@@ -3,10 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RestfulApi/RestfulApi.iml" filepath="$PROJECT_DIR$/RestfulApi/RestfulApi.iml" />
-      <module fileurl="file://$PROJECT_DIR$/imagelib/imagelib.iml" filepath="$PROJECT_DIR$/imagelib/imagelib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/main.iml" filepath="$PROJECT_DIR$/main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sliding_menu/sliding_menu.iml" filepath="$PROJECT_DIR$/sliding_menu/sliding_menu.iml" />
-      <module fileurl="file://$PROJECT_DIR$/store/store.iml" filepath="$PROJECT_DIR$/store/store.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task/Task.iml" filepath="$PROJECT_DIR$/Task/Task.iml" />
+      <module fileurl="file://$PROJECT_DIR$/taskallo.iml" filepath="$PROJECT_DIR$/taskallo.iml" />
     </modules>
   </component>
 </project>

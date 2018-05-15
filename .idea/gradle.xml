@@ -10,9 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/RestfulApi" />
-            <option value="$PROJECT_DIR$/imagelib" />
-            <option value="$PROJECT_DIR$/sliding_menu" />
-            <option value="$PROJECT_DIR$/store" />
+            <option value="$PROJECT_DIR$/Task" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

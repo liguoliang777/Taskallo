@@ -123,7 +123,7 @@ public interface GameService {
     // 帖子详情
     @POST("gameCircle/getShowPostById")
     Observable<MsgDetailBean> queryMsgDetail(@Header("content-type") String type,
-                                              @Body MsgDetailBodyBean bean);
+                                             @Body MsgDetailBodyBean bean);
     // 点赞、投票
     @POST("gameCircle/addPointORVote")
     Observable<NormalDataBean> addPoint(@Header("content-type") String type,
@@ -166,7 +166,7 @@ public interface GameService {
     // 排行 好评榜游戏列表
     @POST("gameDiscovery/queryGameListByCategoryAndDownload")
     Observable<LikeListBean> rankCommentList(@Header("content-type") String type,
-                                                 @Body RankListBody bean);
+                                             @Body RankListBody bean);
 
     // 帖子搜索
     @POST("gameCircle/gameCircleSearch")
@@ -205,7 +205,7 @@ public interface GameService {
     // 帮助与反馈-问题列表
     @POST("appHelp/queryHelpHomeHotProblem")
     Observable<QuestionListBean> queryHelpHomeHotProblem(@Header("content-type") String type,
-                                                   @Body AdminGameUpdateBody bean);
+                                                         @Body AdminGameUpdateBody bean);
 
     // 帮助分类页面
     @POST("appHelp/queryHelpCategoryProblem")
@@ -220,7 +220,7 @@ public interface GameService {
     // 系统消息
     @POST("message/querySystemMessList")
     Observable<SystemMsgBean> querySystemMessList(@Header("content-type") String type,
-                                                 @Body AdminGameUpdateBody bean);
+                                                  @Body AdminGameUpdateBody bean);
 
     // 推荐 游戏列表
     @POST("gameRecommend/queryGameRecommendList")
