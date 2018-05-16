@@ -30,7 +30,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.manager.FeedbackSucceedActivity;
 import com.android.taskallo.bean.JsonResult;

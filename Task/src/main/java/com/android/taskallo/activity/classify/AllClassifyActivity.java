@@ -8,6 +8,16 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
 
+import com.android.taskallo.R;
+import com.android.taskallo.activity.BaseFgActivity;
+import com.android.taskallo.adapter.HomeRaiderAdapter;
+import com.android.taskallo.bean.PageAction;
+import com.android.taskallo.core.utils.ImageUtil;
+import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.game.view.SeeMoreActivity;
+import com.android.taskallo.view.LoadStateView;
+import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
+import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
 import com.jzt.hol.android.jkda.sdk.bean.classification.AllClassifyBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
@@ -16,17 +26,6 @@ import com.jzt.hol.android.jkda.sdk.services.Classification.ClassifiHomeClient;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import cn.ngame.store.R;
-import com.android.taskallo.activity.BaseFgActivity;
-import com.android.taskallo.adapter.HomeRaiderAdapter;
-import com.android.taskallo.bean.PageAction;
-import com.android.taskallo.core.utils.KeyConstant;
-import com.android.taskallo.game.view.SeeMoreActivity;
-import com.android.taskallo.view.LoadStateView;
-import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
-import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
-import com.android.taskallo.core.utils.ImageUtil;
 
 /**
  * 分类

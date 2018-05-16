@@ -12,7 +12,7 @@ import com.jzt.hol.android.jkda.sdk.bean.gamehub.NormalDataBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.AddGameClient;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.core.utils.APIErrorUtils;
 import com.android.taskallo.util.StringUtil;

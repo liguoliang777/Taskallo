@@ -8,7 +8,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.push.model.MessageDetail;
 import com.android.taskallo.push.presenter.PushMsgDetailPresenter;

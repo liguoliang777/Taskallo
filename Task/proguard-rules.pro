@@ -129,7 +129,7 @@
 
 #-keep class com.alibaba.** { *; }
 
--keep public class cn.ngame.store.ota.model.OtaService
+-keep public class com.android.taskallo.ota.model.OtaService
 
 #baidu push
 #-libraryjars libs/pushservice-5.3.0.99.jar
@@ -150,7 +150,7 @@
 # Application classes that will be serialized/deserialized over Gson
 #-keep class com.google.gson.examples.android.model.** { *; } ##这里需要改成解析到哪个  javabean
 #-keep class ExtraDataBean
--keep class cn.ngame.store.push.model.** { *; }
+-keep class com.android.taskallo.push.model.** { *; }
 
 -keepclassmembers class * {
    public <init> (org.json.JSONObject);
@@ -237,15 +237,15 @@
  -keep class com.android.volley.toolbox.HurlStack$* { *; }
  -keep class com.android.volley.toolbox.ImageLoader$* { *; }
  #------------------实体类 # -------------------------------------------
- -keep class cn.ngame.store.bean.** { *; }
- -keep class cn.ngame.store.game.bean.** { *; }
- -keep class cn.ngame.store.StoreApplication { *; }
+ -keep class com.android.taskallo.bean.** { *; }
+ -keep class com.android.taskallo.game.bean.** { *; }
+ -keep class com.android.taskallo.StoreApplication { *; }
  -keep class com.jzt.hol.android.jkda.sdk.bean.** { *; }
  -keep class com.jzt.hol.android.jkda.sdk.services.** { *; }
- -keep class cn.ngame.store.push.model.ExtraDataBean
- -keep class cn.ngame.store.push.model.MessageDetail
- -keep class cn.ngame.store.activity.main.MainHomeActivity
- -keep class cn.ngame.store.activity.hub.HubItemActivity
+ -keep class com.android.taskallo.push.model.ExtraDataBean
+ -keep class com.android.taskallo.push.model.MessageDetail
+ -keep class com.android.taskallo.activity.main.MainHomeActivity
+ -keep class com.android.taskallo.activity.hub.HubItemActivity
 
  -keep class org.apache.http.** {*; }
  -keep class org.apache.**{*;}

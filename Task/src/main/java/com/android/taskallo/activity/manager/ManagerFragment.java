@@ -20,7 +20,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.adapter.InstalledGameAdapter;
 import com.android.taskallo.core.fileload.FileLoadInfo;
 import com.android.taskallo.core.fileload.FileLoadManager;
@@ -139,7 +139,7 @@ public class ManagerFragment extends Fragment {
                     if ((applicationInfo.flags & applicationInfo.FLAG_SYSTEM) <= 0) {
                         String packageName = applicationInfo.packageName;
                         //如果包名
-                        if (pkgNameListStr.contains(packageName) && !"cn.ngame.store".equals
+                        if (pkgNameListStr.contains(packageName) && !"com.android.taskallo".equals
                                 (packageName)) {
                             localAppList.add(packageInfo);
                         }

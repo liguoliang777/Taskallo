@@ -18,7 +18,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.StoreApplication;
 import com.android.taskallo.video.view.VideoDetailActivity;
 import com.android.taskallo.adapter.GvVrVideoAdapter;

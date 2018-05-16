@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.core.fileload.FileLoadInfo;
 import com.android.taskallo.core.fileload.FileLoadManager;
 import com.android.taskallo.core.fileload.IFileLoad;
@@ -44,7 +44,7 @@ import com.android.taskallo.util.ConvUtil;
 import com.android.taskallo.view.GameLoadProgressBar;
 import com.android.taskallo.view.QuickAction;
 
-import static cn.ngame.store.R.id.tv_title;
+import static com.android.taskallo.R.id.tv_title;
 
 
 /**

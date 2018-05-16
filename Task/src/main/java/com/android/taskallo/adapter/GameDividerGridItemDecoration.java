@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 /**
  * 实现RecyclerView的分割

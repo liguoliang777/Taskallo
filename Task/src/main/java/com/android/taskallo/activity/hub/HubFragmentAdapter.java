@@ -33,7 +33,7 @@ import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBean;
 
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.activity.main.MainHubFragment;
 import com.android.taskallo.core.utils.KeyConstant;
 

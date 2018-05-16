@@ -29,7 +29,7 @@ import android.view.View;
 
 import java.io.File;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.StoreApplication;
 import com.android.taskallo.exception.NoSDCardException;
 import com.android.taskallo.fragment.OneBtDialogFragment;
@@ -186,7 +186,7 @@ public class CommonUtil {
 
         int versionCode = -1;
         try {
-            versionCode = context.getPackageManager().getPackageInfo("cn.ngame.store", 0)
+            versionCode = context.getPackageManager().getPackageInfo("com.android.taskallo", 0)
                     .versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             Log.e(TAG, e.getMessage());
@@ -204,7 +204,7 @@ public class CommonUtil {
     public static String getVersionName(Context context) {
         String verName = "";
         try {
-            verName = context.getPackageManager().getPackageInfo("cn.ngame.store", 0).versionName;
+            verName = context.getPackageManager().getPackageInfo("com.android.taskallo", 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

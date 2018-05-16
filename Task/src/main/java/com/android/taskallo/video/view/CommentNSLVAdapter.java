@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.bean.GameInfo;
 import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.view.GameLoadProgressBar2;

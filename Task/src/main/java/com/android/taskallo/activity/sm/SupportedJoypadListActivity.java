@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 
 

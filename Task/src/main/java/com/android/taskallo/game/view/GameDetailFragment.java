@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.bean.GameCategorys;
 import com.android.taskallo.bean.GameImage;
 import com.android.taskallo.bean.GameInfo;
@@ -39,7 +39,7 @@ import com.android.taskallo.gamehub.view.ShowViewActivity;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.AutoHeightViewPager;
 
-import static cn.ngame.store.R.id.tv_show_all2;
+import static com.android.taskallo.R.id.tv_show_all2;
 
 /**
  * 显示游戏详情的Fragment

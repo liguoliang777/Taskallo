@@ -10,7 +10,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.push.model.MessageDetail;
 import com.android.taskallo.push.model.PushMessage;

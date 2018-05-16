@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.StoreApplication;
 import com.android.taskallo.adapter.GameHubAdapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
@@ -47,7 +47,7 @@ import com.android.taskallo.view.PicassoImageView;
 import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
 import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
 
-import static cn.ngame.store.R.id.banner_view;
+import static com.android.taskallo.R.id.banner_view;
 
 /**
  * 游戏圈

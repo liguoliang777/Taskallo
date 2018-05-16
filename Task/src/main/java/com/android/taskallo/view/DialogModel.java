@@ -10,7 +10,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 
 public class DialogModel extends Dialog {

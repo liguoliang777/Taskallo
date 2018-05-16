@@ -30,7 +30,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.adapter.LvSearchAdapter;
 import com.android.taskallo.adapter.SearchAdapter;

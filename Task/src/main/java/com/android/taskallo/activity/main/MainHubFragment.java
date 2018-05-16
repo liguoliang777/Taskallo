@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.activity.hub.HubFragmentAdapter;
 import com.android.taskallo.activity.hub.HubItemActivity;
 import com.android.taskallo.base.fragment.BaseSearchFragment;

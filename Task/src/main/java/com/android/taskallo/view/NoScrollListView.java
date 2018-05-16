@@ -27,7 +27,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.core.utils.CommonUtil;
 
 /**

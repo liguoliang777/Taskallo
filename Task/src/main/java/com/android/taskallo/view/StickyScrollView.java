@@ -14,7 +14,7 @@ import android.widget.ScrollView;
 
 import java.util.ArrayList;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 /**
  * @author  sjolander.emil@gmail.com

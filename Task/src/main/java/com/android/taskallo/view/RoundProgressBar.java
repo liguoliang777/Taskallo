@@ -9,7 +9,7 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.core.utils.CommonUtil;
 import com.android.taskallo.core.utils.TextUtil;
 

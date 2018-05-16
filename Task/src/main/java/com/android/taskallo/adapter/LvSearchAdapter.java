@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.bean.SearchHistoryBean;
 import com.android.taskallo.search.view.SearchActivity;
 

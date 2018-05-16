@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 
 /**

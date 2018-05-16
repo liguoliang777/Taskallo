@@ -13,7 +13,7 @@ import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.activity.main.TopicsDetailActivity;
 import com.android.taskallo.core.utils.KeyConstant;
 

@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 
 public class MsgDetailPop extends PopupWindow {

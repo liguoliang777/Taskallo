@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 /**
  * Created by liguoliang

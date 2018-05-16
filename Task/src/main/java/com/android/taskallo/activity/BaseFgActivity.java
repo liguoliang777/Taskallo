@@ -16,7 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.base.service.ConnectionChangeReceiver;
 
 /**

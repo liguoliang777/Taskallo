@@ -16,12 +16,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.core.utils.FileUtil;
 import com.android.taskallo.gamehub.view.MsgDetailActivity;
 import com.android.taskallo.util.DateUtil;
 
-import static cn.ngame.store.R.id.tv_item_agreeNum;
+import static com.android.taskallo.R.id.tv_item_agreeNum;
 
 /**
  * 帖子详情 listview

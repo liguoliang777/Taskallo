@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.activity.hub.CircleActivity;
 import com.android.taskallo.activity.hub.HubPostsActivity;
 import com.android.taskallo.bean.PostsInfo;

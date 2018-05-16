@@ -12,9 +12,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
-import static cn.ngame.store.R.id.tv_content;
+import static com.android.taskallo.R.id.tv_content;
 
 /**
  * @author gp

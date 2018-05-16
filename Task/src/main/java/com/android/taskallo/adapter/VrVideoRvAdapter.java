@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.video.view.VideoDetailActivity;
 import com.android.taskallo.bean.VideoInfo;
 

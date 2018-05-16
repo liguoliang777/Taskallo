@@ -16,7 +16,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 /**
  * 飘心动画的界面

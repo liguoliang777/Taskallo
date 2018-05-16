@@ -110,7 +110,7 @@ public class PushMsgReceiver extends PushMessageReceiver{
 
         }else {
             //如果app进程已经被杀死，先重新启动app
-            Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage("cn.ngame.store");
+            Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage("com.android.taskallo");
             launchIntent.putExtra("msgId",bean.getMsgId());
             launchIntent.putExtra("type",bean.getType());
             if(bean.getType() == PushMessage.MSG_TYPE_TZ){

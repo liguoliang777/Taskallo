@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 import java.lang.ref.WeakReference;
 import java.util.Random;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 /**
  * 飘心动画路径

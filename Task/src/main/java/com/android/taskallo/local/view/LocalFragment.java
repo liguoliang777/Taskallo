@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 /**
  * 显示本地管理主页面

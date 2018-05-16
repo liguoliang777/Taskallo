@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.activity.main.TopicsDetailActivity;
 import com.android.taskallo.activity.main.TopicsListActivity;
 import com.android.taskallo.adapter.classify.ClassifyIvAdapter;

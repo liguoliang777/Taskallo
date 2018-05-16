@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.StoreApplication;
 import com.android.taskallo.bean.GameInfo;
 import com.android.taskallo.bean.JsonResult;
@@ -34,7 +34,7 @@ import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.game.bean.GameStrategy;
 import com.android.taskallo.view.AutoHeightViewPager;
 
-import static cn.ngame.store.R.id.strategy_content_tv;
+import static com.android.taskallo.R.id.strategy_content_tv;
 
 /**
  * 必读

@@ -11,7 +11,7 @@ import com.jzt.hol.android.jkda.sdk.bean.classification.AllClassifyBean;
 
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 /**
  *  首页下方攻略列表

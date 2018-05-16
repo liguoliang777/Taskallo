@@ -15,7 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 /**
  * Fragment类型的对话框

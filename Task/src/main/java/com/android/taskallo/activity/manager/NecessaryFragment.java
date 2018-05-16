@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimerTask;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 

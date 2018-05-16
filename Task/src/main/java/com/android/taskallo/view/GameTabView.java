@@ -29,7 +29,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 /**
  * 自定义游戏详情窗口中，带动画效果的viewpager Tab指示器控件

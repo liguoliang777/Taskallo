@@ -18,7 +18,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 /**
  * 获取图片的Base64字符串

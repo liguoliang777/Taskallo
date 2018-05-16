@@ -25,7 +25,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.core.fileload.FileLoadInfo;
 import com.android.taskallo.core.fileload.GameFileStatus;
 import com.android.taskallo.core.utils.CommonUtil;

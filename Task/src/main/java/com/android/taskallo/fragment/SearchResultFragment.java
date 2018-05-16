@@ -19,7 +19,7 @@ import com.jzt.hol.android.jkda.sdk.services.search.SearchGVClient;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.adapter.SearchOtherAdapter;
 import com.android.taskallo.adapter.SearchVideoAdapter;
 import com.android.taskallo.game.view.GameDetailActivity;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="cn.ngame.store">
+          package="com.android.taskallo">
 
     <uses-sdk
         android:maxSdkVersion="23"
@@ -34,13 +34,13 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.cn.ngame.store"/>
+    <uses-permission android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.android.taskallo"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 
     <permission
-        android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.cn.ngame.store"
+        android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.android.taskallo"
         android:protectionLevel="normal"></permission>
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <!-- 百度推送权限 end -->
@@ -58,13 +58,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.android.taskallo.activity.main.MainHomeActivity"
+            android:name="com.android.taskallo.base.activity.BeginActivity"
+            android:theme="@style/AppTheme_NoActionBar_Fullscreen"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.android.taskallo.activity.main.MainHomeActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboard|keyboardHidden|navigation"
+            android:launchMode="singleTask"
+            />
         <activity
             android:name="com.android.taskallo.base.activity.GuideViewActivity"
             android:screenOrientation="portrait"
@@ -167,11 +174,6 @@
             android:theme="@android:style/Theme.NoTitleBar"/>
         <activity
             android:name="com.android.taskallo.game.view.LabelsActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity
-            android:name="com.android.taskallo.game.view.GameRecommendActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"/>
@@ -498,16 +500,16 @@
         <!-- 适配Android N系统必需的ContentProvider声明，写权限包含应用包名-->
        <provider
             android:name="com.baidu.android.pushservice.PushInfoProvider"
-            android:authorities="cn.ngame.store.bdpush"
+            android:authorities="com.android.taskallo.bdpush"
             android:exported="true"
             android:protectionLevel="signature"
-            android:writePermission="baidu.push.permission.WRITE_PUSHINFOPROVIDER.cn.ngame.store"/>
+            android:writePermission="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.android.taskallo"/>
         <!-- baidu push结束 -->
 
         <!--android 7.0 适配-->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="cn.ngame.store.provider"
+            android:authorities="com.android.taskallo.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

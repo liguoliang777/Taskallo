@@ -30,7 +30,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import java.util.Timer;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.bean.VideoInfo;
 
 /**

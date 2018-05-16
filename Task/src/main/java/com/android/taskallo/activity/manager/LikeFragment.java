@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimerTask;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.StoreApplication;
 import com.android.taskallo.adapter.LikeFragmentAdapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;

@@ -5,7 +5,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.view.SimpleTitleBar;
 

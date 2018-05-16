@@ -12,7 +12,7 @@ import com.google.vr.sdk.widgets.video.VrVideoView;
 
 import java.io.IOException;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.VideoInfo;
 import com.android.taskallo.core.utils.Log;

@@ -19,7 +19,7 @@ import android.widget.VideoView;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.bean.VideoInfo;
 import com.android.taskallo.local.model.WatchRecord;
 import com.android.taskallo.local.model.WatchRecordModel;

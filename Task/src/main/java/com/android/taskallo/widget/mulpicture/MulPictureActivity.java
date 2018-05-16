@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.core.utils.CommonUtil;
 import com.android.taskallo.core.utils.FileUtil;
 import com.android.taskallo.gamehub.bean.PictureBean;

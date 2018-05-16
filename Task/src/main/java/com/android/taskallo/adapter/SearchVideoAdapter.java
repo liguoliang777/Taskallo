@@ -27,7 +27,7 @@ import com.jzt.hol.android.jkda.sdk.bean.search.SearchGameVideoBean;
 
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 /**
  * 搜索结果的ListView控件适配器

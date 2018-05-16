@@ -14,7 +14,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.activity.hub.CircleActivity;
 import com.android.taskallo.activity.hub.HubItemActivity;
 import com.android.taskallo.bean.CirclePostsInfo;

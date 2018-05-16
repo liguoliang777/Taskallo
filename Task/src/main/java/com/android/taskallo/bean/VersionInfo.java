@@ -16,7 +16,7 @@ public class VersionInfo implements Serializable{
     public long fileSize;
     public String md5;
     public String url;
-    public String packageName = "cn.ngame.store";
+    public String packageName = "com.android.taskallo";
     public String content;
 
 }

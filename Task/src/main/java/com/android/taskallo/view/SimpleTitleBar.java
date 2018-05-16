@@ -23,7 +23,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.core.utils.CommonUtil;
 
 public class SimpleTitleBar extends RelativeLayout{

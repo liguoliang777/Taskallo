@@ -15,18 +15,15 @@
  */
 package com.android.taskallo.base.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.activity.main.MainHomeActivity;
 import com.android.taskallo.core.fileload.FileLoadService;
 import com.android.taskallo.core.utils.Constant;
@@ -35,13 +32,16 @@ import com.android.taskallo.core.utils.SPUtils;
 import com.android.taskallo.push.model.PushMessage;
 import com.android.taskallo.util.ConvUtil;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * App启动时的等待窗口，处理进入home页时需要预先加载的内容
  *
  * @author flan
  * @since 2016年5月3日
  */
-public class BeginActivity extends Activity {
+public class BeginActivity extends FragmentActivity {
 
     public static final String TAG = BeginActivity.class.getSimpleName();
     private boolean isFirstInstall = true;
@@ -156,7 +156,6 @@ public class BeginActivity extends Activity {
             finish();
 
         } else {*/
-        Log.d(TAG, "skip2Main 跳主页面");
         Intent intent = new Intent(content, MainHomeActivity.class);
         startActivity(intent);
         finish();

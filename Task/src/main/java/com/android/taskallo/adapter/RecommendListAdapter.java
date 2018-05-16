@@ -32,7 +32,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 public class RecommendListAdapter extends BaseAdapter {
 

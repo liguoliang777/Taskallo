@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.core.view.AlertDialogFragment;
 import com.android.taskallo.core.view.ConfirmDialogFragment;
 import com.android.taskallo.fragment.WaitingDialogFragment;

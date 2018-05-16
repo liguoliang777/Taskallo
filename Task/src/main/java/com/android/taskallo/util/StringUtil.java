@@ -38,7 +38,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 /**
  * 字符串操作工具包<br>

@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.adapter.RankTopPagerAdapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
 

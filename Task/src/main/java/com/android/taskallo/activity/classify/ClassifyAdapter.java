@@ -34,7 +34,7 @@ import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
 
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.game.view.GameDetailActivity;
 import com.android.taskallo.game.view.SeeMoreActivity;

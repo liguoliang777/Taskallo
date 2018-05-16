@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddCommentBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddPointBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.BrowseHistoryBodyBean;
@@ -56,7 +56,7 @@ import com.android.taskallo.view.popupwin.MsgDetailPop;
 import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
 import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
 
-import static cn.ngame.store.R.id.pulllistview;
+import static com.android.taskallo.R.id.pulllistview;
 
 
 /**

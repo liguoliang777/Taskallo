@@ -13,7 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 
 /**

@@ -14,7 +14,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 /**
  * 图片放大缩小对话框框

@@ -59,7 +59,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.jzvd.JZVideoPlayerStandard;
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.adapter.DCViewPagerAdapter;
@@ -201,7 +201,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 }
                 final UMShareAPI umShareAPI = UMShareAPI.get(content);
                 final UMWeb web = new UMWeb(getString(R.string.app_download_url_yyb));
-                //final UMWeb web = new UMWeb("http://m.app.so.com/detail/index?pname=cn.ngame.store&id=3419150");
+                //final UMWeb web = new UMWeb("http://m.app.so.com/detail/index?pname=com.android.taskallo&id=3419150");
                 web.setTitle(gameName);
                 web.setThumb(mUMImage);
                 web.setDescription(getString(R.string.share_description));//描述

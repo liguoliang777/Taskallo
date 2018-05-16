@@ -27,7 +27,7 @@ import com.jzt.hol.android.jkda.sdk.bean.search.SearchBean;
 
 import java.util.List;
 
-import cn.ngame.store.R;
+import com.android.taskallo.R;
 
 /**
  * @author gp
