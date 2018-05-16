@@ -29,8 +29,8 @@
 
     <!-- 注册登录 -->
     <string name="login_now">立即登录</string>
-    <string name="login_name_hint"><font size="16">请输入账号</font></string>
-    <string name="login_pwd_hint"><font size="16">请输入密码</font></string>
+    <string name="login_name_hint">邮箱/手机号</string>
+    <string name="login_pwd_hint">输入密码</string>
     <string name="login_other">使用更多方式登录</string>
 
     <string name="find_pwd">找回密码</string>

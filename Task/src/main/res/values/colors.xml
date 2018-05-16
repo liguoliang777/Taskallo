@@ -55,8 +55,8 @@
 
     <color name="transparent">#00000000</color>
     <color name="translucent_1affffff">#1affffff</color>
-    <color name="login_bt_pressed">#2e995b</color>
-    <color name="login_bt_nomal">#3ecc7a</color>
+    <color name="login_bt_pressed">#5782d9</color>
+    <color name="login_bt_nomal">#6191f2</color>
     <color name="register_bt_nomal">#66cc90</color>
 
     <color name="all_claasify_item_1">#66cc90</color>

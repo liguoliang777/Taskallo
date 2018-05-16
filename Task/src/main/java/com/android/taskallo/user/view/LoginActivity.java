@@ -16,20 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.google.gson.reflect.TypeToken;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.umeng.analytics.MobclickAgent;
-import com.umeng.socialize.UMAuthListener;
-import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import com.android.taskallo.R;
 import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
@@ -45,6 +31,19 @@ import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.local.model.IWatchRecordModel;
 import com.android.taskallo.local.model.WatchRecordModel;
 import com.android.taskallo.util.ToastUtil;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 用户登录界面
@@ -138,9 +137,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() > 0) {
                     deleteIv.setVisibility(View.VISIBLE);
-                    if (s.length() >= 11) {
-                        et_pwd.requestFocus();
-                    }
                 } else {
                     deleteIv.setVisibility(View.GONE);
                 }

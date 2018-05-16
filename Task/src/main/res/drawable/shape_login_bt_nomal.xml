@@ -5,12 +5,8 @@
     <!-- 填充 -->
     <solid android:color="@color/login_bt_nomal"/>
 
-    <!-- 宽度和高度 -->
-    <size
-        android:width="330dp"
-        android:height="44dp"/>
 
-    <corners android:radius="10dp"
+    <corners android:radius="@dimen/dm008"
         />
 
 </shape>
