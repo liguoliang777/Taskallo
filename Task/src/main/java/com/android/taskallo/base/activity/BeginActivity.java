@@ -24,12 +24,14 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.android.taskallo.R;
+import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.main.MainHomeActivity;
 import com.android.taskallo.core.fileload.FileLoadService;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.SPUtils;
 import com.android.taskallo.push.model.PushMessage;
+import com.android.taskallo.user.view.LoginActivity;
 import com.android.taskallo.util.ConvUtil;
 
 import java.util.Timer;
@@ -51,6 +53,7 @@ public class BeginActivity extends FragmentActivity {
     private long SHOW_TIME_isFirstInstall = 1000;
     private Button skipBt;
     private FrameLayout adsParent;
+    private String pwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,7 +159,14 @@ public class BeginActivity extends FragmentActivity {
             finish();
 
         } else {*/
-        Intent intent = new Intent(content, MainHomeActivity.class);
+        pwd = StoreApplication.passWord;
+        Intent intent;
+        if (pwd != null && !"".endsWith(pwd) || !Constant.PHONE.equals(StoreApplication
+                .loginType)) {
+            intent = new Intent(content, MainHomeActivity.class);
+        } else {
+            intent = new Intent(content, LoginActivity.class);
+        }
         startActivity(intent);
         finish();
 

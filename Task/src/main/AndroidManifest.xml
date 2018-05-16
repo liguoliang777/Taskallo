@@ -67,6 +67,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".user.view.LoginActivity"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|keyboard|keyboardHidden|navigation"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+        <activity
             android:name="com.android.taskallo.activity.main.MainHomeActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboard|keyboardHidden|navigation"
