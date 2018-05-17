@@ -7,36 +7,29 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/app_title_height"
-        android:layout_alignParentTop="true"
-        android:background="@android:color/transparent"
-        android:gravity="center_vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dm058"
+        android:layout_marginTop="@dimen/dm128">
 
-        <Button
-            android:id="@+id/left_bt"
+        <ImageView
+            android:layout_width="@dimen/dm100"
+            android:layout_height="@dimen/dm100"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_login_top_logo" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:background="@null"
-            android:drawableLeft="@drawable/ic_back"
-            android:drawablePadding="@dimen/dp_10"
-            android:paddingLeft="@dimen/dm032"
-            android:paddingRight="@dimen/dp_20"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/title_size" />
-    </RelativeLayout>
+            android:layout_gravity="center_vertical"
+            android:text="@string/appName"
+            android:textColor="@color/color_1a"
+            android:textSize="@dimen/dm044"
+            android:textStyle="bold" />
 
-    <ImageView
-        android:layout_width="@dimen/dm200"
-        android:layout_height="@dimen/dm200"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dm020"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_login_top_logo" />
+    </LinearLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -44,7 +37,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/login_bt_margin_left_right"
         android:layout_marginRight="@dimen/login_bt_margin_left_right"
-        android:layout_marginTop="@dimen/dm080">
+        android:layout_marginTop="@dimen/dm070">
 
         <ImageView
             android:id="@+id/img_1"
@@ -72,18 +65,20 @@
             android:id="@+id/et_login_user"
             style="?android:attr/textViewStyle"
             android:layout_width="match_parent"
+            android:gravity="center_vertical"
             android:layout_height="match_parent"
             android:layout_toLeftOf="@id/delete_iv"
             android:layout_toRightOf="@id/img_1"
             android:background="@null"
             android:hint="@string/login_name_hint"
-            android:maxLength="25"
+            android:maxLength="30"
             android:maxLines="1"
+            android:textStyle="bold"
             android:paddingLeft="@dimen/dm002"
             android:singleLine="true"
-            android:textColor="@color/color_666666"
+            android:textColor="@color/color_1a"
             android:textColorHint="@color/cccccc"
-            android:textSize="@dimen/dm024" />
+            android:textSize="@dimen/dm032" />
     </RelativeLayout>
 
     <View
@@ -120,11 +115,13 @@
             android:hint="@string/login_pwd_hint"
             android:inputType="textPassword"
             android:maxLength="16"
+            android:gravity="center_vertical"
             android:paddingLeft="@dimen/dm002"
+            android:textStyle="bold"
             android:singleLine="true"
-            android:textColor="@color/color_666666"
+            android:textColor="@color/color_1a"
             android:textColorHint="@color/cccccc"
-            android:textSize="@dimen/dm024" />
+            android:textSize="@dimen/dm032" />
 
         <ImageButton
             android:id="@+id/bt_show_pwd"
@@ -133,6 +130,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp_20"
+            android:visibility="gone"
             android:background="@drawable/login_selector_eye_but"
             android:scaleType="centerInside" />
 
@@ -157,7 +155,7 @@
         android:onClick="onLoginClick"
         android:text="@string/login_now"
         android:textColor="@color/white"
-        android:textSize="@dimen/dm028" />
+        android:textSize="@dimen/dm030" />
 
     <!-- /////////////  忘记密码 /////////// -->
     <RelativeLayout
@@ -194,10 +192,10 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/login_qq_bt"

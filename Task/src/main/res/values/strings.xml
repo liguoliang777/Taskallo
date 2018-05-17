@@ -28,9 +28,9 @@
     <string name="skip_ad">跳过广告</string>
 
     <!-- 注册登录 -->
-    <string name="login_now">立即登录</string>
+    <string name="login_now">登录</string>
     <string name="login_name_hint">邮箱/手机号</string>
-    <string name="login_pwd_hint">输入密码</string>
+    <string name="login_pwd_hint">密码</string>
     <string name="login_other">使用更多方式登录</string>
 
     <string name="find_pwd">找回密码</string>
@@ -62,7 +62,7 @@
     <string name="update_cancel">取消</string>
     <string name="update_background">后台运行</string>
     <string name="update_goon">继续更新</string>
-    <string name="update_log"><p font="10">1.重新设计的UI界面</p><br/><p font="10">2.优化后台多线程下载逻辑</p><br/><p font="10">3.修复已知Bug</p></string>
+    <string name="update_log"><p font="10">1.重新设计的UI界面</p><br /><p font="10">2.优化后台多线程下载逻辑</p><br /><p font="10">3.修复已知Bug</p></string>
 
     <string name="download">下载</string>
 
@@ -233,7 +233,7 @@
     <string name="install_apk_lost_redownload">安装包文件丢失\n请重新下载</string>
     <string name="ok">好的</string>
     <string name="main_tab_04">圈子</string>
-    <string name="share_description">欢迎来到方格游戏。手柄游戏，破解游戏，汉化游戏，应有尽有，快来畅玩吧！</string>
+    <string name="share_description">Taskallo！</string>
     <string name="app_download_url_yyb">http://sj.qq.com/myapp/detail.htm?apkName=com.android.taskallo</string>
     <string name="alipay_redpackage_content">7Dl59e13pi</string>
 </resources>

@@ -1,368 +1,311 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.android.taskallo">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.android.taskallo">
 
     <uses-sdk
         android:maxSdkVersion="23"
         android:minSdkVersion="19"
-        android:targetSdkVersion="23"/>
+        android:targetSdkVersion="23" />
 
     <!-- 网络访问权限 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- 允许获取网络状态权限 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 读写手机状态和身份 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- 读写存储权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 允许挂载和反挂载文件系统可移动存储卡权限 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <!-- 蓝牙操作权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <!--监听APP安装与卸载权限-->
-    <uses-permission android:name="android.permission.RESTART_PACKAGES"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <!-- 百度推送权限 start -->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.android.taskallo"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.android.taskallo" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <permission
         android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.android.taskallo"
         android:protectionLevel="normal"></permission>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
     <!-- 百度推送权限 end -->
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
-        android:required="false"/>
+        android:required="false" />
 
     <application
         android:name="com.android.taskallo.StoreApplication"
         android:allowBackup="false"
-        tools:replace="android:allowBackup"
         android:icon="@drawable/ic_launcher"
         android:label="@string/appName"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup">
         <activity
-            android:screenOrientation="portrait"
             android:name="com.android.taskallo.base.activity.BeginActivity"
-            android:theme="@style/AppTheme_NoActionBar_Fullscreen"
-            >
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_NoActionBar_Fullscreen">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".user.view.LoginActivity"
-            android:launchMode="singleTask"
             android:configChanges="orientation|keyboard|keyboardHidden|navigation"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar"/>
+            android:theme="@style/AppTheme_NoActionBar_Fullscreen"/>
         <activity
             android:name="com.android.taskallo.activity.main.MainHomeActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboard|keyboardHidden|navigation"
             android:launchMode="singleTask"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.android.taskallo.base.activity.GuideViewActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.android.taskallo.base.activity.WelcomeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
             android:name="com.android.taskallo.activity.PadToolActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|navigation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
             android:name="com.android.taskallo.search.view.SearchActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.user.view.RegisterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.user.view.FindPwdActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.user.view.ChangePwdActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.game.view.GameDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.android.taskallo.activity.hub.HubItemActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.android.taskallo.activity.ReviewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.activity.ReviewListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
             android:name="com.android.taskallo.base.activity.AboutActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.base.activity.FeedbackActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.base.activity.DisclaimerActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.activity.sm.SystemSettingsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
             android:name="com.android.taskallo.user.view.UserCenterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.activity.VRVideoActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.game.view.VRGameActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.game.view.CPGameActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.game.view.LabelsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.game.view.SeeMoreActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
             android:name="com.android.taskallo.video.view.VideoDetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
             android:name="com.android.taskallo.video.view.VideoRecommendActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
             android:name="com.android.taskallo.video.view.VideoPlayActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
             android:name="com.android.taskallo.video.view.VideoPlay3DActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
             android:name="com.android.taskallo.video.view.VideoMediaPlayerActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.local.view.MyGameActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
             android:name="com.android.taskallo.local.view.WatchHistoryActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
             android:name="com.android.taskallo.push.view.MsgCenterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
             android:name="com.android.taskallo.push.view.MessageDetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
             android:name="com.android.taskallo.push.view.NotifyMsgDetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar" />
 
-        <activity
-            android:name="com.android.taskallo.gamehub.view.ReportActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.gamehub.view.PostMsgActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.gamehub.view.SubmitGameActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.gamehub.view.StrategyActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.gamehub.view.VoteActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.gamehub.view.ChooseModuleActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.gamehub.view.ChooseGameActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.gamehub.view.NoticeActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.gamehub.view.ShowViewActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.gamehub.view.SearchPostActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.base.activity.AdvertisingPageActivity"
-            />
+        <activity android:name="com.android.taskallo.gamehub.view.ReportActivity" />
+        <activity android:name="com.android.taskallo.gamehub.view.PostMsgActivity" />
+        <activity android:name="com.android.taskallo.gamehub.view.SubmitGameActivity" />
+        <activity android:name="com.android.taskallo.gamehub.view.StrategyActivity" />
+        <activity android:name="com.android.taskallo.gamehub.view.VoteActivity" />
+        <activity android:name="com.android.taskallo.gamehub.view.ChooseModuleActivity" />
+        <activity android:name="com.android.taskallo.gamehub.view.ChooseGameActivity" />
+        <activity android:name="com.android.taskallo.gamehub.view.NoticeActivity" />
+        <activity android:name="com.android.taskallo.gamehub.view.ShowViewActivity" />
+        <activity android:name="com.android.taskallo.gamehub.view.SearchPostActivity" />
+        <activity android:name="com.android.taskallo.base.activity.AdvertisingPageActivity" />
         <activity
             android:name="com.android.taskallo.gamehub.view.MsgDetailActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity
-            android:name="com.android.taskallo.widget.mulpicture.MulPictureActivity"
-            />
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name="com.android.taskallo.widget.mulpicture.MulPictureActivity" />
 
         <activity
             android:name="com.android.taskallo.activity.hub.HubPostsActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.android.taskallo.activity.rank.RankActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.android.taskallo.activity.hub.CircleActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity
-            android:name="com.android.taskallo.activity.main.VRActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.activity.main.TopicsListActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.activity.main.TopicsDetailActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.activity.manager.DownloadCenterActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.activity.manager.FeedbackSucceedActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.activity.manager.HelpAndFeedbackActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.activity.manager.QuestionListActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.activity.manager.QuestionDetailActivity"
-            />
-        <activity
-            android:name="com.android.taskallo.activity.manager.SystemInfoActivity"
-            />
+            android:screenOrientation="portrait" />
+        <activity android:name="com.android.taskallo.activity.main.VRActivity" />
+        <activity android:name="com.android.taskallo.activity.main.TopicsListActivity" />
+        <activity android:name="com.android.taskallo.activity.main.TopicsDetailActivity" />
+        <activity android:name="com.android.taskallo.activity.manager.DownloadCenterActivity" />
+        <activity android:name="com.android.taskallo.activity.manager.FeedbackSucceedActivity" />
+        <activity android:name="com.android.taskallo.activity.manager.HelpAndFeedbackActivity" />
+        <activity android:name="com.android.taskallo.activity.manager.QuestionListActivity" />
+        <activity android:name="com.android.taskallo.activity.manager.QuestionDetailActivity" />
+        <activity android:name="com.android.taskallo.activity.manager.SystemInfoActivity" />
         <activity
             android:name="com.android.taskallo.activity.sm.JoypadSettingsActivity"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.NoTitleBar"
-            />
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.activity.sm.SupportedJoypadListActivity"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.NoTitleBar"
-            />
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.activity.sm.JoypadAdaptationApplyActivity"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.NoTitleBar"
-            />
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.activity.sm.AdCooperativeActivity"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.NoTitleBar"
-            />
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.activity.sm.AboutNgameZoneActivity"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.NoTitleBar"
-            />
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.activity.sm.NecessaryOrLikeActivity"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.NoTitleBar"
-            />
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.activity.classify.AllClassifyActivity"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.NoTitleBar"
-            />
+            android:theme="@android:style/Theme.NoTitleBar" />
         <!--=============================友盟==================================================================-->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -372,7 +315,7 @@
                android:value="${UMENG_CHANNEL_VALUE}"/>&lt;!&ndash;如果要多渠道打包&ndash;&gt;-->
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="ngame_test"/>
+            android:value="ngame_test" />
 
         <!--  qq完整版：-->
         <activity
@@ -381,12 +324,12 @@
             android:noHistory="true">
 
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent1105610048"/>
+                <data android:scheme="tencent1105610048" />
             </intent-filter>
 
         </activity>
@@ -395,7 +338,7 @@
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
 
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!--新浪-->
         <activity
@@ -408,15 +351,14 @@
             android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"
-            ></activity>
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name="com.sina.weibo.sdk.share.WbShareTransActivity"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -426,14 +368,14 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <service android:name="com.android.taskallo.core.fileload.FileLoadService"/>
+        <service android:name="com.android.taskallo.core.fileload.FileLoadService" />
 
         <receiver android:name="com.android.taskallo.receiver.NetStatusReceiver">
             <intent-filter>
                 <!-- 监听网络变动事件 -->
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
@@ -442,10 +384,10 @@
             android:name="com.android.taskallo.receiver.InstallStatusReceiver"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED"/>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
-                <data android:scheme="package"/>
+                <data android:scheme="package" />
             </intent-filter>
         </receiver>
 
@@ -454,11 +396,11 @@
         <receiver android:name="com.android.taskallo.receiver.PushMsgReceiver">
             <intent-filter>
                 <!-- 接收push消息 -->
-                <action android:name="com.baidu.android.pushservice.action.MESSAGE"/>
+                <action android:name="com.baidu.android.pushservice.action.MESSAGE" />
                 <!-- 接收bind、setTags等method的返回结果-->
-                <action android:name="com.baidu.android.pushservice.action.RECEIVE"/>
+                <action android:name="com.baidu.android.pushservice.action.RECEIVE" />
                 <!-- 接收通知点击事件，和通知自定义内容 -->
-                <action android:name="com.baidu.android.pushservice.action.notification.CLICK"/>
+                <action android:name="com.baidu.android.pushservice.action.notification.CLICK" />
             </intent-filter>
         </receiver>
 
@@ -467,15 +409,15 @@
             android:name="com.baidu.android.pushservice.PushServiceReceiver"
             android:process=":bdservice_v1">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-                <action android:name="com.baidu.android.pushservice.action.notification.SHOW"/>
-                <action android:name="com.baidu.android.pushservice.action.media.CLICK"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="com.baidu.android.pushservice.action.notification.SHOW" />
+                <action android:name="com.baidu.android.pushservice.action.media.CLICK" />
                 <!-- 以下四项为可选的action声明，可大大提高service存活率和消息到达速度 -->
-                <action android:name="android.intent.action.MEDIA_MOUNTED"/>
-                <action android:name="android.intent.action.USER_PRESENT"/>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
         </receiver>
         <!-- Push服务接收客户端发送的各种请求-->
@@ -483,12 +425,12 @@
             android:name="com.baidu.android.pushservice.RegistrationReceiver"
             android:process=":bdservice_v1">
             <intent-filter>
-                <action android:name="com.baidu.android.pushservice.action.METHOD"/>
-                <action android:name="com.baidu.android.pushservice.action.BIND_SYNC"/>
+                <action android:name="com.baidu.android.pushservice.action.METHOD" />
+                <action android:name="com.baidu.android.pushservice.action.BIND_SYNC" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
             </intent-filter>
         </receiver>
         <service
@@ -496,21 +438,21 @@
             android:exported="true"
             android:process=":bdservice_v1">
             <intent-filter>
-                <action android:name="com.baidu.android.pushservice.action.PUSH_SERVICE"/>
+                <action android:name="com.baidu.android.pushservice.action.PUSH_SERVICE" />
             </intent-filter>
         </service>
         <!-- 4.4版本新增的CommandService声明，提升小米和魅族手机上的实际推送到达率 -->
         <service
             android:name="com.baidu.android.pushservice.CommandService"
-            android:exported="true"/>
+            android:exported="true" />
 
         <!-- 适配Android N系统必需的ContentProvider声明，写权限包含应用包名-->
-       <provider
+        <provider
             android:name="com.baidu.android.pushservice.PushInfoProvider"
             android:authorities="com.android.taskallo.bdpush"
             android:exported="true"
             android:protectionLevel="signature"
-            android:writePermission="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.android.taskallo"/>
+            android:writePermission="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.android.taskallo" />
         <!-- baidu push结束 -->
 
         <!--android 7.0 适配-->
@@ -521,7 +463,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
     </application>
 

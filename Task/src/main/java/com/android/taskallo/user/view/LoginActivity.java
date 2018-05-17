@@ -2,7 +2,6 @@ package com.android.taskallo.user.view;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -35,7 +34,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -71,14 +69,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
 
         this.setContentView(R.layout.activity_login);
-
-        /*======================================透明标题栏==========================================*/
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
-        }
         //获取状态栏高度设置给标题栏==========================================
        /* RelativeLayout titleRlay = (RelativeLayout) findViewById(R.id.title_rlay);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -122,23 +112,31 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 0) {
-                    deleteIv.setVisibility(View.VISIBLE);
-                } else {
-                    deleteIv.setVisibility(View.GONE);
-                }
+                deleteIv.setVisibility(s.length() > 0 ? View.VISIBLE : View.GONE);
+            }
+
+
+        });
+        et_pwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                bt_show_pwd.setVisibility(s.length() > 0 ? View.VISIBLE : View.GONE);
             }
 
 
         });
         dialogHelper = new DialogHelper(getSupportFragmentManager(), mContext);
         mShareAPI = UMShareAPI.get(this);
-        findViewById(R.id.left_bt).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         findViewById(R.id.login_qq_bt).setOnClickListener(this);
         findViewById(R.id.login_wechat_bt).setOnClickListener(this);
         findViewById(R.id.login_sina_bt).setOnClickListener(this);
