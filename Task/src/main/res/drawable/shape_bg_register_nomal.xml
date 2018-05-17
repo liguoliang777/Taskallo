@@ -3,7 +3,7 @@
     android:useLevel="false">
 
     <!-- 填充 -->
-    <solid android:color="@color/mainColor"/>
+    <solid android:color="@color/login_bt_nomal"/>
     <!--圆角-->
     <corners android:radius="@dimen/dp_10"
         />

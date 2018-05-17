@@ -21,7 +21,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.android.taskallo.R;
 import com.android.taskallo.StoreApplication;
@@ -116,19 +115,6 @@ public class BeginActivity extends FragmentActivity {
             }, SHOW_TIME);
         }
     }
-
-    private LinearLayout mFrameLayoutView;
-    //InMobiNative nativeAd;
-  /*  private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            ToastUtil.show(content, "收到消息");
-            //handler.sendEmptyMessageAtTime(0, 1000);
-
-        }
-    };*/
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

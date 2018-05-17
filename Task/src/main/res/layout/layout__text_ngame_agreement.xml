@@ -18,6 +18,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="《方格用户隐私协议》"
-        android:textColor="@color/register_bt_nomal"
+        android:textColor="@color/mainColor"
         android:textSize="@dimen/dp_12"/>
 </LinearLayout>

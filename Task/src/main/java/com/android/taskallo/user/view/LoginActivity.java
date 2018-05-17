@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.android.taskallo.R;
 import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
+import com.android.taskallo.activity.main.MainHomeActivity;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.User;
 import com.android.taskallo.core.net.GsonRequest;
@@ -28,8 +29,6 @@ import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.NetUtil;
 import com.android.taskallo.core.utils.TextUtil;
-import com.android.taskallo.local.model.IWatchRecordModel;
-import com.android.taskallo.local.model.WatchRecordModel;
 import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -71,18 +70,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-/*
-        View.SYSTEM_UI_FLAG_FULLSCREEN,   //全屏，状态栏和导航栏不显示
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION, //隐藏导航栏
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN, //全屏，状态栏会盖在布局上
-                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION,
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE,
-                View.SYSTEM_UI_FLAG_LOW_PROFILE,
-                View.SYSTEM_UI_FLAG_VISIBLE,  //显示状态栏和导航栏*/
-/*
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);*/
-
-        //getWindow().setWindowAnimations(R.style.activity_left_in_style);
         this.setContentView(R.layout.activity_login);
 
         /*======================================透明标题栏==========================================*/
@@ -341,7 +328,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         dialogHelper.showAlert("正在登录...", true);
         String url = Constant.WEB_SITE + Constant.URL_USER_LOGIN;
 
-        Response.Listener<JsonResult<User>> succesListener = new Response.Listener<JsonResult<User>>() {
+        Response.Listener<JsonResult<User>> succesListener = new Response
+                .Listener<JsonResult<User>>() {
             @Override
             public void onResponse(JsonResult<User> result) {
                 if (result == null) {
@@ -387,13 +375,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     }
 
                     //同步本地观看记录到服务器
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            IWatchRecordModel watchRecordModel = new WatchRecordModel(LoginActivity.this);
-                            watchRecordModel.synchronizeWatchRecord();
-                        }
-                    }).start();
+                    startActivity(new Intent(mContext, MainHomeActivity.class));
                     mContext.finish();
                 } else {
                     ToastUtil.show(mContext, "登录失败，" + result.msg);
@@ -415,7 +397,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 }
             }
         };
-        Request<JsonResult<User>> versionRequest1 = new GsonRequest<JsonResult<User>>(Request.Method.POST, url,
+        Request<JsonResult<User>> versionRequest1 = new GsonRequest<JsonResult<User>>(Request
+                .Method.POST, url,
                 succesListener, errorListener, new TypeToken<JsonResult<User>>() {
         }.getType()) {
             @Override
@@ -432,7 +415,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             }
         };
         StoreApplication.requestQueue.add(versionRequest1);
-       /* Request<JsonResult<Token>> versionRequest = new GsonRequest<JsonResult<Token>>(Request.Method.POST, url,
+       /* Request<JsonResult<Token>> versionRequest = new GsonRequest<JsonResult<Token>>(Request
+       .Method.POST, url,
                 successListener, errorListener, new TypeToken<JsonResult<Token>>() {
         }.getType()) {
             @Override
@@ -460,7 +444,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
    /* private void getUserInfo() {
 
         final String url = Constant.WEB_SITE + Constant.URL_USER_INFO;
-        Response.Listener<JsonResult<User>> successListener = new Response.Listener<JsonResult<User>>() {
+        Response.Listener<JsonResult<User>> successListener = new Response
+        .Listener<JsonResult<User>>() {
             @Override
             public void onResponse(JsonResult<User> result) {
                 DialogHelper.hideWaiting(getSupportFragmentManager());
@@ -491,7 +476,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            IWatchRecordModel watchRecordModel = new WatchRecordModel(LoginActivity.this);
+                            IWatchRecordModel watchRecordModel = new WatchRecordModel
+                            (LoginActivity.this);
                             watchRecordModel.synchronizeWatchRecord();
                         }
                     }).start();
@@ -515,7 +501,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             }
         };
 
-        Request<JsonResult<User>> versionRequest = new GsonRequest<JsonResult<User>>(Request.Method.POST, url,
+        Request<JsonResult<User>> versionRequest = new GsonRequest<JsonResult<User>>(Request
+        .Method.POST, url,
                 successListener, errorListener, new TypeToken<JsonResult<User>>() {
         }.getType()) {
             @Override
@@ -528,7 +515,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         };
         StoreApplication.requestQueue.add(versionRequest);
     }*/
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -536,6 +522,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             @Override
             public void onStart(SHARE_MEDIA share_media) {
             }
+
             @Override
             public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
 

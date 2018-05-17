@@ -17,16 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-
 import com.android.taskallo.R;
 import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
@@ -38,6 +28,15 @@ import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.fragment.SimpleDialogFragment;
 import com.android.taskallo.view.BaseTitleBar;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Timer;
 
 /**
  * 用户账号注册页面
