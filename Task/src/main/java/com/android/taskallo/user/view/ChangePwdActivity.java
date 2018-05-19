@@ -165,7 +165,7 @@ public class ChangePwdActivity extends BaseFgActivity {
                 params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
                 params.put(KeyConstant.TOKEN, StoreApplication.token);
                 params.put(KeyConstant.old_Password, oldPwdStr);
-                params.put(KeyConstant.new_Password, newPwdETStr1);
+                params.put(KeyConstant.newPassword, newPwdETStr1);
                 return params;
             }
         };

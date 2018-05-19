@@ -185,7 +185,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 break;
             case R.id.tv_find_pwd:
                 Intent fIntent = new Intent(this, FindPwdActivity.class);
-                fIntent.putExtra(KeyConstant.IS_FROM_USER_CENTER, false);
                 startActivity(fIntent);
 
                 break;

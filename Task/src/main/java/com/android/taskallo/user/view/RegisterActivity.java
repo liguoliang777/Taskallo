@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.taskallo.R;
 import com.android.taskallo.StoreApplication;
@@ -231,7 +230,7 @@ public class RegisterActivity extends BaseFgActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                Toast.makeText(RegisterActivity.this, "更新失败，请检查网络连接!", Toast.LENGTH_SHORT).show();
+                ToastUtil.show(content, "请检查网络连接");
                 Log.d(TAG, "HTTP请求失败：网络连接错误！");
             }
         };

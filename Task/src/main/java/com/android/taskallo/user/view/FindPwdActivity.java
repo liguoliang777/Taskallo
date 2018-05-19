@@ -2,11 +2,9 @@ package com.android.taskallo.user.view;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
-import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
@@ -18,15 +16,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import com.android.taskallo.R;
 import com.android.taskallo.StoreApplication;
@@ -40,7 +29,16 @@ import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.fragment.SimpleDialogFragment;
+import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.BaseTitleBar;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 找回密码界面
@@ -96,14 +94,15 @@ public class FindPwdActivity extends BaseFgActivity {
             }
         }
     };
-    private boolean isFromUserCenter;
+    private FindPwdActivity context;
+    private String LOGIN_MODE=Constant.loginMode_Phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initStatusBar();
-        this.setContentView(R.layout.activity_findpwd);
-        isFromUserCenter = getIntent().getBooleanExtra(KeyConstant.IS_FROM_USER_CENTER, false);
+        setContentView(R.layout.activity_findpwd);
+        context = this;
         BaseTitleBar titleBar = (BaseTitleBar) findViewById(R.id.title_bar);
         titleBar.setOnLeftClickListener(new View.OnClickListener() {
             @Override
@@ -123,17 +122,19 @@ public class FindPwdActivity extends BaseFgActivity {
         tv_captcha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mobile = et_name.getText().toString().trim();
+                String userName = et_name.getText().toString().trim();
 
-                if (mobile != null && !"".equals(mobile)) {
-                    if (!TextUtil.isMobile(mobile)) {
-                        Toast.makeText(FindPwdActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                if (userName != null && !"".equals(userName)) {
+                    boolean mobile = TextUtil.isMobile(userName);
+                    if (!mobile &&!TextUtil.isEmail(userName)) {
+                        ToastUtil.show(context,"请输入正确的邮箱/手机号");
                         return;
                     }
+                    LOGIN_MODE = mobile ? Constant.loginMode_Phone : Constant.loginMode_Email;
                     tv_captcha.setBackgroundResource(R.drawable.shape_bg_verif_code_bt_waiting);
                     tv_captcha.setText("正在获取...");
                     tv_captcha.setClickable(false);
-                    getVerifCode(mobile);
+                    getVerifCode(userName);
                 } else {
                     Toast.makeText(FindPwdActivity.this, "手机号不能为空", Toast.LENGTH_SHORT).show();
                 }
@@ -152,7 +153,7 @@ public class FindPwdActivity extends BaseFgActivity {
                     return;
                 }
                 if (!TextUtil.isMobile(userName)) {
-                    Toast.makeText(FindPwdActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (captcha == null || captcha.length() <= 0) {
@@ -171,14 +172,6 @@ public class FindPwdActivity extends BaseFgActivity {
                 doFindPwd(userName, pwd, captcha);
             }
         });
-        if (isFromUserCenter) {
-            titleBar.setTitleText("修改密码");
-            et_name.setText(StoreApplication.userName);
-            et_name.setTextColor(Color.LTGRAY);
-            et_name.setInputType(InputType.TYPE_NULL);
-            et_captcha.requestFocus();
-            bt_find_pwd.setText("确认修改");
-        }
         bt_show_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,9 +192,9 @@ public class FindPwdActivity extends BaseFgActivity {
     }
 
     /**
-     * 获取手机验证码
+     * 获取验证码
      */
-    private void getVerifCode(final String mobile) {
+    private void getVerifCode(final String userName) {
         String url = Constant.WEB_SITE + Constant.URL_GET_AUTH_CODE;//新接口
         Response.Listener<JsonResult<Object>> successListener = new Response.Listener<JsonResult<Object>>() {
             @Override
@@ -210,14 +203,14 @@ public class FindPwdActivity extends BaseFgActivity {
                     tv_captcha.setClickable(true);
                     tv_captcha.setText(getResources().getString(R.string.register_get_captcha));
                     tv_captcha.setBackgroundResource(R.drawable.shape_bg_verif_code_bt_send);
-                    Toast.makeText(FindPwdActivity.this, "服务器异常", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(context,"服务器异常");
                     return;
                 }
 
                 if (result.code == 0) {
                     second = 60;
                     new Thread(runnable).start();
-                    Toast.makeText(FindPwdActivity.this, "验证码已发送成功，请注意查收", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(context,"验证码已发送成功，请注意查收");
                 } else {
                     tv_captcha.setClickable(true);
                     tv_captcha.setText(getResources().getString(R.string.register_get_captcha));
@@ -235,7 +228,7 @@ public class FindPwdActivity extends BaseFgActivity {
                 tv_captcha.setClickable(true);
                 tv_captcha.setText(getResources().getString(R.string.register_get_captcha));
                 tv_captcha.setBackgroundResource(R.drawable.shape_bg_verif_code_bt_send);
-                Toast.makeText(FindPwdActivity.this, "服务器异常,获取验证码失败", Toast.LENGTH_SHORT).show();
+                ToastUtil.show(context,"服务器异常,获取验证码失败");
                 Log.d(TAG, "HTTP请求失败：获取手机验证码失败！");
             }
         };
@@ -247,8 +240,10 @@ public class FindPwdActivity extends BaseFgActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.PHONE_NUMBER, mobile);
-                params.put(KeyConstant.TYPE, "2");//type 短信类型（1注册，2忘记密码）
+                params.put(KeyConstant.loginName, userName);
+                params.put(KeyConstant.loginMode, LOGIN_MODE);
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
+                params.put(KeyConstant.authType, Constant.authType_Find_Pwd);//type 短信类型（1注册，2忘记密码）
                 return params;
             }
         };
@@ -283,8 +278,7 @@ public class FindPwdActivity extends BaseFgActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                Toast.makeText(FindPwdActivity.this, "网络异常,请稍后重试", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "更新密码失败：网络连接错误！" + volleyError.toString());
+                ToastUtil.show(context,"网络异常,请稍后重试");
             }
         };
 
@@ -297,12 +291,7 @@ public class FindPwdActivity extends BaseFgActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.loginName, userName);
                 params.put(KeyConstant.smsCode, captcha);
-                params.put(KeyConstant.new_Password, pwd);
-                android.util.Log.d(TAG, KeyConstant.loginName + "getParams: " + userName);
-                android.util.Log.d(TAG, KeyConstant.new_Password + "getParams: " + captcha);
-                android.util.Log.d(TAG, KeyConstant.smsCode + "getParams: " + pwd);
-                for (int i = 0; i < params.size(); i++) {
-                }
+                params.put(KeyConstant.newPassword, pwd);
                 return params;
             }
         };
@@ -343,7 +332,7 @@ public class FindPwdActivity extends BaseFgActivity {
                 dialogFragment.dismiss();
 
                 if (isSuccess) {
-                    Intent intent = new Intent(FindPwdActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(context, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 }
