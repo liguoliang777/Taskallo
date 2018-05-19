@@ -98,7 +98,7 @@ public class LoginHelper {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.NICK_NAME, StoreApplication.nickName);
-                params.put(KeyConstant.LOGIN_NAME, StoreApplication.userName);
+                params.put(KeyConstant.loginName, StoreApplication.userName);
                 params.put(KeyConstant.pass_word, StoreApplication.passWord);
                 android.util.Log.d(TAG, "重新登录: " + StoreApplication.passWord);
                 android.util.Log.d(TAG, "重新登录: " + StoreApplication.userName);

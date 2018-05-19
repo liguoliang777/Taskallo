@@ -281,8 +281,8 @@ public class RegisterActivity extends BaseFgActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.LOGIN_NAME, userName);
-                params.put(KeyConstant.pass_Word, pwd);
+                params.put(KeyConstant.loginName, userName);
+                params.put(KeyConstant.passWord, pwd);
                 params.put(KeyConstant.SMS_CODE, captcha);
                 params.put(KeyConstant.TYPE, "1");
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);

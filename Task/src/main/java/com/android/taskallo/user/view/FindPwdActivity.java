@@ -295,10 +295,10 @@ public class FindPwdActivity extends BaseFgActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.LOGIN_NAME, userName);
+                params.put(KeyConstant.loginName, userName);
                 params.put(KeyConstant.SMS_CODE, captcha);
                 params.put(KeyConstant.new_Password, pwd);
-                android.util.Log.d(TAG, KeyConstant.LOGIN_NAME + "getParams: " + userName);
+                android.util.Log.d(TAG, KeyConstant.loginName + "getParams: " + userName);
                 android.util.Log.d(TAG, KeyConstant.new_Password + "getParams: " + captcha);
                 android.util.Log.d(TAG, KeyConstant.SMS_CODE + "getParams: " + pwd);
                 for (int i = 0; i < params.size(); i++) {

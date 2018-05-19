@@ -20,7 +20,6 @@ import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.activity.main.MainHomeActivity;
 import com.android.taskallo.bean.JsonResult;
-import com.android.taskallo.bean.User;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.DialogHelper;
@@ -34,7 +33,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
-import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -326,10 +324,10 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         dialogHelper.showAlert("正在登录...", true);
         String url = Constant.WEB_SITE + Constant.URL_USER_LOGIN;
 
-        Response.Listener<JsonResult<User>> succesListener = new Response
-                .Listener<JsonResult<User>>() {
+        Response.Listener<JsonResult> succesListener = new Response
+                .Listener<JsonResult>() {
             @Override
-            public void onResponse(JsonResult<User> result) {
+            public void onResponse(JsonResult result) {
                 if (result == null) {
                     if (null != mContext && !mContext.isFinishing()) {
                         dialogHelper.hideAlert();
@@ -338,7 +336,13 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     return;
                 }
                 if (result.code == 0) {
-                    User user = result.data;
+                    SharedPreferences.Editor editor = preferences.edit();
+                    String token = (String) result.data;
+                    editor.putString(Constant.CONFIG_TOKEN, token);
+                    editor.apply();
+                    StoreApplication.token = token;
+
+                   /* User user = result.data;
                     String token = user.token;
                     String userCode = user.userCode;
                     String headPhoto = user.headPhoto;
@@ -370,9 +374,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                         MobclickAgent.onProfileSignIn("WEIXIN", userCode);
                     } else {
                         MobclickAgent.onProfileSignIn(userName);
-                    }
+                    }*/
 
-                    //同步本地观看记录到服务器
                     startActivity(new Intent(mContext, MainHomeActivity.class));
                     mContext.finish();
                 } else {
@@ -388,27 +391,27 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                Toast.makeText(LoginActivity.this, "登录失败，请检查网络连接!", Toast.LENGTH_SHORT).show();
+                ToastUtil.show(mContext, "登录失败，请检查网络连接!");
                 Log.d(TAG, "HTTP请求失败：网络连接错误！" + volleyError.getMessage());
                 if (null != mContext && !mContext.isFinishing()) {
                     dialogHelper.hideAlert();
                 }
             }
         };
-        Request<JsonResult<User>> versionRequest1 = new GsonRequest<JsonResult<User>>(Request
+        Request<JsonResult> versionRequest1 = new GsonRequest<JsonResult>(Request
                 .Method.POST, url,
-                succesListener, errorListener, new TypeToken<JsonResult<User>>() {
+                succesListener, errorListener, new TypeToken<JsonResult>() {
         }.getType()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.LOGIN_NAME, userName);//uid
-                params.put(KeyConstant.NICK_NAME, nicknameStr);//
-                params.put(KeyConstant.pass_word, password);//""
-                params.put(KeyConstant.TYPE, LOGIN_TYPE); //（1手机，2QQ，3微信，4新浪微博）
-                params.put(KeyConstant.HEAD_PHOTO, URL_HEAD_PHOTO);  //头像
+                params.put(KeyConstant.loginName, userName);//uid
+                params.put(KeyConstant.passWord, password);//""
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);  //
+                // params.put(KeyConstant.NICK_NAME, nicknameStr);//
+                //params.put(KeyConstant.TYPE, LOGIN_TYPE); //（1手机，2QQ，3微信，4新浪微博）
+                // params.put(KeyConstant.HEAD_PHOTO, URL_HEAD_PHOTO);  //头像
                 return params;
             }
         };
@@ -422,7 +425,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.NICK_NAME, nicknameStr);
-                params.put(KeyConstant.LOGIN_NAME, userName);
+                params.put(KeyConstant.loginName, userName);
                 params.put(KeyConstant.pass_word, password);
                 params.put(KeyConstant.TYPE, LOGIN_TYPE); //（1手机，2QQ，3微信，4新浪微博）
                 params.put(KeyConstant.HEAD_PHOTO, URL_HEAD_PHOTO);  //头像
