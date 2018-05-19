@@ -82,11 +82,15 @@ public class Constant {
     public static final int NET_STATUS_4G = 0x0011;// 4G状态连接
     public static final int NET_STATUS_WIFI = 0x0012;//WIFI状态
     public static final String APP_TYPE_ID_0_ANDROID = "0";
-    public static final String URL_FORGOT_REGIST_SMS_CODE = "/user/SMSAuthenticationCode";
+    public static final String URL_GET_AUTH_CODE = "/user/getAuthCode";
     public static final String URL_MODIFY_USER_DATA = "/user/modifyUserData";
     public static final String CONFIG_LOGIN_TYPE = "loginType";
     public static final String CONFIG_USER_CODE = "config_user_code";
     public static final String PHONE = "1";
+    public static final String loginMode_Phone = "0";
+    public static final String loginMode_Email = "1";
+    public static final String authType_Find_Pwd = "1";
+    public static final String authType_Register = "0";
     public static final String QQ = "2";
     public static final String WEIXIN = "3";
     public static final String SINA = "4";//（1手机，2QQ，3微信，4新浪微博）

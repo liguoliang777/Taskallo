@@ -14,8 +14,9 @@ public class KeyConstant {
     public static final String PHONE_NUMBER = "phoneNumber";
     public static final String passWord = "passWord";//密码
     public static final String pass_word = "password";//密码
-    public static final String SMS_CODE = "smsCode";//短信验证码
+    public static final String smsCode = "smsCode";//短信验证码
     public static final String TYPE = "type";//注册渠道    （1手机，2QQ，3微信，4新浪微博）
+    public static final String loginMode = "loginMode";//注册渠道    （1手机，2QQ，3微信，4新浪微博）
     public static final String APP_TYPE_ID = "appTypeId";//平台类型（0表示安卓)
     public static final String HEAD_PHOTO = "headPhoto";
     public static final String USER_CODE = "userCode";
@@ -37,7 +38,7 @@ public class KeyConstant {
     public static final String START_INDEX = "startIndex";
     public static final String PAGE_SIZE = "pageSize";
     public static final String index = "index";
-    public static final String start_Record="startRecord";
+    public static final String start_Record = "startRecord";
     public static final String RECORDS = "records";
     public static final String updateOrDownloadTips = "updateOrDownloadTips";
     public static final String gameVersion = "gameVersion";
@@ -48,11 +49,13 @@ public class KeyConstant {
     public static final String system = "system";//手机系统
     public static final String cpu = "cpu";
 
-    public static final String parentId="parentId";
+    public static final String parentId = "parentId";
     public static final String postId = "postId";
-    public static final String postCategoryId="postCategoryId";
-    public static final String pageIndex="pageIndex";
-    public static final String likeOrNecessaryExtraKey="likeOrNecessaryExtraKey";
-    public static final int EXTRA_LIKE=0;
-    public static final int EXTRA_NECESSARY=1;
+    public static final String postCategoryId = "postCategoryId";
+    public static final String pageIndex = "pageIndex";
+    public static final String likeOrNecessaryExtraKey = "likeOrNecessaryExtraKey";
+    public static final int EXTRA_LIKE = 0;
+    public static final int EXTRA_NECESSARY = 1;
+
+    public static final String authType = "authType";
 }

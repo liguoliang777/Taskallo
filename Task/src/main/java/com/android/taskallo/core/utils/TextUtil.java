@@ -105,4 +105,18 @@ public class TextUtil {
         }
         return countStr;
     }
+    /**
+     * 描述：是否是邮箱.
+     *
+     * @param str 指定的字符串
+     * @return 是否是邮箱:是为true，否则false
+     */
+    public static Boolean isEmail(String str) {
+        Boolean isEmail = false;
+        String expr = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        if (str.matches(expr)) {
+            isEmail = true;
+        }
+        return isEmail;
+    }
 }

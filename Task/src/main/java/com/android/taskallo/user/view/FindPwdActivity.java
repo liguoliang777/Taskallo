@@ -202,7 +202,7 @@ public class FindPwdActivity extends BaseFgActivity {
      * 获取手机验证码
      */
     private void getVerifCode(final String mobile) {
-        String url = Constant.WEB_SITE + Constant.URL_FORGOT_REGIST_SMS_CODE;//新接口
+        String url = Constant.WEB_SITE + Constant.URL_GET_AUTH_CODE;//新接口
         Response.Listener<JsonResult<Object>> successListener = new Response.Listener<JsonResult<Object>>() {
             @Override
             public void onResponse(JsonResult<Object> result) {
@@ -296,11 +296,11 @@ public class FindPwdActivity extends BaseFgActivity {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.loginName, userName);
-                params.put(KeyConstant.SMS_CODE, captcha);
+                params.put(KeyConstant.smsCode, captcha);
                 params.put(KeyConstant.new_Password, pwd);
                 android.util.Log.d(TAG, KeyConstant.loginName + "getParams: " + userName);
                 android.util.Log.d(TAG, KeyConstant.new_Password + "getParams: " + captcha);
-                android.util.Log.d(TAG, KeyConstant.SMS_CODE + "getParams: " + pwd);
+                android.util.Log.d(TAG, KeyConstant.smsCode + "getParams: " + pwd);
                 for (int i = 0; i < params.size(); i++) {
                 }
                 return params;

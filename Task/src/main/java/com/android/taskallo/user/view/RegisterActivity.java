@@ -27,6 +27,7 @@ import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.fragment.SimpleDialogFragment;
+import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.BaseTitleBar;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -69,8 +70,10 @@ public class RegisterActivity extends BaseFgActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            tv_captcha.setText(getResources().getString(R.string.register_get_captcha));
-                            tv_captcha.setBackgroundResource(R.drawable.shape_bg_verif_code_bt_send);
+                            tv_captcha.setText(getResources().getString(R.string
+                                    .register_get_captcha));
+                            tv_captcha.setBackgroundResource(R.drawable
+                                    .shape_bg_verif_code_bt_send);
                             tv_captcha.setClickable(true);
                             return;
                         }
@@ -81,7 +84,8 @@ public class RegisterActivity extends BaseFgActivity {
                         @Override
                         public void run() {
                             tv_captcha.setText("重新发送(" + second + "s)");
-                            tv_captcha.setBackgroundResource(R.drawable.shape_bg_verif_code_bt_waiting);
+                            tv_captcha.setBackgroundResource(R.drawable
+                                    .shape_bg_verif_code_bt_waiting);
                             tv_captcha.setClickable(false);
                         }
                     });
@@ -94,13 +98,14 @@ public class RegisterActivity extends BaseFgActivity {
             }
         }
     };
+    RegisterActivity content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initStatusBar();
         this.setContentView(R.layout.activity_register);
-
+        content = RegisterActivity.this;
         BaseTitleBar titleBar = (BaseTitleBar) findViewById(R.id.title_bar);
         titleBar.setOnLeftClickListener(new View.OnClickListener() {
             @Override
@@ -123,25 +128,27 @@ public class RegisterActivity extends BaseFgActivity {
                 String captcha = et_captcha.getText().toString();
 
                 if (userName == null && userName.equals("")) {
-                    Toast.makeText(RegisterActivity.this, "手机号不能为空", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(content, "邮箱/手机号不能为空");
                     return;
                 }
-                if (!TextUtil.isMobile(userName)) {
-                    Toast.makeText(RegisterActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                boolean isMobile = TextUtil.isMobile(userName);
+                if (!isMobile && !TextUtil.isEmail(userName)) {
+                    ToastUtil.show(content, "请输入正确的邮箱/手机号");
                     return;
                 }
                 if (captcha == null || captcha.equals("")) {
-                    Toast.makeText(RegisterActivity.this, "验证码不能为空", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(content, "验证码不能为空");
                     return;
                 }
                 if (pwd == null || pwd.equals("")) {
-                    Toast.makeText(RegisterActivity.this, "密码不能为空", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(content, "密码不能为空");
                     return;
                 }
                 if (pwd.length() < 6) {
-                    Toast.makeText(RegisterActivity.this, "密码要大于六位", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(content, "密码要大于六位");
                     return;
                 }
+                LOGIN_MODE = isMobile ? Constant.loginMode_Phone : Constant.loginMode_Email;
                 doRegister(userName, pwd, captcha);
             }
         });
@@ -151,15 +158,17 @@ public class RegisterActivity extends BaseFgActivity {
             @Override
             public void onClick(View v) {
 
-                String mobile = et_name.getText().toString();
-                if (mobile != null && !"".equals(mobile)) {
-                    if (!TextUtil.isMobile(mobile)) {
-                        Toast.makeText(RegisterActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
-                        return;
+                String userName = et_name.getText().toString();
+                if (userName != null && !"".equals(userName)) {
+                    boolean mobile = TextUtil.isMobile(userName);
+                    if (!mobile && !TextUtil.isEmail(userName)) {
+                        ToastUtil.show(content, "请输入正确的邮箱/手机号");
+                    } else {
+                        LOGIN_MODE = mobile ? Constant.loginMode_Phone : Constant.loginMode_Email;
+                        getSMSCode(userName);
                     }
-                    getSMSCode(mobile);
                 } else {
-                    Toast.makeText(RegisterActivity.this, "手机号不能为空", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(content, "邮箱/手机号不能为空");
                 }
             }
         });
@@ -182,30 +191,33 @@ public class RegisterActivity extends BaseFgActivity {
         });
     }
 
+    String LOGIN_MODE = Constant.loginMode_Phone;
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         timer.cancel();
     }
 
-      /**
+    /**
      * 获取手机验证码
      */
-    private void getSMSCode(final String mobile) {
+    private void getSMSCode(final String userName) {
 
-        String url = Constant.WEB_SITE + Constant.URL_FORGOT_REGIST_SMS_CODE;
-        Response.Listener<JsonResult<Object>> successListener = new Response.Listener<JsonResult<Object>>() {
+        String url = Constant.WEB_SITE + Constant.URL_GET_AUTH_CODE;
+        Response.Listener<JsonResult<Object>> successListener = new Response
+                .Listener<JsonResult<Object>>() {
             @Override
             public void onResponse(JsonResult result) {
                 if (result == null) {
-                    Toast.makeText(RegisterActivity.this, "服务端异常", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(content, "服务端异常");
                     return;
                 }
                 if (result.code == 0) {
                     second = 60;
                     new Thread(runnable).start();
 
-                    Toast.makeText(RegisterActivity.this, "验证码已发送，请查收！", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(content, "验证码已发送，请查收！");
                     Log.d(TAG, "HTTP请求成功：服务端返回：" + result.data);
 
                 } else {
@@ -224,39 +236,41 @@ public class RegisterActivity extends BaseFgActivity {
             }
         };
 
-        Request<JsonResult<Object>> versionRequest = new GsonRequest<JsonResult<Object>>(Request.Method.POST, url,
+        Request<JsonResult<Object>> versionRequest = new GsonRequest<JsonResult<Object>>(Request
+                .Method.POST, url,
                 successListener, errorListener, new TypeToken<JsonResult>() {
         }.getType()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.PHONE_NUMBER, mobile);
-                params.put(KeyConstant.TYPE, "1");//type 短信类型（1注册，2忘记密码）
+                params.put(KeyConstant.loginName, userName);
+                params.put(KeyConstant.loginMode, LOGIN_MODE);
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
+                params.put(KeyConstant.authType, Constant.authType_Register);//type 短信类型（1注册，2忘记密码）
                 return params;
             }
         };
         StoreApplication.requestQueue.add(versionRequest);
     }
 
-    /**
-     * 执行HTTP注册操作
-     */
+    //注册
     private void doRegister(final String userName, final String pwd, final String captcha) {
-
         String url = Constant.WEB_SITE + Constant.URL_USER_REGISTER;
         Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
             @Override
             public void onResponse(JsonResult result) {
 
                 if (result == null) {
-                    Toast.makeText(RegisterActivity.this, "服务端异常", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(content, "服务端异常");
                     return;
                 }
 
                 if (result.code == 0) {
-                    SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
+                    SharedPreferences preferences = getSharedPreferences(Constant
+                            .CONFIG_FILE_NAME, MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString(Constant.CONFIG_USER_NAME, userName);
+                    String token = (String) result.data;
+                    editor.putString(Constant.CONFIG_TOKEN, token);
                     editor.apply();
 
                     showDialog(true, "恭喜您，注册成功！");
@@ -270,7 +284,7 @@ public class RegisterActivity extends BaseFgActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                Toast.makeText(RegisterActivity.this, "更新失败，请检查网络连接!", Toast.LENGTH_SHORT).show();
+                ToastUtil.show(RegisterActivity.this, "登录失败，请检查网络连接!");
                 Log.d(TAG, "HTTP请求失败：网络连接错误！");
             }
         };
@@ -283,8 +297,8 @@ public class RegisterActivity extends BaseFgActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.loginName, userName);
                 params.put(KeyConstant.passWord, pwd);
-                params.put(KeyConstant.SMS_CODE, captcha);
-                params.put(KeyConstant.TYPE, "1");
+                params.put(KeyConstant.smsCode, captcha);
+                params.put(KeyConstant.loginMode, LOGIN_MODE);
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 return params;
             }
@@ -301,7 +315,8 @@ public class RegisterActivity extends BaseFgActivity {
         final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
         dialogFragment.setDialogWidth(220);
         TextView tv = new TextView(RegisterActivity.this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
+                .MATCH_PARENT, ViewGroup
                 .LayoutParams.MATCH_PARENT);
         params.setMargins(0, 20, 0, 0);
         params.gravity = Gravity.CENTER;

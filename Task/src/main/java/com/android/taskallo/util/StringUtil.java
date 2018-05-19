@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.android.taskallo.R;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -37,8 +38,6 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-
-import com.android.taskallo.R;
 
 /**
  * 字符串操作工具包<br>
@@ -590,18 +589,6 @@ public class StringUtil {
      */
     public static boolean isChineseZimus(String str1) {
         Pattern pattern = Pattern.compile("^[a-zA-Z\u4e00-\u9fa5\u0020]+$");
-        Matcher matcher = pattern.matcher(str1);
-        return matcher.matches();
-    }
-
-    /**
-     * 判断邮箱格式是否正确
-     *
-     * @param str1
-     * @return
-     */
-    public static boolean isEmail(String str1) {
-        Pattern pattern = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
         Matcher matcher = pattern.matcher(str1);
         return matcher.matches();
     }
