@@ -24,7 +24,7 @@
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_18"
-        android:background="@drawable/shape_yj_white_rectangle">
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/img_1"
@@ -62,7 +62,7 @@
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
-        android:background="@drawable/shape_yj_white_rectangle">
+        android:background="@color/white">
         <TextView
             android:id="@+id/img_4"
             android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_22"
-        android:background="@drawable/shape_yj_white_rectangle">
+        android:background="@color/white">
         <TextView
             android:id="@+id/img_2"
             android:layout_width="wrap_content"

@@ -38,13 +38,13 @@
     <string name="find_new"><font size="15">请输入6-16位新密码</font></string>
 
     <string name="register_title">注册</string>
-    <string name="register_mobile"><font size="15">请输入手机号</font></string>
-    <string name="register_captcha"><font size="15">请输入验证码</font></string>
+    <string name="register_mobile"><font size="15">输入手机号</font></string>
+    <string name="register_captcha"><font size="15">输入验证码</font></string>
     <string name="register_get_captcha">获取验证码</string>
-    <string name="register_password"><font size="15">请输入6-16位密码</font></string>
+    <string name="register_password"><font size="15">输入6-16位密码</font></string>
     <string name="register">立即注册</string>
-    <string name="register_protocol"><font size="12">《Taskallo用户隐私协议》</font></string>
     <string name="register_text">注册代表您同意</string>
+    <string name="register_protocol"><font size="12">《Taskallo用户隐私协议》</font></string>
 
     <!-- 侧滑菜单 -->
     <string name="sliding_un_login">未登录</string>
@@ -236,4 +236,5 @@
     <string name="share_description">Taskallo！</string>
     <string name="app_download_url_yyb">http://sj.qq.com/myapp/detail.htm?apkName=com.android.taskallo</string>
     <string name="alipay_redpackage_content">7Dl59e13pi</string>
+    <string name="fogote_pwd">忘记密码?</string>
 </resources>

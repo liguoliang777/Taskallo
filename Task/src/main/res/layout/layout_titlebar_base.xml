@@ -23,7 +23,7 @@
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
         android:textSize="16sp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/color_666666"/>
 
 
     <Button 
