@@ -55,7 +55,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        System.out.print("登陆！！！");
         token = (String) SPUtils.get(this, Constant.CONFIG_TOKEN, "");
         userHeadUrl = (String) SPUtils.get(this, Constant.CONFIG_USER_HEAD, "");
         userName = (String) SPUtils.get(this, Constant.CONFIG_USER_NAME, "");
