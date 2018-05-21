@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
+import com.android.taskallo.user.view.UserCenterActivity;
 import com.android.taskallo.util.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
@@ -447,6 +448,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             case R.id.main_rank_bt:
                 startActivity(new Intent(context, RankActivity.class));
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainRankButtonClickCount);
+                break;
+            case R.id.iv_icon_title:
+                startActivity(new Intent(context, UserCenterActivity.class));
                 break;
         }
     }

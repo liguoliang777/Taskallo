@@ -23,22 +23,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.taskallo.util.App;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.google.gson.reflect.TypeToken;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.JsonResult;
@@ -53,7 +37,22 @@ import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.exception.NoSDCardException;
 import com.android.taskallo.fragment.OneBtDialogFragment;
+import com.android.taskallo.util.App;
 import com.android.taskallo.util.ToastUtil;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.reflect.TypeToken;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -105,7 +104,7 @@ public class UserCenterActivity extends BaseFgActivity {
             }
         });
         TextView centerTv = (TextView) findViewById(R.id.center_tv);
-        centerTv.setText("个人资料设置");
+        centerTv.setText("资料设置");
         LOGIN_TYPE = App.loginType;
 
         Button changePwdBt = (Button) findViewById(R.id.change_pwd_bt);

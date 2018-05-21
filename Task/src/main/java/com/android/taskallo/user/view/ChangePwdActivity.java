@@ -12,17 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.taskallo.util.App;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
@@ -34,7 +23,17 @@ import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.fragment.SimpleDialogFragment;
+import com.android.taskallo.util.App;
+import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.BaseTitleBar;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -54,8 +53,8 @@ public class ChangePwdActivity extends BaseFgActivity {
     private int second = 60;
 
 
-    private boolean isFromUserCenter;
     private SharedPreferences.Editor editor;
+    private ChangePwdActivity context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +62,6 @@ public class ChangePwdActivity extends BaseFgActivity {
         this.setContentView(R.layout.activity_change_pwd);
         SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
         editor = preferences.edit();
-        isFromUserCenter = getIntent().getBooleanExtra(KeyConstant.IS_FROM_USER_CENTER, false);
         BaseTitleBar titleBar = (BaseTitleBar) findViewById(R.id.title_bar);
         titleBar.setOnLeftClickListener(new View.OnClickListener() {
             @Override
@@ -88,27 +86,28 @@ public class ChangePwdActivity extends BaseFgActivity {
                 String newPwdETStr1 = newPwdET1.getText().toString().trim();
 
                 if (oldPwdStr == null || oldPwdStr.length() <= 0) {
-                    Toast.makeText(ChangePwdActivity.this, "旧密码不能为空哦", Toast.LENGTH_SHORT).show();
+                    context = ChangePwdActivity.this;
+                    ToastUtil.show(context,"旧密码不能为空哦");
                     return;
                 }
                 if (oldPwdStr.equals(newPwdETStr1)) {
-                    Toast.makeText(ChangePwdActivity.this, "新密码和旧密码不能一致哦", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(context,"新密码和旧密码不能一致哦");
                     return;
                 }
                 if (newPwdETStr1 == null || newPwdETStr1.length() <= 0) {
-                    Toast.makeText(ChangePwdActivity.this, "请输入新密码", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(context,"请输入新密码");
                     return;
                 }
                 if (newPwdETStr1.length() < 6) {
-                    Toast.makeText(ChangePwdActivity.this, "新密码不能少于六位哦", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(context,"新密码不能少于六位哦");
                     return;
                 }
                 if (ensurePwdStr == null || ensurePwdStr.length() <= 0) {
-                    Toast.makeText(ChangePwdActivity.this, "请确认新密码", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(context,"请确认新密码");
                     return;
                 }
                 if (!newPwdETStr1.equals(ensurePwdStr)) {
-                    Toast.makeText(ChangePwdActivity.this, "两次输入的新密码不一致哦", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(context,"两次输入的新密码不一致哦");
                     return;
                 }
 
@@ -126,7 +125,7 @@ public class ChangePwdActivity extends BaseFgActivity {
             @Override
             public void onResponse(JsonResult<User> result) {
                 if (result == null) {
-                    Toast.makeText(ChangePwdActivity.this, "服务端异常", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(context,"服务端异常");
                     return;
                 }
                 int code = result.code;
@@ -150,8 +149,7 @@ public class ChangePwdActivity extends BaseFgActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                Toast.makeText(ChangePwdActivity.this, "更新失败，请检查网络连接!", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "更新密码失败：网络连接错误！" + volleyError.toString());
+                ToastUtil.show(context,"更新失败，请检查网络连接!");
             }
         };
 
