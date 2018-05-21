@@ -1,5 +1,6 @@
 package com.android.taskallo.user.view;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,6 +33,7 @@ import com.android.taskallo.core.utils.CommonUtil;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.DialogHelper;
 import com.android.taskallo.core.utils.FileUtil;
+import com.android.taskallo.core.utils.ImageUtil;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.UrlConstant;
@@ -47,6 +49,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -86,6 +89,7 @@ public class UserCenterActivity extends BaseFgActivity {
     private ArrayAdapter<String> mAdapter;
     private Dialog defAvatarDialog;
     private FragmentManager fm;
+    private Uri fileUri;
 
 
     @Override
@@ -113,7 +117,8 @@ public class UserCenterActivity extends BaseFgActivity {
             changePwdBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(UserCenterActivity.this.content, ChangePwdActivity.class);
+                    Intent intent = new Intent(UserCenterActivity.this.content, ChangePwdActivity
+                            .class);
                     intent.putExtra(KeyConstant.IS_FROM_USER_CENTER, true);
                     startActivity(intent);
                     UserCenterActivity.this.content.finish();
@@ -181,9 +186,6 @@ public class UserCenterActivity extends BaseFgActivity {
             }
         });
 
-        android.util.Log.d(TAG, "userTOKEN:" + App.token);
-        android.util.Log.d(TAG, "userCode:" + App.userCode);
-
         //默认头像地址
         for (int i = 1; i < 21; i++) {
             if (i < 10) {
@@ -194,7 +196,8 @@ public class UserCenterActivity extends BaseFgActivity {
         }
         defAvatarDialog = new Dialog(this, R.style.Dialog_From_Bottom_Style);
         //填充对话框的布局
-        View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_recommend_avatar, null);
+        View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_recommend_avatar,
+                null);
         GridView gridView = (GridView) inflate.findViewById(R.id.recommend_grid_view);
         gridView.setAdapter(new AvatarAdapter());
         defAvatarDialog.setContentView(inflate);//将布局设置给Dialog
@@ -208,11 +211,28 @@ public class UserCenterActivity extends BaseFgActivity {
         });
     }
 
+    private void handleCrop(int resultCode, Intent result) {
+        if (resultCode == Activity.RESULT_OK) {
+            Uri uri = Crop.getOutput(result);
+            //StoreService.uploadImage(file);
+            avatarUrl = uri.toString();
+            imageLoader.displayImage(avatarUrl, img_photo, roundOptions);
+            // 上传图片
+            String path = uri.getPath();
+            File file = new File(path);
+            imgStrPost = ImageUtil.getImageStr(file);
+            IMG_TYPE = "1";
+        } else if (resultCode == Crop.RESULT_ERROR) {
+            Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     //修改头像
     public void showChangeAvatarDialog() {
         final Dialog dialog = new Dialog(this, R.style.Dialog_From_Bottom_Style);
         //填充对话框的布局
-        View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_change_avatar, null);
+        View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_change_avatar,
+                null);
 
         View.OnClickListener mDialogClickLstener = new View.OnClickListener() {
             @Override
@@ -220,6 +240,7 @@ public class UserCenterActivity extends BaseFgActivity {
                 dialog.cancel();
                 int id = v.getId();
                 if (id == R.id.choose_local_tv) {//本地相册
+                    Crop.pickImage(UserCenterActivity.this);
                 } else if (id == R.id.choose_camera_tv) {//相机
                     getImageFromCamera();
                 } else if (id == R.id.choose_recomend_tv) {
@@ -266,8 +287,10 @@ public class UserCenterActivity extends BaseFgActivity {
             AvatarAdapter.ViewHolder holder;
             if (convertView == null) {
                 holder = new AvatarAdapter.ViewHolder();
-                convertView = View.inflate(parent.getContext(), R.layout.gridview_image_view_item, null);
-                holder.mIconIv = (SimpleDraweeView) convertView.findViewById(R.id.recommend_icon_gv_iv);
+                convertView = View.inflate(parent.getContext(), R.layout
+                        .gridview_image_view_item, null);
+                holder.mIconIv = (SimpleDraweeView) convertView.findViewById(R.id
+                        .recommend_icon_gv_iv);
                 convertView.setTag(holder);
             } else {
                 holder = (AvatarAdapter.ViewHolder) convertView.getTag();
@@ -317,17 +340,38 @@ public class UserCenterActivity extends BaseFgActivity {
         dialog.show();//显示对话框
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent result) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == Crop.REQUEST_PICK) {
+                beginCrop(result.getData());
+            } else if (requestCode == Crop.REQUEST_CROP) {
+                handleCrop(resultCode, result);
+            } else if (requestCode == REQUEST_CODE_CAPTURE_CAMERA) {
+                if (fileUri != null) {
+                    beginCrop(fileUri);
+                }
+            }
+        }
+    }
+
+    private void beginCrop(Uri source) {
+        String fileName = "Temp_" + String.valueOf(System.currentTimeMillis()) + ".jpg";
+        File cropFile = new File(mTempDir, fileName);
+        Uri outputUri = Uri.fromFile(cropFile);
+        new Crop(source).output(outputUri).asSquare().start(this);
+    }
+
     protected void getImageFromCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         String fileName = "Temp_camera" + String.valueOf(System.currentTimeMillis());
         File cropFile = new File(mTempDir, fileName);
-        Uri fileUri = Uri.fromFile(cropFile);
+        fileUri = FileUtil.getUriForFile(content, cropFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file
 
         mCurrentPhotoPath = fileUri.getPath();
         startActivityForResult(intent, REQUEST_CODE_CAPTURE_CAMERA);
     }
-
 
     DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.color.transparent, 360);
 
@@ -363,7 +407,8 @@ public class UserCenterActivity extends BaseFgActivity {
                             logoutClearData();
                             //UserCenterActivity.this.finish();
                         } else {
-                            Toast.makeText(UserCenterActivity.this, "修改失败！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserCenterActivity.this, "修改失败！", Toast.LENGTH_SHORT)
+                                    .show();
                             Log.d(TAG, "HTTP请求成功：修改失败！" + code + result.msg);
                         }
                         //隐藏提示框
@@ -381,7 +426,8 @@ public class UserCenterActivity extends BaseFgActivity {
             }
         };
 
-        Request<JsonResult<User>> versionRequest = new GsonRequest<JsonResult<User>>(Request.Method.POST, url,
+        Request<JsonResult<User>> versionRequest = new GsonRequest<JsonResult<User>>(Request
+                .Method.POST, url,
                 successListener, errorListener, new TypeToken<JsonResult<User>>() {
         }.getType()) {
             @Override
@@ -410,7 +456,8 @@ public class UserCenterActivity extends BaseFgActivity {
     private void showReLoginDialog() {
         final OneBtDialogFragment dialogFragment = new OneBtDialogFragment();
         dialogFragment.setTitle(R.string.relogin_msg);
-        dialogFragment.setDialogWidth(content.getResources().getDimensionPixelSize(R.dimen.unlogin_dialog_width));
+        dialogFragment.setDialogWidth(content.getResources().getDimensionPixelSize(R.dimen
+                .unlogin_dialog_width));
         dialogFragment.setNegativeButton(R.string.login_now, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -433,7 +480,8 @@ public class UserCenterActivity extends BaseFgActivity {
 
     //退出登录
     private void logoutClearData() {
-        SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME,
+                MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constant.CONFIG_USER_PWD, "");
         editor.putString(Constant.CONFIG_LOGIN_TYPE, Constant.PHONE);
@@ -452,7 +500,8 @@ public class UserCenterActivity extends BaseFgActivity {
 
 
     private void setUserInfo() {
-        DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_def_logo_188_188, 360);
+        DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable
+                .ic_def_logo_188_188, 360);
         imageLoader.displayImage(App.userHeadUrl, img_photo, roundOptions);
         tv_nickname.setText(nickName);
         tv_nickname.setSelection(nickName.length());
@@ -474,7 +523,8 @@ public class UserCenterActivity extends BaseFgActivity {
         dialogFragment.setDialogWidth(250);
 
         LayoutInflater inflater = getLayoutInflater();
-        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_edit, null);
+        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.layout_dialog_edit,
+        null);
         final EditText editText = (EditText) contentView.findViewById(R.id.et_content);
         dialogFragment.setContentView(contentView);
 
@@ -491,10 +541,12 @@ public class UserCenterActivity extends BaseFgActivity {
                 nickName = editText.getText().toString();
                 if (nickName.length() > 0) {
                     if (nickName.length() > 13) {
-                        Toast.makeText(UserCenterActivity.this, "亲，您的昵称太长了！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserCenterActivity.this, "亲，您的昵称太长了！", Toast.LENGTH_SHORT)
+                        .show();
                         return;
                     } else if (!TextUtil.isLegal(nickName.trim(), "[A-Za-z0-9\\u4e00-\\u9fa5_]+")) {
-                        Toast.makeText(UserCenterActivity.this, "亲，只允许中文，英文，数字等字符哦！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserCenterActivity.this, "亲，只允许中文，英文，数字等字符哦！", Toast
+                        .LENGTH_SHORT).show();
                         return;
                     }
                     dialogFragment.dismiss();
@@ -576,7 +628,8 @@ public class UserCenterActivity extends BaseFgActivity {
      *//*
     private void getUserInfo() {
         final String url = Constant.WEB_SITE + Constant.URL_USER_INFO;
-        Response.Listener<JsonResult<User>> successListener = new Response.Listener<JsonResult<User>>() {
+        Response.Listener<JsonResult<User>> successListener = new Response
+        .Listener<JsonResult<User>>() {
             @Override
             public void onResponse(JsonResult<User> result) {
                 if (result == null) {
@@ -607,7 +660,8 @@ public class UserCenterActivity extends BaseFgActivity {
 
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
-                    Toast.makeText(UserCenterActivity.this, "服务端异常，请重新登录！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserCenterActivity.this, "服务端异常，请重新登录！", Toast.LENGTH_SHORT)
+                    .show();
                 }
             }
         };
@@ -615,12 +669,14 @@ public class UserCenterActivity extends BaseFgActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                Toast.makeText(UserCenterActivity.this, "加载用户信息，请检查网络连接!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserCenterActivity.this, "加载用户信息，请检查网络连接!", Toast.LENGTH_SHORT)
+                .show();
                 Log.d(TAG, "HTTP请求失败：网络连接错误！");
             }
         };
 
-        Request<JsonResult<User>> versionRequest = new GsonRequest<JsonResult<User>>(Request.Method.POST, url,
+        Request<JsonResult<User>> versionRequest = new GsonRequest<JsonResult<User>>(Request
+        .Method.POST, url,
                 successListener, errorListener, new TypeToken<JsonResult<User>>() {
         }.getType()) {
             @Override

@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/RestfulApi" />
             <option value="$PROJECT_DIR$/Task" />
+            <option value="$PROJECT_DIR$/imglib" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -148,6 +148,7 @@ dependencies {
     compile(name: 'commonwidget', ext: 'aar')
     compile(name: 'videowidget', ext: 'aar')
     compile project(path: ':RestfulApi')
+    compile project(path: ':imglib')
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
     compile 'com.android.support:design:26.0.0-alpha1'
     //引入名为imagelib的第三方库（图片截取库）

@@ -1,1 +1,1 @@
-include ':Task', ':RestfulApi'
+include ':Task', ':RestfulApi', ':imglib'

@@ -27,13 +27,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
-import java.io.File;
-
-import com.android.taskallo.util.App;
 import com.android.taskallo.R;
 import com.android.taskallo.exception.NoSDCardException;
 import com.android.taskallo.fragment.OneBtDialogFragment;
 import com.android.taskallo.user.view.LoginActivity;
+import com.android.taskallo.util.App;
+
+import java.io.File;
 
 /**
  * 常用工具类
@@ -138,7 +138,7 @@ public class CommonUtil {
                 .equals(android.os.Environment.MEDIA_MOUNTED); //判断sd卡是否存在
         if (sdCardExist) {
             path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator +
-                    "ngame" + File.separator +
+                    "taskallo" + File.separator +
                     "image" + File.separator;
         } else {
             throw new NoSDCardException("设备上没有找到SDCard");

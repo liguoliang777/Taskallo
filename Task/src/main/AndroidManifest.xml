@@ -243,6 +243,10 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
 
+        <activity
+            android:name="com.soundcloud.android.crop.CropImageActivity"
+            />
+
         <activity android:name="com.android.taskallo.gamehub.view.ReportActivity" />
         <activity android:name="com.android.taskallo.gamehub.view.PostMsgActivity" />
         <activity android:name="com.android.taskallo.gamehub.view.SubmitGameActivity" />
@@ -456,7 +460,7 @@
         <!-- baidu push结束 -->
 
         <!--android 7.0 适配-->
-        <provider
+       <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.android.taskallo.provider"
             android:exported="false"
@@ -465,6 +469,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+        <!--调用相机-->
+
     </application>
 
 </manifest>
