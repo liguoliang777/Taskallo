@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.android.taskallo.util.App;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.CommentBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.CommentBodyBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
@@ -16,7 +17,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.adapter.NoticeCommentAdapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
 import com.android.taskallo.bean.PageAction;
@@ -109,8 +109,8 @@ public class CommentFragment extends BaseSearchFragment {
 
     private void runService() {
         CommentBodyBean bodyBean = new CommentBodyBean();
-        bodyBean.setToken(StoreApplication.token);
-        User user = StoreApplication.user;
+        bodyBean.setToken(App.token);
+        User user = App.user;
         if (user != null) {
             bodyBean.setUserCode(user.userCode);
         }

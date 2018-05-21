@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.taskallo.util.App;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -22,7 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.core.fileload.FileLoadInfo;
 import com.android.taskallo.core.fileload.FileLoadManager;
@@ -63,7 +63,7 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
     public void onStartDownload(FileLoadInfo info) {
         //Toast.makeText(context,"我开始下载了",Toast.LENGTH_SHORT).show();
         int res = manager.load(info.getName(), info.getUrl(), info.getMd5(), info.getPackageName(), info.getVersionCode(), info
-                .getTitle(), info.getPreviewUrl(), info.getServerId(), StoreApplication.allowAnyNet);
+                .getTitle(), info.getPreviewUrl(), info.getServerId(), App.allowAnyNet);
         if (res == IFileLoad.RESULT_NO_NET) {
             Toast.makeText(context, "无网络，请检查网络连接", Toast.LENGTH_SHORT).show();
             if (NetUtil.isNetworkConnected(context)) {
@@ -81,7 +81,7 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
     public void updateApp(FileLoadInfo info) {
 
         int res = manager.load(info.getName(), info.getUrl(), info.getMd5(), info.getPackageName(), info.getVersionCode(), info
-                .getTitle(), info.getPreviewUrl(), info.getServerId(), StoreApplication.allowAnyNet);
+                .getTitle(), info.getPreviewUrl(), info.getServerId(), App.allowAnyNet);
         if (res == IFileLoad.RESULT_NO_NET) {
             Toast.makeText(context, "无网络，请检查网络连接", Toast.LENGTH_SHORT).show();
         } else if (res == IFileLoad.RESULT_PARAMES_ERROR) {
@@ -101,7 +101,7 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
     public void onRestartDownload(FileLoadInfo info) {
         //Toast.makeText(context,"继续下载",Toast.LENGTH_SHORT).show();
         int res = manager.load(info.getName(), info.getUrl(), info.getMd5(), info.getPackageName(), info.getVersionCode(), info
-                .getTitle(), info.getPreviewUrl(), info.getServerId(), StoreApplication.allowAnyNet);
+                .getTitle(), info.getPreviewUrl(), info.getServerId(), App.allowAnyNet);
         if (res == IFileLoad.RESULT_NO_NET) {
             Toast.makeText(context, "无网络，请检查网络连接", Toast.LENGTH_SHORT).show();
         } else if (res == IFileLoad.RESULT_PARAMES_ERROR) {
@@ -258,7 +258,7 @@ public class ProgressBarStateListener implements GameLoadProgressBar.OnStateChan
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
 
     }
 }

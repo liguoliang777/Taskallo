@@ -16,17 +16,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.activity.main.MainHomeActivity;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.core.net.GsonRequest;
+import com.android.taskallo.core.utils.CommonUtil;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.DialogHelper;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.NetUtil;
 import com.android.taskallo.core.utils.TextUtil;
+import com.android.taskallo.util.App;
 import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -75,6 +76,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
         layoutParams.setMargins(0, statusBarHeight, 0, 0);
         titleRlay.setLayoutParams(layoutParams);*/
         //======================================================================
+        //申请SD卡读写权限
+        CommonUtil.verifyStoragePermissions(this);
         mContext = this;
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
 
@@ -338,8 +341,10 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     SharedPreferences.Editor editor = preferences.edit();
                     String token = (String) result.data;
                     editor.putString(Constant.CONFIG_TOKEN, token);
+                    editor.putString(Constant.CONFIG_USER_NAME, userName);
+                    editor.putString(Constant.CONFIG_USER_PWD, password);
                     editor.apply();
-                    StoreApplication.token = token;
+                    App.token = token;
 
                    /* User user = result.data;
                     String token = user.token;
@@ -359,13 +364,13 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
                     editor.apply();
 
-                    StoreApplication.token = token;
-                    StoreApplication.passWord = password;
-                    StoreApplication.userHeadUrl = headPhoto;
-                    StoreApplication.nickName = nickName;
-                    StoreApplication.userName = userName;
-                    StoreApplication.loginType = LOGIN_TYPE;
-                    StoreApplication.userCode = userCode;
+                    App.token = token;
+                    App.passWord = password;
+                    App.userHeadUrl = headPhoto;
+                    App.nickName = nickName;
+                    App.userName = userName;
+                    App.loginType = LOGIN_TYPE;
+                    App.userCode = userCode;
 
                     if (LOGIN_TYPE.equals(Constant.QQ)) {
                         MobclickAgent.onProfileSignIn("QQ", userCode);
@@ -414,7 +419,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest1);
+        App.requestQueue.add(versionRequest1);
        /* Request<JsonResult<Token>> versionRequest = new GsonRequest<JsonResult<Token>>(Request
        .Method.POST, url,
                 successListener, errorListener, new TypeToken<JsonResult<Token>>() {
@@ -456,7 +461,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 if (result.code == 0) {
 
                     User user = result.data;
-                    StoreApplication.user = user;
+                    App.user = user;
 
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);
@@ -464,8 +469,8 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     editor.apply();
 
                     //加载用户头像
-                    StoreApplication.userHeadUrl = user.headPhoto;
-                    StoreApplication.nickName = user.nickName;
+                    App.userHeadUrl = user.headPhoto;
+                    App.nickName = user.nickName;
 
 //                    //跳转到用户中心
 //                    Intent intent = new Intent(LoginActivity.this,UserCenterActivity.class);
@@ -509,11 +514,11 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("token", StoreApplication.token);
+                params.put("token", App.token);
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }*/
     @Override
     protected void onStop() {

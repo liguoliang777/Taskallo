@@ -22,7 +22,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.core.fileload.FileLoadManager;
 import com.android.taskallo.core.utils.Constant;
 
@@ -46,20 +46,20 @@ public class NetStatusReceiver extends BroadcastReceiver{
 		if(wifiInfo.isConnected()){
 
 			FileLoadManager.getInstance(context).loadAllPauseTemp();
-			StoreApplication.net_status = Constant.NET_STATUS_WIFI;
+			App.net_status = Constant.NET_STATUS_WIFI;
 
 		}else if(mobileInfo.isConnected()){
 
-			if(StoreApplication.allowAnyNet){
+			if(App.allowAnyNet){
 				FileLoadManager.getInstance(context).loadAllPauseTemp();
 			}else {
 				FileLoadManager.getInstance(context).pauseAllTemp();
 			}
-			StoreApplication.net_status = Constant.NET_STATUS_4G;
+			App.net_status = Constant.NET_STATUS_4G;
 
 		}else {
 			FileLoadManager.getInstance(context).pauseAllTemp();
-			StoreApplication.net_status = Constant.NET_STATUS_DISCONNECT;
+			App.net_status = Constant.NET_STATUS_DISCONNECT;
 		}
 	}
 	

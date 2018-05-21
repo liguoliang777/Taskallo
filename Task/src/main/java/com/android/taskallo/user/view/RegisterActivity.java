@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.core.net.GsonRequest;
@@ -249,7 +249,7 @@ public class RegisterActivity extends BaseFgActivity {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     //注册
@@ -302,7 +302,7 @@ public class RegisterActivity extends BaseFgActivity {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     /**

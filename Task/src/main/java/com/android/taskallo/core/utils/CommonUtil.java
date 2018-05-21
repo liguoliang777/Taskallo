@@ -29,8 +29,8 @@ import android.view.View;
 
 import java.io.File;
 
+import com.android.taskallo.util.App;
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.exception.NoSDCardException;
 import com.android.taskallo.fragment.OneBtDialogFragment;
 import com.android.taskallo.user.view.LoginActivity;
@@ -264,8 +264,8 @@ public class CommonUtil {
      */
 
     public static boolean isLogined() {
-        String pwd = StoreApplication.passWord;
-        return (pwd != null && !"".endsWith(pwd)) || !Constant.PHONE.equals(StoreApplication
+        String pwd = App.passWord;
+        return (pwd != null && !"".endsWith(pwd)) || !Constant.PHONE.equals(App
                 .loginType);
     }
 

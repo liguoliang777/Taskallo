@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.android.taskallo.util.App;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddPointBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.NormalDataBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.VoteListBean;
@@ -18,7 +19,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.adapter.OrderMagListAdapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
 import com.android.taskallo.bean.PageAction;
@@ -106,11 +106,11 @@ public class OrderMagFragment extends BaseSearchFragment implements VoteRankList
 
     private void runService() {
         VoteRankBodyBean bodyBean = new VoteRankBodyBean();
-        User user = StoreApplication.user;
+        User user = App.user;
         if (user != null) {
             bodyBean.setUserCode(user.userCode);
         } else {
-            bodyBean.setDeviceOnlyNum(StoreApplication.deviceId);
+            bodyBean.setDeviceOnlyNum(App.deviceId);
         }
         bodyBean.setPageIndex(pageAction.getCurrentPage());
         bodyBean.setPageSize(PAGE_SIZE);
@@ -177,11 +177,11 @@ public class OrderMagFragment extends BaseSearchFragment implements VoteRankList
     public void clickVote(int id, final int position) {
         //帖子id
         AddPointBodyBean bodyBean = new AddPointBodyBean();
-        User user = StoreApplication.user;
+        User user = App.user;
         if (user != null) {
             bodyBean.setUserCode(user.userCode);
         } else {
-            bodyBean.setDeviceOnlyNum(StoreApplication.deviceId);
+            bodyBean.setDeviceOnlyNum(App.deviceId);
         }
         bodyBean.setType(3);  //type：1表示帖子点赞，2表示评论点赞，3表示投票
         bodyBean.setPostId(id);  //帖子id

@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.taskallo.util.App;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -24,7 +25,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.User;
@@ -162,14 +162,14 @@ public class ChangePwdActivity extends BaseFgActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
-                params.put(KeyConstant.TOKEN, StoreApplication.token);
+                params.put(KeyConstant.USER_CODE, App.userCode);
+                params.put(KeyConstant.TOKEN, App.token);
                 params.put(KeyConstant.old_Password, oldPwdStr);
                 params.put(KeyConstant.newPassword, newPwdETStr1);
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     /**
@@ -209,13 +209,13 @@ public class ChangePwdActivity extends BaseFgActivity {
         editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
         editor.apply();
 
-        StoreApplication.userHeadUrl = "";
-        StoreApplication.nickName = "";
-        StoreApplication.userCode = "";
-        StoreApplication.userName = "";
-        StoreApplication.passWord = "";
-        StoreApplication.token = null;
-        StoreApplication.user = null;
+        App.userHeadUrl = "";
+        App.nickName = "";
+        App.userCode = "";
+        App.userName = "";
+        App.passWord = "";
+        App.token = null;
+        App.user = null;
     }
 
     /**

@@ -11,8 +11,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.android.taskallo.util.App;
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.core.utils.LoginHelper;
 import com.android.taskallo.local.model.WatchRecord;
@@ -54,11 +54,11 @@ public class WatchHistoryActivity extends BaseFgActivity implements IWatchRecord
         });
 
         //重新登录
-        if(StoreApplication.passWord != null && StoreApplication.passWord.length() > 0){
+        if(App.passWord != null && App.passWord.length() > 0){
             LoginHelper loginHelper = new LoginHelper(this);
             loginHelper.reLoadSP();
         }else {
-            StoreApplication.token = null;
+            App.token = null;
         }
 
         bt_edit = (TextView) findViewById(R.id.right_but);
@@ -106,16 +106,16 @@ public class WatchHistoryActivity extends BaseFgActivity implements IWatchRecord
 
         presenter = new WatchRecordPresenter(this,this);
 
-        String userCode = StoreApplication.user == null ? null : StoreApplication.user.userCode;
-        presenter.showWatchRecord(StoreApplication.token,userCode);
+        String userCode = App.user == null ? null : App.user.userCode;
+        presenter.showWatchRecord(App.token,userCode);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        String userCode = StoreApplication.user == null ? null : StoreApplication.user.userCode;
-        presenter.showWatchRecord(StoreApplication.token,userCode);
+        String userCode = App.user == null ? null : App.user.userCode;
+        presenter.showWatchRecord(App.token,userCode);
     }
 
     @Override
@@ -177,14 +177,14 @@ public class WatchHistoryActivity extends BaseFgActivity implements IWatchRecord
                 if(checkedRecordList != null && checkedRecordList.size() > 0){
 
                     Toast.makeText(this,"正在删除记录",Toast.LENGTH_SHORT).show();
-                    String userCode = StoreApplication.user == null ? null : StoreApplication.user.userCode;
-                    presenter.deleteRecord(StoreApplication.token,userCode,checkedRecordList);
+                    String userCode = App.user == null ? null : App.user.userCode;
+                    presenter.deleteRecord(App.token,userCode,checkedRecordList);
                     try {
                         Thread.sleep(800);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    presenter.showWatchRecord(StoreApplication.token,userCode);
+                    presenter.showWatchRecord(App.token,userCode);
                     checkedRecordList.clear();
                     bt_delete.setText("删除（0 ）");
 

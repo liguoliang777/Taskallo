@@ -12,6 +12,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.taskallo.util.App;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -23,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.activity.ReviewActivity;
 import com.android.taskallo.activity.ReviewListActivity;
@@ -162,7 +162,7 @@ public class VideoDetailActivity extends BaseFgActivity {
                     bt_review.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            User user = StoreApplication.user;
+                            User user = App.user;
                             if(user == null){
                                 Intent intent = new Intent(VideoDetailActivity.this, LoginActivity.class);
                                 startActivity(intent);
@@ -294,7 +294,7 @@ public class VideoDetailActivity extends BaseFgActivity {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     private void createVideoAboutView() {
@@ -393,7 +393,7 @@ public class VideoDetailActivity extends BaseFgActivity {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
 
     }
 }

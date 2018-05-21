@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.Token;
 import com.android.taskallo.core.net.GsonRequest;
@@ -146,11 +146,11 @@ public class ReviewActivity extends BaseFgActivity {
                 params.put("toMatterCode", String.valueOf(targetId));    //目标ID
                 params.put("value", String.valueOf((int) Math.floor(rating)));           //评分值
                 params.put("content", content);
-                params.put("token", ((StoreApplication) getApplication()).token);
+                params.put("token", ((App) getApplication()).token);
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     /**

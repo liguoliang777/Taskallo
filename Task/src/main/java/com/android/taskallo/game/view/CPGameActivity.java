@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.adapter.GvGameSubjectAdapter;
 import com.android.taskallo.adapter.NoScrollGameListAdapter;
@@ -163,7 +163,7 @@ public class CPGameActivity extends BaseFgActivity {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
     }
 
     /** 获取推荐游戏列表 */
@@ -209,7 +209,7 @@ public class CPGameActivity extends BaseFgActivity {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
     }
 
     /** 获取轮播图片数据 */
@@ -258,7 +258,7 @@ public class CPGameActivity extends BaseFgActivity {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
     }
 
     /** 创建轮播视图 */

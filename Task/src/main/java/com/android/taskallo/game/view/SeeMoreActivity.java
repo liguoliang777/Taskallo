@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.android.taskallo.util.App;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -23,7 +24,6 @@ import java.util.Map;
 import java.util.TimerTask;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.adapter.MoreGameListAdapter;
 import com.android.taskallo.bean.PageAction;
@@ -280,7 +280,7 @@ public class SeeMoreActivity extends BaseFgActivity {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
     }
 
     @Override

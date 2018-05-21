@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.android.taskallo.util.App;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -19,7 +20,6 @@ import com.google.gson.reflect.TypeToken;
 import java.util.List;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.video.view.VideoDetailActivity;
 import com.android.taskallo.adapter.GvVrVideoAdapter;
 import com.android.taskallo.bean.JsonResult;
@@ -109,7 +109,7 @@ public class VideoRankFragment extends Fragment {
 
         Request<JsonResult<List<VideoInfo>>> request = new GsonRequest<JsonResult<List<VideoInfo>>>(Request.Method.POST, url,
                 successListener,errorListener, new TypeToken<JsonResult<List<VideoInfo>>>() {}.getType());
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
     }
 
 

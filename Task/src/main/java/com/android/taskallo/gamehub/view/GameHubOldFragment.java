@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.adapter.GameHubAdapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
 import com.android.taskallo.bean.HotInfo;
@@ -276,7 +276,7 @@ public class GameHubOldFragment extends BaseSearchFragment implements View.OnCli
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
     }
 
     /**
@@ -343,7 +343,7 @@ public class GameHubOldFragment extends BaseSearchFragment implements View.OnCli
                 startActivity(new Intent(getActivity(), VoteActivity.class));
                 break;
             case R.id.rl_notifi:
-                if (StoreApplication.passWord == "") {
+                if (App.passWord == "") {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     getActivity().startActivity(intent);
                 } else {
@@ -351,7 +351,7 @@ public class GameHubOldFragment extends BaseSearchFragment implements View.OnCli
                 }
                 break;
             case R.id.rl_add:
-                if (StoreApplication.passWord == "") {
+                if (App.passWord == "") {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     getActivity().startActivity(intent);
                 } else {

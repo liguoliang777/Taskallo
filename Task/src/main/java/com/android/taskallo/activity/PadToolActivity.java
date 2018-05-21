@@ -18,7 +18,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.adapter.ProgressBarStateListener;
 import com.android.taskallo.bean.GameInfo;
 import com.android.taskallo.bean.JsonResult;
@@ -139,7 +139,7 @@ public class PadToolActivity extends BaseFgActivity {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
 
 
         timer.schedule(new TimerTask() {

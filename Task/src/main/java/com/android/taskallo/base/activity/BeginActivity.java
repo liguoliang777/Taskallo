@@ -23,7 +23,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.main.MainHomeActivity;
 import com.android.taskallo.core.fileload.FileLoadService;
 import com.android.taskallo.core.utils.Constant;
@@ -68,7 +67,7 @@ public class BeginActivity extends FragmentActivity {
 
         //判断是否是安装后第一次启动
         isFirstInstall = ConvUtil.NB(SPUtils.get(this, Constant.CONFIG_FIRST_INSTALL, true));
-        timer = new Timer();
+        //timer = new Timer();
 
         skip2Main();
     }
@@ -125,11 +124,20 @@ public class BeginActivity extends FragmentActivity {
     }
 
     public void skip2Main() {
-        if (timer != null) {
+      /*  if (timer != null) {
             timer.cancel();
             timer = null;
+        }*/
+        pwd = (String) SPUtils.get(this, Constant.CONFIG_USER_PWD, "");
+        Log.d(TAG, "登陆:"+pwd);
+        Intent intent;
+        if (pwd != null && !"".equals(pwd) ) {
+            intent = new Intent(content, MainHomeActivity.class);
+        } else {
+            intent = new Intent(content, LoginActivity.class);
         }
-
+        startActivity(intent);
+        finish();
         //去掉欢迎的滑动页
 /*        if (isFirstInstall) {
             Log.d(TAG, "skip2Main 滑动页");
@@ -145,17 +153,6 @@ public class BeginActivity extends FragmentActivity {
             finish();
 
         } else {*/
-        pwd = StoreApplication.passWord;
-        Intent intent;
-        if (pwd != null && !"".endsWith(pwd) || !Constant.PHONE.equals(StoreApplication
-                .loginType)) {
-            intent = new Intent(content, MainHomeActivity.class);
-        } else {
-            intent = new Intent(content, LoginActivity.class);
-        }
-        startActivity(intent);
-        finish();
-
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {

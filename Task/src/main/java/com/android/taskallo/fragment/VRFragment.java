@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.activity.VRVideoActivity;
 import com.android.taskallo.bean.HotInfo;
 import com.android.taskallo.bean.JsonResult;
@@ -194,7 +194,7 @@ public class VRFragment extends Fragment {
         Request<JsonResult<VRHotInfo>> versionRequest = new GsonRequest<>(Request.Method.POST, url,
                 successListener, errorListener, new TypeToken<JsonResult<VRHotInfo>>() {
         }.getType());
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     private void createView() {
@@ -359,7 +359,7 @@ public class VRFragment extends Fragment {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
     }
 
     /**

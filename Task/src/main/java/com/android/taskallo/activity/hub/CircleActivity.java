@@ -13,6 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.taskallo.R;
+import com.android.taskallo.activity.BaseFgActivity;
+import com.android.taskallo.adapter.CircleAdapter;
+import com.android.taskallo.bean.CirclePostsInfo;
+import com.android.taskallo.core.net.GsonRequest;
+import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.ImageUtil;
+import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.util.App;
+import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -29,17 +39,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
-import com.android.taskallo.activity.BaseFgActivity;
-import com.android.taskallo.adapter.CircleAdapter;
-import com.android.taskallo.bean.CirclePostsInfo;
-import com.android.taskallo.core.net.GsonRequest;
-import com.android.taskallo.core.utils.Constant;
-import com.android.taskallo.core.utils.ImageUtil;
-import com.android.taskallo.core.utils.KeyConstant;
-import com.android.taskallo.util.ToastUtil;
 
 /**
  * 圈子
@@ -243,7 +242,7 @@ public class CircleActivity extends BaseFgActivity {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
     }
 
 

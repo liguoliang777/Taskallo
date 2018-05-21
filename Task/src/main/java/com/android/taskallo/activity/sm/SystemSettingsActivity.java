@@ -13,11 +13,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.android.taskallo.util.App;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.DataCleanManager;
@@ -51,21 +51,21 @@ public class SystemSettingsActivity extends BaseFgActivity implements CompoundBu
         });
 
         but_push = (ToggleButton) findViewById(R.id.but_push);
-        if (StoreApplication.isReceiveMsg) {
+        if (App.isReceiveMsg) {
             but_push.setChecked(true);
         } else {
             but_push.setChecked(false);
         }
 
         but_load = (ToggleButton) findViewById(R.id.but_load);
-        if (StoreApplication.allowAnyNet) {
+        if (App.allowAnyNet) {
             but_load.setChecked(true);
         } else {
             but_load.setChecked(false);
         }
 
         but_install = (ToggleButton) findViewById(R.id.but_install);
-        if (StoreApplication.isDeleteApk) {
+        if (App.isDeleteApk) {
             but_install.setChecked(true);
         } else {
             but_install.setChecked(false);
@@ -173,7 +173,7 @@ public class SystemSettingsActivity extends BaseFgActivity implements CompoundBu
                 doLoadClick(isChecked);
                 break;
             case R.id.but_install:
-                StoreApplication.isDeleteApk = isChecked;
+                App.isDeleteApk = isChecked;
                 if (isChecked) {
                     SPUtils.put(this, Constant.CFG_DELETE_APK, true);
                 } else {
@@ -192,7 +192,7 @@ public class SystemSettingsActivity extends BaseFgActivity implements CompoundBu
     }
 
     private void doPushClick(boolean isChecked) {
-        StoreApplication.isReceiveMsg = isChecked;
+        App.isReceiveMsg = isChecked;
         if (isChecked) {
             SPUtils.put(this, Constant.CFG_RECEIVE_MSG, true);
             //启动百度推送
@@ -207,7 +207,7 @@ public class SystemSettingsActivity extends BaseFgActivity implements CompoundBu
 
     private void doLoadClick(boolean isChecked) {
         //允许 isChecked=true, 
-        StoreApplication.allowAnyNet = isChecked;
+        App.allowAnyNet = isChecked;
         //如果允许
         if (isChecked) {
             DialogHelper dialogHelper = new DialogHelper(getSupportFragmentManager(), this);

@@ -2,6 +2,7 @@ package com.android.taskallo.local.model;
 
 import android.content.Context;
 
+import com.android.taskallo.util.App;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.RequestFuture;
@@ -13,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.core.db.DatabaseManager;
 import com.android.taskallo.core.net.GsonRequest;
@@ -44,9 +44,9 @@ public class WatchRecordModel implements IWatchRecordModel {
             e.printStackTrace();
         }
 
-        final String userCode = StoreApplication.user == null ? null : StoreApplication.user.userCode;
+        final String userCode = App.user == null ? null : App.user.userCode;
         //如果用户未登录删除本地数据库
-        if(TextUtil.isEmpty(StoreApplication.token) || TextUtil.isEmpty(userCode)){
+        if(TextUtil.isEmpty(App.token) || TextUtil.isEmpty(userCode)){
             return;
         }
 
@@ -65,7 +65,7 @@ public class WatchRecordModel implements IWatchRecordModel {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String,String> params = new HashMap<>();
-                        params.put("token",StoreApplication.token);
+                        params.put("token", App.token);
                         params.put("userCode",userCode);
                         params.put("appTypeId","0");
                         params.put("videoId",String.valueOf(wh.getVideoId()));
@@ -78,7 +78,7 @@ public class WatchRecordModel implements IWatchRecordModel {
                         return params;
                     }
                 };
-                StoreApplication.requestQueue.add(versionRequest);
+                App.requestQueue.add(versionRequest);
             }
 
         } catch (ParseException e) {
@@ -92,10 +92,10 @@ public class WatchRecordModel implements IWatchRecordModel {
     @Override
     public void addWatchRecord(final WatchRecord wh) {
 
-        final String userCode = StoreApplication.user == null ? null : StoreApplication.user.userCode;
+        final String userCode = App.user == null ? null : App.user.userCode;
 
         //如果用户未登录删除本地数据库
-        if(TextUtil.isEmpty(StoreApplication.token) || TextUtil.isEmpty(userCode)){
+        if(TextUtil.isEmpty(App.token) || TextUtil.isEmpty(userCode)){
 
             dbManager.addWatchHistory(wh);
 
@@ -108,7 +108,7 @@ public class WatchRecordModel implements IWatchRecordModel {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String,String> params = new HashMap<>();
-                    params.put("token",StoreApplication.token);
+                    params.put("token", App.token);
                     params.put("userCode",userCode);
                     params.put("appTypeId","0");
                     params.put("videoId",String.valueOf(wh.getVideoId()));
@@ -121,7 +121,7 @@ public class WatchRecordModel implements IWatchRecordModel {
                     return params;
                 }
             };
-            StoreApplication.requestQueue.add(versionRequest);
+            App.requestQueue.add(versionRequest);
         }
 
 
@@ -157,7 +157,7 @@ public class WatchRecordModel implements IWatchRecordModel {
                     return params;
                 }
             };
-            StoreApplication.requestQueue.add(versionRequest);
+            App.requestQueue.add(versionRequest);
         }
     }
 
@@ -197,7 +197,7 @@ public class WatchRecordModel implements IWatchRecordModel {
                     return params;
                 }
             };
-            StoreApplication.requestQueue.add(versionRequest);
+            App.requestQueue.add(versionRequest);
 
             WatchRecordGroup group = null;
             try {

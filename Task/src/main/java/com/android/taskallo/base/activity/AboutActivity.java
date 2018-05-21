@@ -18,6 +18,7 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.taskallo.util.App;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -31,7 +32,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.VersionInfo;
@@ -190,7 +190,7 @@ public class AboutActivity extends BaseFgActivity {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
         isChecking = true;
     }
 

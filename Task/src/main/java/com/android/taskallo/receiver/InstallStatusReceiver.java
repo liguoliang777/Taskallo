@@ -8,7 +8,7 @@ import android.content.pm.PackageManager;
 
 import java.util.List;
 
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.core.fileload.FileLoadManager;
 import com.android.taskallo.core.fileload.FileLoadService;
 
@@ -48,7 +48,7 @@ public class InstallStatusReceiver extends BroadcastReceiver {
             }
 
             //删除APK文件
-            if (StoreApplication.isDeleteApk) {
+            if (App.isDeleteApk) {
                 FileLoadManager manager = FileLoadManager.getInstance(context);
                 manager.deleteByPackage(packageName);
             }

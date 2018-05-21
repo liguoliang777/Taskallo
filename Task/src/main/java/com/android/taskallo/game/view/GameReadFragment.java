@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.bean.GameInfo;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.core.net.GsonRequest;
@@ -152,7 +152,7 @@ public class GameReadFragment extends Fragment {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
 
     }
 

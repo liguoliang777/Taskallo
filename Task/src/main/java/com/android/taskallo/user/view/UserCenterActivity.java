@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.taskallo.util.App;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -39,7 +40,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.User;
@@ -106,7 +106,7 @@ public class UserCenterActivity extends BaseFgActivity {
         });
         TextView centerTv = (TextView) findViewById(R.id.center_tv);
         centerTv.setText("个人资料设置");
-        LOGIN_TYPE = StoreApplication.loginType;
+        LOGIN_TYPE = App.loginType;
 
         Button changePwdBt = (Button) findViewById(R.id.change_pwd_bt);
         if (Constant.PHONE.equals(LOGIN_TYPE)) {
@@ -143,10 +143,10 @@ public class UserCenterActivity extends BaseFgActivity {
 
             }
         });
-       /* user = StoreApplication.user;*/
-        pwd = StoreApplication.passWord;
-        imgStrPost = StoreApplication.userHeadUrl;
-        nickName = StoreApplication.nickName;
+       /* user = App.user;*/
+        pwd = App.passWord;
+        imgStrPost = App.userHeadUrl;
+        nickName = App.nickName;
         setUserInfo();
      /*   if (pwd == null) {
             //getUserInfo();
@@ -182,8 +182,8 @@ public class UserCenterActivity extends BaseFgActivity {
             }
         });
 
-        android.util.Log.d(TAG, "userTOKEN:" + StoreApplication.token);
-        android.util.Log.d(TAG, "userCode:" + StoreApplication.userCode);
+        android.util.Log.d(TAG, "userTOKEN:" + App.token);
+        android.util.Log.d(TAG, "userCode:" + App.userCode);
 
         //默认头像地址
         for (int i = 1; i < 21; i++) {
@@ -350,10 +350,10 @@ public class UserCenterActivity extends BaseFgActivity {
                             editor.putString(Constant.CONFIG_USER_CODE, user.userCode);//userCode
                             editor.apply();
 
-                            StoreApplication.token = user.token;
-                            StoreApplication.userHeadUrl = user.headPhoto;
-                            StoreApplication.nickName = nickName;
-                            StoreApplication.userCode = user.userCode;
+                            App.token = user.token;
+                            App.userHeadUrl = user.headPhoto;
+                            App.nickName = nickName;
+                            App.userCode = user.userCode;
                             UserCenterActivity.this.finish();
                         } else if (code >= -4 && code <= -1) {
                             android.util.Log.d(TAG, "返回: " + code + result.msg);
@@ -388,12 +388,12 @@ public class UserCenterActivity extends BaseFgActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
+                params.put(KeyConstant.USER_CODE, App.userCode);
                 params.put(KeyConstant.PICTURE_STR, imgStrPost);
                 params.put(KeyConstant.GENDER, "男");
                 params.put(KeyConstant.TYPE, IMG_TYPE);//type 0表示用户选的新图片，base64字符串。      1表示用户有图片地址
                 params.put(KeyConstant.NICK_NAME, nickName);
-                params.put(KeyConstant.TOKEN, StoreApplication.token);
+                params.put(KeyConstant.TOKEN, App.token);
 
                 return params;
             }
@@ -402,7 +402,7 @@ public class UserCenterActivity extends BaseFgActivity {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));*/
 
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     /**
@@ -441,23 +441,23 @@ public class UserCenterActivity extends BaseFgActivity {
         editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
         editor.apply();
 
-        StoreApplication.userHeadUrl = "";
-        StoreApplication.loginType = Constant.PHONE;
-        StoreApplication.nickName = "";
-        StoreApplication.userCode = "";
-        StoreApplication.userName = "";
-        StoreApplication.passWord = "";
-        StoreApplication.token = null;
-        StoreApplication.user = null;
+        App.userHeadUrl = "";
+        App.loginType = Constant.PHONE;
+        App.nickName = "";
+        App.userCode = "";
+        App.userName = "";
+        App.passWord = "";
+        App.token = null;
+        App.user = null;
     }
 
 
     private void setUserInfo() {
         DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable.ic_def_logo_188_188, 360);
-        imageLoader.displayImage(StoreApplication.userHeadUrl, img_photo, roundOptions);
+        imageLoader.displayImage(App.userHeadUrl, img_photo, roundOptions);
         tv_nickname.setText(nickName);
         tv_nickname.setSelection(nickName.length());
-        tv_account.setText(StoreApplication.userName);
+        tv_account.setText(App.userName);
     }
 
 /* private void showChangeNicknameDialog() {
@@ -533,7 +533,7 @@ public class UserCenterActivity extends BaseFgActivity {
                     }
                     if (user != null) {
                         user.nickName = nickName;
-                        StoreApplication.nickName = nickName;
+                        App.nickName = nickName;
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString(Constant.CONFIG_NICK_NAME, nickName);
                         editor.apply();
@@ -563,13 +563,13 @@ public class UserCenterActivity extends BaseFgActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("token", StoreApplication.token);
-                params.put("userCode", StoreApplication.userCode);
+                params.put("token", App.token);
+                params.put("userCode", App.userCode);
                 params.put("newNickName", nickName);
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }*/
 
     /*   *//**
@@ -588,14 +588,14 @@ public class UserCenterActivity extends BaseFgActivity {
                     user = result.data;
                     user = user;
                     String userHeadPhoto = user.headPhoto;
-                    if (userHeadPhoto != null && StoreApplication.userHeadUrl != null &&
-                            !StoreApplication.userHeadUrl.equals(userHeadPhoto)) {
-                        StoreApplication.userHeadUrl = userHeadPhoto;
+                    if (userHeadPhoto != null && App.userHeadUrl != null &&
+                            !App.userHeadUrl.equals(userHeadPhoto)) {
+                        App.userHeadUrl = userHeadPhoto;
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString(Constant.CONFIG_USER_HEAD, userHeadPhoto);
                         editor.apply();
                     } else {
-                        StoreApplication.userHeadUrl = userHeadPhoto;
+                        App.userHeadUrl = userHeadPhoto;
                     }
 
                     nickName = user.nickName;
@@ -604,7 +604,7 @@ public class UserCenterActivity extends BaseFgActivity {
                     }
                     tv_nickname.setText(nickName);
                     tv_account.setText(user.mobile);
-                    imageLoader.displayImage(StoreApplication.userHeadUrl, img_photo, roundOptions);
+                    imageLoader.displayImage(App.userHeadUrl, img_photo, roundOptions);
 
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误: " + result.msg);
@@ -628,11 +628,11 @@ public class UserCenterActivity extends BaseFgActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("token", StoreApplication.token);
+                params.put("token", App.token);
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }*/
 
 }

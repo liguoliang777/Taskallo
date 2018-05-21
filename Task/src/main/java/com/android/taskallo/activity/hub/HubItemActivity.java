@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.taskallo.util.App;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddPointBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBodyBean;
@@ -39,7 +40,6 @@ import java.net.URL;
 import java.util.List;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.core.utils.CommonUtil;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.ImageUtil;
@@ -231,7 +231,7 @@ public class HubItemActivity extends AppCompatActivity {
         super.onRestart();
         Log.d(TAG, "重启onRestart: " + postId);
         MsgDetailBodyBean bodyBean = new MsgDetailBodyBean();
-        String userCode = StoreApplication.userCode;
+        String userCode = App.userCode;
         bodyBean.setUserCode(userCode);
         bodyBean.setPostId(postId);
         bodyBean.setAppTypeId(Constant.APP_TYPE_ID_0_ANDROID);
@@ -381,7 +381,7 @@ public class HubItemActivity extends AppCompatActivity {
         mSupportBt.setEnabled(false);
         //帖子id
         AddPointBodyBean bodyBean = new AddPointBodyBean();
-        String userCode = StoreApplication.userCode;
+        String userCode = App.userCode;
         bodyBean.setUserCode(userCode);
         bodyBean.setAppTypeId(Constant.APP_TYPE_ID_0_ANDROID);
         bodyBean.setPostId(id);  //帖子id
@@ -428,7 +428,7 @@ public class HubItemActivity extends AppCompatActivity {
      */
     private void getData() {
         MsgDetailBodyBean bodyBean = new MsgDetailBodyBean();
-        String userCode = StoreApplication.userCode;
+        String userCode = App.userCode;
         bodyBean.setUserCode(userCode);
         bodyBean.setPostId(postId);
         bodyBean.setAppTypeId(Constant.APP_TYPE_ID_0_ANDROID);

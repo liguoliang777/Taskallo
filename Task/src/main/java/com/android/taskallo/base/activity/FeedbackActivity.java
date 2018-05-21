@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.activity.manager.FeedbackSucceedActivity;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.UpLoadBean;
@@ -343,7 +343,7 @@ public class FeedbackActivity extends CommonBaseActivity implements View.OnClick
                 params.put("content", content);
                 params.put("contact", contact);
                 params.put("feedbackImage", file);
-                params.put("token", StoreApplication.token);
+                params.put("token", App.token);
                 params.put("brand", mtyb);
                 params.put("model", mtype);
                 params.put("system", mtbbh);
@@ -353,7 +353,7 @@ public class FeedbackActivity extends CommonBaseActivity implements View.OnClick
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     @Override

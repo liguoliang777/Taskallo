@@ -1,4 +1,4 @@
-package com.android.taskallo;
+package com.android.taskallo.util;
 
 import android.app.Application;
 import android.content.Context;
@@ -32,7 +32,7 @@ import com.android.taskallo.exception.GlobalExceptionHandler;
  * @author flan
  * @since 2016/5/6
  */
-public class StoreApplication extends Application {
+public class App extends Application {
 
     public static RequestQueue requestQueue;
 
@@ -42,7 +42,7 @@ public class StoreApplication extends Application {
     public static String userHeadUrl;   //用户头像URL
     public static String token;
     public static User user;
-    public static String deviceId="";  //设备id
+    public static String deviceId = "";  //设备id
 
     public static int net_status = 0;
 
@@ -55,6 +55,7 @@ public class StoreApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        System.out.print("登陆！！！");
         token = (String) SPUtils.get(this, Constant.CONFIG_TOKEN, "");
         userHeadUrl = (String) SPUtils.get(this, Constant.CONFIG_USER_HEAD, "");
         userName = (String) SPUtils.get(this, Constant.CONFIG_USER_NAME, "");
@@ -88,7 +89,8 @@ public class StoreApplication extends Application {
     private void initUmengKey() {
         PlatformConfig.setWeixin("wxd60a30dd49d09626", "0525fb7c7c0dce4aaeba06cf02442605");
         PlatformConfig.setQQZone("1105610048", "cRaNEPSsHj95Ay9p");
-        PlatformConfig.setSinaWeibo("3533498134", "28073913cd2521023ef4fcd9bdde88bf", "http://www.ngame.cn/views/platform.html");
+        PlatformConfig.setSinaWeibo("3533498134", "28073913cd2521023ef4fcd9bdde88bf", "http://www" +
+                ".ngame.cn/views/platform.html");
 
     }
 
@@ -99,7 +101,8 @@ public class StoreApplication extends Application {
 
     private void checkNetState() {
 
-        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context
+                .CONNECTIVITY_SERVICE);
         NetworkInfo mobileInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         NetworkInfo wifiInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
@@ -114,7 +117,8 @@ public class StoreApplication extends Application {
 
     public void initGloalData() {
         // 初始化缓存目录
-//        File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "JZT/Imageloader/Cache");
+//        File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(),
+// "JZT/Imageloader/Cache");
         // Imageloader的配置信息
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
 
@@ -126,7 +130,8 @@ public class StoreApplication extends Application {
 
                 .denyCacheImageMultipleSizesInMemory()
 
-                .memoryCache(new LruMemoryCache(5 * 1024 * 1024)) // 建议内存设在5-10M,可以有比较好的表现UsingFreqLimitedMemoryCache
+                .memoryCache(new LruMemoryCache(5 * 1024 * 1024)) // 建议内存设在5-10M,
+                // 可以有比较好的表现UsingFreqLimitedMemoryCache
                 // implementation/你可以通过自己的内存缓存实现
                 .memoryCacheSize(5 * 1024 * 1024)
 
@@ -141,7 +146,8 @@ public class StoreApplication extends Application {
                 // 自定义缓存路径
                 .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
 
-                .imageDownloader(new BaseImageDownloader(this, 5 * 1000, 30 * 1000)) // connectTimeout(5s),readTimeout(30 s)超时时间
+                .imageDownloader(new BaseImageDownloader(this, 5 * 1000, 30 * 1000)) //
+                // connectTimeout(5s),readTimeout(30 s)超时时间
 
                 .writeDebugLogs() // Remove for release app
                 .build();// 开始构建
@@ -153,6 +159,7 @@ public class StoreApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
+        Log.d("", "登陆 重启: ");
         MultiDex.install(this);
     }
 }

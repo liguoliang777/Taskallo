@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.adapter.VrViewFragmentAdapter;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.VideoLabel;
@@ -165,7 +165,7 @@ public class VRVideoActivity extends BaseFgActivity {
         Request<JsonResult<List<VideoLabel>>> request = new GsonRequest<>(Request.Method.POST, url,
                 successListener, errorListener, new TypeToken<JsonResult<List<VideoLabel>>>() {
         }.getType());
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
     }
 
 }

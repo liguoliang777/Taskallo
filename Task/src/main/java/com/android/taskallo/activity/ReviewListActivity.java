@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.adapter.LvCommentAdapter;
 import com.android.taskallo.bean.Comment;
 import com.android.taskallo.bean.JsonResult;
@@ -96,7 +96,7 @@ public class ReviewListActivity extends BaseFgActivity {
         bt_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = StoreApplication.user;
+                User user = App.user;
                 if(user == null){
                     Intent intent = new Intent(ReviewListActivity.this, LoginActivity.class);
                     startActivity(intent);
@@ -184,7 +184,7 @@ public class ReviewListActivity extends BaseFgActivity {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
     }
 
 }

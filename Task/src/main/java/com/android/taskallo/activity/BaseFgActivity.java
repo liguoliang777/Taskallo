@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.android.taskallo.R;
 import com.android.taskallo.base.service.ConnectionChangeReceiver;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
@@ -93,7 +94,7 @@ public class BaseFgActivity extends FragmentActivity {
             //tintManager.setStatusBarTintEnabled(true); // 激活导航栏设//
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
-            //tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
+            tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
         }
     }
 }

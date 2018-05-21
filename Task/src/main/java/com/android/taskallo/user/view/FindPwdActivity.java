@@ -17,8 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.taskallo.util.App;
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.User;
@@ -247,7 +247,7 @@ public class FindPwdActivity extends BaseFgActivity {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     /**
@@ -295,7 +295,7 @@ public class FindPwdActivity extends BaseFgActivity {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     /**

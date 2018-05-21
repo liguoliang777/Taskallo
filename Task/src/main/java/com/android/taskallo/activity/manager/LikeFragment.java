@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.taskallo.util.App;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -31,7 +32,6 @@ import java.util.Map;
 import java.util.TimerTask;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.adapter.LikeFragmentAdapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
 import com.android.taskallo.bean.JsonResult;
@@ -111,7 +111,7 @@ public class LikeFragment extends BaseSearchFragment {
             gameList.clear();
         }*/
         LikeListBody bodyBean = new LikeListBody();
-        bodyBean.setUserCode(StoreApplication.userCode);
+        bodyBean.setUserCode(App.userCode);
         bodyBean.setStartRecord(pageAction.getCurrentPage());
         bodyBean.setRecords(PAGE_SIZE);
         new LikeListClient(content, bodyBean).observable()
@@ -255,12 +255,12 @@ public class LikeFragment extends BaseSearchFragment {
                 //{"userCode":"UC1500609205627","gameId":146,"appTypeId":0}
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
-                params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
+                params.put(KeyConstant.USER_CODE, App.userCode);
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     @Override

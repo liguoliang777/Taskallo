@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.activity.ReviewActivity;
 import com.android.taskallo.activity.ReviewListActivity;
 import com.android.taskallo.adapter.LvCommentAdapter;
@@ -96,8 +96,8 @@ public class GameReviewFragment extends Fragment {
         review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pwd = StoreApplication.passWord;
-                if (pwd != null && !"".endsWith(pwd) || !Constant.PHONE.equals(StoreApplication.loginType)) {
+                pwd = App.passWord;
+                if (pwd != null && !"".endsWith(pwd) || !Constant.PHONE.equals(App.loginType)) {
                     Intent intent = new Intent(context, ReviewActivity.class);
                     intent.putExtra("categoryId", 1);
                     intent.putExtra("targetId", gameInfo.id);
@@ -209,7 +209,7 @@ public class GameReviewFragment extends Fragment {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
 
     }
 

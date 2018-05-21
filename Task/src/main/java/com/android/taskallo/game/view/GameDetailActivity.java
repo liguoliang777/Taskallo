@@ -30,6 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.taskallo.util.App;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -60,7 +61,6 @@ import java.util.TimerTask;
 
 import cn.jzvd.JZVideoPlayerStandard;
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.adapter.DCViewPagerAdapter;
 import com.android.taskallo.adapter.ProgressBarStateListener;
@@ -502,12 +502,12 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
 
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
-                params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
+                params.put(KeyConstant.USER_CODE, App.userCode);
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
     }
 
     private void initViewPager() {
@@ -687,12 +687,12 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 //{"userCode":"UC1500609205627","gameId":146,"appTypeId":0}
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
-                params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
+                params.put(KeyConstant.USER_CODE, App.userCode);
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -731,13 +731,13 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 //{"userCode":"UC1500609205627","gameId":146,"appTypeId":0}
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
-                params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
+                params.put(KeyConstant.USER_CODE, App.userCode);
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
-                params.put(KeyConstant.TOKEN, StoreApplication.token);
+                params.put(KeyConstant.TOKEN, App.token);
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     private int UPDATE_TIPS_OR_DOWNLOAD_EXCEPTION = 1;
@@ -904,7 +904,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 //{"userCode":"UC1500609205627","gameId":146,"appTypeId":0}
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
-                params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
+                params.put(KeyConstant.USER_CODE, App.userCode);
                 params.put(KeyConstant.GAME_ID, String.valueOf(gameId));
                 params.put(KeyConstant.gameName, gameName);
                 params.put(KeyConstant.gameVersion, gameInfo.versionName);
@@ -918,7 +918,7 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     //提示绑定对话框
@@ -931,8 +931,8 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
         //用户头像+昵称
         SimpleDraweeView iconIv = (SimpleDraweeView) percentView.findViewById(R.id.ic_percent_icon);
         TextView nameTv = (TextView) percentView.findViewById(R.id.ic_percent_user_name);
-        iconIv.setImageURI(StoreApplication.userHeadUrl);
-        nameTv.setText(StoreApplication.nickName);
+        iconIv.setImageURI(App.userHeadUrl);
+        nameTv.setText(App.nickName);
 
         reviewScoreView = (ReviewScoreView) percentView.findViewById(R.id.review_scoreView);
         ratingBarBig = (RatingBar) percentView.findViewById(R.id.rating_bar);
@@ -1019,11 +1019,11 @@ public class GameDetailActivity extends BaseFgActivity implements StickyScrollVi
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.GAME_ID, "gameId");
                 params.put(KeyConstant.VALUE, (int) Math.floor(rate) + ""); //评分值
-                params.put(KeyConstant.TOKEN, StoreApplication.token);
+                params.put(KeyConstant.TOKEN, App.token);
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     @Override

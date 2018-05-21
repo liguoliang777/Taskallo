@@ -2,6 +2,7 @@ package com.android.taskallo.push.model;
 
 import android.content.Context;
 
+import com.android.taskallo.util.App;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.RequestFuture;
@@ -12,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.core.db.DatabaseManager;
 import com.android.taskallo.core.net.GsonRequest;
@@ -91,7 +91,7 @@ public class PushMessageModel implements IPushMessageModel{
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
 
         MessageDetail detail = null;
         try {

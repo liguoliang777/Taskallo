@@ -31,7 +31,7 @@ public class Constant {
    //public static final String WEB_SITE = "http://openapi.ngame.cn";
     public static final String WEB_SITE2 = "http://192.168.37.252:20004";      //h5测试
     public static final String WEB_SITE3 = "http://files.ngame.cn";      //h5正式服务器
-    public static final String CONFIG_FILE_NAME = "Store.config";
+    public static final String CONFIG_FILE_NAME = "taskallo.config";
     public static final String CONFIG_FIRST_INSTALL = "FirstInstall";
     public static final String CONFIG_TOKEN = "Token";
     public static final String CONFIG_USER_NAME = "UserName";

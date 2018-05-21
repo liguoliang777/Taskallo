@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.core.utils.AppInstallHelper;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.TextUtil;
@@ -94,9 +94,9 @@ public class FileLoadManager implements IFileLoad {
         }
 
         if (!allowAnyNet) {
-            if (StoreApplication.net_status == Constant.NET_STATUS_DISCONNECT) {
+            if (App.net_status == Constant.NET_STATUS_DISCONNECT) {
                 return RESULT_NO_NET;
-            } else if (StoreApplication.net_status == Constant.NET_STATUS_4G) {
+            } else if (App.net_status == Constant.NET_STATUS_4G) {
                 return RESULT_4G_NET;
             }
         }

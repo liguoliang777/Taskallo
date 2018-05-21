@@ -239,7 +239,7 @@
  #------------------实体类 # -------------------------------------------
  -keep class com.android.taskallo.bean.** { *; }
  -keep class com.android.taskallo.game.bean.** { *; }
- -keep class com.android.taskallo.StoreApplication { *; }
+ -keep class com.android.taskallo.util.App { *; }
  -keep class com.jzt.hol.android.jkda.sdk.bean.** { *; }
  -keep class com.jzt.hol.android.jkda.sdk.services.** { *; }
  -keep class com.android.taskallo.push.model.ExtraDataBean

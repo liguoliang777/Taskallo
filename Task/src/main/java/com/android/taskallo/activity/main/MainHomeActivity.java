@@ -25,8 +25,8 @@ import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
+import com.android.taskallo.util.App;
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.activity.classify.ClassifyFragment;
 import com.android.taskallo.activity.hub.HubPostsActivity;
@@ -182,7 +182,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         video.setOnClickListener(mTabClickListener);
         manager.setOnClickListener(mTabClickListener);
 
-        pwd = StoreApplication.passWord;
+        pwd = App.passWord;
         //如果用户没有主动退出，则重新登录
         new Thread(new Runnable() {
             @Override
@@ -495,7 +495,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
      * 检测是否有更新
      */
     private void checkUpdate() {
-        if (StoreApplication.net_status != Constant.NET_STATUS_WIFI) {
+        if (App.net_status != Constant.NET_STATUS_WIFI) {
             return;
         }
         if (isChecking) {
@@ -578,7 +578,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                         return params;
                     }
                 };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
         isChecking = true;
     }
 

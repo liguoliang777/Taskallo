@@ -26,6 +26,7 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.taskallo.util.App;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -52,7 +53,6 @@ import java.util.Map;
 import java.util.Timer;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.GameInfo;
 import com.android.taskallo.bean.JsonResult;
@@ -193,11 +193,11 @@ public class HubItemOldActivity extends BaseFgActivity implements StickyScrollVi
         mSupportImageView.setEnabled(false);
         //帖子id
         AddPointBodyBean bodyBean = new AddPointBodyBean();
-        User user = StoreApplication.user;
+        User user = App.user;
         if (user != null) {
             bodyBean.setUserCode(user.userCode);
         } else {
-            bodyBean.setDeviceOnlyNum(StoreApplication.deviceId);
+            bodyBean.setDeviceOnlyNum(App.deviceId);
         }
         bodyBean.setType(type);  //type：1表示帖子点赞，2表示评论点赞，3表示投票
         bodyBean.setPostId(id);  //帖子id
@@ -477,11 +477,11 @@ public class HubItemOldActivity extends BaseFgActivity implements StickyScrollVi
      */
     private void getData() {
         MsgDetailBodyBean bodyBean = new MsgDetailBodyBean();
-        User user = StoreApplication.user;
+        User user = App.user;
         if (user != null) {
             bodyBean.setUserCode(user.userCode);
         } else {
-            bodyBean.setDeviceOnlyNum(StoreApplication.deviceId);
+            bodyBean.setDeviceOnlyNum(App.deviceId);
         }
         bodyBean.setId(msgId);
         bodyBean.setType(1);
@@ -650,7 +650,7 @@ public class HubItemOldActivity extends BaseFgActivity implements StickyScrollVi
                 //{"userCode":"UC1500609205627","msgId":146,"appTypeId":0}
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
-                params.put(KeyConstant.USER_CODE, StoreApplication.userCode);
+                params.put(KeyConstant.USER_CODE, App.userCode);
                 params.put(KeyConstant.GAME_ID, String.valueOf(msgId));
                 params.put(KeyConstant.gameVersion, gameInfo.versionName);
                 params.put(KeyConstant.brand, Build.BRAND);//手机品牌
@@ -663,7 +663,7 @@ public class HubItemOldActivity extends BaseFgActivity implements StickyScrollVi
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     //提示绑定对话框
@@ -676,8 +676,8 @@ public class HubItemOldActivity extends BaseFgActivity implements StickyScrollVi
         //用户头像+昵称
         SimpleDraweeView iconIv = (SimpleDraweeView) percentView.findViewById(R.id.ic_percent_icon);
         TextView nameTv = (TextView) percentView.findViewById(R.id.ic_percent_user_name);
-        iconIv.setImageURI(StoreApplication.userHeadUrl);
-        nameTv.setText(StoreApplication.nickName);
+        iconIv.setImageURI(App.userHeadUrl);
+        nameTv.setText(App.nickName);
 
         reviewScoreView = (ReviewScoreView) percentView.findViewById(R.id.review_scoreView);
         ratingBarBig = (RatingBar) percentView.findViewById(R.id.rating_bar);
@@ -764,11 +764,11 @@ public class HubItemOldActivity extends BaseFgActivity implements StickyScrollVi
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.GAME_ID, "msgId");
                 params.put(KeyConstant.VALUE, (int) Math.floor(rate) + ""); //评分值
-                params.put(KeyConstant.TOKEN, StoreApplication.token);
+                params.put(KeyConstant.TOKEN, App.token);
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     @Override

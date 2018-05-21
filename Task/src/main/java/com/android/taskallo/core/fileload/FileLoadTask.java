@@ -10,7 +10,7 @@ import java.net.ProtocolException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.bean.ThreadInfo;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.Log;
@@ -93,7 +93,7 @@ class FileLoadTask implements Runnable {
 
                 while ((len = is.read(data)) != -1) {
 
-                    if(StoreApplication.net_status == Constant.NET_STATUS_4G && !allowAnyNet){
+                    if(App.net_status == Constant.NET_STATUS_4G && !allowAnyNet){
                         Log.e(TAG,"----------------------------------------------------------  4G网 不下载 ");
 
                         return true;

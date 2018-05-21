@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.adapter.DividerGridItemDecoration;
 import com.android.taskallo.adapter.VrVideoRvAdapter;
 import com.android.taskallo.bean.JsonResult;
@@ -190,7 +190,7 @@ public class VRVideoFragmentNew extends Fragment {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
     }
 
     /**
@@ -257,7 +257,7 @@ public class VRVideoFragmentNew extends Fragment {
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
     }
 
 

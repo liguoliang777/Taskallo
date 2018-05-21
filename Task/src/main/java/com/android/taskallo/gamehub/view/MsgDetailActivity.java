@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.taskallo.util.App;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ import com.jzt.hol.android.jkda.sdk.services.gamehub.AddPointClient;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.BrowseHistoryClient;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.CommentListClient;
 import com.jzt.hol.android.jkda.sdk.services.gamehub.MsgDetailClient;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.adapter.MsgDetailGridAdapter;
 import com.android.taskallo.adapter.MsgDetailListAdapter;
@@ -160,7 +160,7 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
                     fl_comment.setVisibility(View.VISIBLE);
                     StringUtil.hideKeyBorad(MsgDetailActivity.this);
                 } else {
-                    User user = StoreApplication.user;
+                    User user = App.user;
                     if (user == null) {
                         showPop();
                     } else {
@@ -181,7 +181,7 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
             }
         });
         msgId = getIntent().getIntExtra("msgId", 0);
-        User user = StoreApplication.user;
+        User user = App.user;
         if (user == null) {
             et_content.setKeyListener(null); //获得焦点后不会弹出输入法
         }
@@ -189,11 +189,11 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
 
     private void browsingHistory() {
         BrowseHistoryBodyBean bodyBean = new BrowseHistoryBodyBean();
-        User user = StoreApplication.user;
+        User user = App.user;
         if (user != null) {
             bodyBean.setUserCode(user.userCode);
         } else {
-            bodyBean.setDeviceOnlyNum(StoreApplication.deviceId);
+            bodyBean.setDeviceOnlyNum(App.deviceId);
         }
         bodyBean.setPostId(msgId);
         new BrowseHistoryClient(this, bodyBean).observable()
@@ -218,11 +218,11 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
     // 查询帖子详情
     private void getMsgDetail() {
         MsgDetailBodyBean bodyBean = new MsgDetailBodyBean();
-        User user = StoreApplication.user;
+        User user = App.user;
         if (user != null) {
             bodyBean.setUserCode(user.userCode);
         } else {
-            bodyBean.setDeviceOnlyNum(StoreApplication.deviceId);
+            bodyBean.setDeviceOnlyNum(App.deviceId);
         }
         bodyBean.setId(msgId);
         bodyBean.setType(1);
@@ -340,11 +340,11 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
     private void runService() {
         CommentListBodyBean bodyBean = new CommentListBodyBean();
         bodyBean.setCode(msgId);
-        User user = StoreApplication.user;
+        User user = App.user;
         if (user != null) {
             bodyBean.setUserCode(user.userCode);
         } else {
-            bodyBean.setDeviceOnlyNum(StoreApplication.deviceId);
+            bodyBean.setDeviceOnlyNum(App.deviceId);
         }
         bodyBean.setPageIndex(pageAction.getCurrentPage());
         bodyBean.setPageSize(PAGE_SIZE);
@@ -440,7 +440,7 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
                 startActivity(new Intent(this, RegisterActivity.class));
                 break;
             case R.id.et_content:
-                User user = StoreApplication.user;
+                User user = App.user;
                 if (user == null) {
                     showPop();
                 } else {
@@ -464,11 +464,11 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
     public void clickAgree(final int type, int id, final int position) {
         //帖子id
         AddPointBodyBean bodyBean = new AddPointBodyBean();
-        User user = StoreApplication.user;
+        User user = App.user;
         if (user != null) {
             bodyBean.setUserCode(user.userCode);
         } else {
-            bodyBean.setDeviceOnlyNum(StoreApplication.deviceId);
+            bodyBean.setDeviceOnlyNum(App.deviceId);
         }
         bodyBean.setType(type);  //type：1表示帖子点赞，2表示评论点赞，3表示投票
         bodyBean.setPostId(id);  //帖子id
@@ -504,7 +504,7 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
     // 发送评论
     private void sendComment() {
         AddCommentBodyBean bodyBean = new AddCommentBodyBean();
-        bodyBean.setToken(StoreApplication.token);
+        bodyBean.setToken(App.token);
         bodyBean.setToMatterCode(msgId);
         bodyBean.setContent(et_content.getText().toString().trim());
         if (msgType == 1) {//攻略6  求助7 投票8

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.android.taskallo.util.App;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -25,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.adapter.NoticeBrowseAdapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
 import com.android.taskallo.bean.JsonResult;
@@ -41,7 +41,7 @@ import com.android.taskallo.view.popupwin.DeleteBrowsePop;
 import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
 import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
 
-import static com.android.taskallo.StoreApplication.user;
+import static com.android.taskallo.util.App.user;
 
 /**
  * 浏览fragment (懒加载-当滑动到当前fragment时，才去加载。而不是进入到activity时，加载所有fragment)
@@ -141,8 +141,8 @@ public class BrowseFragment extends BaseSearchFragment implements View.OnClickLi
 
     private void runService() {
         CommentBodyBean bodyBean = new CommentBodyBean();
-        bodyBean.setToken(StoreApplication.token);
-        User user = StoreApplication.user;
+        bodyBean.setToken(App.token);
+        User user = App.user;
         if (user != null) {
             bodyBean.setUserCode(user.userCode);
         }
@@ -274,14 +274,14 @@ public class BrowseFragment extends BaseSearchFragment implements View.OnClickLi
             protected Map<String, String> getParams() throws AuthFailureError {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
-                params.put("token", StoreApplication.token);
+                params.put("token", App.token);
                 params.put("userCode", user.userCode);
                 params.put("postIdStr", deleteId + ""); //帖子ID
                 params.put("appTypeId", "0");
                 return params;
             }
         };
-        StoreApplication.requestQueue.add(versionRequest);
+        App.requestQueue.add(versionRequest);
     }
 
     @Override

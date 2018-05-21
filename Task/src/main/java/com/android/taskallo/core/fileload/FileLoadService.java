@@ -23,7 +23,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.android.taskallo.StoreApplication;
+import com.android.taskallo.util.App;
 import com.android.taskallo.bean.ThreadInfo;
 import com.android.taskallo.core.db.DatabaseHelper;
 import com.android.taskallo.core.db.DatabaseManager;
@@ -155,15 +155,15 @@ public class FileLoadService extends Service {
         //3.自动开启没有完成的下载任务
         for(FileLoadInfo info : fileLoadInfos){
             if(info.getStatus() == FileLoadInfo.STATUS_LOADING || info.getStatus() == FileLoadInfo.STATUS_PAUSE_TEMP){
-                if(StoreApplication.net_status == Constant.NET_STATUS_WIFI ||
-                        (StoreApplication.net_status == Constant.NET_STATUS_4G && StoreApplication.allowAnyNet)){
+                if(App.net_status == Constant.NET_STATUS_WIFI ||
+                        (App.net_status == Constant.NET_STATUS_4G && App.allowAnyNet)){
 
                     info.setStatus(FileLoadInfo.STATUS_LOADING);    //统一将状态恢复为下载中
-                    info.setAllowAnyNet(StoreApplication.allowAnyNet);
+                    info.setAllowAnyNet(App.allowAnyNet);
                     startLoad(info);
                 }else {
                     info.setStatus(FileLoadInfo.STATUS_PAUSE_TEMP);    //统一将状态恢复为下载中
-                    info.setAllowAnyNet(StoreApplication.allowAnyNet);
+                    info.setAllowAnyNet(App.allowAnyNet);
                 }
 
             }

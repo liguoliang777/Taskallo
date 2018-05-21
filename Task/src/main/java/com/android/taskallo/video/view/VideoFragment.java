@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.taskallo.util.App;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.taskallo.R;
-import com.android.taskallo.StoreApplication;
 import com.android.taskallo.adapter.VrViewFragmentAdapter;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.VideoLabel;
@@ -152,7 +152,7 @@ public class VideoFragment extends Fragment {
 
         Request<JsonResult<List<VideoLabel>>> request = new GsonRequest<>(Request.Method.POST, url,
                 successListener, errorListener, new TypeToken<JsonResult<List<VideoLabel>>>() {}.getType());
-        StoreApplication.requestQueue.add(request);
+        App.requestQueue.add(request);
     }
 
 }
