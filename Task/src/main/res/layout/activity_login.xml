@@ -149,9 +149,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/login_bt_margin_left_right"
-        android:layout_marginRight="@dimen/login_bt_margin_left_right"
-        android:layout_marginTop="@dimen/dm040"
+        android:layout_marginLeft="@dimen/dm034"
+        android:layout_marginRight="@dimen/dm034"
+        android:layout_marginTop="@dimen/dm010"
         android:gravity="center_vertical">
 
         <TextView
@@ -160,7 +160,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dm002"
+            android:padding="@dimen/dm030"
             android:text="@string/fogote_pwd"
             android:textColor="@color/color999999"
             android:textSize="@dimen/dm024" />
@@ -171,7 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:gravity="center_vertical"
-            android:paddingRight="@dimen/dm002"
+            android:padding="@dimen/dm030"
             android:text="@string/register_title"
             android:textColor="@color/color999999"
             android:textSize="@dimen/dm024" />

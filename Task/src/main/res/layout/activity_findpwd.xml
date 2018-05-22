@@ -18,7 +18,7 @@
 
 
     <EditText
-        android:layout_marginTop="@dimen/dm020"
+        android:layout_marginTop="@dimen/dm040"
         android:id="@+id/et_login_user"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"

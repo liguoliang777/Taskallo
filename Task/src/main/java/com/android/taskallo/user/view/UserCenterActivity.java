@@ -400,7 +400,7 @@ public class UserCenterActivity extends BaseFgActivity {
                             App.userCode = user.userCode;
                             UserCenterActivity.this.finish();
                         } else if (code >= -4 && code <= -1) {
-                            android.util.Log.d(TAG, "返回: " + code + result.msg);
+                            android.util.Log.d(TAG, "ic_back: " + code + result.msg);
                             if (content != null && !content.isFinishing()) {
                                 showReLoginDialog();
                             }

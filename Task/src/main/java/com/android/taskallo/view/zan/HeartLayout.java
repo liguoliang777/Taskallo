@@ -173,7 +173,7 @@ public class HeartLayout extends RelativeLayout implements View.OnClickListener 
 
     public void addFavor() {
         HeartView heartView = new HeartView(getContext());
-        heartView.setDrawable(drawableIds[random.nextInt(7)]);//返回(0,6)集合中的整数，注意不包括6
+        heartView.setDrawable(drawableIds[random.nextInt(7)]);//ic_back(0,6)集合中的整数，注意不包括6
         init(attrs, defStyleAttr);
         mAnimator.start(heartView, this);
     }
