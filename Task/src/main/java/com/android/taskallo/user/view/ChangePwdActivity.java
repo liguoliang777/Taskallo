@@ -16,11 +16,9 @@ import android.widget.TextView;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.JsonResult;
-import com.android.taskallo.bean.User;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.KeyConstant;
-import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.fragment.SimpleDialogFragment;
 import com.android.taskallo.util.App;
@@ -55,12 +53,15 @@ public class ChangePwdActivity extends BaseFgActivity {
 
     private SharedPreferences.Editor editor;
     private ChangePwdActivity context;
+    private String tokenSp = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_change_pwd);
-        SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME,
+                MODE_PRIVATE);
+        tokenSp = preferences.getString(Constant.CONFIG_TOKEN, "");
         editor = preferences.edit();
         BaseTitleBar titleBar = (BaseTitleBar) findViewById(R.id.title_bar);
         titleBar.setOnLeftClickListener(new View.OnClickListener() {
@@ -87,27 +88,27 @@ public class ChangePwdActivity extends BaseFgActivity {
 
                 if (oldPwdStr == null || oldPwdStr.length() <= 0) {
                     context = ChangePwdActivity.this;
-                    ToastUtil.show(context,"旧密码不能为空哦");
+                    ToastUtil.show(context, "旧密码不能为空哦");
                     return;
                 }
                 if (oldPwdStr.equals(newPwdETStr1)) {
-                    ToastUtil.show(context,"新密码和旧密码不能一致哦");
+                    ToastUtil.show(context, "新密码和旧密码不能一致哦");
                     return;
                 }
                 if (newPwdETStr1 == null || newPwdETStr1.length() <= 0) {
-                    ToastUtil.show(context,"请输入新密码");
+                    ToastUtil.show(context, "请输入新密码");
                     return;
                 }
                 if (newPwdETStr1.length() < 6) {
-                    ToastUtil.show(context,"新密码不能少于六位哦");
+                    ToastUtil.show(context, "新密码不能少于六位哦");
                     return;
                 }
                 if (ensurePwdStr == null || ensurePwdStr.length() <= 0) {
-                    ToastUtil.show(context,"请确认新密码");
+                    ToastUtil.show(context, "请确认新密码");
                     return;
                 }
                 if (!newPwdETStr1.equals(ensurePwdStr)) {
-                    ToastUtil.show(context,"两次输入的新密码不一致哦");
+                    ToastUtil.show(context, "两次输入的新密码不一致哦");
                     return;
                 }
 
@@ -121,19 +122,19 @@ public class ChangePwdActivity extends BaseFgActivity {
      */
     private void doFindPwd(final String oldPwdStr, final String newPwdETStr1) {
         String url = Constant.WEB_SITE + UrlConstant.URL_MODIFY_PASSWORD;
-        Response.Listener<JsonResult<User>> successListener = new Response.Listener<JsonResult<User>>() {
+        Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
             @Override
-            public void onResponse(JsonResult<User> result) {
+            public void onResponse(JsonResult result) {
                 if (result == null) {
-                    ToastUtil.show(context,"服务端异常");
+                    ToastUtil.show(context, "服务端异常");
                     return;
                 }
                 int code = result.code;
-                Log.d(TAG, "找回密码:" + code);
-                Log.d(TAG, "找回密码:" + result.msg);
                 if (code == 0) {
-                    showDialog(true, "密码重置成功,请重新登录！");
-                    logoutClearData();
+                    String token = (String) result.data;
+                    editor.putString(Constant.CONFIG_TOKEN, token).commit();
+                    showDialog(true, "密码重置成功！");
+                    //logoutClearData();
                 } else if (code >= -4 && code <= -1) {
                     showReLoginDialog();
                     //需要重新登录
@@ -149,19 +150,19 @@ public class ChangePwdActivity extends BaseFgActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                ToastUtil.show(context,"更新失败，请检查网络连接!");
+                ToastUtil.show(context, "修改密码失败，请检查网络连接!");
             }
         };
 
-        Request<JsonResult<User>> versionRequest = new GsonRequest<JsonResult<User>>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<User>>() {
+        Request<JsonResult> versionRequest = new GsonRequest<JsonResult>(Request.Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult>() {
         }.getType()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.USER_CODE, App.userCode);
-                params.put(KeyConstant.TOKEN, App.token);
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
+                params.put(KeyConstant.TOKEN, tokenSp);
                 params.put(KeyConstant.old_Password, oldPwdStr);
                 params.put(KeyConstant.newPassword, newPwdETStr1);
                 return params;
@@ -179,7 +180,8 @@ public class ChangePwdActivity extends BaseFgActivity {
         final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
         dialogFragment.setDialogWidth(220);
         TextView tv = new TextView(ChangePwdActivity.this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
+                .MATCH_PARENT, ViewGroup
                 .LayoutParams.MATCH_PARENT);
         params.setMargins(0, 20, 0, 0);
         params.gravity = Gravity.CENTER;
@@ -227,7 +229,8 @@ public class ChangePwdActivity extends BaseFgActivity {
         dialogFragment.setDialogWidth(220);
 
         TextView tv = new TextView(ChangePwdActivity.this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
+                .MATCH_PARENT, ViewGroup
                 .LayoutParams.MATCH_PARENT);
         params.setMargins(0, 0, 0, 0);
         params.gravity = Gravity.CENTER;
@@ -239,7 +242,7 @@ public class ChangePwdActivity extends BaseFgActivity {
 
         int stringId;
         if (isSuccess) {
-            stringId = R.string.login_now;
+            stringId = R.string.sure;
         } else {
             stringId = R.string.sure;
         }
@@ -248,11 +251,12 @@ public class ChangePwdActivity extends BaseFgActivity {
             @Override
             public void onClick(View v) {
                 dialogFragment.dismiss();
-                if (isSuccess) {
+              /*  if (isSuccess) {
                     Intent intent = new Intent(ChangePwdActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
-                }
+                }*/
+                finish();
             }
         });
         dialogFragment.show(ft, "successDialog");

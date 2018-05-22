@@ -113,21 +113,19 @@ public class UserCenterActivity extends BaseFgActivity {
         LOGIN_TYPE = App.loginType;
 
         Button changePwdBt = (Button) findViewById(R.id.change_pwd_bt);
-        if (Constant.PHONE.equals(LOGIN_TYPE)) {
-            changePwdBt.setVisibility(View.VISIBLE);
-            changePwdBt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(UserCenterActivity.this.content, ChangePwdActivity
-                            .class);
-                    intent.putExtra(KeyConstant.IS_FROM_USER_CENTER, true);
-                    startActivity(intent);
-                    UserCenterActivity.this.content.finish();
-                }
-            });
-        } else {
-            changePwdBt.setVisibility(View.INVISIBLE);
-        }
+        //if (Constant.PHONE.equals(LOGIN_TYPE)) {
+        changePwdBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserCenterActivity.this.content, ChangePwdActivity
+                        .class);
+                startActivity(intent);
+                UserCenterActivity.this.content.finish();
+            }
+        });
+        //} else {
+        //changePwdBt.setVisibility(View.INVISIBLE);
+        //}
         try {
             mTempDir = new File(CommonUtil.getImageBasePath());
         } catch (NoSDCardException e) {
