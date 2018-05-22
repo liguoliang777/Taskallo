@@ -37,42 +37,25 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/im_toSearch"
-            android:layout_width="@dimen/dm084"
-            android:layout_height="@dimen/dm052"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
-            android:paddingBottom="@dimen/dm010"
-            android:paddingLeft="@dimen/dm020"
-            android:paddingRight="@dimen/dm032"
-            android:paddingTop="@dimen/dm010"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_sousu" />
-
-        <ImageView
             android:id="@+id/main_rank_bt"
             android:layout_width="@dimen/dm074"
             android:layout_height="@dimen/dm052"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/im_toSearch"
             android:gravity="center_vertical"
-            android:paddingBottom="@dimen/dm010"
-            android:paddingLeft="@dimen/dm020"
-            android:paddingRight="@dimen/dm022"
-            android:paddingTop="@dimen/dm010"
+            android:paddingLeft="@dimen/dm022"
+            android:paddingRight="@dimen/dm032"
             android:scaleType="centerInside"
             android:src="@drawable/ic_paihang"
             android:visibility="gone" />
 
         <FrameLayout
-            android:id="@+id/fl_notifi"
+            android:id="@+id/fl_notifi_fl"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/im_toSearch"
-            android:paddingRight="@dimen/dm020">
+            android:paddingRight="@dimen/dm032">
 
             <TextView
                 android:id="@+id/tv_notifi_num"
@@ -97,6 +80,21 @@
                 android:src="@drawable/ic_tongzhi" />
         </FrameLayout>
 
+        <ImageView
+            android:id="@+id/im_toSearch"
+            android:layout_width="@dimen/dm084"
+            android:layout_height="@dimen/dm052"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dm074"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/dm010"
+            android:paddingLeft="@dimen/dm020"
+            android:paddingRight="@dimen/dm020"
+            android:paddingTop="@dimen/dm010"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_sousu" />
 
         <ImageView
             android:id="@+id/main_download_bt"

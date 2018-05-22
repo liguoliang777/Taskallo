@@ -153,7 +153,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         //标题上面的消息和搜索
         im_toSearch = (ImageView) findViewById(R.id.im_toSearch);
-        fl_notifi = (FrameLayout) findViewById(R.id.fl_notifi);
+        fl_notifi = (FrameLayout) findViewById(R.id.fl_notifi_fl);
         tv_notifi_num = (TextView) findViewById(R.id.tv_notifi_num); //右上角消息数目
 
         mIconIv = (SimpleDraweeView) findViewById(R.id.iv_icon_title);
@@ -299,7 +299,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     classifyFragment.setShow(false);
                 }
                 bt_home.setSelected(true);
-                mTitleTv.setText("热门游戏");
+                mTitleTv.setText(R.string.main_top_title_tab_1);
                 fl_notifi.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 mDownloadBt.setVisibility(View.GONE);
@@ -431,7 +431,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             case R.id.im_toSearch:
                 startActivity(new Intent(context, SearchActivity.class));
                 break;
-            case R.id.fl_notifi:
+            case R.id.fl_notifi_fl:
                 startActivity(new Intent(context, MsgCenterActivity.class));
                 break;
             case R.id.main_download_bt:

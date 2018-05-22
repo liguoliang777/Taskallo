@@ -237,4 +237,5 @@
     <string name="app_download_url_yyb">http://sj.qq.com/myapp/detail.htm?apkName=com.android.taskallo</string>
     <string name="alipay_redpackage_content">7Dl59e13pi</string>
     <string name="fogote_pwd">忘记密码?</string>
+    <string name="main_top_title_tab_1">看板</string>
 </resources>

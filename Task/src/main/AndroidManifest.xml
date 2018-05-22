@@ -223,7 +223,7 @@
             android:name="com.android.taskallo.push.view.MsgCenterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
 
         <activity
             android:name="com.android.taskallo.push.view.MessageDetailActivity"
