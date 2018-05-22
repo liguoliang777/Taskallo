@@ -2,7 +2,7 @@
 <resources>
 
     <!-- APP 基础色 -->
-    <color name="mainColor">#5782d9</color>
+    <color name="mainColor">#6088c6</color>
 
     <color name="mainColorLight">#553ecc7a</color>
     <color name="colorPrimaryDark">#000000</color>

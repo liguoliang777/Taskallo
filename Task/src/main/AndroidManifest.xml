@@ -191,12 +191,6 @@
             android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
-            android:name="com.android.taskallo.video.view.VideoRecommendActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" />
-
-        <activity
             android:name="com.android.taskallo.video.view.VideoPlayActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"

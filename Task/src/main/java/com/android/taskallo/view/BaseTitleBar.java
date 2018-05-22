@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,7 +30,8 @@ import com.android.taskallo.core.utils.TextUtil;
 
 public class BaseTitleBar extends RelativeLayout{
 
-	private Button leftButton,rightButton;
+	private ImageView leftButton;
+			Button rightButton;
 	private TextView tv_title;
 
 	private String titleText;
@@ -64,7 +66,7 @@ public class BaseTitleBar extends RelativeLayout{
 		
 		//获取组合控件中的各个子控件
 		inflate(context, R.layout.layout_titlebar_base, this);
-		leftButton = (Button) this.findViewById(R.id.left_but);
+		leftButton = (ImageView) this.findViewById(R.id.left_but);
 		rightButton = (Button) this.findViewById(R.id.right_but);
 		tv_title = (TextView) this.findViewById(R.id.tv_title);
 

@@ -12,7 +12,6 @@
         android:id="@+id/title_bar"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/app_title_height"
-        ngame:left_but_img="@drawable/ic_back"
         ngame:left_but_visable="true"
         ngame:title_size="@dimen/title_size"
         ngame:title_text="@string/find_pwd" />

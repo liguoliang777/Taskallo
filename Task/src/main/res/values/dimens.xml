@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- APP的Title高度 -->
-    <dimen name="app_title_height">45dp</dimen>
+    <dimen name="app_title_height">@dimen/dm084</dimen>
 
     <!-- ListView 中图片尺寸 -->
     <dimen name="list_detail_image_size">65dp</dimen>
@@ -87,6 +87,8 @@
     <dimen name="dp_40">40dp</dimen>
     <dimen name="dp_25">25dp</dimen>
     <dimen name="dp17">17dp</dimen>
+    <dimen name="title_back_bt_padding_left">@dimen/dm036</dimen>
+    <dimen name="title_back_bt_padding_right">@dimen/dm032</dimen>
     <dimen name="dp_84">84dp</dimen>
     <dimen name="game_detail_bottom_item_left_width">108dp</dimen>
     <dimen name="dp_9">9dp</dimen>
