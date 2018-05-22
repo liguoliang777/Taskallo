@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
+import com.android.taskallo.activity.main.MainHomeActivity;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.User;
 import com.android.taskallo.core.net.GsonRequest;
@@ -306,7 +307,7 @@ public class UserCenterActivity extends BaseFgActivity {
 
     //退出登录
     public void showLogoutDialog() {
-        final Dialog dialog = new Dialog(this, R.style.Dialog_From_Bottom_Style);
+        final Dialog dialog = new Dialog(content, R.style.Dialog_From_Bottom_Style);
         //填充对话框的布局
         View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_logout, null);
 
@@ -316,7 +317,8 @@ public class UserCenterActivity extends BaseFgActivity {
                 dialog.cancel();
                 logoutClearData();
                 startActivity(new Intent(content, LoginActivity.class));
-                UserCenterActivity.this.finish();
+                content.finish();
+                MainHomeActivity.context.finish();
             }
         });
         inflate.findViewById(R.id.logout_cancel_bt).setOnClickListener(new View.OnClickListener() {

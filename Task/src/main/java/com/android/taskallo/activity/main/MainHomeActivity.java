@@ -85,7 +85,7 @@ import java.util.TimerTask;
 @SuppressLint("WrongConstant")
 public class MainHomeActivity extends BaseFgActivity implements View.OnClickListener {
     public String TAG = MainHomeActivity.class.getSimpleName();
-    private static MainHomeActivity context;
+    public static MainHomeActivity context;
     private boolean isExit = false;     //是否安装后第一次启动
     private IFileLoad fileLoad;
     private Timer timer = new Timer();
