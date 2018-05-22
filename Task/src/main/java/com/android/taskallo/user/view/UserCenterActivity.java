@@ -307,6 +307,7 @@ public class UserCenterActivity extends BaseFgActivity {
 
     //退出登录
     public void showLogoutDialog() {
+
         final Dialog dialog = new Dialog(content, R.style.Dialog_From_Bottom_Style);
         //填充对话框的布局
         View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_logout, null);
