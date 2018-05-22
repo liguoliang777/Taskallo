@@ -25,11 +25,11 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import java.util.List;
-
 import com.android.taskallo.R;
 import com.android.taskallo.bean.SearchHistoryBean;
 import com.android.taskallo.search.view.SearchActivity;
+
+import java.util.List;
 
 /**
  * 搜索结果的ListView控件适配器

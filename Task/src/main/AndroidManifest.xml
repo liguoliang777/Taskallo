@@ -97,7 +97,7 @@
             android:name="com.android.taskallo.search.view.SearchActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.user.view.RegisterActivity"
             android:launchMode="singleTask"

@@ -18,18 +18,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jzt.hol.android.jkda.sdk.bean.search.RequestSearchBean;
-import com.jzt.hol.android.jkda.sdk.bean.search.SearchBean;
-import com.jzt.hol.android.jkda.sdk.bean.search.SearchBodyBean;
-import com.jzt.hol.android.jkda.sdk.bean.search.SearchGameVideoBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.search.SearchClient;
-import com.jzt.hol.android.jkda.sdk.services.search.SearchGVClient;
-
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.adapter.LvSearchAdapter;
@@ -44,6 +32,18 @@ import com.android.taskallo.game.view.GameDetailActivity;
 import com.android.taskallo.util.StringUtil;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.LoadStateView;
+import com.jzt.hol.android.jkda.sdk.bean.search.RequestSearchBean;
+import com.jzt.hol.android.jkda.sdk.bean.search.SearchBean;
+import com.jzt.hol.android.jkda.sdk.bean.search.SearchBodyBean;
+import com.jzt.hol.android.jkda.sdk.bean.search.SearchGameVideoBean;
+import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
+import com.jzt.hol.android.jkda.sdk.services.search.SearchClient;
+import com.jzt.hol.android.jkda.sdk.services.search.SearchGVClient;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 /**
@@ -58,7 +58,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
     public int GAMETYPE_ID = 36;
     public int VIDEOTYPE_ID = 37;
     private LoadStateView loadStateView;
-    private TextView tv_search;
+    //private TextView tv_search;
     private EditText et_search;
     private String searchName;
     private ImageView input_clear_bt;
@@ -90,11 +90,12 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
         initStatusBar();
         content = this;
         dbManager = DatabaseManager.getInstance(this);
-
         resultListView = (ListView) findViewById(R.id.listView);
         loadStateView = (LoadStateView) findViewById(R.id.loadStateView);
-        tv_search = (TextView) findViewById(R.id.search_bt);
+        //tv_search = (TextView) findViewById(R.id.search_bt);
         et_search = (EditText) findViewById(R.id.et_search);
+       /* InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(et_search, 0);*/
         input_clear_bt = (ImageView) findViewById(R.id.but_fork);
 
         ll_show = (LinearLayout) findViewById(R.id.ll_show);
@@ -104,7 +105,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
         gridView_game = (GridView) findViewById(R.id.gridView_game);
 
         loadStateView.setReLoadListener(this);
-        tv_search.setOnClickListener(this);
+        //tv_search.setOnClickListener(this);
         tv_clear.setOnClickListener(this);
 
         et_search.addTextChangedListener(new TextWatcher() {

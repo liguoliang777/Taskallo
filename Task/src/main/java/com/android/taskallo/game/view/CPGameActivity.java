@@ -10,6 +10,24 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.android.taskallo.R;
+import com.android.taskallo.activity.BaseFgActivity;
+import com.android.taskallo.adapter.GvGameSubjectAdapter;
+import com.android.taskallo.adapter.NoScrollGameListAdapter;
+import com.android.taskallo.bean.GameInfo;
+import com.android.taskallo.bean.GameType;
+import com.android.taskallo.bean.HotInfo;
+import com.android.taskallo.bean.JsonResult;
+import com.android.taskallo.core.net.GsonRequest;
+import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.Log;
+import com.android.taskallo.search.view.SearchActivity;
+import com.android.taskallo.util.App;
+import com.android.taskallo.video.view.VideoDetailActivity;
+import com.android.taskallo.view.BannerView;
+import com.android.taskallo.view.BaseTitleBar;
+import com.android.taskallo.view.NoScrollListView;
+import com.android.taskallo.view.PicassoImageView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -20,25 +38,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.android.taskallo.R;
-import com.android.taskallo.util.App;
-import com.android.taskallo.activity.BaseFgActivity;
-import com.android.taskallo.adapter.GvGameSubjectAdapter;
-import com.android.taskallo.adapter.NoScrollGameListAdapter;
-import com.android.taskallo.bean.GameInfo;
-import com.android.taskallo.bean.GameType;
-import com.android.taskallo.bean.HotInfo;
-import com.android.taskallo.bean.JsonResult;
-import com.android.taskallo.core.net.GsonRequest;
-import com.android.taskallo.search.view.SearchActivity;
-import com.android.taskallo.core.utils.Constant;
-import com.android.taskallo.core.utils.Log;
-import com.android.taskallo.video.view.VideoDetailActivity;
-import com.android.taskallo.view.BannerView;
-import com.android.taskallo.view.BaseTitleBar;
-import com.android.taskallo.view.NoScrollListView;
-import com.android.taskallo.view.PicassoImageView;
 
 /**
  * 显示触屏游戏的首面

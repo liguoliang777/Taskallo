@@ -25,8 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
-import com.android.taskallo.user.view.UserCenterActivity;
-import com.android.taskallo.util.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.activity.classify.ClassifyFragment;
@@ -59,6 +57,8 @@ import com.android.taskallo.push.view.MessageDetailActivity;
 import com.android.taskallo.push.view.MsgCenterActivity;
 import com.android.taskallo.push.view.NotifyMsgDetailActivity;
 import com.android.taskallo.search.view.SearchActivity;
+import com.android.taskallo.user.view.UserCenterActivity;
+import com.android.taskallo.util.App;
 import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;

@@ -6,6 +6,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.android.taskallo.R;
+import com.android.taskallo.adapter.VrViewFragmentAdapter;
+import com.android.taskallo.bean.JsonResult;
+import com.android.taskallo.bean.VideoLabel;
+import com.android.taskallo.core.net.GsonRequest;
+import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.Log;
+import com.android.taskallo.search.view.SearchActivity;
+import com.android.taskallo.util.App;
+import com.android.taskallo.video.view.VRVideoFragmentNew;
+import com.android.taskallo.video.view.VideoPlayActivity;
+import com.android.taskallo.view.LoadStateView;
+import com.android.taskallo.view.SimpleTitleBar;
+import com.android.taskallo.view.VideoTabView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -13,21 +27,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.android.taskallo.R;
-import com.android.taskallo.util.App;
-import com.android.taskallo.adapter.VrViewFragmentAdapter;
-import com.android.taskallo.bean.JsonResult;
-import com.android.taskallo.bean.VideoLabel;
-import com.android.taskallo.video.view.VRVideoFragmentNew;
-import com.android.taskallo.core.net.GsonRequest;
-import com.android.taskallo.search.view.SearchActivity;
-import com.android.taskallo.core.utils.Constant;
-import com.android.taskallo.core.utils.Log;
-import com.android.taskallo.video.view.VideoPlayActivity;
-import com.android.taskallo.view.LoadStateView;
-import com.android.taskallo.view.SimpleTitleBar;
-import com.android.taskallo.view.VideoTabView;
 
 /**
  * 显示VR视频分类的界面
