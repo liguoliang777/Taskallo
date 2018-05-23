@@ -25,13 +25,13 @@ import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
+import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.activity.classify.ClassifyFragment;
 import com.android.taskallo.activity.hub.HubPostsActivity;
 import com.android.taskallo.activity.manager.DownloadCenterActivity;
 import com.android.taskallo.activity.manager.ManagerFragment;
-import com.android.taskallo.activity.rank.RankActivity;
 import com.android.taskallo.activity.rank.RankFragment;
 import com.android.taskallo.activity.sm.NecessaryOrLikeActivity;
 import com.android.taskallo.adapter.FragmentViewPagerAdapter;
@@ -58,7 +58,6 @@ import com.android.taskallo.push.view.MsgCenterActivity;
 import com.android.taskallo.push.view.NotifyMsgDetailActivity;
 import com.android.taskallo.search.view.SearchActivity;
 import com.android.taskallo.user.view.UserCenterActivity;
-import com.android.taskallo.App;
 import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -105,16 +104,16 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private int currentMenu;
     private FragmentViewPagerAdapter adapter;
     private FragmentManager fragmentManager;
-    private LinearLayout home, menu_game_hub, video, manager;
-    private Button bt_home, bt_game, bt_video, bt_manager;
-    private TextView tv_home, tv_video, tv_manager, mEditProfileTv, tv_notifi_num,
+    private LinearLayout  menu_game_hub, video, manager;
+    private Button  bt_game, bt_video, bt_manager;
+    private TextView  tv_video, tv_manager, mEditProfileTv, tv_notifi_num,
             menu_gamehub_tv, mTitleTv;
     private int colorDark;
     private int colorNormal;
     private String imgUrl;
     private List<Fragment> mfragmentlist = new ArrayList<>();
     private int rbIndex;
-    private ImageView im_toSearch, mRankBt, mDownloadBt, mLikeBt, mHubBt;
+    private ImageView im_toSearch, mDownloadBt, mLikeBt, mHubBt;
     private FrameLayout fl_notifi;
     private SimpleDraweeView mIconIv;
     private String pwd;
@@ -133,18 +132,18 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         initStatusBar();
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
         editor = preferences.edit();
-        home = (LinearLayout) findViewById(R.id.main_tab_0);
+        //home = (LinearLayout) findViewById(R.id.main_tab_0);
         //game = (LinearLayout) findViewById(R.id.menu_game_ll);
         menu_game_hub = (LinearLayout) findViewById(R.id.main_tab_2);
         video = (LinearLayout) findViewById(R.id.main_tab_1);
         manager = (LinearLayout) findViewById(R.id.main_tab_3);
 
-        bt_home = (Button) findViewById(R.id.menu_home_bt1);
+        //bt_home = (Button) findViewById(R.id.menu_home_bt1);
         //bt_game = (Button) findViewById(R.id.menu_game_bt);
         bt_video = (Button) findViewById(R.id.menu_video_bt);
         bt_manager = (Button) findViewById(R.id.menu_manager_bt);
 
-        tv_home = (TextView) findViewById(R.id.menu_home_tv);
+        //tv_home = (TextView) findViewById(R.id.menu_home_tv);
         //tv_game = (TextView) findViewById(R.id.menu_game_tv);
         menu_gamehub_tv = (TextView) findViewById(R.id.menu_gamehub_tv);
         tv_video = (TextView) findViewById(R.id.menu_video_tv);
@@ -161,23 +160,21 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         mDownloadBt = (ImageView) findViewById(R.id.main_download_bt);
         mLikeBt = (ImageView) findViewById(R.id.main_like_bt);
         mHubBt = (ImageView) findViewById(R.id.main_hub_bt);
-        mRankBt = (ImageView) findViewById(R.id.main_rank_bt);
         im_toSearch.setOnClickListener(this);
         fl_notifi.setOnClickListener(this);
         mIconIv.setOnClickListener(this);
         mDownloadBt.setOnClickListener(this);
         mLikeBt.setOnClickListener(this);
         mHubBt.setOnClickListener(this);
-        mRankBt.setOnClickListener(this);
 
         colorDark = getResources().getColor(R.color.mainColor);
         colorNormal = getResources().getColor(R.color.color_333333);
 
 //        init(viewPager, getSupportFragmentManager());
         fragmentManager = getSupportFragmentManager();
-        setCurrentMenu(0);    //当前选中标签
+        setCurrentMenu(1);    //当前选中标签
 
-        home.setOnClickListener(mTabClickListener);
+        //home.setOnClickListener(mTabClickListener);
         //game.setOnTouchListener(listener);
         menu_game_hub.setOnClickListener(mTabClickListener);
         video.setOnClickListener(mTabClickListener);
@@ -209,9 +206,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.main_tab_0:
+              /*  case R.id.main_tab_0:
                     setCurrentMenu(0);
-                    break;
+                    break;*/
                 case R.id.main_tab_1:
                     setCurrentMenu(1);
                     break;
@@ -256,13 +253,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     public void setCurrentMenu(int currentMenu) {
         this.currentMenu = currentMenu;
 
-        bt_home.setSelected(false);
+        //bt_home.setSelected(false);
         //bt_game.setSelected(false);
         bt_video.setSelected(false);
         bt_manager.setSelected(false);
         menu_game_hub_bt.setSelected(false);
 
-        tv_home.setTextColor(colorNormal);
+        //tv_home.setTextColor(colorNormal);
         //tv_game.setTextColor(colorNormal);
         menu_gamehub_tv.setTextColor(colorNormal);
         tv_video.setTextColor(colorNormal);
@@ -273,10 +270,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 //        }
 //        switchFragment(currentMenu);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        if (null == recommendFragment) {
+      /*  if (null == recommendFragment) {
             recommendFragment = new RecommendFragment();
             transaction.add(R.id.main_list_fragments, recommendFragment);
-        }
+        }*/
         if (null == classifyFragment) {
             classifyFragment = new ClassifyFragment();
             transaction.add(R.id.main_list_fragments, classifyFragment);
@@ -290,7 +287,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             transaction.add(R.id.main_list_fragments, managerFragment);
         }
         switch (currentMenu) {
-            case 0://推荐
+         /*   case 0://推荐
                 transaction.show(recommendFragment).hide(classifyFragment).hide(gameMainHubFragment)
                         .hide(managerFragment);
                 recommendFragment.scroll2Top();
@@ -298,7 +295,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 if (null != classifyFragment) {
                     classifyFragment.setShow(false);
                 }
-                bt_home.setSelected(true);
+                //bt_home.setSelected(true);
                 mTitleTv.setText(R.string.main_top_title_tab_1);
                 fl_notifi.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.VISIBLE);
@@ -311,7 +308,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 //埋点
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendButtonClickCount);
 
-                break;
+                break;*/
           /*  case 1://排行
                 if (null == rankingFragment) {
                     rankingFragment = new RankFragment();
@@ -333,32 +330,30 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 tv_game.setTextColor(colorDark);
                 break;*/
             case 1://分类
-                transaction.show(classifyFragment).hide(recommendFragment).hide(gameMainHubFragment)
+                transaction.show(classifyFragment).hide(gameMainHubFragment)
                         .hide(managerFragment);
                 classifyFragment.scroll2Top();
                 classifyFragment.setShow(true);
-                recommendFragment.setShow(false);
+                //recommendFragment.setShow(false);
                 bt_video.setSelected(true);
-                mTitleTv.setText("分类");
+                mTitleTv.setText(R.string.main_bottom_tab_0);
                 mDownloadBt.setVisibility(View.GONE);
                 mLikeBt.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.GONE);
-                fl_notifi.setVisibility(View.GONE);
+                fl_notifi.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.VISIBLE);
-                mRankBt.setVisibility(View.VISIBLE);
                 tv_video.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainDiscoverButtonClickCount);
                 break;
             case 2://圈子
-                transaction.show(gameMainHubFragment).hide(recommendFragment).hide(classifyFragment)
+                transaction.show(gameMainHubFragment).hide(classifyFragment)
                         .hide(managerFragment);
                 menu_game_hub_bt.setSelected(true);
-                mTitleTv.setText(R.string.main_tab_04);
+                mTitleTv.setText(R.string.main_bottom_tab_01);
                 fl_notifi.setVisibility(View.GONE);
                 mDownloadBt.setVisibility(View.GONE);
                 mLikeBt.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.VISIBLE);
-                mRankBt.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.GONE);
                 menu_gamehub_tv.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainCircleButtonClickCount);
@@ -366,17 +361,16 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
 
             case 3://管理
-                transaction.show(managerFragment).hide(recommendFragment).hide
+                transaction.show(managerFragment).hide
                         (gameMainHubFragment).hide(classifyFragment);
-                recommendFragment.setShow(false);
+                //recommendFragment.setShow(false);
                 if (null != classifyFragment) {
                     classifyFragment.setShow(false);
                 }
                 bt_manager.setSelected(true);
-                mTitleTv.setText("管理");
+                mTitleTv.setText(R.string.main_bottom_tab_02);
                 mDownloadBt.setVisibility(View.VISIBLE);
                 mLikeBt.setVisibility(View.VISIBLE);
-                mRankBt.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
@@ -444,10 +438,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 break;
             case R.id.main_hub_bt:
                 startActivity(new Intent(context, HubPostsActivity.class));
-                break;
-            case R.id.main_rank_bt:
-                startActivity(new Intent(context, RankActivity.class));
-                MobclickAgent.onEvent(context, UMEventNameConstant.mainRankButtonClickCount);
                 break;
             case R.id.iv_icon_title:
                 startActivity(new Intent(context, UserCenterActivity.class));

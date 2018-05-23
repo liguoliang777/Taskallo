@@ -36,19 +36,6 @@
             android:textSize="@dimen/title_size"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/main_rank_bt"
-            android:layout_width="@dimen/dm074"
-            android:layout_height="@dimen/dm052"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dm022"
-            android:paddingRight="@dimen/dm032"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_paihang"
-            android:visibility="gone" />
-
         <FrameLayout
             android:id="@+id/fl_notifi_fl"
             android:layout_width="wrap_content"
@@ -77,7 +64,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_tongzhi" />
+                android:src="@drawable/post_add" />
         </FrameLayout>
 
         <ImageView
@@ -151,35 +138,6 @@
         android:background="@color/white">
 
         <LinearLayout
-            android:id="@+id/main_tab_0"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingBottom="2dp">
-
-            <Button
-                android:id="@+id/menu_home_bt1"
-                android:layout_width="@dimen/dm044"
-                android:layout_height="@dimen/dm044"
-                android:background="@drawable/seletor_home_bottom_hot_bt"
-                android:clickable="false"
-                android:enabled="false" />
-
-            <TextView
-                android:id="@+id/menu_home_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
-                android:layout_marginTop="2dp"
-                android:text="热门"
-                android:textColor="@color/color_333333"
-                android:textSize="@dimen/dm016" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/main_tab_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -194,7 +152,7 @@
                 android:id="@+id/menu_video_bt"
                 android:layout_width="@dimen/dm044"
                 android:layout_height="@dimen/dm044"
-                android:background="@drawable/seletor_home_bottom_category_bt"
+                android:background="@drawable/seletor_main_bottom_tab_01_bt"
                 android:clickable="false"
                 android:enabled="false"
                 android:focusable="false" />
@@ -205,41 +163,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
-                android:text="分类"
+                android:text="@string/main_bottom_tab_0"
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/dm016" />
         </LinearLayout>
 
-        <!--        <LinearLayout
-                    android:id="@+id/menu_game_ll"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingBottom="2dp">
-
-                    <Button
-                        android:id="@+id/menu_game_bt"
-                        android:layout_width="@dimen/dm044"
-                        android:layout_height="@dimen/dm044"
-                        android:background="@drawable/menu_game"
-                        android:clickable="false"
-                        android:enabled="false"
-                        android:focusable="false"/>
-
-                    <TextView
-                        android:id="@+id/menu_game_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="2dp"
-                        android:text="排行"
-                        android:textColor="@color/color_333333"
-                        android:textSize="@dimen/dm016"/>
-                </LinearLayout>-->
 
         <LinearLayout
             android:id="@+id/main_tab_2"
@@ -257,7 +185,7 @@
                 android:layout_width="@dimen/dm044"
                 android:layout_height="@dimen/dm044"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/seletor_home_bottom_hub_bt"
+                android:background="@drawable/seletor_main_bottom_tab_02"
                 android:clickable="false"
                 android:enabled="false"
                 android:focusable="false" />
@@ -269,7 +197,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
-                android:text="@string/main_tab_04"
+                android:text="@string/main_bottom_tab_01"
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/dm016" />
         </LinearLayout>
@@ -289,7 +217,7 @@
                 android:id="@+id/menu_manager_bt"
                 android:layout_width="@dimen/dm044"
                 android:layout_height="@dimen/dm044"
-                android:background="@drawable/seletor_home_bottom_manage_bt"
+                android:background="@drawable/seletor_main_bottom_tab_03"
                 android:clickable="false"
                 android:enabled="false"
                 android:focusable="false" />
@@ -300,10 +228,38 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
-                android:text="管理"
+                android:text="@string/main_bottom_tab_02"
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/dm016" />
         </LinearLayout>
+        <!-- <LinearLayout
+             android:id="@+id/main_tab_0"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_gravity="bottom"
+             android:layout_weight="1"
+             android:gravity="center"
+             android:orientation="vertical"
+             android:paddingBottom="2dp">
+
+             <Button
+                 android:id="@+id/menu_home_bt1"
+                 android:layout_width="@dimen/dm044"
+                 android:layout_height="@dimen/dm044"
+                 android:background="@drawable/seletor_home_bottom_hot_bt"
+                 android:clickable="false"
+                 android:enabled="false" />
+
+             <TextView
+                 android:id="@+id/menu_home_tv"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginBottom="2dp"
+                 android:layout_marginTop="2dp"
+                 android:text="热门"
+                 android:textColor="@color/color_333333"
+                 android:textSize="@dimen/dm016" />
+         </LinearLayout>-->
     </LinearLayout>
 
 
@@ -312,7 +268,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ll_bot_tab"
-        android:layout_below="@id/main_home_title_rlay" />
+        android:layout_below="@id/main_home_title_rlay"
+        android:visibility="invisible" />
 
     <View
         android:layout_width="match_parent"
