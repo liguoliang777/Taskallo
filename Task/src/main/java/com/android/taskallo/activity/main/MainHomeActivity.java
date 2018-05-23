@@ -771,4 +771,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     }
 
 
+    public void onMeTopPhoneClick(View view) {
+        ToastUtil.show(this, "點ddd");
+    }
+
+    public void onMeTopEmailClick(View view) {
+        ToastUtil.show(this, "5555");
+    }
 }

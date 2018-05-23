@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -248,15 +249,15 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dm241"
+            android:layout_height="@dimen/dm255"
             android:layout_marginTop="@dimen/dm084"
             android:background="@color/mainColor"></View>
 
         <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
             android:id="@+id/iv_icon_title"
             android:layout_width="@dimen/dm108"
-            android:layout_centerHorizontal="true"
             android:layout_height="@dimen/dm108"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dm040"
             android:scaleType="fitXY"
             fresco:actualImageScaleType="fitXY"
@@ -265,18 +266,60 @@
             fresco:placeholderImageScaleType="centerCrop"
             fresco:progressBarImage="@drawable/ic_user_icon_bg"
             fresco:roundAsCircle="true" />
+
         <TextView
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/iv_icon_title"
+            android:id="@+id/me_user_name_tv"
             android:layout_width="wrap_content"
-            android:textColor="@color/white"
-            android:text="用戶名字"
-            android:textSize="@dimen/dm032"
-            android:maxLength="12"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_icon_title"
+            android:layout_centerHorizontal="true"
             android:ellipsize="end"
-            android:textStyle="bold"
+            android:gravity="center"
+            android:maxWidth="@dimen/dm400"
             android:paddingTop="@dimen/dm020"
-            android:layout_height="wrap_content" />
+            android:singleLine="true"
+            android:text="名字的似懂非懂"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dm032"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm176"
+            android:layout_below="@id/me_user_name_tv"
+            android:layout_marginLeft="@dimen/dm020"
+            android:layout_marginRight="@dimen/dm020"
+            android:layout_marginTop="@dimen/dm040"
+            android:paddingLeft="@dimen/dm060"
+            android:paddingRight="@dimen/dm060"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/dm016"
+            app:cardElevation="@dimen/dm010">
+
+            <RelativeLayout
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dm086"
+                android:background="@color/white"
+                android:onClick="onMeTopPhoneClick"></RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dm002"
+                android:layout_below="@id/me_user_name_tv"
+                android:layout_gravity="center_vertical"
+                android:background="@color/red" />
+
+            <RelativeLayout
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dm086"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
+                android:onClick="onMeTopEmailClick"></RelativeLayout>
+        </android.support.v7.widget.CardView>
+
 
     </RelativeLayout>
 
