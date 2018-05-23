@@ -44,7 +44,7 @@
                 android:layout_marginRight="@dimen/dm018"
                 android:paddingTop="@dimen/dm002"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_sousu" />
+                android:src="@drawable/ic_search" />
 
             <ImageView
                 android:id="@+id/but_fork"

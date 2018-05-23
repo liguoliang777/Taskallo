@@ -14,7 +14,7 @@
         ngame:left_but="@drawable/ic_back"
         ngame:left_tv_visable="true"
         ngame:left_text="@string/about"
-        ngame:left_text_size="18sp"
+        ngame:left_text_size="@dimen/dm018"
         ngame:right_but_visable="false"/>
 
     <ImageView

@@ -19,9 +19,10 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
@@ -104,9 +105,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private int currentMenu;
     private FragmentViewPagerAdapter adapter;
     private FragmentManager fragmentManager;
-    private LinearLayout  menu_game_hub, video, manager;
-    private Button  bt_game, bt_video, bt_manager;
-    private TextView  tv_video, tv_manager, mEditProfileTv, tv_notifi_num,
+    private LinearLayout video, manager;
+    private RelativeLayout menu_game_hub;
+    private Button bt_game, bt_video, bt_manager;
+    private TextView tv_video, tv_manager, mEditProfileTv, tv_notifi_num,
             menu_gamehub_tv, mTitleTv;
     private int colorDark;
     private int colorNormal;
@@ -114,7 +116,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private List<Fragment> mfragmentlist = new ArrayList<>();
     private int rbIndex;
     private ImageView im_toSearch, mDownloadBt, mLikeBt, mHubBt;
-    private FrameLayout fl_notifi;
+    private ImageButton fl_notifi;
     private SimpleDraweeView mIconIv;
     private String pwd;
     private SharedPreferences preferences;
@@ -134,7 +136,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         editor = preferences.edit();
         //home = (LinearLayout) findViewById(R.id.main_tab_0);
         //game = (LinearLayout) findViewById(R.id.menu_game_ll);
-        menu_game_hub = (LinearLayout) findViewById(R.id.main_tab_2);
+        menu_game_hub = (RelativeLayout) findViewById(R.id.main_tab_2);
         video = (LinearLayout) findViewById(R.id.main_tab_1);
         manager = (LinearLayout) findViewById(R.id.main_tab_3);
 
@@ -152,7 +154,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         //标题上面的消息和搜索
         im_toSearch = (ImageView) findViewById(R.id.im_toSearch);
-        fl_notifi = (FrameLayout) findViewById(R.id.fl_notifi_fl);
+        fl_notifi = (ImageButton) findViewById(R.id.fl_notifi_fl);
         tv_notifi_num = (TextView) findViewById(R.id.tv_notifi_num); //右上角消息数目
 
         mIconIv = (SimpleDraweeView) findViewById(R.id.iv_icon_title);

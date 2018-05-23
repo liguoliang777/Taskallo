@@ -18,7 +18,7 @@ public class AboutNgameZoneActivity extends BaseFgActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_about_ngame_zone);
+        this.setContentView(R.layout.activity_about);
 
         findViewById(R.id.left_bt).setOnClickListener(new View.OnClickListener() {
             @Override

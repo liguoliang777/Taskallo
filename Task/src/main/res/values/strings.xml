@@ -62,8 +62,6 @@
     <string name="update_cancel">取消</string>
     <string name="update_background">后台运行</string>
     <string name="update_goon">继续更新</string>
-    <string name="update_log"><p font="10">1.重新设计的UI界面</p><br /><p font="10">2.优化后台多线程下载逻辑</p><br /><p font="10">3.修复已知Bug</p></string>
-
     <string name="download">下载</string>
 
     <!-- Game相关 -->
@@ -91,9 +89,7 @@
     <string name="game_hub_submit">提交</string>
     <string name="game_hub_choose_module">选择板块</string>
     <string name="game_hub_choose_game">选择游戏</string>
-    <string name="game_hub_choose_game_expl">&#160;&#160;&#160;&#160;以下游戏目前均没有进行手柄适配，如果您希望这一款游
-        戏支持手柄玩法请将这款游戏加入投票推荐，已经加入投票推荐的游戏无法再次添加进入投票环节。每个
-        自然月参入投票的游戏获得投票最多的游戏将会获得优先手柄适配，已经适配的游戏将不再参入投票。</string>
+    <string name="game_hub_choose_game_expl">&#160;&#160;&#160;&#160;。</string>
     <string name="game_hub_no_find">没找到自己喜欢的游戏？</string>
     <string name="game_hub_click_hear">点击这里</string>
     <string name="game_hub_sub_name">提交游戏名字</string>
@@ -109,7 +105,6 @@
     <string name="user_info">账号信息</string>
     <string name="user_photo">我的头像</string>
     <string name="user_nick_name">我的昵称</string>
-    <string name="user_login_name">Ngame账号</string>
     <string name="user_level">我的等级</string>
     <string name="user_nb">我的N币</string>
     <string name="user_level_nb">等级与N币</string>
@@ -139,16 +134,16 @@
 
     <!-- About相关 -->
     <string name="about">关于</string>
-    <string name="about_code">Ngame 1.01</string>
-    <string name="about_copyright">Ngame 版权所有(c) 2016 宁美国度</string>
+    <string name="about_code">Taskallo 1.01</string>
+    <string name="about_copyright">Taskallo 版权所有(c)</string>
 
     <!-- 免责声明 相关 -->
     <string name="disclaimer">免责声明</string>
 
     <!-- 联系我们 相关 -->
     <string name="contact_us">联系我们</string>
-    <string name="contact_phone">027-88889999</string>
-    <string name="contact_email">zeng@ngame.cn</string>
+    <string name="contact_phone">027-</string>
+    <string name="contact_email"></string>
     <string name="contact_address">武汉市洪山区广八路天宝佳苑C座</string>
 
     <!--公司信息-->
@@ -168,15 +163,10 @@
 
     <!-- 手柄助手 相关 -->
     <string name="pad_mapping_sprite">映射精灵</string>
-    <string name="pad_mapping_sprite_ngame">Ngame映射精灵</string>
+    <string name="pad_mapping_sprite_ngame">映射精灵</string>
     <string name="pad_download">下载</string>
     <string name="pad_tool_desc">
-        Ngame映射精灵，您的手柄辅助神器！随时随地，战个痛快！\r\n\r\n
-        Ngame映射精灵专门为专业玩家打造的Root触屏映射应用，实现使用Ngame手柄玩触屏操作的所有游戏，升级操控体验。\r\n\r\n
-        【自由映射】自定义按键映射，可DIY按键，告别触屏的束缚。\r\n\r\n
-        【操作简单】免Root，只需要通过蓝牙连接手柄就可以愉快的战斗。\r\n\r\n
-        【极致控制】与Ngame手柄结合，更强、更稳、更准，释放您的战斗力！\r\n\r\n
-        【畅快游戏】全民超神、全民突击、全名破坏神、全民枪战、穿越火线、独立防线、王者联盟、魔龙与勇士、热血传奇、乱斗西游、全名奇迹、自由之战、超级城之光等热门游戏全覆盖，想怎么玩就怎么玩！\r\n\r\n
+     ""
     </string>
 
     <!-- 下拉刷新和上拉加载更多的文本 -->
@@ -198,12 +188,6 @@
     <string name="pull_to_refresh_network_error">网络异常，请稍候重试</string>
     <string name="no_network">网络异常,请检查网络设置</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
-    <string name="about_text_line_1">NGAMEZONE是一个好玩的游戏下载平台。我们提供Android、iOS两种版本的客户端产品。</string>
-    <string name="about_text_line_2">NGAMEZONE收集全球热门、好玩的游戏，每日推荐一些经过编辑独立评测的游戏，玩家在这里可以交流、分享，
-        独特的圈子功能让游戏玩家更加靠近。</string>
-    <string name="about_text_line_3">NGAMEZONE独有的云端存储功能，让热门大作即使更换手机，也能持续畅玩。</string>
-    <string name="about_text_line_4">NGAMEZONE支持数百款游戏的手柄操作，一个游戏，两种玩法，
-        即使那些游戏原生并不支持手柄，通过我们的云映射功能，也能轻松享受。数十家手柄品牌方官方推荐，值得信赖。</string>
     <string name="see_more">查看更多</string>
     <string name="ngamezone">账号：</string>
     <string name="requery_failed">请求失败,稍后重试</string>
