@@ -13,12 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import org.json.JSONArray;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import com.android.taskallo.R;
 import com.android.taskallo.adapter.InstalledGameAdapter;
@@ -29,6 +23,11 @@ import com.android.taskallo.core.utils.AppInstallHelper;
 import com.android.taskallo.core.utils.FileUtil;
 import com.android.taskallo.view.ActionItem;
 import com.android.taskallo.view.QuickAction;
+
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 下载更新fragment (懒加载-当滑动到当前fragment时，才去加载。而不是进入到activity时，加载所有fragment)
@@ -51,7 +50,6 @@ public class ManagerFragment extends Fragment {
     private List<PackageInfo> packageInfos = new ArrayList<>();
     private PackageInfo packageInfo = new PackageInfo();
     private ApplicationInfo applicationInfo;
-    private TextView emptyTv;
     private int oldLength;
 
     @Nullable
@@ -61,8 +59,6 @@ public class ManagerFragment extends Fragment {
         Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_manager, container, false);
         listView =  view.findViewById(R.id.manager_lv);
-        emptyTv =  view.findViewById(R.id.manager_empty_tv);
-        emptyTv.setText("列表为空~");
         return view;
     }
 
@@ -146,13 +142,6 @@ public class ManagerFragment extends Fragment {
                     }
                 }
             }
-            if (localAppList == null || localAppList.size() == 0) {
-                emptyTv.setVisibility(View.VISIBLE);
-            } else {
-                emptyTv.setVisibility(View.GONE);
-            }
-        } else {
-            emptyTv.setVisibility(View.VISIBLE);
         }
         return localAppList;
     }

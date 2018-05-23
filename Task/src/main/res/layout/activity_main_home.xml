@@ -12,20 +12,6 @@
         android:layout_height="@dimen/app_title_height"
         android:background="@color/mainColor">
 
-        <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/iv_icon_title"
-            android:layout_width="@dimen/dm052"
-            android:layout_height="@dimen/dm052"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dm034"
-            android:scaleType="fitXY"
-            fresco:actualImageScaleType="fitXY"
-            fresco:failureImage="@drawable/use_icon_def_120"
-            fresco:placeholderImage="@drawable/use_icon_def_120"
-            fresco:placeholderImageScaleType="centerCrop"
-            fresco:progressBarImage="@drawable/use_icon_def_120"
-            fresco:roundAsCircle="true" />
-
         <TextView
             android:id="@+id/title_tv"
             android:layout_width="wrap_content"
@@ -42,12 +28,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dm012"
+            android:background="@null"
             android:clickable="true"
             android:padding="@dimen/dm020"
-            android:background="@null"
-            android:layout_marginRight="@dimen/dm012"
-            android:src="@drawable/ic_add"
-            >
+            android:src="@drawable/ic_add">
 
         </ImageButton>
 
@@ -68,7 +53,7 @@
             android:src="@drawable/ic_search" />
 
         <ImageView
-            android:id="@+id/main_download_bt"
+            android:id="@+id/main_edit_bt"
             android:layout_width="@dimen/dm084"
             android:layout_height="@dimen/dm052"
             android:layout_alignParentRight="true"
@@ -78,23 +63,8 @@
             android:paddingRight="@dimen/dm032"
             android:paddingTop="@dimen/dm010"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_download"
+            android:src="@drawable/ic_me_top_edit"
             android:textSize="@dimen/dm028"
-            android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/main_like_bt"
-            android:layout_width="@dimen/dm072"
-            android:layout_height="@dimen/dm052"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/main_download_bt"
-            android:gravity="center_vertical"
-            android:paddingBottom="@dimen/dm010"
-            android:paddingLeft="@dimen/dm020"
-            android:paddingRight="@dimen/dm020"
-            android:paddingTop="@dimen/dm010"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_xihuanrukou"
             android:visibility="gone" />
 
         <ImageView
@@ -159,8 +129,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_weight="1"
-            android:clickable="true"
             android:background="@color/white"
+            android:clickable="true"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingBottom="2dp">
@@ -179,11 +149,11 @@
                 android:id="@+id/tv_notifi_num"
                 android:layout_width="@dimen/dm014"
                 android:layout_height="@dimen/dm014"
+                android:layout_marginLeft="@dimen/dm003"
                 android:layout_toRightOf="@id/menu_game_hub_bt"
                 android:background="@drawable/shape_circle_green"
                 android:gravity="center"
                 android:text=""
-                android:layout_marginLeft="@dimen/dm003"
                 android:textColor="@color/white"
                 android:textSize="@dimen/dm012"
                 android:visibility="visible" />
@@ -268,8 +238,48 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ll_bot_tab"
-        android:layout_below="@id/main_home_title_rlay"
-        android:visibility="invisible" />
+        android:layout_below="@id/main_home_title_rlay" />
+
+    <RelativeLayout
+        android:id="@+id/main_me_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm241"
+            android:layout_marginTop="@dimen/dm084"
+            android:background="@color/mainColor"></View>
+
+        <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/iv_icon_title"
+            android:layout_width="@dimen/dm108"
+            android:layout_centerHorizontal="true"
+            android:layout_height="@dimen/dm108"
+            android:layout_marginTop="@dimen/dm040"
+            android:scaleType="fitXY"
+            fresco:actualImageScaleType="fitXY"
+            fresco:failureImage="@drawable/ic_user_icon_bg"
+            fresco:placeholderImage="@drawable/ic_user_icon_bg"
+            fresco:placeholderImageScaleType="centerCrop"
+            fresco:progressBarImage="@drawable/ic_user_icon_bg"
+            fresco:roundAsCircle="true" />
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/iv_icon_title"
+            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:text="用戶名字"
+            android:textSize="@dimen/dm032"
+            android:maxLength="12"
+            android:ellipsize="end"
+            android:textStyle="bold"
+            android:paddingTop="@dimen/dm020"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"

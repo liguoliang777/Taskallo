@@ -31,10 +31,8 @@ import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.activity.classify.ClassifyFragment;
 import com.android.taskallo.activity.hub.HubPostsActivity;
-import com.android.taskallo.activity.manager.DownloadCenterActivity;
 import com.android.taskallo.activity.manager.ManagerFragment;
 import com.android.taskallo.activity.rank.RankFragment;
-import com.android.taskallo.activity.sm.NecessaryOrLikeActivity;
 import com.android.taskallo.adapter.FragmentViewPagerAdapter;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.VersionInfo;
@@ -115,7 +113,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private String imgUrl;
     private List<Fragment> mfragmentlist = new ArrayList<>();
     private int rbIndex;
-    private ImageView im_toSearch, mDownloadBt, mLikeBt, mHubBt;
+    private ImageView im_toSearch, mEditBt, mHubBt;
     private ImageButton fl_notifi;
     private SimpleDraweeView mIconIv;
     private String pwd;
@@ -123,6 +121,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private SharedPreferences.Editor editor;
     private Button menu_game_hub_bt;
     private MainHubFragment gameMainHubFragment;
+    private RelativeLayout mMeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +136,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         //home = (LinearLayout) findViewById(R.id.main_tab_0);
         //game = (LinearLayout) findViewById(R.id.menu_game_ll);
         menu_game_hub = (RelativeLayout) findViewById(R.id.main_tab_2);
+        mMeLayout = (RelativeLayout) findViewById(R.id.main_me_layout);
         video = (LinearLayout) findViewById(R.id.main_tab_1);
         manager = (LinearLayout) findViewById(R.id.main_tab_3);
 
@@ -159,14 +159,12 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         mIconIv = (SimpleDraweeView) findViewById(R.id.iv_icon_title);
         mTitleTv = (TextView) findViewById(R.id.title_tv);
-        mDownloadBt = (ImageView) findViewById(R.id.main_download_bt);
-        mLikeBt = (ImageView) findViewById(R.id.main_like_bt);
+        mEditBt = (ImageView) findViewById(R.id.main_edit_bt);
         mHubBt = (ImageView) findViewById(R.id.main_hub_bt);
         im_toSearch.setOnClickListener(this);
         fl_notifi.setOnClickListener(this);
         mIconIv.setOnClickListener(this);
-        mDownloadBt.setOnClickListener(this);
-        mLikeBt.setOnClickListener(this);
+        mEditBt.setOnClickListener(this);
         mHubBt.setOnClickListener(this);
 
         colorDark = getResources().getColor(R.color.mainColor);
@@ -301,7 +299,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mTitleTv.setText(R.string.main_top_title_tab_1);
                 fl_notifi.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.VISIBLE);
-                mDownloadBt.setVisibility(View.GONE);
+                mEditBt.setVisibility(View.GONE);
                 mLikeBt.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.GONE);
                 mRankBt.setVisibility(View.GONE);
@@ -326,7 +324,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mTitleTv.setText("排行榜");
                 fl_notifi.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
-                mDownloadBt.setVisibility(View.GONE);
+                mEditBt.setVisibility(View.GONE);
                 mLikeBt.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.GONE);
                 tv_game.setTextColor(colorDark);
@@ -339,8 +337,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 //recommendFragment.setShow(false);
                 bt_video.setSelected(true);
                 mTitleTv.setText(R.string.main_bottom_tab_0);
-                mDownloadBt.setVisibility(View.GONE);
-                mLikeBt.setVisibility(View.GONE);
+                mEditBt.setVisibility(View.GONE);
+                mMeLayout.setVisibility(View.GONE);
+                mIconIv.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.VISIBLE);
@@ -353,8 +352,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 menu_game_hub_bt.setSelected(true);
                 mTitleTv.setText(R.string.main_bottom_tab_01);
                 fl_notifi.setVisibility(View.GONE);
-                mDownloadBt.setVisibility(View.GONE);
-                mLikeBt.setVisibility(View.GONE);
+                mEditBt.setVisibility(View.GONE);
+                mIconIv.setVisibility(View.GONE);
+                mMeLayout.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.GONE);
                 menu_gamehub_tv.setTextColor(colorDark);
@@ -370,9 +370,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     classifyFragment.setShow(false);
                 }
                 bt_manager.setSelected(true);
-                mTitleTv.setText(R.string.main_bottom_tab_02);
-                mDownloadBt.setVisibility(View.VISIBLE);
-                mLikeBt.setVisibility(View.VISIBLE);
+                mTitleTv.setText("");
+                mMeLayout.setVisibility(View.VISIBLE);
+                mIconIv.setVisibility(View.VISIBLE);
+                mEditBt.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.GONE);
                 mHubBt.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
@@ -430,18 +431,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             case R.id.fl_notifi_fl:
                 startActivity(new Intent(context, MsgCenterActivity.class));
                 break;
-            case R.id.main_download_bt:
-                startActivity(new Intent(context, DownloadCenterActivity.class));
-                break;
-            case R.id.main_like_bt:
-                Intent intent = new Intent(context, NecessaryOrLikeActivity.class);
-                intent.putExtra(KeyConstant.likeOrNecessaryExtraKey, KeyConstant.EXTRA_LIKE);
-                startActivity(intent);
-                break;
             case R.id.main_hub_bt:
                 startActivity(new Intent(context, HubPostsActivity.class));
                 break;
             case R.id.iv_icon_title:
+            case R.id.main_edit_bt:
                 startActivity(new Intent(context, UserCenterActivity.class));
                 break;
         }
