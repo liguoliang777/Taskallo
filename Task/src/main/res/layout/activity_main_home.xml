@@ -160,6 +160,7 @@
             android:layout_gravity="bottom"
             android:layout_weight="1"
             android:clickable="true"
+            android:background="@color/white"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingBottom="2dp">
@@ -176,8 +177,8 @@
 
             <TextView
                 android:id="@+id/tv_notifi_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dm014"
+                android:layout_height="@dimen/dm014"
                 android:layout_toRightOf="@id/menu_game_hub_bt"
                 android:background="@drawable/shape_circle_green"
                 android:gravity="center"

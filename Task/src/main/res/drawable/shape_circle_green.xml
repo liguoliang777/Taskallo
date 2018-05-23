@@ -2,8 +2,5 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval"
     android:useLevel="false">
-    <solid android:color="@color/font_logout_red" />
-    <size
-        android:width="@dimen/dm016"
-        android:height="@dimen/dm015" />
+    <solid android:color="@android:color/holo_red_light" />
 </shape>
