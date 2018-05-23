@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.taskallo.adapter.GameKeyListViewAdapter;
 import com.android.taskallo.bean.GameInfo;
 import com.android.taskallo.bean.GameKey;

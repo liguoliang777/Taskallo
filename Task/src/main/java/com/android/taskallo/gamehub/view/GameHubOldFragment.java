@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.taskallo.adapter.GameHubAdapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
 import com.android.taskallo.bean.HotInfo;

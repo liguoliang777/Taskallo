@@ -17,7 +17,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;

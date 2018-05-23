@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;

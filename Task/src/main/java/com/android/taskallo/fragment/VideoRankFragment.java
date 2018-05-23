@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;

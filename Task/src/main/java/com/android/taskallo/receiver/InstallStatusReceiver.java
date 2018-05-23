@@ -8,7 +8,7 @@ import android.content.pm.PackageManager;
 
 import java.util.List;
 
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.taskallo.core.fileload.FileLoadManager;
 import com.android.taskallo.core.fileload.FileLoadService;
 

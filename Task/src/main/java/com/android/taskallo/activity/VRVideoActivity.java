@@ -14,7 +14,7 @@ import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.search.view.SearchActivity;
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.taskallo.video.view.VRVideoFragmentNew;
 import com.android.taskallo.video.view.VideoPlayActivity;
 import com.android.taskallo.view.LoadStateView;

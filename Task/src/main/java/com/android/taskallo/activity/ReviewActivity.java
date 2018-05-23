@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.android.taskallo.R;
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.Token;
 import com.android.taskallo.core.net.GsonRequest;

@@ -21,7 +21,7 @@ import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.fragment.SimpleDialogFragment;
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.BaseTitleBar;
 import com.android.volley.AuthFailureError;

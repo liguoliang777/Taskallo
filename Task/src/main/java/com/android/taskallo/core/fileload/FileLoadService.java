@@ -23,7 +23,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.taskallo.bean.ThreadInfo;
 import com.android.taskallo.core.db.DatabaseHelper;
 import com.android.taskallo.core.db.DatabaseManager;

@@ -21,7 +21,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.List;
 
 import com.android.taskallo.R;
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.taskallo.adapter.GameListAdapter;
 import com.android.taskallo.bean.GameInfo;
 import com.android.taskallo.bean.JsonResult;

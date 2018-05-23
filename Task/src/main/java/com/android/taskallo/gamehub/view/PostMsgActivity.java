@@ -26,7 +26,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import com.android.taskallo.R;
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.taskallo.bean.UpLoadBean;
 import com.android.taskallo.core.utils.APIErrorUtils;
 import com.android.taskallo.core.utils.Constant;

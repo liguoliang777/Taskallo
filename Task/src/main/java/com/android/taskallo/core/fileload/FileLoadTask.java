@@ -10,7 +10,7 @@ import java.net.ProtocolException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.taskallo.bean.ThreadInfo;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.Log;

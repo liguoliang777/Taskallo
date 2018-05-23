@@ -14,7 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
 import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.taskallo.activity.sm.NecessaryOrLikeActivity;
 import com.android.taskallo.adapter.NeccssaryFragmentAdapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;

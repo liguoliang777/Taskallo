@@ -29,15 +29,15 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/dm054"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dm032"
+            android:layout_marginLeft="@dimen/dm015"
             android:layout_weight="1"
-            android:background="@color/mainColorLight"
+            android:background="@color/white_transparent"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/img_1"
-                android:layout_width="@dimen/dm025"
-                android:layout_height="@dimen/dm025"
+                android:layout_width="@dimen/dm022"
+                android:layout_height="@dimen/dm022"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dm018"
@@ -75,7 +75,7 @@
                 android:lines="1"
                 android:maxLines="1"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/e5e5e5"
                 android:textSize="@dimen/dm026" />
 
         </RelativeLayout>
@@ -92,11 +92,11 @@
             android:focusableInTouchMode="false"
             android:gravity="center"
             android:onClick="onSeachBackClick"
-            android:paddingLeft="@dimen/dm032"
-            android:paddingRight="@dimen/dm032"
+            android:paddingLeft="@dimen/dm023"
+            android:paddingRight="@dimen/dm023"
             android:text="取消"
             android:textColor="@color/white"
-            android:textSize="@dimen/dm026" />
+            android:textSize="@dimen/dm028" />
     </LinearLayout>
     <!--提示背景-->
     <com.android.taskallo.view.LoadStateView

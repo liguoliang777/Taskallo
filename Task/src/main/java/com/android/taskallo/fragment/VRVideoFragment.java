@@ -13,7 +13,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;

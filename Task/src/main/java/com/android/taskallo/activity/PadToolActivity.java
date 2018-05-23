@@ -18,7 +18,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.android.taskallo.R;
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.taskallo.adapter.ProgressBarStateListener;
 import com.android.taskallo.bean.GameInfo;
 import com.android.taskallo.bean.JsonResult;

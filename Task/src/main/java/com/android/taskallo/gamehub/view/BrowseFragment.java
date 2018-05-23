@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -41,7 +41,7 @@ import com.android.taskallo.view.popupwin.DeleteBrowsePop;
 import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
 import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
 
-import static com.android.taskallo.util.App.user;
+import static com.android.taskallo.App.user;
 
 /**
  * 浏览fragment (懒加载-当滑动到当前fragment时，才去加载。而不是进入到activity时，加载所有fragment)

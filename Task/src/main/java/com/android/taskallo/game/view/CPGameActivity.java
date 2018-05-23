@@ -22,7 +22,7 @@ import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.search.view.SearchActivity;
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.taskallo.video.view.VideoDetailActivity;
 import com.android.taskallo.view.BannerView;
 import com.android.taskallo.view.BaseTitleBar;

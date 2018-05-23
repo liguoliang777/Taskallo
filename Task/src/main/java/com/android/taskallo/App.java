@@ -1,4 +1,4 @@
-package com.android.taskallo.util;
+package com.android.taskallo;
 
 import android.app.Application;
 import android.content.Context;
@@ -81,6 +81,7 @@ public class App extends Application {
         UMShareAPI.get(this);
         initUmengKey();
         Log.setLevel(Log.DEBUG);    //设置Log打印级别
+        android.util.Log.d("", "启动!");
         Config.DEBUG = true;
 
     }

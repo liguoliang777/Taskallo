@@ -22,7 +22,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.taskallo.core.fileload.FileLoadManager;
 import com.android.taskallo.core.utils.Constant;
 

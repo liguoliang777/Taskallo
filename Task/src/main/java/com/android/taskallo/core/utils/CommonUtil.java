@@ -31,7 +31,7 @@ import com.android.taskallo.R;
 import com.android.taskallo.exception.NoSDCardException;
 import com.android.taskallo.fragment.OneBtDialogFragment;
 import com.android.taskallo.user.view.LoginActivity;
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 
 import java.io.File;
 

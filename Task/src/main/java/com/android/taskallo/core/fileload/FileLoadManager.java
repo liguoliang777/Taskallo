@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.android.taskallo.util.App;
+import com.android.taskallo.App;
 import com.android.taskallo.core.utils.AppInstallHelper;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.TextUtil;
