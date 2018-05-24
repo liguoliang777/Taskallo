@@ -142,7 +142,7 @@
 
     <!-- 联系我们 相关 -->
     <string name="contact_us">联系我们</string>
-    <string name="contact_phone">027-</string>
+    <string name="contact_phone">-</string>
     <string name="contact_email"></string>
     <string name="contact_address">武汉市洪山区广八路天宝佳苑C座</string>
 
@@ -224,4 +224,8 @@
     <string name="main_top_title_tab_1">看板</string>
     <string name="main_bottom_tab_02">我的</string>
     <string name="main_bottom_tab_0">项目</string>
+    <string name="phone">电话</string>
+    <string name="no_edited_yet">未填写</string>
+    <string name="email">邮箱</string>
+    <string name="me_sync">同步</string>
 </resources>

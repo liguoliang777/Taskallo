@@ -170,7 +170,19 @@
         <item name="android:textSize">14dp</item>
         <item name="android:textColor">@color/color_989999</item>
     </style>
-
+    <style name="me_item_title_text_size">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/dm024</item>
+        <item name="android:textColor">@color/color_333333</item>
+    </style>
+    <style name="me_top_item_switch_style">
+        <!-- Active switch 打开时的拇指按钮的颜色 轨迹颜色默认为30%这个颜色 -->
+        <item name="colorControlActivated">@color/mainColor</item>
+        <!-- Inactive thumb color switch关闭时的拇指按钮的颜色 -->
+      <!--  <item name="colorSwitchThumbNormal">@color/colorHomeTitle</item>
+        &lt;!&ndash; Inactive track color(30% transparency) switch关闭时的轨迹的颜色  30%这个颜色 &ndash;&gt;
+        <item name="android:colorForeground">@color/colorPhoneBind</item>-->
+    </style>
     <!--进度条 -->
     <style name="NumberProgressBar_MyDef">
         <item name="android:layout_height">wrap_content</item>

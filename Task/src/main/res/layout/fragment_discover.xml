@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:background="@color/f5f5f5"
         android:divider="@null"
+        android:visibility="gone"
         android:scrollbars="none"/>
 
     <com.android.taskallo.view.LoadStateView
