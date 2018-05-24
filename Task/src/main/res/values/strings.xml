@@ -232,4 +232,6 @@
     <string name="change_pwd">修改密码</string>
     <string name="clean_cache">清除缓存</string>
     <string name="other">其他</string>
+    <string name="privacy">隐私条款</string>
+    <string name="share">分享此应用</string>
 </resources>

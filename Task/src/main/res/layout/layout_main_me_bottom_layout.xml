@@ -17,7 +17,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dm002"
-            android:layout_alignParentBottom="true"
             android:background="@color/f0f0f0"></View>
 
         <ImageView
@@ -92,7 +91,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dm002"
-            android:layout_alignParentBottom="true"
             android:background="@color/f0f0f0"></View>
 
         <ImageView
@@ -147,9 +145,10 @@
             android:background="@color/f0f0f0"></View>
     </RelativeLayout>
 
-    <!--  .....................其他 ...................... -->
+
+    <!--  ..................... 帮助 ...................... -->
     <RelativeLayout
-        android:id="@+id/me_item_other_layout"
+        android:id="@+id/main_me_item_help"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dm080"
         android:layout_marginTop="@dimen/dm020"
@@ -159,7 +158,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dm002"
-            android:layout_alignParentBottom="true"
             android:background="@color/f0f0f0"></View>
 
         <ImageView
@@ -167,7 +165,7 @@
             android:layout_height="@dimen/dm032"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dm028"
-            android:src="@drawable/ic_clean" />
+            android:src="@drawable/ic_help" />
 
         <TextView
             style="@style/me_item_title_text_size"
@@ -175,7 +173,97 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/me_item_line_margin_left"
-            android:text="@string/other" />
+            android:text="@string/help" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/me_item_line_margin_left"
+            android:background="@color/f0f0f0"></View>
+    </RelativeLayout>
+    <!--  .....................隐私条款...................... -->
+    <RelativeLayout
+        android:id="@+id/main_me_item_privacy"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dm080"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dm032"
+            android:layout_height="@dimen/dm032"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dm028"
+            android:src="@drawable/ic_privacy" />
+
+        <TextView
+            style="@style/me_item_title_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/me_item_line_margin_left"
+            android:text="@string/privacy" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/me_item_line_margin_left"
+            android:background="@color/f0f0f0"></View>
+    </RelativeLayout>
+    <!--  .....................意见与反馈...................... -->
+    <RelativeLayout
+        android:id="@+id/main_me_item_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dm080"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dm032"
+            android:layout_height="@dimen/dm032"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dm028"
+            android:src="@drawable/ic_feedback" />
+
+        <TextView
+            style="@style/me_item_title_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/me_item_line_margin_left"
+            android:text="@string/feedback" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:layout_alignParentBottom="true"
+            android:background="@color/f0f0f0"></View>
+    </RelativeLayout>
+    <!--分享-->
+    <RelativeLayout
+        android:id="@+id/main_me_item_idea"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dm080"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dm032"
+            android:paddingLeft="@dimen/dm002"
+            android:layout_height="@dimen/dm032"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dm028"
+            android:src="@drawable/ic_share" />
+
+        <TextView
+            style="@style/me_item_title_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/me_item_line_margin_left"
+            android:text="@string/share" />
 
         <View
             android:layout_width="match_parent"
@@ -188,6 +276,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dm078"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dm040"
         android:layout_marginLeft="@dimen/dm032"
         android:layout_marginRight="@dimen/dm032"
         android:layout_marginTop="@dimen/dm040"
