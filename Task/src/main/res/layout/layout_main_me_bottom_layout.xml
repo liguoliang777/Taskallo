@@ -4,43 +4,198 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/f5f5f5"
-    tools:showIn="@layout/activity_main_home"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:showIn="@layout/activity_main_home">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dm080"
         android:layout_marginTop="@dimen/dm127"
         android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/dm028"
-        android:paddingRight="@dimen/dm032">
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:layout_alignParentBottom="true"
+            android:background="@color/f0f0f0"></View>
 
         <ImageView
             android:layout_width="@dimen/dm032"
             android:layout_height="@dimen/dm032"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dm028"
             android:src="@drawable/ic_tongbu" />
 
         <TextView
             style="@style/me_item_title_text_size"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dm040"
-            android:layout_weight="1"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/me_item_line_margin_left"
             android:text="@string/me_sync" />
 
         <android.support.v7.widget.SwitchCompat
-            android:id="@+id/me_top_sync_switch_bt"
+            android:id="@+id/me_item_sync_switch_bt"
             android:layout_width="wrap_content"
-            android:theme="@style/me_top_item_switch_style"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/dm032"
+            android:theme="@style/me_top_item_switch_style" />
 
-    <View
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/me_item_line_margin_left"
+            android:background="@color/f0f0f0"></View>
+    </RelativeLayout>
+    <!-- ....................团队................................-->
+    <RelativeLayout
+        android:id="@+id/main_me_item_team"
         android:layout_width="match_parent"
-        android:layout_marginLeft="@dimen/dm100"
-        android:layout_height="@dimen/dm002"
-        android:background="@color/f0f0f0"></View>
+        android:layout_height="@dimen/dm080"
+        android:background="@color/white"
+        android:orientation="horizontal">
 
+        <ImageView
+            android:layout_width="@dimen/dm032"
+            android:layout_height="@dimen/dm032"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dm028"
+            android:src="@drawable/ic_team" />
+
+        <TextView
+            style="@style/me_item_title_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/me_item_line_margin_left"
+            android:text="@string/team" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:layout_alignParentBottom="true"
+            android:background="@color/f0f0f0"></View>
+    </RelativeLayout>
+    <!--  .....................修改密码...................... -->
+    <RelativeLayout
+        android:id="@+id/main_me_item_change_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dm080"
+        android:layout_marginTop="@dimen/dm020"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:layout_alignParentBottom="true"
+            android:background="@color/f0f0f0"></View>
+
+        <ImageView
+            android:layout_width="@dimen/dm032"
+            android:layout_height="@dimen/dm032"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dm028"
+            android:src="@drawable/ic_change_pwd" />
+
+        <TextView
+            style="@style/me_item_title_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/me_item_line_margin_left"
+            android:text="@string/change_pwd" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/me_item_line_margin_left"
+            android:background="@color/f0f0f0"></View>
+    </RelativeLayout>
+    <!--  .....................清除缓存...................... -->
+    <RelativeLayout
+        android:id="@+id/main_me_item_clean_cache"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dm080"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dm032"
+            android:layout_height="@dimen/dm032"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dm028"
+            android:src="@drawable/ic_clean" />
+
+        <TextView
+            style="@style/me_item_title_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/me_item_line_margin_left"
+            android:text="@string/clean_cache" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:layout_alignParentBottom="true"
+            android:background="@color/f0f0f0"></View>
+    </RelativeLayout>
+
+    <!--  .....................其他 ...................... -->
+    <RelativeLayout
+        android:id="@+id/me_item_other_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dm080"
+        android:layout_marginTop="@dimen/dm020"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:layout_alignParentBottom="true"
+            android:background="@color/f0f0f0"></View>
+
+        <ImageView
+            android:layout_width="@dimen/dm032"
+            android:layout_height="@dimen/dm032"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dm028"
+            android:src="@drawable/ic_clean" />
+
+        <TextView
+            style="@style/me_item_title_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/me_item_line_margin_left"
+            android:text="@string/other" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:layout_alignParentBottom="true"
+            android:background="@color/f0f0f0"></View>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dm078"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/dm032"
+        android:layout_marginRight="@dimen/dm032"
+        android:layout_marginTop="@dimen/dm040"
+        android:background="@drawable/shape_white_empty"
+        android:gravity="center"
+        android:onClick="onLogoutClick"
+        android:text="@string/user_logout"
+        android:textColor="@color/font_logout_red"
+        android:textSize="@dimen/dm026"
+        android:textStyle="bold" />
 </LinearLayout>

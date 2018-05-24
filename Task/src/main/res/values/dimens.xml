@@ -123,4 +123,5 @@
     <dimen name="heart_size_width">32.5dp</dimen>
 
     <dimen name="login_bt_margin_left_right">@dimen/dm064</dimen>
+    <dimen name="me_item_line_margin_left">@dimen/dm100</dimen>
 </resources>

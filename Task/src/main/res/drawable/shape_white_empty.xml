@@ -4,5 +4,7 @@
     <!-- 填充 -->
     <solid android:color="@color/white" />
     <corners android:radius="@dimen/dp_10"/>
-
+    <stroke android:color="@color/f0f0f0"
+        android:width="@dimen/dm001"
+        ></stroke>
 </shape>

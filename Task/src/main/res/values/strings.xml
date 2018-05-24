@@ -228,4 +228,8 @@
     <string name="no_edited_yet">未填写</string>
     <string name="email">邮箱</string>
     <string name="me_sync">同步</string>
+    <string name="team">团队</string>
+    <string name="change_pwd">修改密码</string>
+    <string name="clean_cache">清除缓存</string>
+    <string name="other">其他</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.android.taskallo.activity.main;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,9 +16,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.text.format.Formatter;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -55,6 +59,7 @@ import com.android.taskallo.push.view.MessageDetailActivity;
 import com.android.taskallo.push.view.MsgCenterActivity;
 import com.android.taskallo.push.view.NotifyMsgDetailActivity;
 import com.android.taskallo.search.view.SearchActivity;
+import com.android.taskallo.user.view.LoginActivity;
 import com.android.taskallo.user.view.UserCenterActivity;
 import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
@@ -777,5 +782,69 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
     public void onMeTopEmailClick(View view) {
         ToastUtil.show(this, "5555");
+    }
+
+    /**
+     * 处理退出操作
+     */
+    public void onLogoutClick(View view) {
+        showLogoutDialog();
+    }
+
+    //退出登录
+    public void showLogoutDialog() {
+
+        final Dialog dialog = new Dialog(context, R.style.Dialog_From_Bottom_Style);
+        //填充对话框的布局
+        View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_logout, null);
+
+        inflate.findViewById(R.id.logout_yes_bt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+                logoutClearData();
+                startActivity(new Intent(context, LoginActivity.class));
+                context.finish();
+            }
+        });
+        inflate.findViewById(R.id.logout_cancel_bt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        dialog.setContentView(inflate);//将布局设置给Dialog
+
+        setDialogWindow(dialog);
+    }
+
+    private void setDialogWindow(Dialog dialog) {
+        Window dialogWindow = dialog.getWindow(); //获取当前Activity所在的窗体
+        dialogWindow.setGravity(Gravity.BOTTOM);//设置Dialog从窗体底部弹出
+        WindowManager.LayoutParams params = dialogWindow.getAttributes();   //获得窗体的属性
+        //params.y = 20;  Dialog距离底部的距离
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;//设置Dialog距离底部的距离
+        dialogWindow.setAttributes(params); //将属性设置给窗体
+        dialog.show();//显示对话框
+    }
+
+    //退出登录
+    private void logoutClearData() {
+        SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME,
+                MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(Constant.CONFIG_USER_PWD, "");
+        editor.putString(Constant.CONFIG_LOGIN_TYPE, Constant.PHONE);
+        editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
+        editor.apply();
+
+        App.userHeadUrl = "";
+        App.loginType = Constant.PHONE;
+        App.nickName = "";
+        App.userCode = "";
+        App.userName = "";
+        App.passWord = "";
+        App.token = null;
+        App.user = null;
     }
 }

@@ -24,9 +24,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
-import com.android.taskallo.activity.main.MainHomeActivity;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.User;
 import com.android.taskallo.core.net.GsonRequest;
@@ -40,7 +40,6 @@ import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.exception.NoSDCardException;
 import com.android.taskallo.fragment.OneBtDialogFragment;
-import com.android.taskallo.App;
 import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -303,34 +302,6 @@ public class UserCenterActivity extends BaseFgActivity {
         }
     }
 
-    //退出登录
-    public void showLogoutDialog() {
-
-        final Dialog dialog = new Dialog(content, R.style.Dialog_From_Bottom_Style);
-        //填充对话框的布局
-        View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_logout, null);
-
-        inflate.findViewById(R.id.logout_yes_bt).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-                logoutClearData();
-                startActivity(new Intent(content, LoginActivity.class));
-                content.finish();
-                MainHomeActivity.context.finish();
-            }
-        });
-        inflate.findViewById(R.id.logout_cancel_bt).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
-        dialog.setContentView(inflate);//将布局设置给Dialog
-
-        setDialogWindow(dialog);
-    }
-
     private void setDialogWindow(Dialog dialog) {
         Window dialogWindow = dialog.getWindow(); //获取当前Activity所在的窗体
         dialogWindow.setGravity(Gravity.BOTTOM);//设置Dialog从窗体底部弹出
@@ -405,7 +376,7 @@ public class UserCenterActivity extends BaseFgActivity {
                                 showReLoginDialog();
                             }
                             //需要重新登录
-                            logoutClearData();
+                            //logoutClearData();
                             //UserCenterActivity.this.finish();
                         } else {
                             Toast.makeText(UserCenterActivity.this, "修改失败！", Toast.LENGTH_SHORT)
@@ -471,33 +442,6 @@ public class UserCenterActivity extends BaseFgActivity {
     }
 
     ImageLoader imageLoader = ImageLoader.getInstance();
-
-    /**
-     * 处理退出操作
-     */
-    public void onLogoutClick(View view) {
-        showLogoutDialog();
-    }
-
-    //退出登录
-    private void logoutClearData() {
-        SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME,
-                MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(Constant.CONFIG_USER_PWD, "");
-        editor.putString(Constant.CONFIG_LOGIN_TYPE, Constant.PHONE);
-        editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
-        editor.apply();
-
-        App.userHeadUrl = "";
-        App.loginType = Constant.PHONE;
-        App.nickName = "";
-        App.userCode = "";
-        App.userName = "";
-        App.passWord = "";
-        App.token = null;
-        App.user = null;
-    }
 
 
     private void setUserInfo() {
