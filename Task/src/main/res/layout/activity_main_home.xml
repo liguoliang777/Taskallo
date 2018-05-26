@@ -68,21 +68,6 @@
             android:src="@drawable/ic_me_top_edit"
             android:textSize="@dimen/dm028"
             android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/main_hub_bt"
-            android:layout_width="@dimen/dm084"
-            android:layout_height="@dimen/dm052"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:paddingBottom="@dimen/dm010"
-            android:paddingLeft="@dimen/dm020"
-            android:paddingRight="@dimen/dm032"
-            android:paddingTop="@dimen/dm010"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_main_hub_bt"
-            android:textSize="@dimen/dm028"
-            android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout
@@ -149,8 +134,8 @@
 
             <TextView
                 android:id="@+id/tv_notifi_num"
-                android:layout_width="@dimen/dm016"
-                android:layout_height="@dimen/dm016"
+                android:layout_width="@dimen/dm015"
+                android:layout_height="@dimen/dm015"
                 android:layout_toRightOf="@id/menu_game_hub_bt"
                 android:background="@drawable/shape_circle_green"
                 android:gravity="center"

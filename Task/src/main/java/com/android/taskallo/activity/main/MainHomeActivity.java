@@ -36,7 +36,6 @@ import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.activity.classify.ClassifyFragment;
-import com.android.taskallo.activity.hub.HubPostsActivity;
 import com.android.taskallo.activity.rank.RankFragment;
 import com.android.taskallo.adapter.FragmentViewPagerAdapter;
 import com.android.taskallo.bean.JsonResult;
@@ -122,7 +121,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private String imgUrl;
     private List<Fragment> mfragmentlist = new ArrayList<>();
     private int rbIndex;
-    private ImageView im_toSearch, mEditBt, mHubBt;
+    private ImageView im_toSearch, mEditBt;
     private ImageButton fl_notifi;
     private SimpleDraweeView mIconIv;
     private String pwd;
@@ -178,12 +177,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         mTitleTv = (TextView) findViewById(R.id.title_tv);
         mEditBt = (ImageView) findViewById(R.id.main_edit_bt);
-        mHubBt = (ImageView) findViewById(R.id.main_hub_bt);
         im_toSearch.setOnClickListener(this);
         fl_notifi.setOnClickListener(this);
         mIconIv.setOnClickListener(this);
         mEditBt.setOnClickListener(this);
-        mHubBt.setOnClickListener(this);
 
         colorDark = getResources().getColor(R.color.mainColor);
         colorNormal = getResources().getColor(R.color.color_333333);
@@ -493,7 +490,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mEditBt.setVisibility(View.GONE);
                 mMeLayout.setVisibility(View.GONE);
                 mIconIv.setVisibility(View.GONE);
-                mHubBt.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 tv_video.setTextColor(colorDark);
@@ -507,7 +503,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mEditBt.setVisibility(View.GONE);
                 mIconIv.setVisibility(View.GONE);
                 mMeLayout.setVisibility(View.INVISIBLE);
-                mHubBt.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.GONE);
                 menu_gamehub_tv.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainCircleButtonClickCount);
@@ -526,7 +521,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mIconIv.setVisibility(View.VISIBLE);
                 mEditBt.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.GONE);
-                mHubBt.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
                 tv_manager.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainManagerButtonClickCount);
@@ -581,9 +575,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 break;
             case R.id.fl_notifi_fl:
                 startActivity(new Intent(context, MsgCenterActivity.class));
-                break;
-            case R.id.main_hub_bt:
-                startActivity(new Intent(context, HubPostsActivity.class));
                 break;
             case R.id.iv_icon_title:
             case R.id.main_edit_bt:
