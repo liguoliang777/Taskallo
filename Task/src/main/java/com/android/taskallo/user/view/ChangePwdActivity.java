@@ -15,10 +15,12 @@ import android.widget.TextView;
 
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
+import com.android.taskallo.activity.main.MainHomeActivity;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.fragment.SimpleDialogFragment;
 import com.android.taskallo.App;
@@ -63,11 +65,11 @@ public class ChangePwdActivity extends BaseFgActivity {
                 MODE_PRIVATE);
         tokenSp = preferences.getString(Constant.CONFIG_TOKEN, "");
         editor = preferences.edit();
+        context = ChangePwdActivity.this;
         BaseTitleBar titleBar = (BaseTitleBar) findViewById(R.id.title_bar);
         titleBar.setOnLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChangePwdActivity.this, UserCenterActivity.class));
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);//左进,右出
             }
@@ -83,11 +85,10 @@ public class ChangePwdActivity extends BaseFgActivity {
             @Override
             public void onClick(View v) {
                 String oldPwdStr = et_old_pwd.getText().toString().trim();
-                String ensurePwdStr = ensurePwdEt.getText().toString().trim();
                 String newPwdETStr1 = newPwdET1.getText().toString().trim();
+                String ensurePwdStr = ensurePwdEt.getText().toString().trim();
 
                 if (oldPwdStr == null || oldPwdStr.length() <= 0) {
-                    context = ChangePwdActivity.this;
                     ToastUtil.show(context, "旧密码不能为空哦");
                     return;
                 }
@@ -130,16 +131,16 @@ public class ChangePwdActivity extends BaseFgActivity {
                     return;
                 }
                 int code = result.code;
+                Log.d("111", newPwdETStr1 + "修改:code" + result.msg);
                 if (code == 0) {
                     String token = (String) result.data;
-                    editor.putString(Constant.CONFIG_TOKEN, token).commit();
-                    showDialog(true, "密码重置成功！");
-                    //logoutClearData();
+                    editor.putString(Constant.CONFIG_USER_PWD, newPwdETStr1);
+                    editor.putString(Constant.CONFIG_TOKEN, token);
+                    App.token = token;
+                    editor.commit();
+                    showDialog(true, "密码重置成功");
                 } else if (code >= -4 && code <= -1) {
                     showReLoginDialog();
-                    //需要重新登录
-                    logoutClearData();
-                    //UserCenterActivity.this.finish();
                 } else {
                     showDialog(false, result.msg);
                 }
@@ -150,7 +151,7 @@ public class ChangePwdActivity extends BaseFgActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                ToastUtil.show(context, "修改密码失败，请检查网络连接!");
+                ToastUtil.show(context, "修改失败，请检查网络连接!");
             }
         };
 
@@ -198,24 +199,10 @@ public class ChangePwdActivity extends BaseFgActivity {
                 Intent intent = new Intent(ChangePwdActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
+                MainHomeActivity.context.finish();
             }
         });
         dialogFragment.show(ft, "successDialog");
-    }
-
-    //退出登录
-    private void logoutClearData() {
-        editor.putString(Constant.CONFIG_USER_PWD, "");
-        editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
-        editor.apply();
-
-        App.userHeadUrl = "";
-        App.nickName = "";
-        App.userCode = "";
-        App.userName = "";
-        App.passWord = "";
-        App.token = null;
-        App.user = null;
     }
 
     /**
@@ -251,12 +238,9 @@ public class ChangePwdActivity extends BaseFgActivity {
             @Override
             public void onClick(View v) {
                 dialogFragment.dismiss();
-              /*  if (isSuccess) {
-                    Intent intent = new Intent(ChangePwdActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                if (isSuccess) {
                     finish();
-                }*/
-                finish();
+                }
             }
         });
         dialogFragment.show(ft, "successDialog");

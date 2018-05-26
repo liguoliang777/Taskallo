@@ -23,14 +23,14 @@ public class KeyConstant {
     public static final String PICTURE_STR = "pictureStr";
     public static final String GENDER = "gender";
     public static final String TOKEN = "token";
-    public static final String newPassword = "newPassword";
+    public static final String newPassword = "newPassWord";
     public static final String IS_FROM_USER_CENTER = "is_from_user_center";
     public static final String AVATAR_HAS_CHANGED = "avatar_has_changed";
     public static final String category_Id = "categoryId";
     public static final String TITLE = "title";
     public static final String DESC = "desc";
     public static final String URL = "url";
-    public static final String old_Password = "oldPassword";
+    public static final String old_Password = "oldPassWord";
     public static final String game_Name = "game_Name";
     public static final String VALUE = "value";
     public static final String GAME_LABELS = "game_labels";
