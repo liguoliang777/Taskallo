@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:paddingRight="@dimen/dm032"
+            android:paddingRight="@dimen/dm024"
             android:theme="@style/me_top_item_switch_style" />
 
         <View
@@ -137,6 +137,17 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/me_item_line_margin_left"
             android:text="@string/clean_cache" />
+
+        <TextView
+            android:id="@+id/me_item_tv_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/dm032"
+            android:text="0KB"
+            android:textColor="@color/b3"
+            android:textSize="@dimen/dm024" />
 
         <View
             android:layout_width="match_parent"
@@ -251,10 +262,10 @@
 
         <ImageView
             android:layout_width="@dimen/dm032"
-            android:paddingLeft="@dimen/dm002"
             android:layout_height="@dimen/dm032"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dm028"
+            android:paddingLeft="@dimen/dm002"
             android:src="@drawable/ic_share" />
 
         <TextView

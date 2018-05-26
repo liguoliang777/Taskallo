@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.text.format.Formatter;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -48,6 +50,8 @@ import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.AppInstallHelper;
 import com.android.taskallo.core.utils.CommonUtil;
 import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.DataCleanManager;
+import com.android.taskallo.core.utils.DialogHelper;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.LoginHelper;
@@ -131,6 +135,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private TextView mNameIv;
     private TextView mPhoneTv;
     private TextView mEmailTv;
+    private TextView tvClear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -298,16 +303,58 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             }
         }
     };
+    private int delayMillis = 100;
     View.OnClickListener mItemLayoutClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
+
                 //修改密碼
                 case R.id.main_me_item_change_pwd:
                     startActivity(new Intent(context, ChangePwdActivity.class));
                     break;
+
                 //清除缓存
                 case R.id.main_me_item_clean_cache:
+                    String text = tvClear.getText().toString();
+                    if ("0KB".equals(text)) {
+                        ToastUtil.show(context, "没有缓存了~");
+                        return;
+                    }
+
+                    if (text.endsWith("MB")) {
+                        delayMillis = 1000;
+                    } else if (text.endsWith("KB")) {
+                        delayMillis = 200;
+                    } else {
+                        delayMillis = 1000;
+                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("确定清除缓存吗？");
+                    //    设置一个PositiveButton
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            DataCleanManager.clearAllCache(context);
+                            final DialogHelper dialogHelper = new DialogHelper
+                                    (getSupportFragmentManager(), context);
+                            dialogHelper.showAlert("清理中...", false);
+
+                            tvClear.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dialogHelper.hideAlert();
+                                    ToastUtil.show(context, "缓存已清除~");
+                                    if (null != tvClear) {
+                                        tvClear.setText("0KB");
+                                    }
+                                }
+                            }, delayMillis);
+                        }
+                    });
+                    builder.setNegativeButton("取消", null);
+                    builder.show();
                     break;
                 case R.id.main_tab_2:
                     break;
@@ -336,7 +383,14 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         boolean isAvatarChanged = preferences.getBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
         if (isAvatarChanged) {
         }
-
+        //显示App缓存
+        tvClear = (TextView) findViewById(R.id.me_item_tv_clear);
+        try {
+            String cacheSize = DataCleanManager.getTotalCacheSize(this);
+            tvClear.setText(cacheSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         findViewById(R.id.main_me_item_change_pwd).setOnClickListener(mItemLayoutClickListener);
         findViewById(R.id.main_me_item_clean_cache).setOnClickListener(mItemLayoutClickListener);
     }
