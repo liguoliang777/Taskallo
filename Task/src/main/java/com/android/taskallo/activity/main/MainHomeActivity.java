@@ -60,6 +60,7 @@ import com.android.taskallo.push.view.MessageDetailActivity;
 import com.android.taskallo.push.view.MsgCenterActivity;
 import com.android.taskallo.push.view.NotifyMsgDetailActivity;
 import com.android.taskallo.search.view.SearchActivity;
+import com.android.taskallo.user.view.ChangePwdActivity;
 import com.android.taskallo.user.view.LoginActivity;
 import com.android.taskallo.user.view.UserCenterActivity;
 import com.android.taskallo.util.ToastUtil;
@@ -297,7 +298,24 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             }
         }
     };
-
+    View.OnClickListener mItemLayoutClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                //修改密碼
+                case R.id.main_me_item_change_pwd:
+                    startActivity(new Intent(context, ChangePwdActivity.class));
+                    break;
+                //清除缓存
+                case R.id.main_me_item_clean_cache:
+                    break;
+                case R.id.main_tab_2:
+                    break;
+                case R.id.main_tab_3:
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onResume() {
@@ -319,6 +337,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         if (isAvatarChanged) {
         }
 
+        findViewById(R.id.main_me_item_change_pwd).setOnClickListener(mItemLayoutClickListener);
+        findViewById(R.id.main_me_item_clean_cache).setOnClickListener(mItemLayoutClickListener);
     }
 
     /**
