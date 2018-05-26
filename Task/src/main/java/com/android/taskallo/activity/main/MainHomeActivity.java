@@ -128,6 +128,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private RelativeLayout mMeLayout;
     private String mToken = "";
     private TextView mNameIv;
+    private TextView mPhoneTv;
+    private TextView mEmailTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,6 +167,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         mIconIv = (SimpleDraweeView) findViewById(R.id.iv_icon_title);
         mNameIv = (TextView) findViewById(R.id.me_user_name_tv);
+        mPhoneTv = (TextView) findViewById(R.id.me_user_phone_tv);
+        mEmailTv = (TextView) findViewById(R.id.me_user_email_tv);
 
         mTitleTv = (TextView) findViewById(R.id.title_tv);
         mEditBt = (ImageView) findViewById(R.id.main_edit_bt);
@@ -268,6 +272,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             android.util.Log.d(TAG, "得到数据");
             mIconIv.setImageURI(mUser.headPortrait);
             mNameIv.setText(mUser.nickName);
+            mPhoneTv.setText(mUser.phoneNumber);
+            mEmailTv.setText(mUser.email);
         }
     }
 

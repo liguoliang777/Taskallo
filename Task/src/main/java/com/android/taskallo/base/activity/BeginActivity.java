@@ -16,22 +16,36 @@
 package com.android.taskallo.base.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.main.MainHomeActivity;
+import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.core.fileload.FileLoadService;
+import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.SPUtils;
 import com.android.taskallo.push.model.PushMessage;
 import com.android.taskallo.user.view.LoginActivity;
 import com.android.taskallo.util.ConvUtil;
+import com.android.taskallo.util.ToastUtil;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -46,19 +60,20 @@ public class BeginActivity extends FragmentActivity {
     public static final String TAG = BeginActivity.class.getSimpleName();
     private boolean isFirstInstall = true;
     private Timer timer;
-    private BeginActivity content;
+    private BeginActivity mContext;
     private long SHOW_TIME = 1000;
     private long SHOW_TIME_isFirstInstall = 1000;
     private Button skipBt;
     private FrameLayout adsParent;
     private String pwd;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //设置全屏
         setContentView(R.layout.activity_splash_fullscreen);
-        content = this;
+        mContext = this;
         //启动后台服务
         skipBt = (Button) findViewById(R.id.skip_bt);
         Intent serviceIntent = new Intent(this, FileLoadService.class);
@@ -82,7 +97,7 @@ public class BeginActivity extends FragmentActivity {
         }
         if (isFirstInstall) {
             Log.d(TAG, "滑动页");
-            final Intent intent = new Intent(content, GuideViewActivity.class);
+            final Intent intent = new Intent(mContext, GuideViewActivity.class);
             if (pushMsgId > 0) {
                 intent.putExtra("msgId", pushMsgId);
                 intent.putExtra("type", pushMsgType);
@@ -93,12 +108,12 @@ public class BeginActivity extends FragmentActivity {
                 public void run() {
                     startActivity(intent);
                     //更新安装状态值
-                    SPUtils.put(content, Constant.CONFIG_FIRST_INSTALL, false);
+                    SPUtils.put(mContext, Constant.CONFIG_FIRST_INSTALL, false);
                     finish();
                 }
             }, SHOW_TIME_isFirstInstall);
         } else {
-            final Intent intent = new Intent(content, MainHomeActivity.class);
+            final Intent intent = new Intent(mContext, MainHomeActivity.class);
             if (pushMsgId > 0) {
                 intent.putExtra("msgId", pushMsgId);
                 intent.putExtra("type", pushMsgType);
@@ -114,6 +129,7 @@ public class BeginActivity extends FragmentActivity {
             }, SHOW_TIME);
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -123,21 +139,70 @@ public class BeginActivity extends FragmentActivity {
         }
     }
 
+    private String userName;
+
     public void skip2Main() {
       /*  if (timer != null) {
             timer.cancel();
             timer = null;
         }*/
-        pwd = (String) SPUtils.get(this, Constant.CONFIG_USER_PWD, "");
-        Log.d(TAG, "登陆:"+pwd);
+        preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
+        userName = preferences.getString(Constant.CONFIG_USER_NAME, "");
+        pwd = preferences.getString(Constant.CONFIG_USER_PWD, "");
+        Log.d(TAG, "登陆:" + pwd);
         Intent intent;
-        if (pwd != null && !"".equals(pwd) ) {
-            intent = new Intent(content, MainHomeActivity.class);
+        if (pwd != null && !"".equals(pwd)) {
+            String url = Constant.WEB_SITE + Constant.URL_USER_LOGIN;
+
+            Response.Listener<JsonResult> succesListener = new Response
+                    .Listener<JsonResult>() {
+                @Override
+                public void onResponse(JsonResult result) {
+                    if (result == null) {
+                        Toast.makeText(mContext, "服务端异常", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (result.code == 0) {
+                        String token = (String) result.data;
+                        preferences.edit().putString(Constant.CONFIG_TOKEN, token).apply();
+                        App.token = token;
+
+                        startActivity(new Intent(mContext, MainHomeActivity.class));
+                        finish();
+                    } else {
+                        ToastUtil.show(mContext, "登录失败，" + result.msg);
+                    }
+                }
+            };
+
+            Response.ErrorListener errorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyError.printStackTrace();
+                    ToastUtil.show(mContext, "登录失败，请检查网络连接!");
+                    Log.d(TAG, "HTTP请求失败：网络连接错误！" + volleyError.getMessage());
+                }
+            };
+            Request<JsonResult> versionRequest1 = new GsonRequest<JsonResult>(Request
+                    .Method.POST, url,
+                    succesListener, errorListener, new TypeToken<JsonResult>() {
+            }.getType()) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    //设置POST请求参数
+                    Map<String, String> params = new HashMap<>();
+                    params.put(KeyConstant.loginName, userName);//uid
+                    params.put(KeyConstant.passWord, pwd);//""
+                    params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);  //
+                    return params;
+                }
+            };
+            App.requestQueue.add(versionRequest1);
         } else {
-            intent = new Intent(content, LoginActivity.class);
+            intent = new Intent(mContext, LoginActivity.class);
+            startActivity(intent);
+            finish();
         }
-        startActivity(intent);
-        finish();
         //去掉欢迎的滑动页
 /*        if (isFirstInstall) {
             Log.d(TAG, "skip2Main 滑动页");
