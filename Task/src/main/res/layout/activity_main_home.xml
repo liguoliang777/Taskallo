@@ -93,7 +93,7 @@
                 android:id="@+id/menu_video_bt"
                 android:layout_width="@dimen/dm044"
                 android:layout_height="@dimen/dm044"
-                android:background="@drawable/seletor_main_bottom_tab_01_bt"
+                android:background="@drawable/seletor_main_bottom_tab_01"
                 android:clickable="false"
                 android:enabled="false"
                 android:focusable="false" />

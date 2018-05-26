@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ import java.util.List;
  * Created by zeng on 2016/11/23.
  */
 public class MsgListFragment extends Fragment implements IPushMsgListView {
-
+    public String TAG = MsgListFragment.class.getSimpleName();
     private Context context;
     private ListView listView;
     private PushMsgLvAdapter adapter;
@@ -59,7 +60,8 @@ public class MsgListFragment extends Fragment implements IPushMsgListView {
 
     @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container,
+                             @Nullable Bundle
             savedInstanceState) {
 
         //获取初始参数
@@ -101,7 +103,8 @@ public class MsgListFragment extends Fragment implements IPushMsgListView {
                 }
 
                 //清除notification
-                NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                NotificationManager manager = (NotificationManager) context.getSystemService
+                        (Context.NOTIFICATION_SERVICE);
                 manager.cancelAll();
 
             }
@@ -114,8 +117,8 @@ public class MsgListFragment extends Fragment implements IPushMsgListView {
 
     private void setTabLayout() {
         // 添加tab
-        mTabLayout.addTab(mTabLayout.newTab().setText("全部通知"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("按项目查询"));
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(R.drawable.seletor_main_bottom_tab_01));
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(R.drawable.seletor_main_bottom_tab_02));
         mTabLayout.getTabAt(1).select();
         mTabLayout.getTabAt(0).select();
         // 这样可以自定义tab的布局与内容了
@@ -127,19 +130,19 @@ public class MsgListFragment extends Fragment implements IPushMsgListView {
         mTabLayout.setOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(XTabLayout.Tab tab) {
-                String text = (String) tab.getText();
+                Log.d(TAG, "选中1: " + tab.getPosition());
             }
 
 
             @Override
             public void onTabUnselected(XTabLayout.Tab tab) {
-                String text = (String) tab.getText();
+                Log.d(TAG, "未选中2: " + tab.getPosition());
             }
 
 
             @Override
             public void onTabReselected(XTabLayout.Tab tab) {
-                String text = (String) tab.getText();
+                Log.d(TAG, "选中3: " + tab.getPosition());
             }
         });
     }
@@ -152,7 +155,8 @@ public class MsgListFragment extends Fragment implements IPushMsgListView {
         ActionItem pointItem = new ActionItem(1, "删除消息", null);
         mItemClickQuickAction.addActionItem(pointItem);
 
-        mItemClickQuickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
+        mItemClickQuickAction.setOnActionItemClickListener(new QuickAction
+                .OnActionItemClickListener() {
             @Override
             public void onItemClick(QuickAction source, int pos, int actionId) {
 
@@ -179,7 +183,8 @@ public class MsgListFragment extends Fragment implements IPushMsgListView {
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long
+                    id) {
 
                 itemType = 2;
                 itemPosition = position;
