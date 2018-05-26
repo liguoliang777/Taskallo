@@ -65,7 +65,7 @@ public class WatchRecordModel implements IWatchRecordModel {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String,String> params = new HashMap<>();
-                        params.put("token", App.token);
+                        params.put("email", App.token);
                         params.put("userCode",userCode);
                         params.put("appTypeId","0");
                         params.put("videoId",String.valueOf(wh.getVideoId()));
@@ -108,7 +108,7 @@ public class WatchRecordModel implements IWatchRecordModel {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String,String> params = new HashMap<>();
-                    params.put("token", App.token);
+                    params.put("email", App.token);
                     params.put("userCode",userCode);
                     params.put("appTypeId","0");
                     params.put("videoId",String.valueOf(wh.getVideoId()));
@@ -150,7 +150,7 @@ public class WatchRecordModel implements IWatchRecordModel {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String,String> params = new HashMap<>();
-                    params.put("token",token);
+                    params.put("email",token);
                     params.put("userCode",userCode);
                     params.put("videoStr",videoIdStr);
                     params.put("appTypeId","0");
@@ -191,7 +191,7 @@ public class WatchRecordModel implements IWatchRecordModel {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String,String> params = new HashMap<>();
-                    params.put("token",token);
+                    params.put("email",token);
                     params.put("userCode",userCode);
                     params.put("appTypeId","0");
                     return params;

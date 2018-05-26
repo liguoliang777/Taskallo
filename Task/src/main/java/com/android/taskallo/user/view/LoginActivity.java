@@ -345,16 +345,15 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     editor.putString(Constant.CONFIG_USER_PWD, password);
                     editor.apply();
                     App.token = token;
-
                    /* User user = result.data;
-                    String token = user.token;
+                    String email = user.email;
                     String userCode = user.userCode;
-                    String headPhoto = user.headPhoto;
+                    String headPortrait = user.headPortrait;
                     String nickName = user.nickName;
 
                     SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString(Constant.CONFIG_TOKEN, token);
-                    editor.putString(Constant.CONFIG_USER_HEAD, headPhoto);//头像
+                    editor.putString(Constant.CONFIG_TOKEN, email);
+                    editor.putString(Constant.CONFIG_USER_HEAD, headPortrait);//头像
                     editor.putString(Constant.CONFIG_NICK_NAME, nickName);
                     editor.putString(Constant.CONFIG_USER_NAME, userName);
                     editor.putString(Constant.CONFIG_USER_PWD, password);
@@ -364,9 +363,9 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
                     editor.apply();
 
-                    App.token = token;
+                    App.email = email;
                     App.passWord = password;
-                    App.userHeadUrl = headPhoto;
+                    App.userHeadUrl = headPortrait;
                     App.nickName = nickName;
                     App.userName = userName;
                     App.loginType = LOGIN_TYPE;
@@ -464,12 +463,12 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     App.user = user;
 
                     SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);
+                    editor.putString(Constant.CONFIG_USER_HEAD, user.headPortrait);
                     editor.putString(Constant.CONFIG_NICK_NAME, user.nickName);
                     editor.apply();
 
                     //加载用户头像
-                    App.userHeadUrl = user.headPhoto;
+                    App.userHeadUrl = user.headPortrait;
                     App.nickName = user.nickName;
 
 //                    //跳转到用户中心
@@ -514,7 +513,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("token", App.token);
+                params.put("email", App.email);
                 return params;
             }
         };

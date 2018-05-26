@@ -14,14 +14,14 @@ public class LoginToken {
      * password : 154b998e49fee22fd86a454a0b9e511b
      * type : 1
      * status : null
-     * mobile : 13419556163
+     * phoneNumber : 13419556163
      * gender : 保密
-     * headPhoto : http://oss.ngame.cn/userDefaultAvatar/user1.png
+     * headPortrait : http://oss.ngame.cn/userDefaultAvatar/user1.png
      * appTypeId : 0
-     * isDelete : null
-     * createTime : null
-     * updateTime : null
-     * token : 014d4a6526b04ed49a780fcd1c60dc84
+     * age : null
+     * registerTime : null
+     * qqNumber : null
+     * email : 014d4a6526b04ed49a780fcd1c60dc84
      */
 
     private Object id;

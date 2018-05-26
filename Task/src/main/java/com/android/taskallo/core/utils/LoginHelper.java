@@ -64,7 +64,7 @@ public class LoginHelper {
                     App.user = user;
 
                 /*    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);
+                    editor.putString(Constant.CONFIG_USER_HEAD, user.headPortrait);
                     editor.putString(Constant.CONFIG_NICK_NAME, user.nickName);
                     editor.putString(Constant.CONFIG_USER_NAME, user.loginName);
                     editor.putString(Constant.CONFIG_USER_PWD, App.passWord);
@@ -76,7 +76,7 @@ public class LoginHelper {
                     Log.d(TAG, "重新登录.账号: " + user.loginName);
                     Log.d(TAG, "重新登录.密码: " + App.passWord);
                     Log.d(TAG, "重新.User对象密码: " + user.password);
-                    android.util.Log.d(TAG, "userToken:" + user.token);
+                    android.util.Log.d(TAG, "userToken:" + user.email);
                 } else {
                     Log.d(TAG, "重新登录 HTTP请求成功：服务端返回错误: " + result.msg);
                 }

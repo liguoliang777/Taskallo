@@ -146,7 +146,7 @@ public class ReviewActivity extends BaseFgActivity {
                 params.put("toMatterCode", String.valueOf(targetId));    //目标ID
                 params.put("value", String.valueOf((int) Math.floor(rating)));           //评分值
                 params.put("content", content);
-                params.put("token", ((App) getApplication()).token);
+                params.put("email", ((App) getApplication()).token);
                 return params;
             }
         };

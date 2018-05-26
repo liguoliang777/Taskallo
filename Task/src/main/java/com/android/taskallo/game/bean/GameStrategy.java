@@ -14,7 +14,7 @@ public class GameStrategy implements Serializable {
      * strategyTitle : 游戏手柄支持
      * strategyContent : 支持。本游戏是经过云映射处理过的游戏版本；
      * gameId : 146
-     * isDelete : 0
+     * age : 0
      */
 
     private int id;

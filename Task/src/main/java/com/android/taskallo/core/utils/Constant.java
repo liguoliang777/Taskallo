@@ -83,6 +83,7 @@ public class Constant {
     public static final int NET_STATUS_WIFI = 0x0012;//WIFI状态
     public static final String APP_TYPE_ID_0_ANDROID = "0";
     public static final String URL_GET_AUTH_CODE = "/user/getAuthCode";
+    public static final String URL_GET_USER_BY_TOKEN = "/user/getUserByToken";
     public static final String URL_MODIFY_USER_DATA = "/user/modifyUserData";
     public static final String CONFIG_LOGIN_TYPE = "loginType";
     public static final String CONFIG_USER_CODE = "config_user_code";

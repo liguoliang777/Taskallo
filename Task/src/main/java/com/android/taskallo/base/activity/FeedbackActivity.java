@@ -343,7 +343,7 @@ public class FeedbackActivity extends CommonBaseActivity implements View.OnClick
                 params.put("content", content);
                 params.put("contact", contact);
                 params.put("feedbackImage", file);
-                params.put("token", App.token);
+                params.put("email", App.token);
                 params.put("brand", mtyb);
                 params.put("model", mtype);
                 params.put("system", mtbbh);

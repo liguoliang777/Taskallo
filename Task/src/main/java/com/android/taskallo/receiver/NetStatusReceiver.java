@@ -41,7 +41,7 @@ public class NetStatusReceiver extends BroadcastReceiver{
 		NetworkInfo wifiInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 		//NetworkInfo activeInfo = manager.getActiveNetworkInfo();
 		
-		//Toast.makeText(context, "mobile:"+mobileInfo.isConnected()+" wifi:"+wifiInfo.isConnected(), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(context, "phoneNumber:"+mobileInfo.isConnected()+" wifi:"+wifiInfo.isConnected(), Toast.LENGTH_SHORT).show();
 
 		if(wifiInfo.isConnected()){
 

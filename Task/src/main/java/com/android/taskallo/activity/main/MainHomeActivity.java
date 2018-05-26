@@ -38,6 +38,7 @@ import com.android.taskallo.activity.hub.HubPostsActivity;
 import com.android.taskallo.activity.rank.RankFragment;
 import com.android.taskallo.adapter.FragmentViewPagerAdapter;
 import com.android.taskallo.bean.JsonResult;
+import com.android.taskallo.bean.User;
 import com.android.taskallo.bean.VersionInfo;
 import com.android.taskallo.core.fileload.FileLoadManager;
 import com.android.taskallo.core.fileload.FileLoadService;
@@ -125,6 +126,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private Button menu_game_hub_bt;
     private MainHubFragment gameMainHubFragment;
     private RelativeLayout mMeLayout;
+    private String mToken = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,6 +186,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         manager.setOnClickListener(mTabClickListener);
 
         pwd = App.passWord;
+        mToken = App.token;
+        if (!TextUtil.isEmpty(mToken)) {
+            getUserByToken();
+        }
         //如果用户没有主动退出，则重新登录
         new Thread(new Runnable() {
             @Override
@@ -201,6 +207,57 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         fileLoad = FileLoadManager.getInstance(this);
         //判断是否有新版本APP
         //checkUpdate();
+
+    }
+
+    /**
+     * 获取用户信息
+     */
+    private void getUserByToken() {
+        String url = Constant.WEB_SITE + Constant.URL_GET_USER_BY_TOKEN;
+        Response.Listener<JsonResult<User>> successListener = new Response
+                .Listener<JsonResult<User>>() {
+            @Override
+            public void onResponse(JsonResult<User> result) {
+                if (result == null) {
+                    ToastUtil.show(context, "服务端异常");
+                    return;
+                }
+                Log.d(TAG, "请求" + mToken);
+                if (result.code == 0) {
+                    User mUser = result.data;
+                    App.user = mUser;
+                    String loginName = mUser.loginName;
+
+
+                } else {
+                    Log.d(TAG, "HTTP请求成功：服务端返回错误：" + result.msg);
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                ToastUtil.show(context, "网络连接失败");
+                android.util.Log.e(TAG, "请求失败: " + volleyError.getMessage());
+            }
+        };
+
+        Request<JsonResult<User>> versionRequest = new GsonRequest<JsonResult<User>>(Request
+                .Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult<User>>() {
+        }.getType()) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put(KeyConstant.TOKEN, mToken);
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
+                return params;
+            }
+        };
+        App.requestQueue.add(versionRequest);
 
     }
 
@@ -830,10 +887,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
     //退出登录
     private void logoutClearData() {
-        SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME,
-                MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constant.CONFIG_USER_PWD, "");
+        editor.putString(Constant.CONFIG_TOKEN, "");
         editor.putString(Constant.CONFIG_LOGIN_TYPE, Constant.PHONE);
         editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
         editor.apply();
@@ -844,7 +899,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         App.userCode = "";
         App.userName = "";
         App.passWord = "";
-        App.token = null;
+        App.token = "";
         App.user = null;
     }
 }

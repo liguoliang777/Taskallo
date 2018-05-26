@@ -358,15 +358,15 @@ public class UserCenterActivity extends BaseFgActivity {
                         if (code == 0) {
                             ToastUtil.show(content, "资料修改成功!");
                             User user = result.data;
-                            editor.putString(Constant.CONFIG_TOKEN, user.token);
-                            editor.putString(Constant.CONFIG_USER_HEAD, user.headPhoto);
+                            editor.putString(Constant.CONFIG_TOKEN, user.email);
+                            editor.putString(Constant.CONFIG_USER_HEAD, user.headPortrait);
                             editor.putString(Constant.CONFIG_NICK_NAME, nickName);
                             editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
                             editor.putString(Constant.CONFIG_USER_CODE, user.userCode);//userCode
                             editor.apply();
 
-                            App.token = user.token;
-                            App.userHeadUrl = user.headPhoto;
+                            App.token = user.email;
+                            App.userHeadUrl = user.headPortrait;
                             App.nickName = nickName;
                             App.userCode = user.userCode;
                             UserCenterActivity.this.finish();
@@ -559,7 +559,7 @@ public class UserCenterActivity extends BaseFgActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("token", App.token);
+                params.put("email", App.email);
                 params.put("userCode", App.userCode);
                 params.put("newNickName", nickName);
                 return params;
@@ -584,7 +584,7 @@ public class UserCenterActivity extends BaseFgActivity {
                 if (result.code == 0 && result.data != null) {
                     user = result.data;
                     user = user;
-                    String userHeadPhoto = user.headPhoto;
+                    String userHeadPhoto = user.headPortrait;
                     if (userHeadPhoto != null && App.userHeadUrl != null &&
                             !App.userHeadUrl.equals(userHeadPhoto)) {
                         App.userHeadUrl = userHeadPhoto;
@@ -600,7 +600,7 @@ public class UserCenterActivity extends BaseFgActivity {
                         nickName = nickName.length() > 10 ? nickName.substring(0, 10) : nickName;
                     }
                     tv_nickname.setText(nickName);
-                    tv_account.setText(user.mobile);
+                    tv_account.setText(user.phoneNumber);
                     imageLoader.displayImage(App.userHeadUrl, img_photo, roundOptions);
 
                 } else {
@@ -628,7 +628,7 @@ public class UserCenterActivity extends BaseFgActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("token", App.token);
+                params.put("email", App.email);
                 return params;
             }
         };

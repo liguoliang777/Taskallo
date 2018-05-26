@@ -23,15 +23,15 @@ public class NecessaryListInfo implements Serializable {
      * downloadCount : 0
      * appTypeId : null
      * orderNo : 0
-     * isDelete : 0
-     * createTime : null
-     * updateTime : null
+     * age : 0
+     * registerTime : null
+     * qqNumber : null
      * toolVersion : null
      * packages : null
      * auxiliaryTools : [{"id":2,"parentId":6,"toolName":"破解工具","installDesc":"范德萨范德萨","toolLogo":"http://oss.ngame
      * .cn/auxToolLogo/1494494984130.png","toolURL":"http://oss.ngame.cn/log4j-1.2.17.jar",
      * "md5":"04a41f0a068986f0f73485cf507c0f40","uploadId":null,"fileName":"log4j-1.2.17.jar","fileSize":489884,
-     * "downloadCount":0,"appTypeId":null,"orderNo":0,"isDelete":0,"createTime":null,"updateTime":null,"toolVersion":"1.0.0",
+     * "downloadCount":0,"appTypeId":null,"orderNo":0,"age":0,"registerTime":null,"qqNumber":null,"toolVersion":"1.0.0",
      * "packages":"ferwe","auxiliaryTools":null}]
      */
 
@@ -222,9 +222,9 @@ public class NecessaryListInfo implements Serializable {
          * downloadCount : 0
          * appTypeId : null
          * orderNo : 0
-         * isDelete : 0
-         * createTime : null
-         * updateTime : null
+         * age : 0
+         * registerTime : null
+         * qqNumber : null
          * toolVersion : 1.0.0
          * packages : ferwe
          * auxiliaryTools : null

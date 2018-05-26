@@ -23,9 +23,9 @@ public class SearchGameVideoBean {
          * videoId : null
          * labelId : null
          * typeId : null
-         * isDelete : 0
-         * createTime : 1487575590000
-         * updateTime : 1487575590000
+         * age : 0
+         * registerTime : 1487575590000
+         * qqNumber : 1487575590000
          * orderNo : 0
          * advDesc :
          * type : 1
@@ -189,9 +189,9 @@ public class SearchGameVideoBean {
          * videoId : 57
          * labelId : null
          * typeId : null
-         * isDelete : 0
-         * createTime : 1487575813000
-         * updateTime : 1487575813000
+         * age : 0
+         * registerTime : 1487575813000
+         * qqNumber : 1487575813000
          * orderNo : 0
          * advDesc :
          * type : 2

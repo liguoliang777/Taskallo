@@ -17,14 +17,14 @@ public class User implements Serializable {
      * password : 60851f6e7795ca38b6c3be80e5dd951d
      * type : 1
      * status : 0
-     * mobile : 18621767596
+     * phoneNumber : 18621767596
      * gender : 男
-     * headPhoto : http://oss.ngame.cn/upload/userHead/1500454650621.png
+     * headPortrait : http://oss.ngame.cn/upload/userHead/1500454650621.png
      * appTypeId : 2
-     * isDelete : 0
-     * createTime : 1500108331000
-     * updateTime : 1500364165000
-     * token : null
+     * age : 0
+     * registerTime : 1500108331000
+     * qqNumber : 1500364165000
+     * email : null
      */
 
     public int id;
@@ -32,16 +32,14 @@ public class User implements Serializable {
     public String nickName;
     public String loginName;
     public String password;
-    public int type;
-    public int status;
-    public String mobile;
+    public String phoneNumber;
     public String gender;
-    public String headPhoto;
-    public int appTypeId;
-    public int isDelete;
-    public long createTime;
-    public long updateTime;
-    public String token;
+    public String headPortrait;
+    public int age;
+    public long registerTime;
+    public String qqNumber;
+    public String weChat;
+    public String email;
 
     @Override
     public String toString() {
@@ -51,16 +49,13 @@ public class User implements Serializable {
                 ", nickName='" + nickName + '\'' +
                 ", loginName='" + loginName + '\'' +
                 ", password='" + password + '\'' +
-                ", type=" + type +
-                ", status=" + status +
-                ", mobile='" + mobile + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", gender='" + gender + '\'' +
-                ", headPhoto='" + headPhoto + '\'' +
-                ", appTypeId=" + appTypeId +
-                ", isDelete=" + isDelete +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", token='" + token + '\'' +
+                ", headPortrait='" + headPortrait + '\'' +
+                ", age=" + age +
+                ", registerTime=" + registerTime +
+                ", qqNumber=" + qqNumber +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

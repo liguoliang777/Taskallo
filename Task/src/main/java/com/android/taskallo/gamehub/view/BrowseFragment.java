@@ -274,7 +274,7 @@ public class BrowseFragment extends BaseSearchFragment implements View.OnClickLi
             protected Map<String, String> getParams() throws AuthFailureError {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
-                params.put("token", App.token);
+                params.put("email", App.token);
                 params.put("userCode", user.userCode);
                 params.put("postIdStr", deleteId + ""); //帖子ID
                 params.put("appTypeId", "0");
