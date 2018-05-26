@@ -56,7 +56,7 @@
         android:label="@string/appName"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:allowBackup">
+        tools:replace="icon,label,theme,allowBackup">
         <activity
             android:name="com.android.taskallo.base.activity.BeginActivity"
             android:screenOrientation="portrait"

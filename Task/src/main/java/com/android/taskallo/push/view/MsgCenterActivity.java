@@ -65,12 +65,12 @@ public class MsgCenterActivity extends BaseFgActivity {
         ArrayList<Fragment> fragments = new ArrayList<>();
 
         //通知
-        MessageListFragment msgYGFragment = new MessageListFragment();
+        MsgListFragment msgYGFragment = new MsgListFragment();
         Bundle bundleYG = new Bundle();
         bundleYG.putLong("labelId", PushMessage.MSG_TYPE_TZ);
         msgYGFragment.setArguments(bundleYG);
         //活动
-        MessageListFragment msgHDFragment = new MessageListFragment();
+        MsgListFragment msgHDFragment = new MsgListFragment();
         Bundle bundleHD = new Bundle();
         bundleHD.putLong("labelId", PushMessage.MSG_TYPE_HD);
         msgHDFragment.setArguments(bundleHD);

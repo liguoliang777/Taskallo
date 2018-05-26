@@ -14,20 +14,22 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.List;
-
 import com.android.taskallo.R;
 import com.android.taskallo.push.model.PushMessage;
 import com.android.taskallo.push.presenter.IPushMsgListPresenter;
 import com.android.taskallo.push.presenter.PushMsgListPresenter;
 import com.android.taskallo.view.ActionItem;
 import com.android.taskallo.view.QuickAction;
+import com.android.taskallo.view.VideoTabView;
+import com.androidkun.xtablayout.XTabLayout;
+
+import java.util.List;
 
 /**
  * 显示消息列表
  * Created by zeng on 2016/11/23.
  */
-public class MessageListFragment extends Fragment implements IPushMsgListView {
+public class MsgListFragment extends Fragment implements IPushMsgListView {
 
     private Context context;
     private ListView listView;
@@ -44,6 +46,8 @@ public class MessageListFragment extends Fragment implements IPushMsgListView {
 
     private long labelId = 1;
     private TextView msgEmptyTv;
+    private VideoTabView videoTabView;
+    private XTabLayout mTabLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,9 +65,14 @@ public class MessageListFragment extends Fragment implements IPushMsgListView {
         //获取初始参数
         labelId = getArguments().getLong("labelId", 1);
 
-        View view = inflater.inflate(R.layout.push_message_list_fragment, container, false);
-        listView = (ListView) view.findViewById(R.id.listView);
+        View view = inflater.inflate(R.layout.fragment_msg, container, false);
+
+        listView = (ListView) view.findViewById(R.id.msg_listView);
         msgEmptyTv = (TextView) view.findViewById(R.id.no_msg_tv);
+
+        mTabLayout = (XTabLayout) view.findViewById(R.id.msg_top_tab);
+        setTabLayout();
+
         adapter = new PushMsgLvAdapter(getActivity(), getFragmentManager());
         listView.setAdapter(adapter);
 
@@ -101,6 +110,38 @@ public class MessageListFragment extends Fragment implements IPushMsgListView {
         initPop();
 
         return view;
+    }
+
+    private void setTabLayout() {
+        // 添加tab
+        mTabLayout.addTab(mTabLayout.newTab().setText("全部通知"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("按项目查询"));
+        mTabLayout.getTabAt(1).select();
+        mTabLayout.getTabAt(0).select();
+        // 这样可以自定义tab的布局与内容了
+//        mTabLayout.getTabAt(0).setCustomView(R.layout.tab_custom_view);
+//        mTabLayout.getTabAt(0).getCustomView();
+
+
+        // 设置监听
+        mTabLayout.setOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(XTabLayout.Tab tab) {
+                String text = (String) tab.getText();
+            }
+
+
+            @Override
+            public void onTabUnselected(XTabLayout.Tab tab) {
+                String text = (String) tab.getText();
+            }
+
+
+            @Override
+            public void onTabReselected(XTabLayout.Tab tab) {
+                String text = (String) tab.getText();
+            }
+        });
     }
 
     private void initPop() {

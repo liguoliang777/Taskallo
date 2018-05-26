@@ -168,4 +168,6 @@ dependencies {
 
     compile 'fm.jiecao:jiecaovideoplayer:5.8.1'
     compile 'com.android.support:cardview-v7:26.1.0'
+
+    compile 'com.androidkun:XTabLayout:1.1.3'
 }

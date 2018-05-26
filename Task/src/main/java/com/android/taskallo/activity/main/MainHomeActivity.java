@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.taskallo.App;
@@ -60,7 +61,7 @@ import com.android.taskallo.exception.NoSDCardException;
 import com.android.taskallo.fragment.SimpleDialogFragment;
 import com.android.taskallo.push.model.PushMessage;
 import com.android.taskallo.push.view.MessageDetailActivity;
-import com.android.taskallo.push.view.MsgCenterActivity;
+import com.android.taskallo.push.view.MsgListFragment;
 import com.android.taskallo.push.view.NotifyMsgDetailActivity;
 import com.android.taskallo.search.view.SearchActivity;
 import com.android.taskallo.user.view.ChangePwdActivity;
@@ -128,13 +129,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private Button menu_game_hub_bt;
-    private MainHubFragment gameMainHubFragment;
-    private RelativeLayout mMeLayout;
+    private ScrollView mMeLayout;
     private String mToken = "";
     private TextView mNameIv;
     private TextView mPhoneTv;
     private TextView mEmailTv;
     private TextView tvClear;
+    private MsgListFragment msgFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +150,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         //home = (LinearLayout) findViewById(R.id.main_tab_0);
         //game = (LinearLayout) findViewById(R.id.menu_game_ll);
         menu_game_hub = (RelativeLayout) findViewById(R.id.main_tab_2);
-        mMeLayout = (RelativeLayout) findViewById(R.id.main_me_layout);
+        mMeLayout = (ScrollView) findViewById(R.id.main_me_layout);
         video = (LinearLayout) findViewById(R.id.main_tab_1);
         manager = (LinearLayout) findViewById(R.id.main_tab_3);
 
@@ -167,7 +168,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         //标题上面的消息和搜索
         im_toSearch = (ImageView) findViewById(R.id.im_toSearch);
-        fl_notifi = (ImageButton) findViewById(R.id.fl_notifi_fl);
+        fl_notifi = (ImageButton) findViewById(R.id.main_top_add_bt);
         tv_notifi_num = (TextView) findViewById(R.id.tv_notifi_num); //右上角消息数目
 
         mIconIv = (SimpleDraweeView) findViewById(R.id.iv_icon_title);
@@ -429,9 +430,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             classifyFragment = new ClassifyFragment();
             transaction.add(R.id.main_list_fragments, classifyFragment);
         }
-        if (null == gameMainHubFragment) {
-            gameMainHubFragment = new MainHubFragment();
-            transaction.add(R.id.main_list_fragments, gameMainHubFragment);
+        if (null == msgFragment) {
+            //通知
+            msgFragment = new MsgListFragment();
+            Bundle bundleYG = new Bundle();
+            bundleYG.putLong("labelId", PushMessage.MSG_TYPE_TZ);
+            msgFragment.setArguments(bundleYG);
+            transaction.add(R.id.main_list_fragments, msgFragment);
         }
       /*  if (null == managerFragment) {
             managerFragment = new ManagerFragment();
@@ -480,8 +485,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mHubBt.setVisibility(View.GONE);
                 tv_game.setTextColor(colorDark);
                 break;*/
-            case 1://分类
-                transaction.show(classifyFragment).hide(gameMainHubFragment);
+            case 1://项目
+                transaction.show(classifyFragment).hide(msgFragment);
                 classifyFragment.scroll2Top();
                 classifyFragment.setShow(true);
                 //recommendFragment.setShow(false);
@@ -495,14 +500,14 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 tv_video.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainDiscoverButtonClickCount);
                 break;
-            case 2://圈子
-                transaction.show(gameMainHubFragment).hide(classifyFragment);
+            case 2://通知
+                transaction.show(msgFragment).hide(classifyFragment);
                 menu_game_hub_bt.setSelected(true);
                 mTitleTv.setText(R.string.main_bottom_tab_01);
                 fl_notifi.setVisibility(View.GONE);
                 mEditBt.setVisibility(View.GONE);
                 mIconIv.setVisibility(View.GONE);
-                mMeLayout.setVisibility(View.INVISIBLE);
+                mMeLayout.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.GONE);
                 menu_gamehub_tv.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainCircleButtonClickCount);
@@ -510,7 +515,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
 
             case 3://管理
-                transaction.hide(gameMainHubFragment).hide(classifyFragment);
+                transaction.hide(msgFragment).hide(classifyFragment);
                 //recommendFragment.setShow(false);
                 if (null != classifyFragment) {
                     classifyFragment.setShow(false);
@@ -573,8 +578,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             case R.id.im_toSearch:
                 startActivity(new Intent(context, SearchActivity.class));
                 break;
-            case R.id.fl_notifi_fl:
-                startActivity(new Intent(context, MsgCenterActivity.class));
+            case R.id.main_top_add_bt:
+
                 break;
             case R.id.iv_icon_title:
             case R.id.main_edit_bt:

@@ -25,7 +25,7 @@
             android:textStyle="bold" />
 
         <ImageButton
-            android:id="@+id/fl_notifi_fl"
+            android:id="@+id/main_top_add_bt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -227,17 +227,17 @@
         android:layout_below="@id/main_home_title_rlay" />
 
     <ScrollView
+        android:id="@+id/main_me_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/ll_bot_tab">
+        android:layout_above="@+id/ll_bot_tab"
+        android:visibility="gone">
 
 
         <RelativeLayout
-            android:id="@+id/main_me_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:visibility="gone">
+            android:layout_centerHorizontal="true">
 
             <View
                 android:id="@+id/main_me_layout_top_bg_view"
