@@ -166,11 +166,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         mIconIv = (SimpleDraweeView) findViewById(R.id.iv_icon_title);
         mNameIv = (TextView) findViewById(R.id.me_user_name_tv);
 
-        if (null != App.userHeadUrl) {
-            android.util.Log.d(TAG, "图片: " + App.userHeadUrl);
-            mIconIv.setImageURI(App.userHeadUrl);
-            mNameIv.setText(App.nickName);
-        }
         mTitleTv = (TextView) findViewById(R.id.title_tv);
         mEditBt = (ImageView) findViewById(R.id.main_edit_bt);
         mHubBt = (ImageView) findViewById(R.id.main_hub_bt);
@@ -270,6 +265,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
     private void setMeInfoData(User mUser) {
         if (context != null && !context.isFinishing()) {
+            android.util.Log.d(TAG, "得到数据");
             mIconIv.setImageURI(mUser.headPortrait);
             mNameIv.setText(mUser.nickName);
         }
@@ -426,7 +422,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 fl_notifi.setVisibility(View.GONE);
                 mEditBt.setVisibility(View.GONE);
                 mIconIv.setVisibility(View.GONE);
-                mMeLayout.setVisibility(View.GONE);
+                mMeLayout.setVisibility(View.INVISIBLE);
                 mHubBt.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.GONE);
                 menu_gamehub_tv.setTextColor(colorDark);
