@@ -51,7 +51,8 @@ public class Fragment0_0_Adapter extends RecyclerView.Adapter<Fragment0_0_Adapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int vieype) {
-        ViewHolder holder = new ViewHolder(mInflater.inflate(R.layout.item_classify_tviv, parent, false));
+        ViewHolder holder = new ViewHolder(mInflater.inflate(R.layout.item_classify_tviv, parent,
+                false));
         return holder;
     }
 
@@ -59,7 +60,7 @@ public class Fragment0_0_Adapter extends RecyclerView.Adapter<Fragment0_0_Adapte
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         final DiscoverTopBean discoverTopBean = list.get(position);
-        holder.mTV.setText("看板的的");
+        holder.mTV.setText("看板标题");
         holder.mIV.setImageURI(discoverTopBean.getGameLogo());
         //为ItemView设置监听器
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -20,7 +20,6 @@ import com.android.taskallo.bean.PageAction;
 import com.android.taskallo.core.utils.NetUtil;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.PicassoImageView;
-import com.android.taskallo.view.RecyclerViewDivider;
 import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverTopBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
@@ -105,8 +104,8 @@ public class Fragment0 extends BaseSearchFragment  {
         mEverydayList.add(new DiscoverTopBean());
         mEverydayAdapter = new Fragment0_0_Adapter(context, mEverydayList);
         mEverydayRv.setAdapter(mEverydayAdapter);
-        mEverydayRv.addItemDecoration(new RecyclerViewDivider(context,
-                R.dimen.main_margin_left_px, R.dimen.main_margin_20px, mEverydayList.size()));
+    /*    mEverydayRv.addItemDecoration(new RecyclerViewDivider(context,
+                R.dimen.main_margin_left_px, R.dimen.main_margin_20px, mEverydayList.size()));*/
     }
     private void init1(View headView) {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(context, 1);

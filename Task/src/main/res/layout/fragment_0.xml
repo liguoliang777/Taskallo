@@ -24,6 +24,7 @@
             android:text="星标看板" />
 
         <android.support.v7.widget.RecyclerView
+            android:paddingLeft="@dimen/dm020"
             android:id="@+id/everyday_discover_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
