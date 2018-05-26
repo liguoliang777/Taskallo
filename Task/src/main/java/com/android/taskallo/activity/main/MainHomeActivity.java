@@ -36,7 +36,7 @@ import android.widget.TextView;
 import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
-import com.android.taskallo.activity.classify.ClassifyFragment;
+import com.android.taskallo.activity.classify.Fragment0;
 import com.android.taskallo.activity.rank.RankFragment;
 import com.android.taskallo.adapter.FragmentViewPagerAdapter;
 import com.android.taskallo.bean.JsonResult;
@@ -108,7 +108,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private boolean isChecking = false;
     private RecommendFragment recommendFragment;
     private RankFragment rankingFragment;
-    private ClassifyFragment classifyFragment;
+    private Fragment0 fragment0;
     private int currentMenu;
     private FragmentViewPagerAdapter adapter;
     private FragmentManager fragmentManager;
@@ -426,9 +426,9 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             recommendFragment = new RecommendFragment();
             transaction.add(R.id.main_list_fragments, recommendFragment);
         }*/
-        if (null == classifyFragment) {
-            classifyFragment = new ClassifyFragment();
-            transaction.add(R.id.main_list_fragments, classifyFragment);
+        if (null == fragment0) {
+            fragment0 = new Fragment0();
+            transaction.add(R.id.main_list_fragments, fragment0);
         }
         if (null == msgFragment) {
             //通知
@@ -444,12 +444,12 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         }*/
         switch (currentMenu) {
          /*   case 0://推荐
-                transaction.show(recommendFragment).hide(classifyFragment).hide(gameMainHubFragment)
+                transaction.show(recommendFragment).hide(fragment0).hide(gameMainHubFragment)
                         .hide(managerFragment);
                 recommendFragment.scroll2Top();
                 recommendFragment.setShow(true);
-                if (null != classifyFragment) {
-                    classifyFragment.setShow(false);
+                if (null != fragment0) {
+                    fragment0.setShow(false);
                 }
                 //bt_home.setSelected(true);
                 mTitleTv.setText(R.string.main_top_title_tab_1);
@@ -472,8 +472,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 } else {
                     transaction.show(rankingFragment);
                 }
-                if (null != classifyFragment) {
-                    classifyFragment.setShow(false);
+                if (null != fragment0) {
+                    fragment0.setShow(false);
                 }
                 recommendFragment.setShow(false);
                 bt_game.setSelected(true);
@@ -486,12 +486,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 tv_game.setTextColor(colorDark);
                 break;*/
             case 1://项目
-                transaction.show(classifyFragment).hide(msgFragment);
-                classifyFragment.scroll2Top();
-                classifyFragment.setShow(true);
+                transaction.show(fragment0).hide(msgFragment);
                 //recommendFragment.setShow(false);
                 bt_video.setSelected(true);
-                mTitleTv.setText(R.string.main_bottom_tab_0);
+                mTitleTv.setText(R.string.look_board);
                 mEditBt.setVisibility(View.GONE);
                 mMeLayout.setVisibility(View.GONE);
                 mIconIv.setVisibility(View.GONE);
@@ -501,7 +499,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainDiscoverButtonClickCount);
                 break;
             case 2://通知
-                transaction.show(msgFragment).hide(classifyFragment);
+                transaction.show(msgFragment).hide(fragment0);
                 menu_game_hub_bt.setSelected(true);
                 mTitleTv.setText(R.string.main_bottom_tab_01);
                 fl_notifi.setVisibility(View.GONE);
@@ -515,11 +513,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
 
             case 3://管理
-                transaction.hide(msgFragment).hide(classifyFragment);
+                transaction.hide(msgFragment).hide(fragment0);
                 //recommendFragment.setShow(false);
-                if (null != classifyFragment) {
-                    classifyFragment.setShow(false);
-                }
                 bt_manager.setSelected(true);
                 mTitleTv.setText("");
                 mMeLayout.setVisibility(View.VISIBLE);

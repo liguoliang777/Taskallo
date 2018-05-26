@@ -7,28 +7,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
-
 import com.android.taskallo.R;
-import com.android.taskallo.activity.classify.AllClassifyActivity;
-import com.android.taskallo.bean.ClassifyTopBean;
 import com.android.taskallo.core.utils.KeyConstant;
-import com.android.taskallo.game.view.SeeMoreActivity;
+import com.android.taskallo.game.view.GameDetailActivity;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverTopBean;
+
+import java.util.List;
 
 /**
  * @author gp
  */
-public class ClassifyTopAdapter extends RecyclerView.Adapter<ClassifyTopAdapter.ViewHolder> {
+public class Fragment0_0_Adapter extends RecyclerView.Adapter<Fragment0_0_Adapter.ViewHolder> {
 
     private final LayoutInflater mInflater;
     private Context context;
-    private List<ClassifyTopBean> list;
+    private List<DiscoverTopBean> list;
 
     public interface OnItemClickLitener {
-        void onItemClick(View view, int position, int text);
+        void onItemClick(View view, int position, String tag);
     }
 
     private OnItemClickLitener mOnItemClickLitener;
@@ -37,14 +36,14 @@ public class ClassifyTopAdapter extends RecyclerView.Adapter<ClassifyTopAdapter.
         this.mOnItemClickLitener = mOnItemClickListener;
     }
 
-    public ClassifyTopAdapter(Context context, List<ClassifyTopBean> list) {
+    public Fragment0_0_Adapter(Context context, List<DiscoverTopBean> list) {
         super();
         this.context = context;
         this.list = list;
         mInflater = LayoutInflater.from(context);
     }
 
-    public void setList(List<ClassifyTopBean> list) {
+    public void setList(List<DiscoverTopBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -52,32 +51,22 @@ public class ClassifyTopAdapter extends RecyclerView.Adapter<ClassifyTopAdapter.
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int vieype) {
-        ViewHolder holder = new ViewHolder(mInflater.inflate(R.layout.item_classify_top_item, parent, false));
+        ViewHolder holder = new ViewHolder(mInflater.inflate(R.layout.item_classify_tviv, parent, false));
         return holder;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        if (list == null) {
-            return;
-        }
-        final ClassifyTopBean categroyBean = list.get(position);
-        final String name = categroyBean.getName();
 
-        holder.tv_content.setText(name);
-        holder.iconIv.setImageResource(categroyBean.getIcon());
+        final DiscoverTopBean discoverTopBean = list.get(position);
+        holder.mTV.setText("看板的的");
+        holder.mIV.setImageURI(discoverTopBean.getGameLogo());
         //为ItemView设置监听器
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                if (position == list.size() - 1) {
-                    intent.setClass(context, AllClassifyActivity.class);
-                } else {
-                    intent.setClass(context, SeeMoreActivity.class);
-                    intent.putExtra(KeyConstant.category_Id, categroyBean.getId() + "");//原生手柄 id 367
-                    intent.putExtra(KeyConstant.TITLE, name);
-                }
+                Intent intent = new Intent(context, GameDetailActivity.class);
+                intent.putExtra(KeyConstant.ID, discoverTopBean.getId());
                 context.startActivity(intent);
             }
         });
@@ -95,13 +84,13 @@ public class ClassifyTopAdapter extends RecyclerView.Adapter<ClassifyTopAdapter.
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView iconIv;
-        private TextView tv_content;
+        private TextView mTV;
+        private SimpleDraweeView mIV;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tv_content = itemView.findViewById(R.id.singer_item_tv);
-            iconIv = itemView.findViewById(R.id.classify_item_iv);
+            mTV = (TextView) itemView.findViewById(R.id.tviv_item_tv);
+            mIV = (SimpleDraweeView) itemView.findViewById(R.id.tviv_item_iv);
         }
     }
 }

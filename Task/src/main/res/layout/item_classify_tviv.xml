@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-    >
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dm020"
+    android:layout_marginTop="@dimen/dm020"
+    android:orientation="vertical">
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tviv_item_iv"
-        android:layout_width="@dimen/main_classify_iv_size"
-        android:layout_height="@dimen/main_classify_iv_size"
+        android:layout_width="@dimen/fargment0_0_iv_width"
+        android:layout_height="@dimen/dm144"
         android:scaleType="centerCrop"
         fresco:actualImageScaleType="centerCrop"
+        fresco:failureImage="@drawable/ic_def_logo_188_188"
         fresco:placeholderImage="@drawable/ic_def_logo_188_188"
         fresco:placeholderImageScaleType="centerCrop"
-        fresco:failureImage="@drawable/ic_def_logo_188_188"
         fresco:progressBarImage="@drawable/ic_def_logo_188_188"
-        fresco:roundedCornerRadius="@dimen/dm028"/>
+        fresco:roundedCornerRadius="@dimen/dm008" />
 
     <TextView
-        android:layout_gravity="center_horizontal"
         android:id="@+id/tviv_item_tv"
-        android:layout_width="@dimen/main_classify_iv_size"
+        style="@style/style_28px_333333_bold"
+        android:layout_width="@dimen/fargment0_0_iv_width"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dm020"
-        android:singleLine="true"
         android:ellipsize="end"
-        android:text=""
-        android:textStyle="bold"
-        android:textColor="@color/color_1a"
-        android:textSize="@dimen/dm020"/>
+        android:singleLine="true"
+        android:text="" />
 </LinearLayout>

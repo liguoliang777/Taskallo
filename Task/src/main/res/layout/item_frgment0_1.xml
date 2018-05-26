@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/fragment_0_item_layout_height"
+    android:background="@drawable/selector_classify_top_bt"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/classify_item_iv"
+        android:layout_width="@dimen/dm080"
+        android:layout_height="@dimen/dm080"
+        android:layout_margin="@dimen/dm020"
+        android:scaleType="centerCrop"
+        fresco:actualImageScaleType="centerCrop"
+        fresco:failureImage="@drawable/ic_def_logo_188_188"
+        fresco:placeholderImage="@drawable/ic_def_logo_188_188"
+        fresco:placeholderImageScaleType="centerCrop"
+        fresco:progressBarImage="@drawable/ic_def_logo_188_188"
+        fresco:roundedCornerRadius="@dimen/dm005" />
+
+
+    <TextView
+        android:id="@+id/singer_item_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:width="0dp"
+        style="@style/style_28px_333333_bold"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text=""
+      />
+
+    <ImageView
+        android:id="@+id/singer_item_star_tag"
+        android:layout_width="@dimen/dm036"
+        android:layout_height="@dimen/dm036"
+        android:layout_marginRight="@dimen/dm020"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_big_star_yellow" />
+</LinearLayout>

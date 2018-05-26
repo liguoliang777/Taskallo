@@ -151,7 +151,7 @@ public class ClassifyAdapter extends BaseAdapter {
             horizontalViewContainer.removeAllViews();
 
             Resources resources = context.getResources();
-            int px34 = resources.getDimensionPixelSize(R.dimen.main_margin_left_34px);
+            int px34 = resources.getDimensionPixelSize(R.dimen.main_margin_left_px);
             int px20 = resources.getDimensionPixelSize(R.dimen.main_margin_20px);
             gameInfoList = gameInfo.getList();
             for (int i = 0; i < gameInfoList.size(); i++) {

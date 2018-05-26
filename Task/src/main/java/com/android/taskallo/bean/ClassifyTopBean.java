@@ -6,10 +6,10 @@ package com.android.taskallo.bean;
 
 public class ClassifyTopBean {
     long id;
-    int icon;
+    String icon;
     String name;
 
-    public ClassifyTopBean(String name, long id, int icon) {
+    public ClassifyTopBean(String name, long id, String icon) {
         this.id = id;
         this.icon = icon;
         this.name = name;
@@ -19,7 +19,7 @@ public class ClassifyTopBean {
         return id;
     }
 
-    public int getIcon() {
+    public String getIcon() {
         return icon;
     }
 

@@ -61,8 +61,8 @@
     <dimen name="dp_1">1dp</dimen>
     <dimen name="dp_7">7dp</dimen>
     <dimen name="dp_28">28dp</dimen>
-    <dimen name="discover_classify_item_size">@dimen/dm120</dimen>
-    <dimen name="main_classify_iv_size">@dimen/dm150</dimen>
+    <dimen name="fragment_0_item_layout_height">@dimen/dm100</dimen>
+    <dimen name="fargment0_0_iv_width">@dimen/dm288</dimen>
     <dimen name="dp_36">36dp</dimen>
     <dimen name="dp_94">94dp</dimen>
     <dimen name="dp_90">90dp</dimen>
@@ -108,7 +108,7 @@
     <dimen name="dp_55">55dp</dimen>
     <dimen name="unlogin_dialog_width">@dimen/dm376</dimen>
     <dimen name="stroke_line_width">@dimen/dm001</dimen>
-    <dimen name="main_margin_left_34px">@dimen/dm034</dimen>
+    <dimen name="main_margin_left_px">@dimen/dm020</dimen>
     <dimen name="main_margin_32px">@dimen/dm032</dimen>
     <dimen name="main_margin_20px">@dimen/dm020</dimen>
     <dimen name="main_margin_bottom_32px">@dimen/dm032</dimen>
