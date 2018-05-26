@@ -316,45 +316,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
                 //清除缓存
                 case R.id.main_me_item_clean_cache:
-                    String text = tvClear.getText().toString();
-                    if ("0KB".equals(text)) {
-                        ToastUtil.show(context, "没有缓存了~");
-                        return;
-                    }
-
-                    if (text.endsWith("MB")) {
-                        delayMillis = 1000;
-                    } else if (text.endsWith("KB")) {
-                        delayMillis = 200;
-                    } else {
-                        delayMillis = 1000;
-                    }
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setMessage("确定清除缓存吗？");
-                    //    设置一个PositiveButton
-                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                            DataCleanManager.clearAllCache(context);
-                            final DialogHelper dialogHelper = new DialogHelper
-                                    (getSupportFragmentManager(), context);
-                            dialogHelper.showAlert("清理中...", false);
-
-                            tvClear.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    dialogHelper.hideAlert();
-                                    ToastUtil.show(context, "缓存已清除~");
-                                    if (null != tvClear) {
-                                        tvClear.setText("0KB");
-                                    }
-                                }
-                            }, delayMillis);
-                        }
-                    });
-                    builder.setNegativeButton("取消", null);
-                    builder.show();
+                    cleanCache();
                     break;
                 case R.id.main_tab_2:
                     break;
@@ -363,6 +325,48 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             }
         }
     };
+    //清除緩存
+    private void cleanCache() {
+        String text = tvClear.getText().toString();
+        if ("0KB".equals(text)) {
+            ToastUtil.show(context, "没有缓存了~");
+            return;
+        }
+
+        if (text.endsWith("MB")) {
+            delayMillis = 1000;
+        } else if (text.endsWith("KB")) {
+            delayMillis = 200;
+        } else {
+            delayMillis = 1000;
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("确定清除缓存吗？");
+        //    设置一个PositiveButton
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                DataCleanManager.clearAllCache(context);
+                final DialogHelper dialogHelper = new DialogHelper
+                        (getSupportFragmentManager(), context);
+                dialogHelper.showAlert("清理中...", false);
+
+                tvClear.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialogHelper.hideAlert();
+                        ToastUtil.show(context, "缓存已清除~");
+                        if (null != tvClear) {
+                            tvClear.setText("0KB");
+                        }
+                    }
+                }, delayMillis);
+            }
+        });
+        builder.setNegativeButton("取消", null);
+        builder.show();
+    }
 
     @Override
     protected void onResume() {
