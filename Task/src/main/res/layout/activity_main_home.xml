@@ -286,7 +286,7 @@
                 android:maxWidth="@dimen/dm400"
                 android:paddingTop="@dimen/dm020"
                 android:singleLine="true"
-                android:text="名字的似懂非懂"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="@dimen/dm032"
                 android:textStyle="bold" />

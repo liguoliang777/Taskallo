@@ -127,6 +127,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private MainHubFragment gameMainHubFragment;
     private RelativeLayout mMeLayout;
     private String mToken = "";
+    private TextView mNameIv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +164,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         tv_notifi_num = (TextView) findViewById(R.id.tv_notifi_num); //右上角消息数目
 
         mIconIv = (SimpleDraweeView) findViewById(R.id.iv_icon_title);
+        mNameIv = (TextView) findViewById(R.id.me_user_name_tv);
+
+        if (null != App.userHeadUrl) {
+            android.util.Log.d(TAG, "图片: " + App.userHeadUrl);
+            mIconIv.setImageURI(App.userHeadUrl);
+            mNameIv.setText(App.nickName);
+        }
         mTitleTv = (TextView) findViewById(R.id.title_tv);
         mEditBt = (ImageView) findViewById(R.id.main_edit_bt);
         mHubBt = (ImageView) findViewById(R.id.main_hub_bt);
@@ -224,12 +232,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     return;
                 }
                 Log.d(TAG, "请求" + mToken);
-                if (result.code == 0) {
+                if (result.code == 0 && result.data != null
+                        ) {
                     User mUser = result.data;
                     App.user = mUser;
-                    String loginName = mUser.loginName;
-
-
+                    setMeInfoData(mUser);
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误：" + result.msg);
                 }
@@ -259,6 +266,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         };
         App.requestQueue.add(versionRequest);
 
+    }
+
+    private void setMeInfoData(User mUser) {
+        if (context != null && !context.isFinishing()) {
+            mIconIv.setImageURI(mUser.headPortrait);
+            mNameIv.setText(mUser.nickName);
+        }
     }
 
 
