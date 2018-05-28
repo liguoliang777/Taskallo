@@ -166,7 +166,7 @@ public class BeginActivity extends FragmentActivity {
                         String token = (String) result.data;
                         preferences.edit().putString(Constant.CONFIG_TOKEN, token).apply();
                         App.token = token;
-
+                        android.util.Log.d(TAG, "启动界面 修改token:" + token);
                         startActivity(new Intent(mContext, MainHomeActivity.class));
                         finish();
                     } else {

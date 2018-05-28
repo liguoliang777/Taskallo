@@ -83,7 +83,7 @@ public class App extends Application {
         UMShareAPI.get(this);
         initUmengKey();
         Log.setLevel(Log.DEBUG);    //设置Log打印级别
-        android.util.Log.d("", phone + ",密码:" + passWord + ",启动：" + token);
+        android.util.Log.d("app修改", phone + ",密码:" + passWord + ",启动：" + token);
         Config.DEBUG = true;
 
     }

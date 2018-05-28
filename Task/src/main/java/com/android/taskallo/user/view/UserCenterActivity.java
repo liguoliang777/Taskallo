@@ -21,13 +21,11 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.JsonResult;
-import com.android.taskallo.bean.User;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.CommonUtil;
 import com.android.taskallo.core.utils.Constant;
@@ -40,7 +38,6 @@ import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.exception.NoSDCardException;
 import com.android.taskallo.fragment.OneBtDialogFragment;
 import com.android.taskallo.util.ToastUtil;
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -77,7 +74,6 @@ public class UserCenterActivity extends BaseFgActivity {
     private String mCurrentPhotoPath;
 
     private File mTempDir;
-    private User user;
     private String imgStrPost = "";
     private String avatarUrl;
     private String LOGIN_TYPE;
@@ -88,6 +84,7 @@ public class UserCenterActivity extends BaseFgActivity {
     private FragmentManager fm;
     private Uri fileUri;
     private RelativeLayout imgPhotoLayout;
+    private TextView titleRightBt;
 
 
     @Override
@@ -109,9 +106,6 @@ public class UserCenterActivity extends BaseFgActivity {
         centerTv.setText(R.string.me_profile);
         LOGIN_TYPE = App.loginType;
 
-        //} else {
-        //changePwdBt.setVisibility(View.INVISIBLE);
-        //}
         try {
             mTempDir = new File(CommonUtil.getImageBasePath());
         } catch (NoSDCardException e) {
@@ -158,7 +152,7 @@ public class UserCenterActivity extends BaseFgActivity {
         //*/重新登录
      /*   LoginHelper loginHelper = new LoginHelper(this);
         loginHelper.reLogin();*/
-        TextView titleRightBt = (TextView) findViewById(R.id.title_right_tv);
+        titleRightBt = (TextView) findViewById(R.id.title_right_tv);
         titleRightBt.setVisibility(View.VISIBLE);
         titleRightBt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +167,7 @@ public class UserCenterActivity extends BaseFgActivity {
                     //content.finish();
                 } else {
                     nickName = nickNameStr;
+                    titleRightBt.setClickable(false);
                     uploadImage();
                 }
             }
@@ -209,13 +204,14 @@ public class UserCenterActivity extends BaseFgActivity {
             //StoreService.uploadImage(file);
             avatarUrl = uri.toString();
             img_photo.setImageURI(avatarUrl);
-            // 上传图片
+
             String path = uri.getPath();
-            File file = new File(path);
-            imgStrPost = ImageUtil.getImageStr(file);
+            //File file = new File(path);
+            imgStrPost = ImageUtil.getImageStr(path);
+            android.util.Log.d(TAG, path+"修改参数:图片地址:"+imgStrPost);
             IMG_TYPE = "1";
         } else if (resultCode == Crop.RESULT_ERROR) {
-            Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -341,77 +337,73 @@ public class UserCenterActivity extends BaseFgActivity {
 
 
     private void uploadImage() {
+        editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true).apply();
+        android.util.Log.d(TAG, App.token+"修改 点击: "+App.userHeadUrl);
+
         DialogHelper.showWaiting(fm, "加载中...");
         String url = Constant.WEB_SITE + Constant.URL_MODIFY_USER_DATA;
-        Response.Listener<JsonResult<User>> successListener =
-                new Response.Listener<JsonResult<User>>() {
-                    @Override
-                    public void onResponse(JsonResult<User> result) {
-                        int code = result.code;
-                        if (code == 0) {
-                            ToastUtil.show(content, "资料修改成功!");
-                            User user = result.data;
-                            editor.putString(Constant.CONFIG_TOKEN, user.email);
-                            editor.putString(Constant.CONFIG_USER_HEAD, user.headPortrait);
-                            editor.putString(Constant.CONFIG_NICK_NAME, nickName);
-                            editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
-                            editor.putString(Constant.CONFIG_USER_CODE, user.userCode);//userCode
-                            editor.apply();
 
-                            App.token = user.email;
-                            App.userHeadUrl = user.headPortrait;
-                            App.nickName = nickName;
-                            App.userCode = user.userCode;
-                            content.finish();
-                        } else if (code >= -4 && code <= -1) {
-                            android.util.Log.d(TAG, "ic_back: " + code + result.msg);
+        Response.Listener<JsonResult> succesListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                int code = result.code;
+                Log.d(TAG, "修改成功" + code);
+                if (code == 0) {
+                    String token = (String) result.data;
+                    ToastUtil.show(content, "资料修改成功!");
+                    editor.putString(Constant.CONFIG_TOKEN, token);
+                    editor.putString(Constant.CONFIG_NICK_NAME, nickName);
+                    editor.apply();
+
+                    App.token = token;
+                    App.nickName = nickName;
+                    content.finish();
+                } else if (code >= -4 && code <= -1) {
+                          /*  android.util.Log.d(TAG, "ic_back: " + code + result.msg);
                             if (content != null && !content.isFinishing()) {
                                 showReLoginDialog();
-                            }
-                            //需要重新登录
-                            //logoutClearData();
-                            //UserCenterActivity.this.finish();
-                        } else {
-                            ToastUtil.show(content, "修改失败");
-                            Log.d(TAG, "HTTP请求成功：修改失败！" + code + result.msg);
-                        }
-                        //隐藏提示框
-                        DialogHelper.hideWaiting(fm);
-                    }
-                };
+                            }*/
+                    //需要重新登录
+                    //logoutClearData();
+                } else {
+                    ToastUtil.show(content, "修改失败");
+                    Log.d(TAG, "HTTP请求成功：修改失败！" + code + result.msg);
+                }
+                //隐藏提示框
+                DialogHelper.hideWaiting(fm);
+                titleRightBt.setClickable(true);
+            }
+        };
 
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
+                titleRightBt.setClickable(true);
                 DialogHelper.hideWaiting(fm);
                 ToastUtil.show(content, "修改失败，网络连接异常");
-                Log.d(TAG, "HTTP请求失败：网络连接错误！" + volleyError.getMessage());
+                Log.d(TAG, "修改" + volleyError.getCause());
             }
         };
-
-        Request<JsonResult<User>> versionRequest = new GsonRequest<JsonResult<User>>(Request
+        Request<JsonResult> versionRequest1 = new GsonRequest<JsonResult>(Request
                 .Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<User>>() {
+                succesListener, errorListener, new TypeToken<JsonResult>() {
         }.getType()) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
+                //设置POST请求参数
+                Log.d(TAG, imgStrPost+"修改参数," + App.token);
                 Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.USER_CODE, App.userCode);
-                params.put(KeyConstant.PICTURE_STR, imgStrPost);
-                params.put(KeyConstant.GENDER, "男");
-                params.put(KeyConstant.TYPE, IMG_TYPE);//type 0表示用户选的新图片，base64字符串。      1表示用户有图片地址
-                params.put(KeyConstant.NICK_NAME, nickName);
                 params.put(KeyConstant.TOKEN, App.token);
-
+                params.put(KeyConstant.NICK_NAME, nickName);
+                params.put(KeyConstant.head_Portrait, imgStrPost+"");
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);  //
                 return params;
             }
         };
-   /*     versionRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));*/
+        App.requestQueue.add(versionRequest1);
 
-        App.requestQueue.add(versionRequest);
     }
 
     /**

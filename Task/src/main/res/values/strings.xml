@@ -237,4 +237,5 @@
     <string name="look_board">看板</string>
     <string name="me_profile">个人资料</string>
     <string name="nick_name">昵称</string>
+    <string name="choose_from_loc_pic">从相册选择</string>
 </resources>

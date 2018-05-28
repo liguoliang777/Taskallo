@@ -198,10 +198,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         manager.setOnClickListener(mTabClickListener);
 
         pwd = App.passWord;
-        mToken = App.token;
-        if (!TextUtil.isEmpty(mToken)) {
-            getUserByToken();
-        }
+        getUserByToken();
+
         //如果用户没有主动退出，则重新登录
         new Thread(new Runnable() {
             @Override
@@ -216,7 +214,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         //申请SD卡读写权限
         CommonUtil.verifyStoragePermissions(this);
 
-        fileLoad = FileLoadManager.getInstance(this);
+        //fileLoad = FileLoadManager.getInstance(this);
         //判断是否有新版本APP
         //checkUpdate();
 
@@ -226,6 +224,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
      * 获取用户信息
      */
     private void getUserByToken() {
+        mToken = App.token;
+        if (TextUtil.isEmpty(mToken)) {
+            return;
+        }
         String url = Constant.WEB_SITE + Constant.URL_GET_USER_BY_TOKEN;
         Response.Listener<JsonResult<User>> successListener = new Response
                 .Listener<JsonResult<User>>() {
@@ -236,8 +238,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                     return;
                 }
                 Log.d(TAG, "请求" + mToken);
-                if (result.code == 0 && result.data != null
-                        ) {
+                if (result.code == 0 && result.data != null) {
                     User mUser = result.data;
                     App.user = mUser;
                     setMeInfoData(mUser);
@@ -274,11 +275,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
     private void setMeInfoData(User mUser) {
         if (context != null && !context.isFinishing()) {
-            android.util.Log.d(TAG, "得到数据");
             App.userHeadUrl = mUser.headPortrait;
             App.nickName = mUser.nickName;
             App.phone = mUser.phoneNumber;
-            App.email = mUser.email==null?"":mUser.email;
+            App.email = mUser.email == null ? "" : mUser.email;
             mIconIv.setImageURI(mUser.headPortrait);
             mNameTv.setText(mUser.nickName);
             mPhoneTv.setText(mUser.phoneNumber);
@@ -388,8 +388,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     protected void onStart() {
         super.onStart();
         //主界面顶部头像
-        boolean isAvatarChanged = preferences.getBoolean(KeyConstant.AVATAR_HAS_CHANGED, true);
+        boolean isAvatarChanged = preferences.getBoolean(KeyConstant.AVATAR_HAS_CHANGED, false);
         if (isAvatarChanged) {
+            android.util.Log.d(TAG, "onStart: 55");
+            getUserByToken();
+            editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, false).apply();
         }
         //显示App缓存
         tvClear = (TextView) findViewById(R.id.me_item_tv_clear);

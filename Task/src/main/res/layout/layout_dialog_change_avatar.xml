@@ -22,7 +22,7 @@
         android:layout_height="@dimen/diolg_bottom_height"
         android:background="@drawable/selector_item_bg"
         android:gravity="center"
-        android:text="上传本地头像"
+        android:text="@string/choose_from_loc_pic"
         android:textColor="@color/color_1a"
         android:textSize="@dimen/dp_18"
         />

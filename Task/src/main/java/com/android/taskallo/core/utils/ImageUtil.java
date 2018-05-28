@@ -2,6 +2,8 @@ package com.android.taskallo.core.utils;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Base64;
@@ -13,12 +15,9 @@ import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.PopupWindow;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import com.android.taskallo.R;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * 获取图片的Base64字符串
@@ -30,23 +29,46 @@ public class ImageUtil {
     private static int mScreenWidth;
     private static int mScreenHeight;
     private static float scale;
+    // 根据路径获得图片并压缩，返回bitmap用于显示
+    public static Bitmap getSmallBitmap(String filePath) {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath, options);
 
-    public static String getImageStr(File imgFile) {
-        InputStream in = null;
-        byte[] data = null;
-        try {
-            try {
-                in = new FileInputStream(imgFile);
-                data = new byte[in.available()];
-                in.read(data);
-            } finally {
-                in.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, 480, 800);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+
+        return BitmapFactory.decodeFile(filePath, options);
+    }
+
+    //计算图片的缩放值
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+            final int heightRatio = Math.round((float) height/ (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
         }
-        String str = new String(Base64.encode(data, Base64.DEFAULT));
-        return str;
+        return inSampleSize;
+    }
+
+    public static String getImageStr(String filePath) {
+        Bitmap bm = getSmallBitmap(filePath);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        //1.5M的压缩后在100Kb以内，测试得值,压缩后的大小=94486字节,压缩后的大小=74473字节
+        //这里的JPEG 如果换成PNG，那么压缩的就有600kB这样
+        bm.compress(Bitmap.CompressFormat.JPEG, 40, baos);
+        byte[] b = baos.toByteArray();
+        Log.d("d", "压缩后的大小=" + b.length);
+        return Base64.encodeToString(b, Base64.DEFAULT);
+
     }
 
     public static int getScreenWidth(Activity activity) {

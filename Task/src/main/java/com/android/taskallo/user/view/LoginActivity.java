@@ -414,7 +414,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);  //
                 // params.put(KeyConstant.NICK_NAME, nicknameStr);//
                 //params.put(KeyConstant.TYPE, LOGIN_TYPE); //（1手机，2QQ，3微信，4新浪微博）
-                // params.put(KeyConstant.HEAD_PHOTO, URL_HEAD_PHOTO);  //头像
+                // params.put(KeyConstant.head_Portrait, URL_HEAD_PHOTO);  //头像
                 return params;
             }
         };
@@ -431,7 +431,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 params.put(KeyConstant.loginName, phone);
                 params.put(KeyConstant.pass_word, password);
                 params.put(KeyConstant.TYPE, LOGIN_TYPE); //（1手机，2QQ，3微信，4新浪微博）
-                params.put(KeyConstant.HEAD_PHOTO, URL_HEAD_PHOTO);  //头像
+                params.put(KeyConstant.head_Portrait, URL_HEAD_PHOTO);  //头像
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);  //
                 return params;
             }
