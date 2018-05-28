@@ -92,8 +92,8 @@ public class Constant {
     public static final String authType_Find_Pwd = "1";
     public static final String authType_Register = "0";
 
-    public static final String EMAIL = "0";
-    public static final String PHONE = "1";
+    public static final String PHONE = "0";
+    public static final String EMAIL = "1";
     public static final String QQ = "2";
     public static final String WEIXIN = "3";
     public static final String SINA = "4";//（1手机，2QQ，3微信，4新浪微博）

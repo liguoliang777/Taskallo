@@ -4,13 +4,6 @@
 
     <!-- 填充 -->
     <solid android:color="@color/register_bt_nomal"/>
-    <size
-        android:width="60dp"
-        android:height="@dimen/dp_20"/>
-    <!--边框-->
-    <stroke
-        android:width="@dimen/dp_05"
-        android:color="@color/cccccc"/>
     <!--圆角-->
     <corners android:radius="@dimen/dp_4"
         />

@@ -104,6 +104,11 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
+            android:name=".user.view.SendBindCodeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
             android:name="com.android.taskallo.user.view.FindPwdActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -261,9 +266,6 @@
 
         <activity
             android:name="com.android.taskallo.activity.hub.HubPostsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.android.taskallo.user.view.SendBindCodeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.android.taskallo.activity.hub.CircleActivity"

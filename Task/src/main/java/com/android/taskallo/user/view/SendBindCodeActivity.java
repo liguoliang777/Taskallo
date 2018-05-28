@@ -2,9 +2,11 @@ package com.android.taskallo.user.view;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -14,12 +16,14 @@ import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.adapter.HubAdapter;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.PostsInfo;
-import com.android.taskallo.bean.User;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.Log;
+import com.android.taskallo.core.utils.TextUtil;
+import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.util.ToastUtil;
+import com.android.taskallo.view.BaseTitleBar;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -30,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
 
 /**
  * 圈子
@@ -47,7 +52,16 @@ public class SendBindCodeActivity extends BaseFgActivity {
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private String m_EDIT_TYPE;
+    private EditText et_name;
+    private EditText et_captcha;
+    private Button bt_register;
+    private TextView tv_captcha;
 
+    private String mToken;
+    private static final int WAIT_TIME = 61;
+    private int second = 60;
+    private Timer timer = new Timer();
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,109 +72,215 @@ public class SendBindCodeActivity extends BaseFgActivity {
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
         m_EDIT_TYPE = getIntent().getStringExtra(KeyConstant.EDIT_TYPE);
         editor = preferences.edit();
+        mToken = App.token;
         init();
     }
 
     private void init() {
-        tv_nickname = (EditText) findViewById(R.id.tv_nickname);
-
-        findViewById(R.id.left_bt).setOnClickListener(new View.OnClickListener() {
+        BaseTitleBar titleBar = (BaseTitleBar) findViewById(R.id.title_bar);
+        titleBar.setOnLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        TextView centerTv = (TextView) findViewById(R.id.center_tv);
-        centerTv.setText(R.string.me_profile);
+        titleBar.setTitleText(m_EDIT_TYPE.equals(Constant.PHONE) ? "绑定手机" : "绑定邮箱");
 
-        nickName = App.nickName;
-        tv_nickname.setText(nickName);
-        tv_nickname.setSelection(nickName.length());
+        et_name = (EditText) findViewById(R.id.et_login_user);
+        et_captcha = (EditText) findViewById(R.id.et_captcha);
 
-        TextView titleRightBt = (TextView) findViewById(R.id.title_right_tv);
-        titleRightBt.setVisibility(View.VISIBLE);
-        titleRightBt.setOnClickListener(new View.OnClickListener() {
+        bt_register = (Button) findViewById(R.id.register);
+        bt_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nickNameStr = tv_nickname.getText().toString();
-                if (nickNameStr.length() == 0) {
-                    ToastUtil.show(content, "昵称为空哦！");
+                String userName = et_name.getText().toString();
+                String captcha = et_captcha.getText().toString();
+
+                if (userName == null && userName.equals("")) {
+                    ToastUtil.show(content, "邮箱/手机号不能为空");
                     return;
                 }
-                if (nickNameStr.equals(nickName)) {
-                    ToastUtil.show(content, "您未修改任何资料哦");
-                    //content.finish();
+                boolean isMobile = TextUtil.isMobile(userName);
+                if (!isMobile && !TextUtil.isEmail(userName)) {
+                    ToastUtil.show(content, "请输入正确的邮箱/手机号");
+                    return;
+                }
+                if (captcha == null || captcha.equals("")) {
+                    ToastUtil.show(content, "验证码不能为空");
+                    return;
+                }
+                m_EDIT_TYPE = isMobile ? Constant.loginMode_Phone : Constant.loginMode_Email;
+                doRegister(userName, captcha);
+            }
+        });
+
+        tv_captcha = (TextView) findViewById(R.id.tv_captcha);
+        tv_captcha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String userName = et_name.getText().toString();
+                if (userName != null && !"".equals(userName)) {
+                    boolean mobile = TextUtil.isMobile(userName);
+                    if (!mobile && !TextUtil.isEmail(userName)) {
+                        ToastUtil.show(content, "请输入正确的邮箱/手机号");
+                    } else {
+                        m_EDIT_TYPE = mobile ? Constant.loginMode_Phone : Constant.loginMode_Email;
+                        getSMSCode(userName);
+                    }
                 } else {
-                    nickName = nickNameStr;
-                    //setName();
+                    ToastUtil.show(content, "邮箱/手机号不能为空");
                 }
             }
-
         });
+
 
     }
 
-    private void setName() {
-        String url = Constant.WEB_SITE + Constant.URL_MODIFY_USER_DATA;
-        Response.Listener<JsonResult<User>> successListener =
-                new Response.Listener<JsonResult<User>>() {
-                    @Override
-                    public void onResponse(JsonResult<User> result) {
-                        int code = result.code;
-                        if (code == 0) {
-                            ToastUtil.show(content, "资料修改成功!");
-                            User user = result.data;
-                            editor.putString(Constant.CONFIG_NICK_NAME, nickName);
-                            editor.apply();
+    String url = Constant.WEB_SITE + UrlConstant.URL_BINDING_PHONE_NUMBER;
+    String key_bind_type = KeyConstant.phoneNumber;
 
-                            App.token = user.email;
-                            App.userHeadUrl = user.headPortrait;
-                            App.nickName = nickName;
-                            App.userCode = user.userCode;
-                            content.finish();
-                        } else if (code >= -4 && code <= -1) {
-                            android.util.Log.d(TAG, "ic_back: " + code + result.msg);
-                            if (content != null && !content.isFinishing()) {
-                            }
-                            //需要重新登录
-                            //logoutClearData();
-                            //UserCenterActivity.this.finish();
-                        } else {
-                            ToastUtil.show(content, "修改失败");
-                            Log.d(TAG, "HTTP请求成功：修改失败！" + code + result.msg);
-                        }
-                        //隐藏提示框
-                    }
-                };
+    private void doRegister(final String userName, final String captcha) {
+        if (m_EDIT_TYPE.equals(Constant.EMAIL)) {
+            url = Constant.WEB_SITE + UrlConstant.URL_BINDING_EMAIL;
+            key_bind_type = KeyConstant.email;
+        }
+        Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+
+                if (result == null) {
+                    ToastUtil.show(content, "服务端异常");
+                    return;
+                }
+
+                if (result.code == 0) {
+                    String token = (String) result.data;
+                    editor.putString(Constant.CONFIG_TOKEN, token);
+                    editor.apply();
+                    App.token = token;
+                }
+            }
+        };
 
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                ToastUtil.show(content, "修改失败，网络连接异常");
-                Log.d(TAG, "HTTP请求失败：网络连接错误！" + volleyError.getMessage());
+                Log.d(TAG, "HTTP请求失败：网络连接错误！");
             }
         };
 
-        Request<JsonResult<User>> versionRequest = new GsonRequest<JsonResult<User>>(Request
-                .Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<User>>() {
+        Request<JsonResult> versionRequest = new GsonRequest<JsonResult>(Request.Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult>() {
         }.getType()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.USER_CODE, App.userCode);
-                params.put(KeyConstant.NICK_NAME, nickName);
-                params.put(KeyConstant.TOKEN, App.token);
-
+                params.put(key_bind_type, userName);
+                params.put(KeyConstant.smsCode, captcha);
+                params.put(KeyConstant.TOKEN, mToken);
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
                 return params;
             }
         };
-   /*     versionRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));*/
-
         App.requestQueue.add(versionRequest);
     }
 
+    /**
+     * 执行倒计时操作
+     */
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            for (int i = 0; i < WAIT_TIME; i++) {
+                if (second <= 1) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            tv_captcha.setText(getResources().getString(R.string
+                                    .register_get_captcha));
+                            tv_captcha.setBackgroundResource(R.drawable
+                                    .shape_bg_verif_code_bt_send);
+                            tv_captcha.setClickable(true);
+                            return;
+                        }
+                    });
+                } else {
+                    second--;
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            tv_captcha.setText("重新发送(" + second + "s)");
+                            tv_captcha.setBackgroundResource(R.drawable
+                                    .shape_bg_verif_code_bt_waiting);
+                            tv_captcha.setClickable(false);
+                        }
+                    });
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
+
+    /**
+     * 获取手机验证码
+     */
+    private void getSMSCode(final String userName) {
+
+        String url = Constant.WEB_SITE + UrlConstant.URL_SEND_BINDING_CODE;
+        Response.Listener<JsonResult<Object>> successListener = new Response
+                .Listener<JsonResult<Object>>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null) {
+                    ToastUtil.show(content, "服务端异常");
+                    return;
+                }
+                if (result.code == 0) {
+                    second = 60;
+                    new Thread(runnable).start();
+
+                    ToastUtil.show(content, "验证码已发送，请查收");
+                    Log.d(TAG, "HTTP请求成功：服务端返回：" + result.data);
+                    mToken = (String) result.data;
+                    App.token = mToken;
+                    editor.putString(Constant.CONFIG_TOKEN, mToken).apply();
+
+                } else {
+                    Log.d(TAG, "HTTP请求成功：服务端返回错误：" + result.msg);
+                    //showDialog(false, result.msg);
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                ToastUtil.show(content, "请检查网络连接");
+                Log.d(TAG, "HTTP请求失败：网络连接错误！");
+            }
+        };
+
+        Request<JsonResult<Object>> versionRequest = new GsonRequest<JsonResult<Object>>(Request
+                .Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult>() {
+        }.getType()) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put(KeyConstant.loginName, userName);
+                params.put(KeyConstant.loginMode, m_EDIT_TYPE);
+                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
+                params.put(KeyConstant.TOKEN, mToken);
+                return params;
+            }
+        };
+        App.requestQueue.add(versionRequest);
+    }
 }

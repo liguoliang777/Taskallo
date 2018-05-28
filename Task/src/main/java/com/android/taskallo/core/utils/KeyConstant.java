@@ -11,7 +11,7 @@ public class KeyConstant {
     public static final String loginName = "loginName";
     public static final String NICK_NAME = "nickName";
     public static final String MOBILE_NUMBER = "mobileNumber";
-    public static final String PHONE_NUMBER = "phoneNumber";
+    public static final String phoneNumber = "phoneNumber";
     public static final String passWord = "passWord";//密码
     public static final String pass_word = "password";//密码
     public static final String smsCode = "smsCode";//短信验证码
@@ -58,4 +58,5 @@ public class KeyConstant {
     public static final int EXTRA_NECESSARY = 1;
 
     public static final String authType = "authType";
+    public static final String email="email";
 }

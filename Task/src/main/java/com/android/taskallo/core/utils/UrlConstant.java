@@ -7,6 +7,9 @@ package com.android.taskallo.core.utils;
 public class UrlConstant {
     public static final String URL_FORGOT_PASSWORD = "/user/forgotPassword";
     public static final String URL_MODIFY_PASSWORD = "/user/modifyPassword";
+    public static final String URL_SEND_BINDING_CODE = "/user/sendBindingCode";
+    public static final String URL_BINDING_EMAIL = "/user/bindingEmail";
+    public static final String URL_BINDING_PHONE_NUMBER = "/user/bindingPhoneNumber";
 
     //推荐头像地址开头
     public static final String RECOMMED_URL_START = "http://ngame.oss-cn-hangzhou.aliyuncs" +
