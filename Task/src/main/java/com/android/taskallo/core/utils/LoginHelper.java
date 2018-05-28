@@ -38,7 +38,7 @@ public class LoginHelper {
     }
 
     public void reLoadSP() {
-        App.userName = preferences.getString(Constant.CONFIG_USER_NAME, "");
+        App.phone = preferences.getString(Constant.CONFIG_USER_NAME, "");
         App.passWord = preferences.getString(Constant.CONFIG_USER_PWD, "");
         App.userCode = preferences.getString(Constant.CONFIG_USER_CODE, "");
         App.userHeadUrl = preferences.getString(Constant.CONFIG_USER_HEAD, "");
@@ -51,7 +51,7 @@ public class LoginHelper {
      */
     public void reLogin() {
         String url = Constant.WEB_SITE + Constant.URL_USER_LOGIN;
-        android.util.Log.d(TAG, "重新登录1:账号 " + App.userName);
+        android.util.Log.d(TAG, "重新登录1:账号 " + App.phone);
         android.util.Log.d(TAG, "重新登录1密码: " + App.passWord);
         Response.Listener<JsonResult<User>> succesListener = new Response.Listener<JsonResult<User>>() {
             @Override
@@ -98,10 +98,10 @@ public class LoginHelper {
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.NICK_NAME, App.nickName);
-                params.put(KeyConstant.loginName, App.userName);
+                params.put(KeyConstant.loginName, App.phone);
                 params.put(KeyConstant.pass_word, App.passWord);
                 android.util.Log.d(TAG, "重新登录: " + App.passWord);
-                android.util.Log.d(TAG, "重新登录: " + App.userName);
+                android.util.Log.d(TAG, "重新登录: " + App.phone);
                 params.put(KeyConstant.TYPE, App.loginType); //（1手机，2QQ，3微信，4新浪微博）
                 params.put(KeyConstant.HEAD_PHOTO, App.userHeadUrl);  //头像
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);  //

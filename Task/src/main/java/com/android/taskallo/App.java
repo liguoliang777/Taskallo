@@ -36,10 +36,11 @@ public class App extends Application {
 
     public static RequestQueue requestQueue;
 
-    public static String userName;   //用户名
+    public static String phone;   //电话
     public static String nickName;   //用户名
     public static String passWord;   //用户密码
     public static String userHeadUrl;   //用户头像URL
+    public static String email="";   //邮箱
     public static String token;
     public static User user;
     public static String deviceId = "";  //设备id
@@ -57,7 +58,8 @@ public class App extends Application {
         super.onCreate();
         token = (String) SPUtils.get(this, Constant.CONFIG_TOKEN, "");
         userHeadUrl = (String) SPUtils.get(this, Constant.CONFIG_USER_HEAD, "");
-        userName = (String) SPUtils.get(this, Constant.CONFIG_USER_NAME, "");
+        phone = (String) SPUtils.get(this, Constant.CONFIG_USER_NAME, "");
+        email = (String) SPUtils.get(this, Constant.CONFIG_USER_EMAIL, "");
         nickName = (String) SPUtils.get(this, Constant.CONFIG_NICK_NAME, "");
         userCode = (String) SPUtils.get(this, Constant.CONFIG_USER_CODE, "");
         passWord = (String) SPUtils.get(this, Constant.CONFIG_USER_PWD, "");
@@ -81,7 +83,7 @@ public class App extends Application {
         UMShareAPI.get(this);
         initUmengKey();
         Log.setLevel(Log.DEBUG);    //设置Log打印级别
-        android.util.Log.d("", userName + ",密码:" + passWord + ",启动：" + token);
+        android.util.Log.d("", phone + ",密码:" + passWord + ",启动：" + token);
         Config.DEBUG = true;
 
     }

@@ -25,17 +25,23 @@
             android:layout_centerVertical="true"
             android:text="@string/user_photo" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
             android:id="@+id/img_photo"
             android:layout_width="@dimen/dm100"
-            android:layout_height="@dimen/dm100"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/ic_user_icon_bg"
             android:layout_marginRight="@dimen/dm028"
-            android:scaleType="centerInside" />
+            android:layout_height="@dimen/dm100"
+            android:clickable="true"
+            android:layout_alignParentRight="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="centerInside"
+            fresco:actualImageScaleType="centerInside"
+            fresco:failureImage="@drawable/ic_def_logo_188_188"
+            fresco:placeholderImage="@drawable/ic_def_logo_188_188"
+            fresco:placeholderImageScaleType="centerCrop"
+            fresco:progressBarImage="@drawable/ic_def_logo_188_188"
+            fresco:roundAsCircle="true" />
 
-        <include layout="@layout/layout_line_1px_f0f0f0" />
     </RelativeLayout>
 
 
@@ -83,7 +89,7 @@
             android:text="@string/phone" />
 
         <TextView
-            android:id="@+id/tv_account"
+            android:id="@+id/tv_phone"
             style="@style/style_20px_808080"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,23 +104,23 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dm072"
-        android:orientation="horizontal"
         android:background="@color/white"
+        android:orientation="horizontal"
         android:paddingLeft="@dimen/dm028">
 
         <TextView
             style="@style/style_24_333333_bold"
             android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="@string/email" />
 
         <TextView
             android:id="@+id/profile_email_tv"
             style="@style/style_20px_808080"
-            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:maxLines="1"
             android:paddingRight="@dimen/dm028" />
 

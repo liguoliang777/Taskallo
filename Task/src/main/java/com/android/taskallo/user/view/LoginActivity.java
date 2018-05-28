@@ -355,7 +355,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     editor.putString(Constant.CONFIG_TOKEN, email);
                     editor.putString(Constant.CONFIG_USER_HEAD, headPortrait);//头像
                     editor.putString(Constant.CONFIG_NICK_NAME, nickName);
-                    editor.putString(Constant.CONFIG_USER_NAME, userName);
+                    editor.putString(Constant.CONFIG_USER_NAME, phone);
                     editor.putString(Constant.CONFIG_USER_PWD, password);
                     editor.putString(Constant.CONFIG_LOGIN_TYPE, LOGIN_TYPE);
                     editor.putString(Constant.CONFIG_USER_CODE, userCode);//userCode
@@ -367,7 +367,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     App.passWord = password;
                     App.userHeadUrl = headPortrait;
                     App.nickName = nickName;
-                    App.userName = userName;
+                    App.phone = phone;
                     App.loginType = LOGIN_TYPE;
                     App.userCode = userCode;
 
@@ -376,7 +376,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     } else if (LOGIN_TYPE.equals(Constant.WEIXIN)) {
                         MobclickAgent.onProfileSignIn("WEIXIN", userCode);
                     } else {
-                        MobclickAgent.onProfileSignIn(userName);
+                        MobclickAgent.onProfileSignIn(phone);
                     }*/
 
                     startActivity(new Intent(mContext, MainHomeActivity.class));
@@ -428,7 +428,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 //设置POST请求参数
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.NICK_NAME, nicknameStr);
-                params.put(KeyConstant.loginName, userName);
+                params.put(KeyConstant.loginName, phone);
                 params.put(KeyConstant.pass_word, password);
                 params.put(KeyConstant.TYPE, LOGIN_TYPE); //（1手机，2QQ，3微信，4新浪微博）
                 params.put(KeyConstant.HEAD_PHOTO, URL_HEAD_PHOTO);  //头像

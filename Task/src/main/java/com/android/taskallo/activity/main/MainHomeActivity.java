@@ -275,6 +275,10 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private void setMeInfoData(User mUser) {
         if (context != null && !context.isFinishing()) {
             android.util.Log.d(TAG, "得到数据");
+            App.userHeadUrl = mUser.headPortrait;
+            App.nickName = mUser.nickName;
+            App.phone = mUser.phoneNumber;
+            App.email = mUser.email==null?"":mUser.email;
             mIconIv.setImageURI(mUser.headPortrait);
             mNameTv.setText(mUser.nickName);
             mPhoneTv.setText(mUser.phoneNumber);
@@ -324,6 +328,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             }
         }
     };
+
     //清除緩存
     private void cleanCache() {
         String text = tvClear.getText().toString();
@@ -981,7 +986,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         App.loginType = Constant.PHONE;
         App.nickName = "";
         App.userCode = "";
-        App.userName = "";
+        App.phone = "";
         App.passWord = "";
         App.token = "";
         App.user = null;

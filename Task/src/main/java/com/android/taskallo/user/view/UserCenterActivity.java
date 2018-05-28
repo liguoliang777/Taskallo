@@ -19,7 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,8 +46,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
@@ -68,8 +65,8 @@ public class UserCenterActivity extends BaseFgActivity {
     private UserCenterActivity content;
     private String pwd;
 
-    private ImageView img_photo;
-    private TextView tv_account;
+    private SimpleDraweeView img_photo;
+    private TextView mPhoneTv, mEmailTv;
     private EditText tv_nickname;
 
     private String nickName;
@@ -123,10 +120,11 @@ public class UserCenterActivity extends BaseFgActivity {
         if (mTempDir != null && !mTempDir.exists()) {
             mTempDir.mkdirs();
         }
-        img_photo = (ImageView) findViewById(R.id.img_photo);
+        img_photo = (SimpleDraweeView) findViewById(R.id.img_photo);
         imgPhotoLayout = (RelativeLayout) findViewById(R.id.img_photo_layout);
-        tv_account = (TextView) findViewById(R.id.tv_account);
+        mPhoneTv = (TextView) findViewById(R.id.tv_phone);
         tv_nickname = (EditText) findViewById(R.id.tv_nickname);
+        mEmailTv = (TextView) findViewById(R.id.profile_email_tv);
 
         imgPhotoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,11 +134,16 @@ public class UserCenterActivity extends BaseFgActivity {
 
             }
         });
-       /* user = App.user;*/
         pwd = App.passWord;
         imgStrPost = App.userHeadUrl;
         nickName = App.nickName;
-        setUserInfo();
+
+        img_photo.setImageURI(imgStrPost);
+        mPhoneTv.setText(App.phone == null ? "" : App.phone);
+        mEmailTv.setText(App.email == null ? "" : App.email);
+
+        tv_nickname.setText(nickName);
+        tv_nickname.setSelection(nickName.length());
      /*   if (pwd == null) {
             //getUserInfo();
             android.util.Log.d(TAG, "user == null");
@@ -194,7 +197,7 @@ public class UserCenterActivity extends BaseFgActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 imgStrPost = mUrlList.get(position);
-                imageLoader.displayImage(imgStrPost, img_photo);
+                img_photo.setImageURI(imgStrPost);
                 IMG_TYPE = "0";
             }
         });
@@ -205,7 +208,7 @@ public class UserCenterActivity extends BaseFgActivity {
             Uri uri = Crop.getOutput(result);
             //StoreService.uploadImage(file);
             avatarUrl = uri.toString();
-            imageLoader.displayImage(avatarUrl, img_photo, roundOptions);
+            img_photo.setImageURI(avatarUrl);
             // 上传图片
             String path = uri.getPath();
             File file = new File(path);
@@ -336,7 +339,6 @@ public class UserCenterActivity extends BaseFgActivity {
         startActivityForResult(intent, REQUEST_CODE_CAPTURE_CAMERA);
     }
 
-    DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.color.transparent, 360);
 
     private void uploadImage() {
         DialogHelper.showWaiting(fm, "加载中...");
@@ -431,17 +433,6 @@ public class UserCenterActivity extends BaseFgActivity {
         dialogFragment.show(fm, "successDialog");
     }
 
-    ImageLoader imageLoader = ImageLoader.getInstance();
-
-
-    private void setUserInfo() {
-        DisplayImageOptions roundOptions = FileUtil.getRoundOptions(R.drawable
-                .ic_def_logo_188_188, 360);
-        imageLoader.displayImage(App.userHeadUrl, img_photo, roundOptions);
-        tv_nickname.setText(nickName);
-        tv_nickname.setSelection(nickName.length());
-        tv_account.setText(App.userName);
-    }
 
 /* private void showChangeNicknameDialog() {
 
