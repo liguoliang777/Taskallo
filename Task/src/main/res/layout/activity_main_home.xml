@@ -248,6 +248,8 @@
                 android:id="@+id/iv_icon_title"
                 android:layout_width="@dimen/dm108"
                 android:layout_height="@dimen/dm108"
+                android:clickable="true"
+                android:focusableInTouchMode="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dm040"
                 android:scaleType="fitXY"
@@ -265,6 +267,8 @@
                 android:layout_below="@id/iv_icon_title"
                 android:layout_centerHorizontal="true"
                 android:ellipsize="end"
+                android:clickable="true"
+                android:focusableInTouchMode="true"
                 android:gravity="center"
                 android:maxWidth="@dimen/dm400"
                 android:paddingTop="@dimen/dm020"
@@ -319,7 +323,7 @@
 
                         <TextView
                             android:id="@+id/me_phone_title"
-                            style="@style/me_item_title_text_size"
+                            style="@style/style_24_333333_bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dm015"
@@ -365,7 +369,7 @@
 
                         <TextView
                             android:id="@+id/me_email_title"
-                            style="@style/me_item_title_text_size"
+                            style="@style/style_24_333333_bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dm015"

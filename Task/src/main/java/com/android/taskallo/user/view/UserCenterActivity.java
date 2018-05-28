@@ -17,10 +17,10 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,7 +64,7 @@ import java.util.Map;
  */
 public class UserCenterActivity extends BaseFgActivity {
 
-    public static final String TAG = UserCenterActivity.class.getSimpleName();
+    public String TAG = UserCenterActivity.class.getSimpleName();
     private UserCenterActivity content;
     private String pwd;
 
@@ -75,7 +75,7 @@ public class UserCenterActivity extends BaseFgActivity {
     private String nickName;
 
     private SharedPreferences preferences;
-    private static final int REQUEST_CODE_CAPTURE_CAMERA = 1458;
+    private int REQUEST_CODE_CAPTURE_CAMERA = 1458;
 
     private String mCurrentPhotoPath;
 
@@ -90,6 +90,7 @@ public class UserCenterActivity extends BaseFgActivity {
     private Dialog defAvatarDialog;
     private FragmentManager fm;
     private Uri fileUri;
+    private RelativeLayout imgPhotoLayout;
 
 
     @Override
@@ -108,20 +109,9 @@ public class UserCenterActivity extends BaseFgActivity {
             }
         });
         TextView centerTv = (TextView) findViewById(R.id.center_tv);
-        centerTv.setText("资料设置");
+        centerTv.setText(R.string.me_profile);
         LOGIN_TYPE = App.loginType;
 
-        Button changePwdBt = (Button) findViewById(R.id.change_pwd_bt);
-        //if (Constant.PHONE.equals(LOGIN_TYPE)) {
-        changePwdBt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(content, ChangePwdActivity
-                        .class);
-                startActivity(intent);
-                content.finish();
-            }
-        });
         //} else {
         //changePwdBt.setVisibility(View.INVISIBLE);
         //}
@@ -134,10 +124,11 @@ public class UserCenterActivity extends BaseFgActivity {
             mTempDir.mkdirs();
         }
         img_photo = (ImageView) findViewById(R.id.img_photo);
+        imgPhotoLayout = (RelativeLayout) findViewById(R.id.img_photo_layout);
         tv_account = (TextView) findViewById(R.id.tv_account);
         tv_nickname = (EditText) findViewById(R.id.tv_nickname);
 
-        img_photo.setOnClickListener(new View.OnClickListener() {
+        imgPhotoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //修改头像

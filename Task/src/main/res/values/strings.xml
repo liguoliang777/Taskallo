@@ -103,7 +103,7 @@
 
     <!-- 用户中心相关 -->
     <string name="user_info">账号信息</string>
-    <string name="user_photo">我的头像</string>
+    <string name="user_photo">头像</string>
     <string name="user_nick_name">我的昵称</string>
     <string name="user_level">我的等级</string>
     <string name="user_nb">我的N币</string>
@@ -189,7 +189,7 @@
     <string name="no_network">网络异常,请检查网络设置</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="see_more">查看全部</string>
-    <string name="ngamezone">账号：</string>
+    <string name="Account">账号：</string>
     <string name="requery_failed">请求失败,稍后重试</string>
     <string name="server_exception">服务器开小差了~</string>
     <string name="server_exception_2_pullrefresh">服务器开小差了,请下拉刷新一下~</string>
@@ -235,4 +235,6 @@
     <string name="privacy">隐私条款</string>
     <string name="share">分享此应用</string>
     <string name="look_board">看板</string>
+    <string name="me_profile">个人资料</string>
+    <string name="nick_name">昵称</string>
 </resources>

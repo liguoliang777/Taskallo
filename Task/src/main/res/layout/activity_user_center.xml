@@ -1,99 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:ngame="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/f5f5f5"
-              android:clipToPadding="true"
-              android:fitsSystemWindows="true"
-              android:orientation="vertical">
+    xmlns:ngame="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f5f5f5"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-    <include layout="@layout/layout_title_left_center"/>
+    <include layout="@layout/layout_title_left_center" />
 
-    <ImageView
-        android:id="@+id/img_photo"
-        android:layout_width="94dp"
-        android:layout_height="94dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/menu_game_hub_circle"
-        android:scaleType="centerInside"
-        />
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/img_photo_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_20"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_height="@dimen/dm140"
+        android:layout_marginTop="@dimen/dm020"
+        android:background="@drawable/selector_bg_white_f2"
+        android:paddingLeft="@dimen/dm028">
 
         <TextView
+            style="@style/style_24_333333_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:text="@string/ngamezone"
-            android:textColor="@color/b3"
-            android:textSize="@dimen/dp_12"/>
+            android:text="@string/user_photo" />
 
-        <TextView
-            android:id="@+id/tv_account"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:maxLength="11"
-            android:textColor="@color/b3"
-            android:textSize="@dimen/dp_12"/>
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/img_photo"
+            android:layout_width="@dimen/dm100"
+            android:layout_height="@dimen/dm100"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_user_icon_bg"
+            android:layout_marginRight="@dimen/dm028"
+            android:scaleType="centerInside" />
+
+        <include layout="@layout/layout_line_1px_f0f0f0" />
+    </RelativeLayout>
 
 
-    <LinearLayout
+    <!--昵称-->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_marginTop="28dp"
-        android:background="@android:color/white"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/dp_30">
+        android:layout_height="@dimen/dm072"
+        android:background="@drawable/selector_bg_white_f2"
+        android:paddingLeft="@dimen/dm028">
 
         <TextView
+            style="@style/style_24_333333_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="昵称"
-            android:textColor="@color/b3"
-            android:textSize="@dimen/dp_13"/>
+            android:layout_centerVertical="true"
+            android:text="@string/nick_name" />
 
         <EditText
             android:id="@+id/tv_nickname"
-            android:layout_width="0dp"
+            style="@style/style_20px_808080"
+            android:layout_width="@dimen/dm450"
             android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_weight="1"
             android:background="@null"
-            android:gravity="center_vertical"
-            android:maxLength="13"
+            android:clickable="true"
+            android:maxLength="20"
             android:maxLines="1"
-            android:paddingLeft="22dp"
-            android:textColor="@color/color_333333"
-            android:textSize="@dimen/dp_13"/>
-    </LinearLayout>
+            android:paddingRight="@dimen/dm028" />
 
-    <Button
-        android:id="@+id/change_pwd_bt"
+        <include layout="@layout/layout_line_1px_f0f0f0" />
+    </RelativeLayout>
+    <!--电话-->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_44"
-        android:layout_marginTop="134dp"
+        android:layout_height="@dimen/dm072"
         android:background="@android:color/white"
-        android:gravity="center"
-        android:text="修改密码"
-        android:textColor="@color/color_1a"
-        android:textSize="@dimen/dp_16"/>
+        android:paddingLeft="@dimen/dm028">
 
-    <include
-        layout="@layout/layout_line_05dp_f2f2f2"/>
+        <TextView
+            style="@style/style_24_333333_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/phone" />
+
+        <TextView
+            android:id="@+id/tv_account"
+            style="@style/style_20px_808080"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:maxLines="1"
+            android:paddingRight="@dimen/dm028" />
+
+        <include layout="@layout/layout_line_1px_f0f0f0" />
+    </RelativeLayout>
+    <!--邮箱-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dm072"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/dm028">
+
+        <TextView
+            style="@style/style_24_333333_bold"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:text="@string/email" />
+
+        <TextView
+            android:id="@+id/profile_email_tv"
+            style="@style/style_20px_808080"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:paddingRight="@dimen/dm028" />
+
+        <include layout="@layout/layout_line_1px_f0f0f0" />
+    </RelativeLayout>
+
+    <include layout="@layout/layout_line_1px_f0f0f0" />
 
 
 </LinearLayout>

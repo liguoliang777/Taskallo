@@ -170,7 +170,7 @@
         <item name="android:textSize">14dp</item>
         <item name="android:textColor">@color/color_989999</item>
     </style>
-    <style name="me_item_title_text_size">
+    <style name="style_24_333333_bold">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dm024</item>
         <item name="android:textColor">@color/color_333333</item>
@@ -179,6 +179,10 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dm028</item>
         <item name="android:textColor">@color/color_333333</item>
+    </style>
+    <style name="style_20px_808080">
+        <item name="android:textSize">@dimen/dm020</item>
+        <item name="android:textColor">@color/color_808080</item>
     </style>
     <style name="me_fragment_0_title_text_style">
         <item name="android:textSize">@dimen/dm024</item>
