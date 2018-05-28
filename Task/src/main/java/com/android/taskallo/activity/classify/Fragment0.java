@@ -95,6 +95,7 @@ public class Fragment0 extends BaseSearchFragment  {
 
 
     private void init0(View headView) {
+        //如果Listview或者RecycleView显示不全，只有一个itme，请在ScrollView中添加  android:fillViewport="true"
         mEverydayRv = headView.findViewById(R.id.everyday_discover_recyclerview);
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(context, 2);
         mGridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -103,6 +104,8 @@ public class Fragment0 extends BaseSearchFragment  {
         mEverydayList.add(new DiscoverTopBean());
         mEverydayList.add(new DiscoverTopBean());
         mEverydayAdapter = new Fragment0_0_Adapter(context, mEverydayList);
+        mEverydayRv.setHasFixedSize(true);
+        mEverydayRv.setNestedScrollingEnabled(false);
         mEverydayRv.setAdapter(mEverydayAdapter);
     /*    mEverydayRv.addItemDecoration(new RecyclerViewDivider(context,
                 R.dimen.main_margin_left_px, R.dimen.main_margin_20px, mEverydayList.size()));*/
@@ -117,6 +120,8 @@ public class Fragment0 extends BaseSearchFragment  {
         categroyAllList.add(new ClassifyTopBean("APP新版界面开发",153,""));
         categroyAllList.add(new ClassifyTopBean("周一会议提要",104,""));
         categroyTopAdapter = new Fragment0_1_Adapter(context, categroyAllList);
+        mClassifyAllRv.setHasFixedSize(true);
+        mClassifyAllRv.setNestedScrollingEnabled(false);
         mClassifyAllRv.setAdapter(categroyTopAdapter);
     }
     private void init_2(View headView) {
@@ -127,6 +132,8 @@ public class Fragment0 extends BaseSearchFragment  {
         mSubjectRv.setLayoutManager(linearLayoutManager);
 
         mTopicsAdapter = new Fragment0_1_Adapter(context, categroyAllList);
+        mSubjectRv.setHasFixedSize(true);
+        mSubjectRv.setNestedScrollingEnabled(false);
         mSubjectRv.setAdapter(mTopicsAdapter);
     }
 

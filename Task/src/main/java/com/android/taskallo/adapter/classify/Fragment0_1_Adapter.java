@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.taskallo.R;
-import com.android.taskallo.activity.classify.AllClassifyActivity;
 import com.android.taskallo.bean.ClassifyTopBean;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.game.view.SeeMoreActivity;
@@ -72,14 +71,10 @@ public class Fragment0_1_Adapter extends RecyclerView.Adapter<Fragment0_1_Adapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                if (position == list.size() - 1) {
-                    intent.setClass(context, AllClassifyActivity.class);
-                } else {
-                    intent.setClass(context, SeeMoreActivity.class);
-                    intent.putExtra(KeyConstant.category_Id, categroyBean.getId() + "");//原生手柄 id
-                    // 367
-                    intent.putExtra(KeyConstant.TITLE, name);
-                }
+                intent.setClass(context, SeeMoreActivity.class);
+                intent.putExtra(KeyConstant.category_Id, categroyBean.getId() + "");//原生手柄 id
+                // 367
+                intent.putExtra(KeyConstant.TITLE, name);
                 context.startActivity(intent);
             }
         });

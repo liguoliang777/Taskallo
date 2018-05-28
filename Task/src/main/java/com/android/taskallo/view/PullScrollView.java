@@ -23,9 +23,9 @@ public class PullScrollView extends ScrollView {
     private static final String TAG = "777 ";
     // 移动因子, 是一个百分比, 比如手指移动了100px, 那么View就只移动50px
     // 目的是达到一个延迟的效果
-    private static final float MOVE_FACTOR = 0.2f;
+    private static final float MOVE_FACTOR = 0.4f;
     // 松开手指后, 界面回到正常位置需要的动画时间
-    private static final int ANIM_TIME = 200;
+    private static final int ANIM_TIME = 400;
     // ScrollView的子View， 也是ScrollView的唯一一个子View
     private View contentView;
     // 手指按下时的Y值, 用于在移动时计算移动距离
@@ -55,6 +55,7 @@ public class PullScrollView extends ScrollView {
 
     @Override
     protected void onFinishInflate() {
+        super.onFinishInflate();
         if (getChildCount() > 0) {
             contentView = getChildAt(0);
         }

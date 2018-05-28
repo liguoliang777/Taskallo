@@ -182,6 +182,7 @@
         <activity
             android:name="com.android.taskallo.game.view.SeeMoreActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
@@ -268,8 +269,10 @@
             android:name="com.android.taskallo.activity.hub.CircleActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.android.taskallo.activity.main.VRActivity" />
-        <activity android:name="com.android.taskallo.activity.main.TopicsListActivity" />
-        <activity android:name="com.android.taskallo.activity.main.TopicsDetailActivity" />
+        <activity android:name="com.android.taskallo.activity.main.TopicsListActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name="com.android.taskallo.activity.main.TopicsDetailActivity"
+            android:launchMode="singleTask"/>
         <activity android:name="com.android.taskallo.activity.manager.DownloadCenterActivity" />
         <activity android:name="com.android.taskallo.activity.manager.FeedbackSucceedActivity" />
         <activity android:name="com.android.taskallo.activity.manager.HelpAndFeedbackActivity" />
