@@ -35,9 +35,9 @@ import java.util.Map;
  * 圈子
  * Created by liguoliang on 2017/11/23 0023.
  */
-public class EditNameActivity extends BaseFgActivity {
-    protected static final String TAG = EditNameActivity.class.getSimpleName();
-    private EditNameActivity content;
+public class SendBindCodeActivity extends BaseFgActivity {
+    protected static final String TAG = SendBindCodeActivity.class.getSimpleName();
+    private SendBindCodeActivity content;
     private RecyclerView mRecyclerView;
     private HubAdapter mAdapter;
     private TextView headerLastUpdateTv;
@@ -46,15 +46,17 @@ public class EditNameActivity extends BaseFgActivity {
     private String nickName;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
+    private String m_EDIT_TYPE;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initStatusBar();
-        setContentView(R.layout.activity_name_edit);
+        setContentView(R.layout.activity_send_code);
         content = this;
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
+        m_EDIT_TYPE = getIntent().getStringExtra(KeyConstant.EDIT_TYPE);
         editor = preferences.edit();
         init();
     }

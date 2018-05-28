@@ -263,7 +263,7 @@
             android:name="com.android.taskallo.activity.hub.HubPostsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.android.taskallo.user.view.EditNameActivity"
+            android:name="com.android.taskallo.user.view.SendBindCodeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.android.taskallo.activity.hub.CircleActivity"

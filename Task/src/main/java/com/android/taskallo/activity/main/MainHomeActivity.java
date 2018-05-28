@@ -65,6 +65,7 @@ import com.android.taskallo.push.view.MsgListFragment;
 import com.android.taskallo.push.view.NotifyMsgDetailActivity;
 import com.android.taskallo.search.view.SearchActivity;
 import com.android.taskallo.user.view.ChangePwdActivity;
+import com.android.taskallo.user.view.SendBindCodeActivity;
 import com.android.taskallo.user.view.LoginActivity;
 import com.android.taskallo.user.view.UserCenterActivity;
 import com.android.taskallo.util.ToastUtil;
@@ -926,11 +927,15 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
 
     public void onMeTopPhoneClick(View view) {
-        ToastUtil.show(this, "點ddd");
+        Intent intent = new Intent(context, SendBindCodeActivity.class);
+        intent.putExtra(KeyConstant.EDIT_TYPE, Constant.PHONE);
+        startActivity(intent);
     }
 
     public void onMeTopEmailClick(View view) {
-        ToastUtil.show(this, "5555");
+        Intent intent = new Intent(context, SendBindCodeActivity.class);
+        intent.putExtra(KeyConstant.EDIT_TYPE, Constant.EMAIL);
+        startActivity(intent);
     }
 
     /**

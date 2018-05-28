@@ -77,7 +77,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dm072"
-        android:background="@android:color/white"
+        android:background="@drawable/selector_bg_white_f2"
+        android:onClick="onProfilePhoneBtClick"
         android:paddingLeft="@dimen/dm028">
 
         <TextView
@@ -103,7 +104,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dm072"
-        android:background="@color/white"
+        android:background="@drawable/selector_bg_white_f2"
+        android:onClick="onProfileEmailBtClick"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dm028">
 

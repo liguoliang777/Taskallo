@@ -248,6 +248,17 @@ public class UserCenterActivity extends BaseFgActivity {
 
     private List<String> mUrlList = new ArrayList<>();
 
+    public void onProfilePhoneBtClick(View view) {
+        Intent intent = new Intent(content, SendBindCodeActivity.class);
+        intent.putExtra(KeyConstant.EDIT_TYPE, Constant.PHONE);
+        startActivity(intent);
+
+    }
+    public void onProfileEmailBtClick(View view) {
+        Intent intent = new Intent(content, SendBindCodeActivity.class);
+        intent.putExtra(KeyConstant.EDIT_TYPE, Constant.EMAIL);
+        startActivity(intent);
+    }
 
     //默认头像适配器
     public class AvatarAdapter extends BaseAdapter {

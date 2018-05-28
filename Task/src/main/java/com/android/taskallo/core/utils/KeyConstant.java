@@ -24,7 +24,7 @@ public class KeyConstant {
     public static final String GENDER = "gender";
     public static final String TOKEN = "token";
     public static final String newPassword = "newPassWord";
-    public static final String IS_FROM_USER_CENTER = "is_from_user_center";
+    public static final String EDIT_TYPE = "is_from_user_center";
     public static final String AVATAR_HAS_CHANGED = "avatar_has_changed";
     public static final String category_Id = "categoryId";
     public static final String TITLE = "title";
