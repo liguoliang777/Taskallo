@@ -131,7 +131,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private Button menu_game_hub_bt;
     private ScrollView mMeLayout;
     private String mToken = "";
-    private TextView mNameIv;
+    private TextView mNameTv;
     private TextView mPhoneTv;
     private TextView mEmailTv;
     private TextView tvClear;
@@ -172,16 +172,17 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         tv_notifi_num = (TextView) findViewById(R.id.tv_notifi_num); //右上角消息数目
 
         mIconIv = (SimpleDraweeView) findViewById(R.id.iv_icon_title);
-        mNameIv = (TextView) findViewById(R.id.me_user_name_tv);
+        mNameTv = (TextView) findViewById(R.id.me_user_name_tv);
         mPhoneTv = (TextView) findViewById(R.id.me_user_phone_tv);
         mEmailTv = (TextView) findViewById(R.id.me_user_email_tv);
 
         mTitleTv = (TextView) findViewById(R.id.title_tv);
-        mEditBt = (ImageView) findViewById(R.id.main_edit_bt);
+        mEditBt = (ImageView) findViewById(R.id.main_profile_edit_bt);
         im_toSearch.setOnClickListener(this);
         fl_notifi.setOnClickListener(this);
-        mIconIv.setOnClickListener(this);
         mEditBt.setOnClickListener(this);
+        mIconIv.setOnClickListener(this);
+        mNameTv.setOnClickListener(this);
 
         colorDark = getResources().getColor(R.color.mainColor);
         colorNormal = getResources().getColor(R.color.color_333333);
@@ -275,7 +276,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         if (context != null && !context.isFinishing()) {
             android.util.Log.d(TAG, "得到数据");
             mIconIv.setImageURI(mUser.headPortrait);
-            mNameIv.setText(mUser.nickName);
+            mNameTv.setText(mUser.nickName);
             mPhoneTv.setText(mUser.phoneNumber);
             mEmailTv.setText(mUser.email);
         }
@@ -490,7 +491,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 //recommendFragment.setShow(false);
                 bt_video.setSelected(true);
                 mTitleTv.setText(R.string.look_board);
-                mEditBt.setVisibility(View.GONE);
                 mMeLayout.setVisibility(View.GONE);
                 mIconIv.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.VISIBLE);
@@ -503,7 +503,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 menu_game_hub_bt.setSelected(true);
                 mTitleTv.setText(R.string.main_bottom_tab_01);
                 fl_notifi.setVisibility(View.GONE);
-                mEditBt.setVisibility(View.GONE);
                 mIconIv.setVisibility(View.GONE);
                 mMeLayout.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.GONE);
@@ -519,7 +518,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mTitleTv.setText("");
                 mMeLayout.setVisibility(View.VISIBLE);
                 mIconIv.setVisibility(View.VISIBLE);
-                mEditBt.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.GONE);
                 fl_notifi.setVisibility(View.GONE);
                 tv_manager.setTextColor(colorDark);
@@ -577,7 +575,8 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
                 break;
             case R.id.iv_icon_title:
-            case R.id.main_edit_bt:
+            case R.id.me_user_name_tv:
+            case R.id.main_profile_edit_bt:
                 startActivity(new Intent(context, UserCenterActivity.class));
                 break;
         }

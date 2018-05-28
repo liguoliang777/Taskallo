@@ -53,21 +53,6 @@
             android:paddingTop="@dimen/dm010"
             android:scaleType="centerInside"
             android:src="@drawable/ic_search" />
-
-        <ImageView
-            android:id="@+id/main_edit_bt"
-            android:layout_width="@dimen/dm084"
-            android:layout_height="@dimen/dm052"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:paddingBottom="@dimen/dm010"
-            android:paddingLeft="@dimen/dm020"
-            android:paddingRight="@dimen/dm032"
-            android:paddingTop="@dimen/dm010"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_me_top_edit"
-            android:textSize="@dimen/dm028"
-            android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout
@@ -226,8 +211,9 @@
         android:layout_above="@+id/ll_bot_tab"
         android:layout_below="@id/main_home_title_rlay" />
 
-    <ScrollView
+    <com.android.taskallo.view.PullScrollView
         android:id="@+id/main_me_layout"
+        android:background="@color/f5f5f5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/ll_bot_tab"
@@ -242,10 +228,22 @@
             <View
                 android:id="@+id/main_me_layout_top_bg_view"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dm255"
-                android:layout_marginTop="@dimen/dm084"
+                android:layout_height="@dimen/dm325"
                 android:background="@color/mainColor"></View>
-
+            <ImageView
+                android:id="@+id/main_profile_edit_bt"
+                android:layout_width="@dimen/dm084"
+                android:layout_height="@dimen/dm072"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:focusableInTouchMode="true"
+                android:paddingBottom="@dimen/dm020"
+                android:paddingLeft="@dimen/dm020"
+                android:paddingRight="@dimen/dm032"
+                android:paddingTop="@dimen/dm020"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_me_top_edit"
+               />
             <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/iv_icon_title"
                 android:layout_width="@dimen/dm108"
@@ -393,7 +391,7 @@
 
 
         </RelativeLayout>
-    </ScrollView>
+    </com.android.taskallo.view.PullScrollView>
 
     <View
         android:layout_width="match_parent"

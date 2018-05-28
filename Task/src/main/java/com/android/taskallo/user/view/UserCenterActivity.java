@@ -97,7 +97,7 @@ public class UserCenterActivity extends BaseFgActivity {
         super.onCreate(savedInstanceState);
         initStatusBar();
         this.setContentView(R.layout.activity_user_center);
-        content = UserCenterActivity.this;
+        content = this;
         fm = getSupportFragmentManager();
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
         editor = preferences.edit();
@@ -116,10 +116,10 @@ public class UserCenterActivity extends BaseFgActivity {
         changePwdBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UserCenterActivity.this.content, ChangePwdActivity
+                Intent intent = new Intent(content, ChangePwdActivity
                         .class);
                 startActivity(intent);
-                UserCenterActivity.this.content.finish();
+                content.finish();
             }
         });
         //} else {
@@ -171,11 +171,11 @@ public class UserCenterActivity extends BaseFgActivity {
             public void onClick(View v) {
                 String nickNameStr = tv_nickname.getText().toString();
                 if (nickNameStr.length() == 0) {
-                    ToastUtil.show(UserCenterActivity.this.content, "昵称为空哦！");
+                    ToastUtil.show(content, "昵称为空哦！");
                     return;
                 }
                 if (nickNameStr.equals(nickName) && "-1".equals(IMG_TYPE)) {
-                    ToastUtil.show(UserCenterActivity.this.content, "您未修改任何资料哦");
+                    ToastUtil.show(content, "您未修改任何资料哦");
                     //content.finish();
                 } else {
                     nickName = nickNameStr;
@@ -238,7 +238,7 @@ public class UserCenterActivity extends BaseFgActivity {
                 dialog.cancel();
                 int id = v.getId();
                 if (id == R.id.choose_local_tv) {//本地相册
-                    Crop.pickImage(UserCenterActivity.this);
+                    Crop.pickImage(content);
                 } else if (id == R.id.choose_camera_tv) {//相机
                     getImageFromCamera();
                 } else if (id == R.id.choose_recomend_tv) {
@@ -369,7 +369,7 @@ public class UserCenterActivity extends BaseFgActivity {
                             App.userHeadUrl = user.headPortrait;
                             App.nickName = nickName;
                             App.userCode = user.userCode;
-                            UserCenterActivity.this.finish();
+                            content.finish();
                         } else if (code >= -4 && code <= -1) {
                             android.util.Log.d(TAG, "ic_back: " + code + result.msg);
                             if (content != null && !content.isFinishing()) {
@@ -379,8 +379,7 @@ public class UserCenterActivity extends BaseFgActivity {
                             //logoutClearData();
                             //UserCenterActivity.this.finish();
                         } else {
-                            Toast.makeText(UserCenterActivity.this, "修改失败！", Toast.LENGTH_SHORT)
-                                    .show();
+                            ToastUtil.show(content, "修改失败");
                             Log.d(TAG, "HTTP请求成功：修改失败！" + code + result.msg);
                         }
                         //隐藏提示框
@@ -393,7 +392,7 @@ public class UserCenterActivity extends BaseFgActivity {
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
                 DialogHelper.hideWaiting(fm);
-                Toast.makeText(UserCenterActivity.this, "修改失败，网络连接异常！", Toast.LENGTH_SHORT).show();
+                ToastUtil.show(content, "修改失败，网络连接异常");
                 Log.d(TAG, "HTTP请求失败：网络连接错误！" + volleyError.getMessage());
             }
         };
