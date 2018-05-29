@@ -8,24 +8,34 @@
 
     <RadioGroup
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
-        <RadioButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
+        <android.support.v7.widget.AppCompatRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:button="@null"
-            android:drawableRight="@drawable/ic_share"
-            android:text="@string/all_msg" />
+            android:background="@color/white"
+            android:gravity="center"
+            android:drawablePadding="@dimen/dm005"
+            android:singleLine="true"
+            android:drawableEnd="@drawable/selector_fragment_1_top_radio_button"
+            android:text="@string/all_msg"
+            android:textColor="@color/mainColor" />
 
-        <RadioButton
-            android:layout_height="wrap_content"
+        <android.support.v7.widget.AppCompatRadioButton
+            android:drawablePadding="@dimen/dm005"
+            android:background="@color/white"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:button="@null"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:drawableRight="@drawable/ic_share"
-            android:text="@string/query_by_project" />
+            android:textColor="@color/msg_top_text_seletor"
+            android:drawableEnd="@drawable/selector_fragment_1_top_radio_button"
+            android:text="@string/query_by_project"
+            />
+
     </RadioGroup>
 
 
