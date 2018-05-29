@@ -5,7 +5,7 @@
         android:color="@color/lightgray"
         android:width="0.7dp"/>  -->
 
-    <solid android:color="@color/mainColor"/><!-- 填充的颜色 -->
+    <solid android:color="@color/mainColorLight"/><!-- 填充的颜色 -->
     
     <corners
         android:bottomLeftRadius="@dimen/dp_20"

@@ -278,12 +278,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         if (context != null && !context.isFinishing()) {
             App.userHeadUrl = mUser.headPortrait;
             App.nickName = mUser.nickName;
-            App.phone =mUser.phoneNumber == null ? "" : mUser.phoneNumber;
+            App.phone = mUser.phoneNumber == null ? "" : mUser.phoneNumber;
             App.email = mUser.email == null ? "" : mUser.email;
-            editor.putString(Constant.CONFIG_USER_PHONE,App.phone);
-            editor.putString(Constant.CONFIG_USER_EMAIL,App.email);
-            editor.putString(Constant.CONFIG_NICK_NAME,App.nickName);
-            editor.putString(Constant.CONFIG_HEAD_PHONE,App.userHeadUrl);
+            android.util.Log.d(TAG, "邮箱:" + App.email);
+            editor.putString(Constant.CONFIG_USER_PHONE, App.phone);
+            editor.putString(Constant.CONFIG_USER_EMAIL, App.email);
+            editor.putString(Constant.CONFIG_NICK_NAME, App.nickName);
+            editor.putString(Constant.CONFIG_HEAD_PHONE, App.userHeadUrl);
             editor.apply();
             mIconIv.setImageURI(mUser.headPortrait);
             mNameTv.setText(mUser.nickName);
@@ -396,7 +397,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         //主界面顶部头像
         boolean isAvatarChanged = preferences.getBoolean(KeyConstant.AVATAR_HAS_CHANGED, false);
         if (isAvatarChanged) {
-            android.util.Log.d(TAG, "onStart: 55");
             getUserByToken();
             editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, false).apply();
         }

@@ -4,8 +4,10 @@
     <!-- APP 基础色 -->
     <color name="mainColor">#6088c6</color>
 
+    <color name="mainColorDrak">#5782d9</color>
     <color name="mainColorLight">#91b2f2</color>
     <color name="mainColorMiddle">#6191f2</color>
+
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FF4081</color>
     <color name="red">#FF0000</color>

@@ -152,6 +152,7 @@ public class SendBindCodeActivity extends BaseFgActivity {
     String key_bind_type = KeyConstant.phoneNumber;
 
     private void doRegister(final String userName, final String captcha) {
+        editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true).apply();
         dialogHelper.showAlert("加载中...", true);
         if (m_EDIT_TYPE.equals(Constant.EMAIL)) {
             url = Constant.WEB_SITE + UrlConstant.URL_BINDING_EMAIL;
@@ -171,6 +172,7 @@ public class SendBindCodeActivity extends BaseFgActivity {
                 if (result.code == 0) {
                     String token = (String) result.data;
                     editor.putString(Constant.CONFIG_TOKEN, token);
+                    App.token = token;
                     if (m_EDIT_TYPE.equals(Constant.PHONE)) {
                         App.phone = userName;
                         editor.putString(Constant.CONFIG_USER_PHONE, userName);
@@ -179,7 +181,7 @@ public class SendBindCodeActivity extends BaseFgActivity {
                         editor.putString(Constant.CONFIG_USER_EMAIL, userName);
                     }
                     editor.apply();
-                    App.token = token;
+
 
                     showDialog("绑定成功!");
                 } else {
