@@ -1,21 +1,15 @@
 package com.android.taskallo.activity.manager;
 
 import android.annotation.SuppressLint;
-import android.support.v4.app.FragmentActivity;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.google.gson.reflect.TypeToken;
-import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
 import com.android.taskallo.App;
-import com.android.taskallo.activity.sm.NecessaryOrLikeActivity;
+import com.android.taskallo.R;
+import com.android.taskallo.activity.main.MainHomeActivity;
 import com.android.taskallo.adapter.NeccssaryFragmentAdapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
 import com.android.taskallo.bean.JsonResult;
@@ -28,6 +22,12 @@ import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.view.ActionItem;
 import com.android.taskallo.view.QuickAction;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
+import com.jzt.hol.android.jkda.sdk.bean.game.GameRankListBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimerTask;
 
-import com.android.taskallo.R;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 
@@ -44,31 +43,20 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
  * Created by gp on 2017/3/3 0003.
  */
 @SuppressLint({"ValidFragment", "WrongConstant"})
-public class NecessaryFragment extends BaseSearchFragment {
+public class Fragment1 extends BaseSearchFragment {
 
     private PageAction pageAction;
     public int PAGE_SIZE = 10;
     protected QuickAction mItemClickQuickAction;
     private GameRankListBean gameInfoBean;
-    private FragmentActivity content;
+    private MainHomeActivity content;
     private NecessaryListInfo.AuxiliaryToolsBean mToolInfo;
     private TextView mEmptyTV;
 
-    public NecessaryFragment(NecessaryOrLikeActivity necessaryActivity) {
-        content = necessaryActivity;
+    public Fragment1(MainHomeActivity activity) {
+        content = activity;
     }
 
-    /*  public static NecessaryFragment newInstance(String type, int bean, FragmentActivity
-    context) {
-          NecessaryFragment fragment = new NecessaryFragment();
-          Bundle bundle = new Bundle();
-          content = context;
-          bundle.putString("type", type);
-          bundle.putSerializable("typeValue", bean);
-          fragment.setArguments(bundle);
-          return fragment;
-      }
-  */
     @Override
     protected int getContentViewLayoutID() {
         return R.layout.fragment_necessary;
@@ -100,7 +88,7 @@ public class NecessaryFragment extends BaseSearchFragment {
     }
 
     private void getData() {
-        String url = Constant.WEB_SITE + UrlConstant.URL_QUERY_NECESSARY;
+        String url = "http://opapi.xflqv.cn"+ UrlConstant.URL_QUERY_NECESSARY;
         Response.Listener<JsonResult<List<NecessaryListInfo>>> successListener = new Response
                 .Listener<JsonResult<List<NecessaryListInfo>>>() {
             @Override
@@ -269,7 +257,7 @@ public class NecessaryFragment extends BaseSearchFragment {
         //getLikeList();
     }
 
-    protected final static String TAG = NecessaryFragment.class.getSimpleName();
+    protected final static String TAG = Fragment1.class.getSimpleName();
 
     @Override
     protected void onUserVisible() {

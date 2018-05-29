@@ -226,12 +226,6 @@
             android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
-            android:name="com.android.taskallo.push.view.MsgCenterActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" />
-
-        <activity
             android:name="com.android.taskallo.push.view.MessageDetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -299,10 +293,6 @@
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.activity.sm.AboutNgameZoneActivity"
-            android:launchMode="singleTask"
-            android:theme="@android:style/Theme.NoTitleBar" />
-        <activity
-            android:name="com.android.taskallo.activity.sm.NecessaryOrLikeActivity"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity

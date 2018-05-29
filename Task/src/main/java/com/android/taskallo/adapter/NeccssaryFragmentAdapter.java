@@ -19,7 +19,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.android.taskallo.R;
-import com.android.taskallo.activity.manager.NecessaryFragment;
+import com.android.taskallo.activity.manager.Fragment1;
 import com.android.taskallo.bean.NecessaryItemData;
 import com.android.taskallo.core.fileload.FileLoadInfo;
 import com.android.taskallo.core.fileload.FileLoadManager;
@@ -152,7 +152,7 @@ public class NeccssaryFragmentAdapter extends BaseAdapter implements StickyListH
      * @author flan
      * @date 2015年10月28日
      */
-    protected final static String TAG = NecessaryFragment.class.getSimpleName();
+    protected final static String TAG = Fragment1.class.getSimpleName();
 
     public class ViewHolder {
 

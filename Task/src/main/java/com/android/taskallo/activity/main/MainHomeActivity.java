@@ -37,6 +37,7 @@ import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.activity.classify.Fragment0;
+import com.android.taskallo.activity.manager.Fragment1;
 import com.android.taskallo.activity.rank.RankFragment;
 import com.android.taskallo.adapter.FragmentViewPagerAdapter;
 import com.android.taskallo.bean.JsonResult;
@@ -61,12 +62,11 @@ import com.android.taskallo.exception.NoSDCardException;
 import com.android.taskallo.fragment.SimpleDialogFragment;
 import com.android.taskallo.push.model.PushMessage;
 import com.android.taskallo.push.view.MessageDetailActivity;
-import com.android.taskallo.push.view.MsgListFragment;
 import com.android.taskallo.push.view.NotifyMsgDetailActivity;
 import com.android.taskallo.search.view.SearchActivity;
 import com.android.taskallo.user.view.ChangePwdActivity;
-import com.android.taskallo.user.view.SendBindCodeActivity;
 import com.android.taskallo.user.view.LoginActivity;
+import com.android.taskallo.user.view.SendBindCodeActivity;
 import com.android.taskallo.user.view.UserCenterActivity;
 import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
@@ -136,7 +136,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private TextView mPhoneTv;
     private TextView mEmailTv;
     private TextView tvClear;
-    private MsgListFragment msgFragment;
+    private Fragment1 fragment1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -445,13 +445,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             fragment0 = new Fragment0();
             transaction.add(R.id.main_list_fragments, fragment0);
         }
-        if (null == msgFragment) {
+        if (null == fragment1) {
             //通知
-            msgFragment = new MsgListFragment();
+            fragment1 = new Fragment1(context);
             Bundle bundleYG = new Bundle();
             bundleYG.putLong("labelId", PushMessage.MSG_TYPE_TZ);
-            msgFragment.setArguments(bundleYG);
-            transaction.add(R.id.main_list_fragments, msgFragment);
+            fragment1.setArguments(bundleYG);
+            transaction.add(R.id.main_list_fragments, fragment1);
         }
       /*  if (null == managerFragment) {
             managerFragment = new ManagerFragment();
@@ -501,7 +501,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 tv_game.setTextColor(colorDark);
                 break;*/
             case 1://项目
-                transaction.show(fragment0).hide(msgFragment);
+                transaction.show(fragment0).hide(fragment1);
                 //recommendFragment.setShow(false);
                 bt_video.setSelected(true);
                 mTitleTv.setText(R.string.look_board);
@@ -513,7 +513,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainDiscoverButtonClickCount);
                 break;
             case 2://通知
-                transaction.show(msgFragment).hide(fragment0);
+                transaction.show(fragment1).hide(fragment0);
                 menu_game_hub_bt.setSelected(true);
                 mTitleTv.setText(R.string.main_bottom_tab_01);
                 fl_notifi.setVisibility(View.GONE);
@@ -526,7 +526,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
 
             case 3://管理
-                transaction.hide(msgFragment).hide(fragment0);
+                transaction.hide(fragment1).hide(fragment0);
                 //recommendFragment.setShow(false);
                 bt_manager.setSelected(true);
                 mTitleTv.setText("");
