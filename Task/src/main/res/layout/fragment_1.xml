@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/f5f5f5"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableRight="@drawable/ic_share"
+            android:text="@string/all_msg" />
+
+        <RadioButton
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/ic_share"
+            android:text="@string/query_by_project" />
+    </RadioGroup>
+
 
     <se.emilsjolander.stickylistheaders.StickyListHeadersListView
         android:id="@+id/sticky_list_view"
@@ -17,16 +41,4 @@
         android:listSelector="#00000000"
         android:overScrollMode="never"
         android:scrollbars="none" />
-
-    <TextView
-        android:id="@+id/necessary_empty_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:padding="@dimen/dm030"
-        android:text="正在获取列表..."
-        android:textColor="@color/color_808080"
-        android:textSize="@dimen/dm024"
-        android:visibility="visible" />
-</RelativeLayout>
+</LinearLayout>

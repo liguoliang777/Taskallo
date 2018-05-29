@@ -240,4 +240,6 @@
     <string name="choose_from_loc_pic">从相册选择</string>
     <string name="save">保存</string>
     <string name="enter_account">输入账号</string>
+    <string name="all_msg">全部通知</string>
+    <string name="query_by_project">按项目查询</string>
 </resources>

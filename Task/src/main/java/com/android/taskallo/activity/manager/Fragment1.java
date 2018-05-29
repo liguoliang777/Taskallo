@@ -5,7 +5,6 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
 
 import com.android.taskallo.App;
 import com.android.taskallo.R;
@@ -51,7 +50,6 @@ public class Fragment1 extends BaseSearchFragment {
     private GameRankListBean gameInfoBean;
     private MainHomeActivity content;
     private NecessaryListInfo.AuxiliaryToolsBean mToolInfo;
-    private TextView mEmptyTV;
 
     public Fragment1(MainHomeActivity activity) {
         content = activity;
@@ -72,7 +70,6 @@ public class Fragment1 extends BaseSearchFragment {
     @Override
     protected void initViewsAndEvents(View view) {
         mStickyLV = (StickyListHeadersListView) view.findViewById(R.id.sticky_list_view);
-        mEmptyTV = (TextView) view.findViewById(R.id.necessary_empty_tv);
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
@@ -96,19 +93,14 @@ public class Fragment1 extends BaseSearchFragment {
 
                 if (result == null || result.code != 0) {
                     //"服务端异常"
-                    mEmptyTV.setVisibility(View.VISIBLE);
-                    mEmptyTV.setText("服务器开小差了~");
                     return;
                 }
 
                 List<NecessaryListInfo> necessaryListInfoList = result.data;
                 if (necessaryListInfoList != null && necessaryListInfoList.size() > 0) {
-                    mEmptyTV.setVisibility(View.GONE);
                     setData(necessaryListInfoList);
                 } else {
                     Log.d(TAG, "HTTP请求成功：服务端返回错误！");
-                    mEmptyTV.setVisibility(View.VISIBLE);
-                    mEmptyTV.setText("数据为空~");
                 }
             }
         };
@@ -117,8 +109,6 @@ public class Fragment1 extends BaseSearchFragment {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                mEmptyTV.setVisibility(View.VISIBLE);
-                mEmptyTV.setText("服务器开小差了~");
             }
         };
 
