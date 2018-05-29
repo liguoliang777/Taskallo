@@ -61,6 +61,7 @@
             android:id="@+id/tv_nickname"
             style="@style/style_20px_808080"
             android:layout_width="@dimen/dm450"
+            android:textCursorDrawable="@drawable/shape_cursor_color"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -121,6 +122,7 @@
             style="@style/style_20px_808080"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:maxLines="1"
             android:paddingRight="@dimen/dm028" />

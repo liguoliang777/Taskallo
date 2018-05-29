@@ -4,10 +4,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.taskallo.App;
@@ -23,6 +27,7 @@ import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.core.utils.UrlConstant;
+import com.android.taskallo.fragment.SimpleDialogFragment;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.BaseTitleBar;
 import com.android.volley.AuthFailureError;
@@ -88,10 +93,11 @@ public class SendBindCodeActivity extends BaseFgActivity {
                 finish();
             }
         });
-        titleBar.setTitleText(m_EDIT_TYPE.equals(Constant.PHONE) ? "绑定手机" : "绑定邮箱");
+        titleBar.setTitleText(m_EDIT_TYPE.equals(Constant.PHONE) ? TextUtil.isEmpty(App.phone) ?
+                "绑定手机" : "更改手机" : TextUtil.isEmpty(App.email) ? "绑定邮箱" : "更改邮箱");
 
         et_name = (EditText) findViewById(R.id.et_login_user);
-        et_name.setText(m_EDIT_TYPE.equals(Constant.PHONE) ? App.phone : App.email);
+        et_name.setHint(m_EDIT_TYPE.equals(Constant.PHONE) ? "输入手机号" : "输入邮箱");
         et_captcha = (EditText) findViewById(R.id.et_captcha);
 
         bt_register = (Button) findViewById(R.id.register);
@@ -102,12 +108,12 @@ public class SendBindCodeActivity extends BaseFgActivity {
                 String captcha = et_captcha.getText().toString();
 
                 if (userName == null && userName.equals("")) {
-                    ToastUtil.show(content, "邮箱/手机号不能为空");
+                    ToastUtil.show(content, "手机号/邮箱不能为空");
                     return;
                 }
                 boolean isMobile = TextUtil.isMobile(userName);
                 if (!isMobile && !TextUtil.isEmail(userName)) {
-                    ToastUtil.show(content, "请输入正确的邮箱/手机号");
+                    ToastUtil.show(content, "请输入正确的手机号/邮箱");
                     return;
                 }
                 if (captcha == null || captcha.equals("")) {
@@ -146,6 +152,7 @@ public class SendBindCodeActivity extends BaseFgActivity {
     String key_bind_type = KeyConstant.phoneNumber;
 
     private void doRegister(final String userName, final String captcha) {
+        dialogHelper.showAlert("加载中...", true);
         if (m_EDIT_TYPE.equals(Constant.EMAIL)) {
             url = Constant.WEB_SITE + UrlConstant.URL_BINDING_EMAIL;
             key_bind_type = KeyConstant.email;
@@ -153,17 +160,30 @@ public class SendBindCodeActivity extends BaseFgActivity {
         Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
             @Override
             public void onResponse(JsonResult result) {
-
+                if (null != content && !content.isFinishing()) {
+                    dialogHelper.hideAlert();
+                }
                 if (result == null) {
-                    ToastUtil.show(content, "服务端异常");
+                    ToastUtil.show(content, "绑定失败,服务端异常");
                     return;
                 }
 
                 if (result.code == 0) {
                     String token = (String) result.data;
                     editor.putString(Constant.CONFIG_TOKEN, token);
+                    if (m_EDIT_TYPE.equals(Constant.PHONE)) {
+                        App.phone = userName;
+                        editor.putString(Constant.CONFIG_USER_PHONE, userName);
+                    } else {
+                        App.email = userName;
+                        editor.putString(Constant.CONFIG_USER_EMAIL, userName);
+                    }
                     editor.apply();
                     App.token = token;
+
+                    showDialog("绑定成功!");
+                } else {
+                    ToastUtil.show(content, result.msg);
                 }
             }
         };
@@ -172,6 +192,10 @@ public class SendBindCodeActivity extends BaseFgActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
+                ToastUtil.show(content, "网络连接错误,");
+                if (null != content && !content.isFinishing()) {
+                    dialogHelper.hideAlert();
+                }
                 Log.d(TAG, "HTTP请求失败：网络连接错误！");
             }
         };
@@ -190,6 +214,40 @@ public class SendBindCodeActivity extends BaseFgActivity {
             }
         };
         App.requestQueue.add(versionRequest);
+    }
+
+    /**
+     * 显示注册结果对话框
+     */
+    private void showDialog(String msg) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        final SimpleDialogFragment dialogFragment = new SimpleDialogFragment();
+        dialogFragment.setDialogWidth(220);
+        TextView tv = new TextView(content);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
+                .MATCH_PARENT, ViewGroup
+                .LayoutParams.MATCH_PARENT);
+        params.setMargins(0, 20, 0, 0);
+        params.gravity = Gravity.CENTER;
+        tv.setLayoutParams(params);
+        tv.setGravity(Gravity.CENTER);
+        tv.setText(msg);
+        tv.setTextColor(getResources().getColor(R.color.color000000));
+        dialogFragment.setContentView(tv);
+
+        int stringId = R.string.sure;
+
+
+        dialogFragment.setNegativeButton(stringId, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogFragment.dismiss();
+                        finish();
+                    }
+                }
+        );
+        dialogFragment.show(ft, "successDialog");
     }
 
     /**
