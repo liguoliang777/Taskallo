@@ -33,15 +33,15 @@ public class LoginHelper {
     public LoginHelper(Context context) {
         this.context = context;
         preferences = context.getSharedPreferences(Constant.CONFIG_FILE_NAME, Context.MODE_PRIVATE);
-        userName = preferences.getString(Constant.CONFIG_USER_NAME, "");
+        userName = preferences.getString(Constant.CONFIG_USER_PHONE, "");
         passWord = preferences.getString(Constant.CONFIG_USER_PWD, "");
     }
 
     public void reLoadSP() {
-        App.phone = preferences.getString(Constant.CONFIG_USER_NAME, "");
+        App.phone = preferences.getString(Constant.CONFIG_USER_PHONE, "");
         App.passWord = preferences.getString(Constant.CONFIG_USER_PWD, "");
         App.userCode = preferences.getString(Constant.CONFIG_USER_CODE, "");
-        App.userHeadUrl = preferences.getString(Constant.CONFIG_USER_HEAD, "");
+        App.userHeadUrl = preferences.getString(Constant.CONFIG_HEAD_PHONE, "");
         App.token = preferences.getString(Constant.CONFIG_TOKEN, "");
         App.loginType = preferences.getString(Constant.CONFIG_LOGIN_TYPE, Constant.PHONE);
     }
@@ -64,9 +64,9 @@ public class LoginHelper {
                     App.user = user;
 
                 /*    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString(Constant.CONFIG_USER_HEAD, user.headPortrait);
+                    editor.putString(Constant.CONFIG_HEAD_PHONE, user.headPortrait);
                     editor.putString(Constant.CONFIG_NICK_NAME, user.nickName);
-                    editor.putString(Constant.CONFIG_USER_NAME, user.loginName);
+                    editor.putString(Constant.CONFIG_USER_PHONE, user.loginName);
                     editor.putString(Constant.CONFIG_USER_PWD, App.passWord);
                     editor.putString(Constant.CONFIG_LOGIN_TYPE, App.loginType);
                     editor.apply();*/

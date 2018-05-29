@@ -61,6 +61,7 @@
             android:layout_centerVertical="true"
             android:background="@drawable/shape_bg_verif_code_bt_send"
             android:gravity="center"
+            android:clickable="true"
             android:paddingBottom="@dimen/dm007"
             android:paddingLeft="@dimen/dm010"
             android:paddingRight="@dimen/dm010"

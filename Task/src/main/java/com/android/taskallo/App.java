@@ -36,12 +36,12 @@ public class App extends Application {
 
     public static RequestQueue requestQueue;
 
-    public static String phone;   //电话
-    public static String nickName;   //用户名
-    public static String passWord;   //用户密码
-    public static String userHeadUrl;   //用户头像URL
-    public static String email="";   //邮箱
-    public static String token;
+    public static String phone = "";   //电话
+    public static String nickName = "";   //用户名
+    public static String passWord = "";   //用户密码
+    public static String userHeadUrl = "";   //用户头像URL
+    public static String email = "";   //邮箱
+    public static String token = "";
     public static User user;
     public static String deviceId = "";  //设备id
 
@@ -57,8 +57,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         token = (String) SPUtils.get(this, Constant.CONFIG_TOKEN, "");
-        userHeadUrl = (String) SPUtils.get(this, Constant.CONFIG_USER_HEAD, "");
-        phone = (String) SPUtils.get(this, Constant.CONFIG_USER_NAME, "");
+        userHeadUrl = (String) SPUtils.get(this, Constant.CONFIG_HEAD_PHONE, "");
+        phone = (String) SPUtils.get(this, Constant.CONFIG_USER_PHONE, "");
         email = (String) SPUtils.get(this, Constant.CONFIG_USER_EMAIL, "");
         nickName = (String) SPUtils.get(this, Constant.CONFIG_NICK_NAME, "");
         userCode = (String) SPUtils.get(this, Constant.CONFIG_USER_CODE, "");

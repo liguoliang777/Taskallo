@@ -147,7 +147,7 @@ public class BeginActivity extends FragmentActivity {
             timer = null;
         }*/
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
-        userName = preferences.getString(Constant.CONFIG_USER_NAME, "");
+        userName = preferences.getString(Constant.CONFIG_USER_PHONE, "");
         pwd = preferences.getString(Constant.CONFIG_USER_PWD, "");
         Log.d(TAG, "登陆:" + pwd);
         Intent intent;

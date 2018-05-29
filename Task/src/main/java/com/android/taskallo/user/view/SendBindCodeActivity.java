@@ -18,6 +18,7 @@ import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.PostsInfo;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.DialogHelper;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.TextUtil;
@@ -62,6 +63,7 @@ public class SendBindCodeActivity extends BaseFgActivity {
     private int second = 60;
     private Timer timer = new Timer();
     private Handler handler = new Handler();
+    private DialogHelper dialogHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,8 +73,10 @@ public class SendBindCodeActivity extends BaseFgActivity {
         content = this;
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
         m_EDIT_TYPE = getIntent().getStringExtra(KeyConstant.EDIT_TYPE);
+
         editor = preferences.edit();
         mToken = App.token;
+        dialogHelper = new DialogHelper(getSupportFragmentManager(), content);
         init();
     }
 
@@ -87,6 +91,7 @@ public class SendBindCodeActivity extends BaseFgActivity {
         titleBar.setTitleText(m_EDIT_TYPE.equals(Constant.PHONE) ? "绑定手机" : "绑定邮箱");
 
         et_name = (EditText) findViewById(R.id.et_login_user);
+        et_name.setText(m_EDIT_TYPE.equals(Constant.PHONE) ? App.phone : App.email);
         et_captcha = (EditText) findViewById(R.id.et_captcha);
 
         bt_register = (Button) findViewById(R.id.register);
@@ -198,8 +203,8 @@ public class SendBindCodeActivity extends BaseFgActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            tv_captcha.setText(getResources().getString(R.string
-                                    .register_get_captcha));
+                            tv_captcha.setText(R.string
+                                    .register_get_captcha);
                             tv_captcha.setBackgroundResource(R.drawable
                                     .shape_bg_verif_code_bt_send);
                             tv_captcha.setClickable(true);
@@ -231,12 +236,15 @@ public class SendBindCodeActivity extends BaseFgActivity {
      * 获取手机验证码
      */
     private void getSMSCode(final String userName) {
-
+        dialogHelper.showAlert("加载中...", true);
         String url = Constant.WEB_SITE + UrlConstant.URL_SEND_BINDING_CODE;
         Response.Listener<JsonResult<Object>> successListener = new Response
                 .Listener<JsonResult<Object>>() {
             @Override
             public void onResponse(JsonResult result) {
+                if (null != content && !content.isFinishing()) {
+                    dialogHelper.hideAlert();
+                }
                 if (result == null) {
                     ToastUtil.show(content, "服务端异常");
                     return;
@@ -252,6 +260,7 @@ public class SendBindCodeActivity extends BaseFgActivity {
                     editor.putString(Constant.CONFIG_TOKEN, mToken).apply();
 
                 } else {
+                    ToastUtil.show(content, result.msg);
                     Log.d(TAG, "HTTP请求成功：服务端返回错误：" + result.msg);
                     //showDialog(false, result.msg);
                 }
@@ -262,6 +271,9 @@ public class SendBindCodeActivity extends BaseFgActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
+                if (null != content && !content.isFinishing()) {
+                    dialogHelper.hideAlert();
+                }
                 ToastUtil.show(content, "请检查网络连接");
                 Log.d(TAG, "HTTP请求失败：网络连接错误！");
             }

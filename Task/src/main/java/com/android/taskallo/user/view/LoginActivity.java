@@ -146,7 +146,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
-        userName = preferences.getString(Constant.CONFIG_USER_NAME, "");
+        userName = preferences.getString(Constant.CONFIG_USER_PHONE, "");
         if (!userName.equals("") && userName.length() <= 11) {
             et_user.setText(userName);
             et_user.setSelection(userName.length());
@@ -341,7 +341,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     SharedPreferences.Editor editor = preferences.edit();
                     String token = (String) result.data;
                     editor.putString(Constant.CONFIG_TOKEN, token);
-                    editor.putString(Constant.CONFIG_USER_NAME, userName);
+                    editor.putString(Constant.CONFIG_USER_PHONE, userName);
                     editor.putString(Constant.CONFIG_USER_PWD, password);
                     editor.apply();
                     App.token = token;
@@ -353,9 +353,9 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
 
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString(Constant.CONFIG_TOKEN, email);
-                    editor.putString(Constant.CONFIG_USER_HEAD, headPortrait);//头像
+                    editor.putString(Constant.CONFIG_HEAD_PHONE, headPortrait);//头像
                     editor.putString(Constant.CONFIG_NICK_NAME, nickName);
-                    editor.putString(Constant.CONFIG_USER_NAME, phone);
+                    editor.putString(Constant.CONFIG_USER_PHONE, phone);
                     editor.putString(Constant.CONFIG_USER_PWD, password);
                     editor.putString(Constant.CONFIG_LOGIN_TYPE, LOGIN_TYPE);
                     editor.putString(Constant.CONFIG_USER_CODE, userCode);//userCode
@@ -463,7 +463,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                     App.user = user;
 
                     SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString(Constant.CONFIG_USER_HEAD, user.headPortrait);
+                    editor.putString(Constant.CONFIG_HEAD_PHONE, user.headPortrait);
                     editor.putString(Constant.CONFIG_NICK_NAME, user.nickName);
                     editor.apply();
 

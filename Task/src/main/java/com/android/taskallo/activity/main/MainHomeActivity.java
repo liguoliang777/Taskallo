@@ -278,8 +278,13 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         if (context != null && !context.isFinishing()) {
             App.userHeadUrl = mUser.headPortrait;
             App.nickName = mUser.nickName;
-            App.phone = mUser.phoneNumber;
+            App.phone =mUser.phoneNumber == null ? "" : mUser.phoneNumber;
             App.email = mUser.email == null ? "" : mUser.email;
+            editor.putString(Constant.CONFIG_USER_PHONE,App.phone);
+            editor.putString(Constant.CONFIG_USER_EMAIL,App.email);
+            editor.putString(Constant.CONFIG_NICK_NAME,App.nickName);
+            editor.putString(Constant.CONFIG_HEAD_PHONE,App.userHeadUrl);
+            editor.apply();
             mIconIv.setImageURI(mUser.headPortrait);
             mNameTv.setText(mUser.nickName);
             mPhoneTv.setText(mUser.phoneNumber);

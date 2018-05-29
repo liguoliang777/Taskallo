@@ -34,10 +34,10 @@ public class Constant {
     public static final String CONFIG_FILE_NAME = "taskallo.config";
     public static final String CONFIG_FIRST_INSTALL = "FirstInstall";
     public static final String CONFIG_TOKEN = "Token";
-    public static final String CONFIG_USER_NAME = "UserName";
+    public static final String CONFIG_USER_PHONE = "UserName";
     public static final String CONFIG_NICK_NAME = "NickName";
     public static final String CONFIG_USER_PWD = "PassWord";
-    public static final String CONFIG_USER_HEAD = "HeadUrl";
+    public static final String CONFIG_HEAD_PHONE = "HeadUrl";
     public static final String CFG_RECEIVE_MSG = "ReceiveMsg";
     public static final String CFG_DELETE_APK = "DeleteApk";
     public static final String CFG_ALLOW_4G_LOAD = "AllowLoadBy4G";

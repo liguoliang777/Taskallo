@@ -573,7 +573,7 @@ public class UserCenterActivity extends BaseFgActivity {
                             !App.userHeadUrl.equals(userHeadPhoto)) {
                         App.userHeadUrl = userHeadPhoto;
                         SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString(Constant.CONFIG_USER_HEAD, userHeadPhoto);
+                        editor.putString(Constant.CONFIG_HEAD_PHONE, userHeadPhoto);
                         editor.apply();
                     } else {
                         App.userHeadUrl = userHeadPhoto;

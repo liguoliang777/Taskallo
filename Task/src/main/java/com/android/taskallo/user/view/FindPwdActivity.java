@@ -265,7 +265,7 @@ public class FindPwdActivity extends BaseFgActivity {
                 if (result.code == 0) {
                     SharedPreferences preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString(Constant.CONFIG_USER_NAME, userName);
+                    editor.putString(Constant.CONFIG_USER_PHONE, userName);
                     editor.commit();
                     showDialog(true, "密码重置成功");
                 } else {
