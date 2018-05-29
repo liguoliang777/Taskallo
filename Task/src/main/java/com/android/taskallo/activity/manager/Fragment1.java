@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.main.MainHomeActivity;
-import com.android.taskallo.adapter.NeccssaryFragmentAdapter;
+import com.android.taskallo.adapter.Fragment1Adapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.NecessaryItemData;
@@ -59,13 +59,13 @@ public class Fragment1 extends BaseSearchFragment {
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.fragment_necessary;
+        return R.layout.fragment_1;
     }
 
     private List<TimerTask> timerTasks = new ArrayList<>();
     public StickyListHeadersListView mStickyLV;
 
-    private NeccssaryFragmentAdapter mNecessaryAdapter;
+    private Fragment1Adapter mNecessaryAdapter;
 
     private List<NecessaryItemData> mNecessaryList = new ArrayList<>();
 
@@ -80,7 +80,7 @@ public class Fragment1 extends BaseSearchFragment {
         mStickyLV.setOnItemClickListener(new OnItemClick());
         mStickyLV.setOnItemLongClickListener(new OnPlanItemLongClick());
         mStickyLV.setDividerHeight(0);
-        mNecessaryAdapter = new NeccssaryFragmentAdapter(getActivity(), getSupportFragmentManager
+        mNecessaryAdapter = new Fragment1Adapter(getActivity(), getSupportFragmentManager
                 (), timerTasks);
         mStickyLV.setAdapter(mNecessaryAdapter);
         getData();
@@ -142,6 +142,7 @@ public class Fragment1 extends BaseSearchFragment {
     }
 
 
+    //点击消息
     private class OnItemClick implements AdapterView.OnItemClickListener {
 
         @Override
@@ -167,6 +168,7 @@ public class Fragment1 extends BaseSearchFragment {
         }
     }
 
+    //设置数据
     private void setData(List<NecessaryListInfo> necessaryListInfoList) {
         mNecessaryList.clear();
         mNecessaryAdapter.setDate(mNecessaryList);

@@ -129,8 +129,8 @@ public class LikeFragmentAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_like, parent, false);
             holder.img = (SimpleDraweeView) convertView.findViewById(R.id.img_1);
             holder.tv_title = (TextView) convertView.findViewById(tv_title);
-            holder.versionTv = (TextView) convertView.findViewById(R.id.tv_version_time);
-            holder.tv_size = (TextView) convertView.findViewById(R.id.tv_length);
+            holder.versionTv = (TextView) convertView.findViewById(R.id.fragment1_item_msg_content);
+            holder.tv_size = (TextView) convertView.findViewById(R.id.fragment1_item_project_name);
             holder.progressBar = (GameLoadProgressBar) convertView.findViewById(R.id.progress_bar);
             holder.more_bt = (ImageView) convertView.findViewById(R.id.manager_installed_more_bt);
             convertView.setTag(holder);

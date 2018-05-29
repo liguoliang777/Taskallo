@@ -25,7 +25,7 @@
             fresco:placeholderImageScaleType="centerCrop"
             fresco:progressBarImage="@drawable/ic_launcher"
             fresco:roundAsCircle="true"
-            fresco:roundedCornerRadius="4dp"/>
+           />
 
         <TextView
             android:id="@+id/text1"

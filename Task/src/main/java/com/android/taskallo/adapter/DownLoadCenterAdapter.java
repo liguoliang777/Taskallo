@@ -27,13 +27,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.daimajia.numberprogressbar.NumberProgressBar;
-import com.facebook.drawee.view.SimpleDraweeView;
-
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import com.android.taskallo.R;
 import com.android.taskallo.core.fileload.FileLoadInfo;
 import com.android.taskallo.core.fileload.FileLoadManager;
@@ -41,6 +34,12 @@ import com.android.taskallo.core.fileload.GameFileStatus;
 import com.android.taskallo.core.fileload.IFileLoad;
 import com.android.taskallo.view.GameLoadProgressBar;
 import com.android.taskallo.view.QuickAction;
+import com.daimajia.numberprogressbar.NumberProgressBar;
+import com.facebook.drawee.view.SimpleDraweeView;
+
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.android.taskallo.R.id.tv_title;
 
@@ -124,7 +123,7 @@ public class DownLoadCenterAdapter extends BaseAdapter {
             // holder.tv_percent = (TextView) convertView.findViewById(R.id.tv_percent);
             holder.tv_state = (TextView) convertView.findViewById(R.id.tv_state);
             holder.tv_finished = (TextView) convertView.findViewById(R.id.tv_finished);
-            holder.tv_size = (TextView) convertView.findViewById(R.id.tv_length);
+            holder.tv_size = (TextView) convertView.findViewById(R.id.fragment1_item_project_name);
             holder.pb = (NumberProgressBar) convertView.findViewById(R.id.pb);
             holder.progressBar = (GameLoadProgressBar) convertView.findViewById(R.id.progress_bar);
             holder.more_bt = (ImageView) convertView.findViewById(R.id.manager_installed_more_bt);
