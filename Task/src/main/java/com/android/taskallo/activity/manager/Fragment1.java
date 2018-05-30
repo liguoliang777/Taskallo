@@ -1,12 +1,16 @@
 package com.android.taskallo.activity.manager;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.ColorDrawable;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListPopupWindow;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.taskallo.App;
 import com.android.taskallo.R;
@@ -51,9 +55,9 @@ public class Fragment1 extends BaseSearchFragment {
     private GameRankListBean gameInfoBean;
     private MainHomeActivity content;
     private NecessaryListInfo.AuxiliaryToolsBean mToolInfo;
-    private RadioGroup mRadioGroup;
-    private RadioButton mRadioBt1, mRadioBt2;
-    private boolean isPopShowing = false;
+    private RelativeLayout mRadioGroup;
+    private TextView mTopBt1, mTopBt2;
+    private ListPopupWindow listPopupWindow;
 
     public Fragment1(MainHomeActivity activity) {
         content = activity;
@@ -74,9 +78,9 @@ public class Fragment1 extends BaseSearchFragment {
     @Override
     protected void initViewsAndEvents(View view) {
         mStickyLV = (StickyListHeadersListView) view.findViewById(R.id.sticky_list_view);
-        mRadioGroup = (RadioGroup) view.findViewById(R.id.fragment_1_top_radio_gp);
-        mRadioBt1 = (RadioButton) view.findViewById(R.id.fragment_1_top_radio_rb_1);
-        mRadioBt2 = (RadioButton) view.findViewById(R.id.fragment_1_top_radio_rb_2);
+        mRadioGroup = (RelativeLayout) view.findViewById(R.id.fragment_1_top_radio_gp);
+        mTopBt1 = (TextView) view.findViewById(R.id.fragment_1_top_radio_rb_1);
+        mTopBt2 = (TextView) view.findViewById(R.id.fragment_1_top_radio_rb_2);
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
@@ -219,21 +223,48 @@ public class Fragment1 extends BaseSearchFragment {
                 .necessary_content_desc)));
 
     }*/
+    String[] products = {"全部通知", "未读通知", "@ 我的通知", "标记全部已读",
+            "清空已读通知"};
+
     private void initGP() {
+        listPopupWindow = new ListPopupWindow(content);
+        listPopupWindow.setHeight(ListPopupWindow.WRAP_CONTENT);
+        //listPopupWindow.setAnimationStyle(R.style.Animations_PopDownMenu);
+        listPopupWindow.setAdapter(new ArrayAdapter(content,
+                R.layout.fragment_1_popup_window, R.id.fragment1_item_tv, products));
+        listPopupWindow.setAnchorView(mRadioGroup);
+        listPopupWindow.setModal(true);
+        listPopupWindow.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color
+                .white)));//设置背景色
+        listPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                mTopBt1.setSelected(false);
+            }
+        });
+        listPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listPopupWindow.dismiss();
+                Log.d(TAG, "item选中:" + position);
+            }
+        });
         // 设置Action
-        mRadioBt1.setOnClickListener(new View.OnClickListener() {
+        mTopBt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isPopShowing = !isPopShowing;
-                if (isPopShowing) {
-
+                view.setSelected(true);
+                if (listPopupWindow.isShowing()) {
+                    listPopupWindow.dismiss();
+                } else {
+                    listPopupWindow.show();
                 }
             }
         });
-        mRadioBt2.setOnClickListener(new View.OnClickListener() {
+        mTopBt2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                view.setSelected(view.isSelected() ? false : true);
             }
         });
     }

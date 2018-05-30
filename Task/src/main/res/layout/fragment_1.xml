@@ -6,54 +6,47 @@
     android:background="@color/f5f5f5"
     android:orientation="vertical">
 
-    <RadioGroup
+    <RelativeLayout
         android:id="@+id/fragment_1_top_radio_gp"
-
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dm080"
         android:background="@color/white"
-        android:gravity="center_horizontal"
         android:orientation="horizontal">
 
-        <RadioButton
-            android:layout_width="wrap_content"
+        <TextView
             android:id="@+id/fragment_1_top_radio_rb_1"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:button="@null"
-            android:drawableEnd="@drawable/selector_fragment_1_top_radio_bt_left"
-            android:drawablePadding="@dimen/dm010"
+            android:layout_centerVertical="true"
+            android:drawableRight="@drawable/selector_fragment_1_top_radio_bt_left"
             android:gravity="center"
-            android:paddingBottom="@dimen/dm028"
-            android:paddingLeft="@dimen/dm065"
-            android:paddingRight="@dimen/dm065"
-            android:paddingTop="@dimen/dm028"
+            android:paddingLeft="@dimen/dm100"
+            android:paddingRight="@dimen/dm050"
             android:singleLine="true"
+            android:drawablePadding="@dimen/dm010"
             android:text="@string/all_msg"
             android:textColor="@color/mainColor"
             android:textSize="@dimen/dm022"
             android:textStyle="bold" />
 
-        <RadioButton
+        <TextView
             android:id="@+id/fragment_1_top_radio_rb_2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:button="@null"
-            android:drawableEnd="@drawable/selector_fragment_1_top_radio_bt_right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:drawablePadding="@dimen/dm010"
+            android:drawableRight="@drawable/selector_fragment_1_top_radio_bt_right"
             android:gravity="center"
-            android:paddingBottom="@dimen/dm028"
-            android:paddingLeft="@dimen/dm065"
-            android:paddingRight="@dimen/dm065"
-            android:paddingTop="@dimen/dm028"
+            android:paddingLeft="@dimen/dm050"
+            android:paddingRight="@dimen/dm100"
             android:singleLine="true"
             android:text="@string/query_by_project"
             android:textColor="@color/msg_top_text_seletor"
             android:textSize="@dimen/dm022"
             android:textStyle="bold" />
 
-    </RadioGroup>
+    </RelativeLayout>
 
     <include layout="@layout/layout_line_1px_f0f0f0" />
 
