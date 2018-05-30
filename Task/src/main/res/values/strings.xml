@@ -250,4 +250,7 @@
     <string name="str_public">公开</string>
     <string name="primary_cover">预选封面</string>
     <string name="str_private">私有</string>
+    <string name="proj_cannot_empty">项目名不能为空</string>
+    <string name="create_proj_success">项目创建成功</string>
+    <string name="create_proj_faild">项目创建失败,稍后重试</string>
 </resources>

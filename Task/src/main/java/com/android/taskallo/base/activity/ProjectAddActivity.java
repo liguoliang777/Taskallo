@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -15,9 +17,12 @@ import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.JsonResult;
-import com.android.taskallo.bean.VersionInfo;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.core.utils.TextUtil;
+import com.android.taskallo.core.utils.UrlConstant;
+import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -38,6 +43,8 @@ public class ProjectAddActivity extends BaseFgActivity {
     private Button mPublicPrivateBt;
     private PopupWindow popupWindow;
     private boolean PUBLIC_PRIVATE = true; //0 共有 1私有
+    private EditText mProjNameTv, mProjSubtitleTv;
+    private String mImgId="1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,8 @@ public class ProjectAddActivity extends BaseFgActivity {
         context = this;
         Button saveBt = (Button) findViewById(R.id.title_right_bt);
         mPublicPrivateBt = (Button) findViewById(R.id.proj_public_or_private);
+        mProjNameTv = (EditText) findViewById(R.id.proj_name_et);
+        mProjSubtitleTv = (EditText) findViewById(R.id.proj_subtitle_et);
         saveBt.setVisibility(View.VISIBLE);
         saveBt.setOnClickListener(mOnClickListener);
         mPublicPrivateBt.setOnClickListener(mOnClickListener);
@@ -89,17 +98,25 @@ public class ProjectAddActivity extends BaseFgActivity {
     /**
      * 上传资料
      */
-    public void postProject() {
-        String url = Constant.WEB_SITE + Constant.URL_APP_UPDATE;
-        Response.Listener<JsonResult<VersionInfo>> successListener = new Response
-                .Listener<JsonResult<VersionInfo>>() {
+    public void postAddProjectData() {
+        final String projName = mProjNameTv.getText().toString();
+        final String projSubtitle = mProjSubtitleTv.getText().toString();
+        if (TextUtil.isEmpty(projName)) {
+            ToastUtil.show(context, getString(R.string.proj_cannot_empty));
+            return;
+        }
+        Log.d(TAG, "提交:" + projSubtitle);
+        String url = Constant.WEB_SITE + UrlConstant.URL_ADD_PROJECT;
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
             @Override
-            public void onResponse(JsonResult<VersionInfo> result) {
-
+            public void onResponse(JsonResult result) {
                 if (result == null || result.code != 0) {
+                    ToastUtil.show(context, getString(R.string.create_proj_faild));
                     return;
                 }
-
+                ToastUtil.show(context, getString(R.string.create_proj_success));
+                finish();
             }
         };
 
@@ -110,14 +127,17 @@ public class ProjectAddActivity extends BaseFgActivity {
             }
         };
 
-        Request<JsonResult<VersionInfo>> versionRequest = new
-                GsonRequest<JsonResult<VersionInfo>>(Request.Method.POST, url,
-                        successListener, errorListener, new TypeToken<JsonResult<VersionInfo>>() {
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(Request.Method.POST, url,
+                        successListener, errorListener, new TypeToken<JsonResult>() {
                 }.getType()) {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
-                        params.put("appType", "0");
+                        params.put(KeyConstant.name, projName);
+                        params.put(KeyConstant.desc, projSubtitle);
+                        params.put(KeyConstant.imgId, mImgId);
+                        params.put(KeyConstant.privacy, PUBLIC_PRIVATE ? "0" : "1");
                         return params;
                     }
                 };
@@ -130,6 +150,7 @@ public class ProjectAddActivity extends BaseFgActivity {
             switch (view.getId()) {
                 case R.id.title_right_bt:
                     //保存项目
+                    postAddProjectData();
                     break;
                 case R.id.left_bt:
                     finish();

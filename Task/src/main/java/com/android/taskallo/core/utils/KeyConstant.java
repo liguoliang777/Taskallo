@@ -59,4 +59,9 @@ public class KeyConstant {
 
     public static final String authType = "authType";
     public static final String email="email";
+
+    public static final String name="name";
+    public static final String desc="desc";
+    public static final String imgId="imgId";
+    public static final String privacy="privacy";
 }
