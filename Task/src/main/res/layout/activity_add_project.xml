@@ -13,7 +13,6 @@
     <EditText
         android:id="@+id/proj_name_et"
         style="@style/px24_1a1a1a"
-        android:textCursorDrawable="@drawable/shape_cursor_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dm020"
@@ -21,7 +20,8 @@
         android:hint="@string/enter_project_name"
         android:padding="@dimen/dm024"
         android:singleLine="true"
-        android:textColorHint="@color/cccccc" />
+        android:textColorHint="@color/cccccc"
+        android:textCursorDrawable="@drawable/shape_cursor_color" />
 
     <include layout="@layout/layout_line_1px_f0f0f0" />
 
@@ -29,14 +29,14 @@
         android:id="@+id/proj_subtitle_et"
         style="@style/px24_1a1a1a"
         android:layout_width="match_parent"
-        android:textCursorDrawable="@drawable/shape_cursor_color"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dm020"
         android:background="@color/white"
         android:hint="@string/enter_proj_subtitle_optional"
         android:padding="@dimen/dm024"
         android:singleLine="true"
-        android:textColorHint="@color/cccccc" />
+        android:textColorHint="@color/cccccc"
+        android:textCursorDrawable="@drawable/shape_cursor_color" />
 
     <include layout="@layout/layout_line_1px_f0f0f0" />
 
@@ -50,26 +50,44 @@
         android:singleLine="true"
         android:text="@string/proj_open_ness" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dm088"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dm024"
-        android:singleLine="true"
-        android:text="@string/str_public"
-        android:textColor="@color/mainColor" />
-
-    <include layout="@layout/layout_line_1px_f0f0f0" />
-
-    <TextView
-        style="@style/px20_808080"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dm020"
-        android:layout_marginLeft="@dimen/dm024"
-        android:layout_marginTop="@dimen/dm040"
-        android:singleLine="true"
-        android:text="@string/primary_cover" />
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/proj_public_or_private"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dm088"
+            android:background="@color/white"
+            android:drawablePadding="@dimen/dm015"
+            android:drawableRight="@drawable/selector_fragment_1_top_radio_bt_left"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dm024"
+            android:paddingRight="@dimen/dm020"
+            android:singleLine="true"
+            android:text="@string/str_public"
+            android:textColor="@color/mainColor"
+        />
+
+        <include
+            layout="@layout/layout_line_1px_f0f0f0"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm001"
+            android:layout_marginTop="@dimen/dm088" />
+
+        <TextView
+            style="@style/px20_808080"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/proj_public_or_private"
+            android:paddingBottom="@dimen/dm020"
+            android:paddingLeft="@dimen/dm024"
+            android:paddingTop="@dimen/dm040"
+            android:background="@color/f5f5f5"
+            android:singleLine="true"
+            android:text="@string/primary_cover" />
+    </RelativeLayout>
+
 
 </LinearLayout>

@@ -1,9 +1,14 @@
 package com.android.taskallo.base.activity;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.android.taskallo.App;
@@ -30,6 +35,9 @@ public class ProjectAddActivity extends BaseFgActivity {
 
     private static final String TAG = ProjectAddActivity.class.getSimpleName();
     private Context context;
+    private Button mPublicPrivateBt;
+    private PopupWindow popupWindow;
+    private boolean PUBLIC_PRIVATE = true; //0 共有 1私有
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +46,44 @@ public class ProjectAddActivity extends BaseFgActivity {
         setContentView(R.layout.activity_add_project);
         context = this;
         Button saveBt = (Button) findViewById(R.id.title_right_bt);
+        mPublicPrivateBt = (Button) findViewById(R.id.proj_public_or_private);
         saveBt.setVisibility(View.VISIBLE);
         saveBt.setOnClickListener(mOnClickListener);
+        mPublicPrivateBt.setOnClickListener(mOnClickListener);
         findViewById(R.id.left_bt).setOnClickListener(mOnClickListener);
         ((TextView) findViewById(R.id.center_tv)).setText(R.string.project_add);
+    }
 
+    private void setPopupWindow() {
+        LinearLayout window = new LinearLayout(context);
+        window.setBackgroundResource(R.drawable.ic_rank_popup_bg);
+        window.setGravity(Gravity.CENTER);
+        TextView tv = new TextView(context);
+        tv.setText(PUBLIC_PRIVATE ? R.string.str_private : R.string
+                .str_public);
+        tv.setTextColor(ContextCompat.getColor(context, R.color.color_808080));
+        window.addView(tv);
 
+        popupWindow = new PopupWindow(window, 220, 120);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                mPublicPrivateBt.setSelected(false);
+            }
+        });
+
+        window.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PUBLIC_PRIVATE = !PUBLIC_PRIVATE;
+                popupWindow.dismiss();
+                mPublicPrivateBt.setText(PUBLIC_PRIVATE ? R.string.str_public : R.string
+                        .str_private);
+            }
+        });
     }
 
     /**
@@ -93,6 +133,11 @@ public class ProjectAddActivity extends BaseFgActivity {
                     break;
                 case R.id.left_bt:
                     finish();
+                    break;
+                case R.id.proj_public_or_private:
+                    setPopupWindow();
+                    popupWindow.showAsDropDown(mPublicPrivateBt);
+                    mPublicPrivateBt.setSelected(!mPublicPrivateBt.isSelected());
                     break;
 
             }

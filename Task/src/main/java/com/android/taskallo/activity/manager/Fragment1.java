@@ -264,7 +264,7 @@ public class Fragment1 extends BaseSearchFragment {
         mTopBt2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                view.setSelected(view.isSelected() ? false : true);
+                view.setSelected(!view.isSelected());
             }
         });
     }

@@ -76,6 +76,7 @@
             android:name="com.android.taskallo.activity.main.MainHomeActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|navigation"
             android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.android.taskallo.base.activity.GuideViewActivity"

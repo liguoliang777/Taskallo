@@ -249,4 +249,5 @@
     <string name="proj_open_ness">项目公开性</string>
     <string name="str_public">公开</string>
     <string name="primary_cover">预选封面</string>
+    <string name="str_private">私有</string>
 </resources>
