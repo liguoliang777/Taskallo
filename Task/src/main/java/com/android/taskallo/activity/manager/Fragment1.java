@@ -5,6 +5,8 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.android.taskallo.App;
 import com.android.taskallo.R;
@@ -19,7 +21,6 @@ import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.UrlConstant;
-import com.android.taskallo.view.ActionItem;
 import com.android.taskallo.view.QuickAction;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -50,6 +51,9 @@ public class Fragment1 extends BaseSearchFragment {
     private GameRankListBean gameInfoBean;
     private MainHomeActivity content;
     private NecessaryListInfo.AuxiliaryToolsBean mToolInfo;
+    private RadioGroup mRadioGroup;
+    private RadioButton mRadioBt1, mRadioBt2;
+    private boolean isPopShowing = false;
 
     public Fragment1(MainHomeActivity activity) {
         content = activity;
@@ -70,6 +74,9 @@ public class Fragment1 extends BaseSearchFragment {
     @Override
     protected void initViewsAndEvents(View view) {
         mStickyLV = (StickyListHeadersListView) view.findViewById(R.id.sticky_list_view);
+        mRadioGroup = (RadioGroup) view.findViewById(R.id.fragment_1_top_radio_gp);
+        mRadioBt1 = (RadioButton) view.findViewById(R.id.fragment_1_top_radio_rb_1);
+        mRadioBt2 = (RadioButton) view.findViewById(R.id.fragment_1_top_radio_rb_2);
         pageAction = new PageAction();
         pageAction.setCurrentPage(0);
         pageAction.setPageSize(PAGE_SIZE);
@@ -81,11 +88,11 @@ public class Fragment1 extends BaseSearchFragment {
                 (), timerTasks);
         mStickyLV.setAdapter(mNecessaryAdapter);
         getData();
-        //initPop();
+        initGP();
     }
 
     private void getData() {
-        String url = "http://opapi.xflqv.cn"+ UrlConstant.URL_QUERY_NECESSARY;
+        String url = "http://opapi.xflqv.cn" + UrlConstant.URL_QUERY_NECESSARY;
         Response.Listener<JsonResult<List<NecessaryListInfo>>> successListener = new Response
                 .Listener<JsonResult<List<NecessaryListInfo>>>() {
             @Override
@@ -212,22 +219,21 @@ public class Fragment1 extends BaseSearchFragment {
                 .necessary_content_desc)));
 
     }*/
-    private void initPop() {
+    private void initGP() {
         // 设置Action
-        mItemClickQuickAction = new QuickAction(getActivity(), QuickAction.VERTICAL);
-        ActionItem pointItem = new ActionItem(1, "不再喜欢", null);
-        mItemClickQuickAction.addActionItem(pointItem);
-
-        mItemClickQuickAction.setOnActionItemClickListener(new QuickAction
-                .OnActionItemClickListener() {
+        mRadioBt1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(QuickAction source, int pos, int actionId) {
-                if (pos == 0) {
-                    //获取gameId  传给服务器 不再喜欢
-                    String currentGameId = mNecessaryAdapter.getItemGameId();
+            public void onClick(View view) {
+                isPopShowing = !isPopShowing;
+                if (isPopShowing) {
+
                 }
-                //取消弹出框
-                mItemClickQuickAction.dismiss();
+            }
+        });
+        mRadioBt2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }

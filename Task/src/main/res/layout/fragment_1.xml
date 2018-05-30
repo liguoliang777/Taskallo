@@ -7,37 +7,55 @@
     android:orientation="vertical">
 
     <RadioGroup
+        android:id="@+id/fragment_1_top_radio_gp"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.AppCompatRadioButton
+        <RadioButton
             android:layout_width="wrap_content"
+            android:id="@+id/fragment_1_top_radio_rb_1"
             android:layout_height="match_parent"
-            android:button="@null"
             android:background="@color/white"
+            android:button="@null"
+            android:drawableEnd="@drawable/selector_fragment_1_top_radio_bt_left"
+            android:drawablePadding="@dimen/dm010"
             android:gravity="center"
-            android:drawablePadding="@dimen/dm005"
+            android:paddingBottom="@dimen/dm028"
+            android:paddingLeft="@dimen/dm065"
+            android:paddingRight="@dimen/dm065"
+            android:paddingTop="@dimen/dm028"
             android:singleLine="true"
-            android:drawableEnd="@drawable/selector_fragment_1_top_radio_button"
             android:text="@string/all_msg"
-            android:textColor="@color/mainColor" />
+            android:textColor="@color/mainColor"
+            android:textSize="@dimen/dm022"
+            android:textStyle="bold" />
 
-        <android.support.v7.widget.AppCompatRadioButton
-            android:drawablePadding="@dimen/dm005"
-            android:background="@color/white"
-            android:gravity="center"
+        <RadioButton
+            android:id="@+id/fragment_1_top_radio_rb_2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:button="@null"
-            android:textColor="@color/msg_top_text_seletor"
-            android:drawableEnd="@drawable/selector_fragment_1_top_radio_button"
+            android:drawableEnd="@drawable/selector_fragment_1_top_radio_bt_right"
+            android:drawablePadding="@dimen/dm010"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dm028"
+            android:paddingLeft="@dimen/dm065"
+            android:paddingRight="@dimen/dm065"
+            android:paddingTop="@dimen/dm028"
+            android:singleLine="true"
             android:text="@string/query_by_project"
-            />
+            android:textColor="@color/msg_top_text_seletor"
+            android:textSize="@dimen/dm022"
+            android:textStyle="bold" />
 
     </RadioGroup>
 
+    <include layout="@layout/layout_line_1px_f0f0f0" />
 
     <se.emilsjolander.stickylistheaders.StickyListHeadersListView
         android:id="@+id/sticky_list_view"

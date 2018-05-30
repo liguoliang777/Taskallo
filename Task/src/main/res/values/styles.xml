@@ -184,8 +184,8 @@
         <item name="android:textSize">@dimen/dm020</item>
         <item name="android:textColor">@color/color_808080</item>
     </style>
-    <style name="style_16px_808080">
-        <item name="android:textSize">@dimen/dm016</item>
+    <style name="style_18px_808080">
+        <item name="android:textSize">@dimen/dm018</item>
         <item name="android:textColor">@color/color_808080</item>
     </style>
     <style name="me_fragment_0_title_text_style">
