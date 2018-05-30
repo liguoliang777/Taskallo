@@ -320,7 +320,7 @@
 
                         <TextView
                             android:id="@+id/me_phone_title"
-                            style="@style/style_24_333333_bold"
+                            style="@style/style_px24_333333_bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dm015"
@@ -366,7 +366,7 @@
 
                         <TextView
                             android:id="@+id/me_email_title"
-                            style="@style/style_24_333333_bold"
+                            style="@style/style_px24_333333_bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dm015"

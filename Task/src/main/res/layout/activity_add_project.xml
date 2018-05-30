@@ -1,13 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ngame="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/f5f5f5"
     android:clipToPadding="true"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <include layout="@layout/layout_title_left_center"></include>
 
+    <EditText
+        android:id="@+id/proj_name_et"
+        style="@style/px24_1a1a1a"
+        android:textCursorDrawable="@drawable/shape_cursor_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dm020"
+        android:background="@color/white"
+        android:hint="@string/enter_project_name"
+        android:padding="@dimen/dm024"
+        android:singleLine="true"
+        android:textColorHint="@color/cccccc" />
 
-</RelativeLayout>
+    <include layout="@layout/layout_line_1px_f0f0f0" />
+
+    <EditText
+        android:id="@+id/proj_subtitle_et"
+        style="@style/px24_1a1a1a"
+        android:layout_width="match_parent"
+        android:textCursorDrawable="@drawable/shape_cursor_color"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dm020"
+        android:background="@color/white"
+        android:hint="@string/enter_proj_subtitle_optional"
+        android:padding="@dimen/dm024"
+        android:singleLine="true"
+        android:textColorHint="@color/cccccc" />
+
+    <include layout="@layout/layout_line_1px_f0f0f0" />
+
+    <TextView
+        style="@style/px20_808080"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dm020"
+        android:layout_marginLeft="@dimen/dm024"
+        android:layout_marginTop="@dimen/dm040"
+        android:singleLine="true"
+        android:text="@string/proj_open_ness" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dm088"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dm024"
+        android:singleLine="true"
+        android:text="@string/str_public"
+        android:textColor="@color/mainColor" />
+
+    <include layout="@layout/layout_line_1px_f0f0f0" />
+
+    <TextView
+        style="@style/px20_808080"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dm020"
+        android:layout_marginLeft="@dimen/dm024"
+        android:layout_marginTop="@dimen/dm040"
+        android:singleLine="true"
+        android:text="@string/primary_cover" />
+
+</LinearLayout>
