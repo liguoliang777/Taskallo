@@ -1,14 +1,17 @@
 package com.android.taskallo.base.activity;
 
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
+import com.android.taskallo.bean.ImgInfo;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
@@ -27,9 +31,15 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,12 +49,14 @@ import java.util.Map;
 public class ProjectAddActivity extends BaseFgActivity {
 
     private static final String TAG = ProjectAddActivity.class.getSimpleName();
-    private Context context;
+    private ProjectAddActivity context;
     private Button mPublicPrivateBt;
     private PopupWindow popupWindow;
     private boolean PUBLIC_PRIVATE = true; //0 共有 1私有
     private EditText mProjNameTv, mProjSubtitleTv;
-    private String mImgId="1";
+    private String mImgId = "1";
+    private GridLayout imgLaout;
+    private List<ImgInfo> gameLogoList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +73,10 @@ public class ProjectAddActivity extends BaseFgActivity {
         mPublicPrivateBt.setOnClickListener(mOnClickListener);
         findViewById(R.id.left_bt).setOnClickListener(mOnClickListener);
         ((TextView) findViewById(R.id.center_tv)).setText(R.string.project_add);
+
+        imgLaout = (GridLayout) findViewById(R.id.proj_add_def_bg_img_layout);
+
+        getImgList();
     }
 
     private void setPopupWindow() {
@@ -105,7 +121,6 @@ public class ProjectAddActivity extends BaseFgActivity {
             ToastUtil.show(context, getString(R.string.proj_cannot_empty));
             return;
         }
-        Log.d(TAG, "提交:" + projSubtitle);
         String url = Constant.WEB_SITE + UrlConstant.URL_ADD_PROJECT;
         Response.Listener<JsonResult> successListener = new Response
                 .Listener<JsonResult>() {
@@ -164,4 +179,82 @@ public class ProjectAddActivity extends BaseFgActivity {
             }
         }
     };
+
+    /**
+     * 上传资料
+     */
+    public void getImgList() {
+        final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup
+                .LayoutParams.WRAP_CONTENT, ViewGroup
+                .LayoutParams.WRAP_CONTENT);
+        params.width = getResources().getDimensionPixelSize(R.dimen.dm136);
+        params.height = getResources().getDimensionPixelSize(R.dimen.dm068);
+
+
+
+        int dmMargin = getResources().getDimensionPixelSize(R.dimen.dm008);
+        params.setMargins(dmMargin, dmMargin, dmMargin, dmMargin);
+
+        final String url = Constant.WEB_SITE + UrlConstant.URL_ADD_PROJECT_IMG;
+        final Response.Listener<JsonResult<List<ImgInfo>>> successListener = new Response
+                .Listener<JsonResult<List<ImgInfo>>>() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onResponse(JsonResult<List<ImgInfo>> result) {
+                if (result == null || result.code != 0) {
+                    ToastUtil.show(context, getString(R.string.get_img_faild));
+                    // return;
+                }
+
+                //gameLogoList = result.data;
+                gameLogoList = new ArrayList<>();
+                gameLogoList.add(new ImgInfo());
+                gameLogoList.add(new ImgInfo());
+                gameLogoList.add(new ImgInfo());
+                gameLogoList.add(new ImgInfo());
+                gameLogoList.add(new ImgInfo());
+                gameLogoList.add(new ImgInfo());
+                gameLogoList.add(new ImgInfo());
+                gameLogoList.add(new ImgInfo());
+                if (gameLogoList != null) {
+                    for (int i = 0; i < gameLogoList.size(); i++) {
+                        ImgInfo imgInfo = gameLogoList.get(i);
+                        if (imgInfo != null) {
+                            SimpleDraweeView picassoImageView = new SimpleDraweeView(context);
+                            final GenericDraweeHierarchy hierarchy = GenericDraweeHierarchyBuilder.newInstance(getResources())
+                                    //设置圆形圆角参数
+                                    .setRoundingParams(new RoundingParams().setCornersRadius(10)).build();
+                            picassoImageView.setHierarchy(hierarchy);
+                            picassoImageView.setLayoutParams(params);
+                            picassoImageView.setScaleType(ImageView.ScaleType.CENTER);
+                            picassoImageView.setLayoutParams(params);
+                            //picassoImageView.setImageURI(imgInfo.imgUrl);
+                            picassoImageView.setImageURI("http://res" +
+                                    ".youzi4.cc/photo_files/news/20180221/d6502340-e340-3b6d-f75d" +
+                                    "-01c51e2ef108.jpg");
+                            imgLaout.addView(picassoImageView);
+                        }
+                    }
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+            }
+        };
+
+        Request<JsonResult<List<ImgInfo>>> versionRequest = new
+                GsonRequest<JsonResult<List<ImgInfo>>>(Request.Method.POST, url,
+                        successListener, errorListener, new TypeToken<JsonResult<List<ImgInfo>>>() {
+                }.getType()) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        return null;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
+    }
 }

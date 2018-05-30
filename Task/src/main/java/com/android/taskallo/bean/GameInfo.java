@@ -111,7 +111,7 @@ public class GameInfo implements Serializable {
     /**
      * 游戏键位描述
      */
-    public List<GameKey> gameKeyDescList;
+    public List<ImgInfo> gameKeyDescList;
 
     /**
      * 游戏评分汇总

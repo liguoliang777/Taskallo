@@ -67,8 +67,7 @@
             android:paddingRight="@dimen/dm020"
             android:singleLine="true"
             android:text="@string/str_public"
-            android:textColor="@color/mainColor"
-        />
+            android:textColor="@color/mainColor" />
 
         <include
             layout="@layout/layout_line_1px_f0f0f0"
@@ -81,13 +80,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/proj_public_or_private"
-            android:paddingBottom="@dimen/dm020"
+            android:background="@color/f5f5f5"
             android:paddingLeft="@dimen/dm024"
             android:paddingTop="@dimen/dm040"
-            android:background="@color/f5f5f5"
             android:singleLine="true"
             android:text="@string/primary_cover" />
+
+
     </RelativeLayout>
 
+    <GridLayout
+        android:layout_marginLeft="@dimen/dm016"
+        android:layout_marginTop="@dimen/dm012"
+        android:id="@+id/proj_add_def_bg_img_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="4"
+        android:orientation="horizontal" />
 
 </LinearLayout>

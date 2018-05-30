@@ -9,6 +9,6 @@ import java.util.List;
 public class GameKeyDesc {
 
     /** 游戏键位描述 */
-    public List<GameKey> gameKeyDescList;
+    public List<ImgInfo> gameKeyDescList;
 
 }
