@@ -14,5 +14,5 @@
         android:scrollbars="none"/>
     <include
         android:id="@+id/ll_title"
-        layout="@layout/layout_title_left" />
+        layout="@layout/layout_title_left_center" />
 </RelativeLayout>

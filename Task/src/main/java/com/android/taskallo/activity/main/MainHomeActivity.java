@@ -25,7 +25,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -40,6 +39,7 @@ import com.android.taskallo.activity.classify.Fragment0;
 import com.android.taskallo.activity.manager.Fragment1;
 import com.android.taskallo.activity.rank.RankFragment;
 import com.android.taskallo.adapter.FragmentViewPagerAdapter;
+import com.android.taskallo.base.activity.ProjectAddActivity;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.User;
 import com.android.taskallo.bean.VersionInfo;
@@ -124,7 +124,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private List<Fragment> mfragmentlist = new ArrayList<>();
     private int rbIndex;
     private ImageView im_toSearch, mEditBt;
-    private ImageButton fl_notifi;
+    private ImageView projectAddBt;
     private SimpleDraweeView mIconIv;
     private String pwd;
     private SharedPreferences preferences;
@@ -169,7 +169,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
 
         //标题上面的消息和搜索
         im_toSearch = (ImageView) findViewById(R.id.im_toSearch);
-        fl_notifi = (ImageButton) findViewById(R.id.main_top_add_bt);
+        projectAddBt = (ImageView) findViewById(R.id.main_top_add_bt);
         tv_notifi_num = (TextView) findViewById(R.id.tv_notifi_num); //右上角消息数目
 
         mIconIv = (SimpleDraweeView) findViewById(R.id.iv_icon_title);
@@ -180,7 +180,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         mTitleTv = (TextView) findViewById(R.id.title_tv);
         mEditBt = (ImageView) findViewById(R.id.main_profile_edit_bt);
         im_toSearch.setOnClickListener(this);
-        fl_notifi.setOnClickListener(this);
         mEditBt.setOnClickListener(this);
         mIconIv.setOnClickListener(this);
         mNameTv.setOnClickListener(this);
@@ -468,7 +467,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 }
                 //bt_home.setSelected(true);
                 mTitleTv.setText(R.string.main_top_title_tab_1);
-                fl_notifi.setVisibility(View.VISIBLE);
+                projectAddBt.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 mEditBt.setVisibility(View.GONE);
                 mLikeBt.setVisibility(View.GONE);
@@ -493,7 +492,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 recommendFragment.setShow(false);
                 bt_game.setSelected(true);
                 mTitleTv.setText("排行榜");
-                fl_notifi.setVisibility(View.GONE);
+                projectAddBt.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 mEditBt.setVisibility(View.GONE);
                 mLikeBt.setVisibility(View.GONE);
@@ -507,7 +506,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mTitleTv.setText(R.string.look_board);
                 mMeLayout.setVisibility(View.GONE);
                 mIconIv.setVisibility(View.GONE);
-                fl_notifi.setVisibility(View.VISIBLE);
+                projectAddBt.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.VISIBLE);
                 tv_video.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainDiscoverButtonClickCount);
@@ -516,7 +515,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 transaction.show(fragment1).hide(fragment0);
                 menu_game_hub_bt.setSelected(true);
                 mTitleTv.setText(R.string.main_bottom_tab_01);
-                fl_notifi.setVisibility(View.GONE);
+                projectAddBt.setVisibility(View.GONE);
                 mIconIv.setVisibility(View.GONE);
                 mMeLayout.setVisibility(View.GONE);
                 im_toSearch.setVisibility(View.GONE);
@@ -533,7 +532,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 mMeLayout.setVisibility(View.VISIBLE);
                 mIconIv.setVisibility(View.VISIBLE);
                 im_toSearch.setVisibility(View.GONE);
-                fl_notifi.setVisibility(View.GONE);
+                projectAddBt.setVisibility(View.GONE);
                 tv_manager.setTextColor(colorDark);
                 MobclickAgent.onEvent(context, UMEventNameConstant.mainManagerButtonClickCount);
                 break;
@@ -584,9 +583,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 break;*/
             case R.id.im_toSearch:
                 startActivity(new Intent(context, SearchActivity.class));
-                break;
-            case R.id.main_top_add_bt:
-
                 break;
             case R.id.iv_icon_title:
             case R.id.me_user_name_tv:
@@ -1003,5 +999,11 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         App.passWord = "";
         App.token = "";
         App.user = null;
+    }
+
+    //创建项目
+    public void onProjectAddBtClick(View view) {
+        startActivity(new Intent(context, ProjectAddActivity.class));
+
     }
 }

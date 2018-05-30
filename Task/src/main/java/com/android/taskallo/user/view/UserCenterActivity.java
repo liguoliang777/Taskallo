@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
@@ -84,7 +85,7 @@ public class UserCenterActivity extends BaseFgActivity {
     private FragmentManager fm;
     private Uri fileUri;
     private RelativeLayout imgPhotoLayout;
-    private TextView titleRightBt;
+    private Button titleRightBt;
 
 
     @Override
@@ -152,8 +153,7 @@ public class UserCenterActivity extends BaseFgActivity {
         //*/重新登录
      /*   LoginHelper loginHelper = new LoginHelper(this);
         loginHelper.reLogin();*/
-        titleRightBt = (TextView) findViewById(R.id.title_right_tv);
-        titleRightBt.setVisibility(View.VISIBLE);
+        titleRightBt = (Button) findViewById(R.id.title_right_bt);
         titleRightBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

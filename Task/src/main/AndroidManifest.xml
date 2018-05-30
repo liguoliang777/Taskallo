@@ -139,7 +139,7 @@
             android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
-            android:name="com.android.taskallo.base.activity.AboutActivity"
+            android:name="com.android.taskallo.base.activity.ProjectAddActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
@@ -251,7 +251,6 @@
         <activity android:name="com.android.taskallo.gamehub.view.NoticeActivity" />
         <activity android:name="com.android.taskallo.gamehub.view.ShowViewActivity" />
         <activity android:name="com.android.taskallo.gamehub.view.SearchPostActivity" />
-        <activity android:name="com.android.taskallo.base.activity.AdvertisingPageActivity" />
         <activity
             android:name="com.android.taskallo.gamehub.view.MsgDetailActivity"
             android:screenOrientation="portrait"
@@ -289,10 +288,6 @@
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.activity.sm.AdCooperativeActivity"
-            android:launchMode="singleTask"
-            android:theme="@android:style/Theme.NoTitleBar" />
-        <activity
-            android:name="com.android.taskallo.activity.sm.AboutNgameZoneActivity"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity

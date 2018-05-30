@@ -243,4 +243,5 @@
     <string name="all_msg">全部通知</string>
     <string name="unRead_msg">未读通知</string>
     <string name="query_by_project">按项目查询</string>
+    <string name="project_add">创建项目</string>
 </resources>

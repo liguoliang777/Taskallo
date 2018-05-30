@@ -36,8 +36,8 @@
         android:textColor="@color/white"
         android:textSize="@dimen/title_size"/>
 
-    <TextView
-        android:id="@+id/title_right_tv"
+    <Button
+        android:id="@+id/title_right_bt"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
@@ -46,8 +46,8 @@
         android:gravity="center"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_20"
+        android:visibility="gone"
         android:text="保存"
         android:textColor="@color/white"
-        android:textSize="@dimen/dp_16"
-        android:visibility="gone"/>
+        android:textSize="@dimen/dp_16" />
 </RelativeLayout>
