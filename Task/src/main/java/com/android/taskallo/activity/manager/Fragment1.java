@@ -6,7 +6,6 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListPopupWindow;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -58,6 +57,8 @@ public class Fragment1 extends BaseSearchFragment {
     private RelativeLayout mRadioGroup;
     private TextView mTopBt1, mTopBt2;
     private ListPopupWindow listPopupWindow;
+    private int mSelectedPosition = 0;
+    private PupopAdapter pupopAdapter;
 
     public Fragment1(MainHomeActivity activity) {
         content = activity;
@@ -230,8 +231,8 @@ public class Fragment1 extends BaseSearchFragment {
         listPopupWindow = new ListPopupWindow(content);
         listPopupWindow.setHeight(ListPopupWindow.WRAP_CONTENT);
         //listPopupWindow.setAnimationStyle(R.style.Animations_PopDownMenu);
-        listPopupWindow.setAdapter(new ArrayAdapter(content,
-                R.layout.fragment_1_popup_window, R.id.fragment1_item_tv, products));
+        pupopAdapter = new PupopAdapter(content, products);
+        listPopupWindow.setAdapter(pupopAdapter);
         listPopupWindow.setAnchorView(mRadioGroup);
         listPopupWindow.setModal(true);
         listPopupWindow.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color
@@ -246,7 +247,8 @@ public class Fragment1 extends BaseSearchFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 listPopupWindow.dismiss();
-                Log.d(TAG, "item选中:" + position);
+                mSelectedPosition = position;
+                mTopBt1.setText(products[position]);
             }
         });
         // 设置Action
@@ -254,6 +256,7 @@ public class Fragment1 extends BaseSearchFragment {
             @Override
             public void onClick(View view) {
                 view.setSelected(true);
+                pupopAdapter.setList(products,mSelectedPosition);
                 if (listPopupWindow.isShowing()) {
                     listPopupWindow.dismiss();
                 } else {
