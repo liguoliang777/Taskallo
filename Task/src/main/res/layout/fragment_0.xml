@@ -119,7 +119,47 @@
                 android:layout_centerVertical="true"
                 android:scrollbars="none" />
         </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dm040"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dm020">
 
+            <TextView
+                android:id="@+id/deleted_board_title"
+                style="@style/me_fragment_0_title_text_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dm020"
+                android:scaleType="centerInside"
+                android:text="回收站" />
+
+            <TextView
+                android:id="@+id/deleted_board_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/deleted_board_title"
+                android:layout_alignParentRight="true"
+                android:paddingBottom="@dimen/dm008"
+                android:paddingLeft="@dimen/dm020"
+                android:paddingRight="@dimen/dm020"
+                android:paddingTop="@dimen/dm020"
+                android:text="@string/see_more"
+                android:textColor="@color/see_more"
+                android:textSize="@dimen/dm020" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_deleted_board"
+                android:paddingTop="@dimen/dm010"
+                android:paddingBottom="@dimen/dm010"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/deleted_board_more"
+                android:layout_centerVertical="true"
+                android:scrollbars="none" />
+        </RelativeLayout>
     </LinearLayout>
 
 </com.android.taskallo.view.PullScrollView>

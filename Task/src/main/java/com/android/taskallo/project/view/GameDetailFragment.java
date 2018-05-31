@@ -1,4 +1,4 @@
-package com.android.taskallo.game.view;
+package com.android.taskallo.project.view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -34,7 +34,7 @@ import com.android.taskallo.bean.GameInfo;
 import com.android.taskallo.core.utils.CommonUtil;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.fragment.ImageDialogFragment;
-import com.android.taskallo.game.presenter.HomeFragmentChangeLayoutListener;
+import com.android.taskallo.project.presenter.HomeFragmentChangeLayoutListener;
 import com.android.taskallo.gamehub.view.ShowViewActivity;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.AutoHeightViewPager;

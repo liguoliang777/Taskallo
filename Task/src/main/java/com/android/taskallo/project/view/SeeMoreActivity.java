@@ -1,4 +1,4 @@
-package com.android.taskallo.game.view;
+package com.android.taskallo.project.view;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -122,7 +122,7 @@ public class SeeMoreActivity extends BaseFgActivity {
         refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(content, GameDetailActivity.class);
+                Intent intent = new Intent(content, ProjectDetailActivity.class);
                 intent.putExtra(KeyConstant.ID, adapter.getItem(position).getId());
                 startActivity(intent);
             }

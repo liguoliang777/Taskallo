@@ -77,6 +77,14 @@ import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
+import com.umeng.socialize.shareboard.SnsPlatform;
+import com.umeng.socialize.utils.ShareBoardlistener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -327,13 +335,15 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
                 case R.id.main_me_item_clean_cache:
                     cleanCache();
                     break;
-                case R.id.main_tab_2:
+                case R.id.main_me_item_share:
+                    shareApp();
                     break;
                 case R.id.main_tab_3:
                     break;
             }
         }
     };
+
 
     //清除緩存
     private void cleanCache() {
@@ -409,6 +419,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         }
         findViewById(R.id.main_me_item_change_pwd).setOnClickListener(mItemLayoutClickListener);
         findViewById(R.id.main_me_item_clean_cache).setOnClickListener(mItemLayoutClickListener);
+        findViewById(R.id.main_me_item_share).setOnClickListener(mItemLayoutClickListener);
     }
 
     /**
@@ -600,6 +611,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         //关闭OTA升级服务
         super.onDestroy();
         MobclickAgent.onKillProcess(context);
+        UMShareAPI.get(this).release();
     }
 
     @Override
@@ -1004,6 +1016,78 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     //创建项目
     public void onProjectAddBtClick(View view) {
         startActivity(new Intent(context, ProjectAddActivity.class));
+    }
 
+    private void shareApp() {
+        final UMShareAPI umShareAPI = UMShareAPI.get(context);
+        final UMWeb web = new UMWeb(getString(R.string.app_download_url_yyb));
+        web.setTitle(getString(R.string.app_name));
+        web.setThumb(new UMImage(context, R.drawable.ic_launcher));
+        web.setDescription(getString(R.string.share_description));//描述
+
+        new ShareAction(context).setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,
+                SHARE_MEDIA
+                        .WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE).
+                setShareboardclickCallback(new ShareBoardlistener() {
+                    @Override
+                    public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+                        if (umShareAPI.isInstall(context, share_media) && share_media !=
+                                null) {
+                            new ShareAction(context).setPlatform(share_media).withMedia
+                                    (web).setCallback
+                                    (umShareListener).share();
+                        } else {
+                            ToastUtil.show(context, "未安装该应用哦~");
+                        }
+                    }
+                }).open();
+    }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        /**
+         * @descrption 分享开始的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+            android.util.Log.d(TAG, "分享开始: ");
+        }
+
+        /**
+         * @descrption 分享成功的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            android.util.Log.d(TAG, "分享成功了: ");
+            //Toast.makeText(content, "分享成功~", Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @descrption 分享失败的回调
+         * @param platform 平台类型
+         * @param t 错误原因
+         */
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            if (t != null && t.getMessage().contains("错误码：2008 错误信息：没有安装应用")) {
+                ToastUtil.show(context, "未安装该应用哦~");
+            }
+        }
+
+        /**
+         * @descrption 分享取消的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            android.util.Log.d(TAG, "分享取消了: ");
+        }
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 }

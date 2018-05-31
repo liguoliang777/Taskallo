@@ -1,4 +1,4 @@
-package com.android.taskallo.game.bean;
+package com.android.taskallo.project.bean;
 
 import java.io.Serializable;
 

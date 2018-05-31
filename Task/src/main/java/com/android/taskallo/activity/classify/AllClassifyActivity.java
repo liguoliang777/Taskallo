@@ -14,7 +14,7 @@ import com.android.taskallo.adapter.HomeRaiderAdapter;
 import com.android.taskallo.bean.PageAction;
 import com.android.taskallo.core.utils.ImageUtil;
 import com.android.taskallo.core.utils.KeyConstant;
-import com.android.taskallo.game.view.SeeMoreActivity;
+import com.android.taskallo.project.view.SeeMoreActivity;
 import com.android.taskallo.view.LoadStateView;
 import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
 import com.android.taskallo.widget.pulllistview.PullToRefreshListView;

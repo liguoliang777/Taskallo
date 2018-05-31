@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.android.taskallo.R;
 import com.android.taskallo.activity.main.TopicsListActivity;
@@ -19,7 +18,6 @@ import com.android.taskallo.bean.ClassifyTopBean;
 import com.android.taskallo.bean.PageAction;
 import com.android.taskallo.core.utils.NetUtil;
 import com.android.taskallo.util.ToastUtil;
-import com.android.taskallo.view.PicassoImageView;
 import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverTopBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
@@ -34,31 +32,21 @@ import java.util.List;
  * Created by gp on 2017/3/14 0014.
  */
 @SuppressLint("WrongConstant")
-public class Fragment0 extends BaseSearchFragment  {
+public class Fragment0 extends BaseSearchFragment {
     private FragmentActivity context;
     private RecyclerView mClassifyAllRv;
     private Fragment0_1_Adapter categroyTopAdapter;
     private List<DiscoverTopBean> mEverydayList = new ArrayList();
     private Fragment0_1_Adapter mTopicsAdapter;
-    private RecyclerView mEverydayRv;
+    private RecyclerView mEverydayRv, mDeletedBoardRv, mSubjectRv;
     private RecyclerView mHotRecentRv;
-    private RecyclerView mSubjectRv;
     private Fragment0_0_Adapter mEverydayAdapter;
     private List<DiscoverTopBean> mHotRecentList = new ArrayList();
     private Fragment0_0_Adapter mHotRecentAdapter;
-    private PicassoImageView picassoImageView;
-    private int match_parent;
-    private LinearLayout.LayoutParams hParams;
-    private String selectImage;
-    private ClassifyAdapter categroy18Adapter;
     private List<ClassifyTopBean> categroyAllList = new ArrayList<>();
-    private List<DiscoverListBean.DataBean.ResultListBean> categroy18ListBean = new ArrayList<>();
     private DiscoverListBean.DataBean.DailyNewGamesListBean dailyNewGames;
     private DiscoverListBean.DataBean.WeeklyNewGamesListBean hotGames;
-    private int categoryId = -1;
-    private String categoryName = "";
     private LinearLayoutManager linearLayoutManager;
-    private ClassifyTopBean mClassifyTopBean;
 
     public Fragment0() {
         android.util.Log.d(TAG, "DiscoverFragment: ()");
@@ -83,6 +71,7 @@ public class Fragment0 extends BaseSearchFragment  {
         init1(view);
         init0(view);
         init_2(view);
+        init_3(view);
 
         getData();
     }
@@ -110,20 +99,22 @@ public class Fragment0 extends BaseSearchFragment  {
     /*    mEverydayRv.addItemDecoration(new RecyclerViewDivider(context,
                 R.dimen.main_margin_left_px, R.dimen.main_margin_20px, mEverydayList.size()));*/
     }
+
     private void init1(View headView) {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(context, 1);
         mGridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mClassifyAllRv =  headView.findViewById(R.id.discover_head_rv_classify);//条目
+        mClassifyAllRv = headView.findViewById(R.id.discover_head_rv_classify);//条目
         mClassifyAllRv.setLayoutManager(mGridLayoutManager);
-        categroyAllList.add(new ClassifyTopBean("web界面开发",101,""));
-        categroyAllList.add(new ClassifyTopBean("办公采购清单",103,""));
-        categroyAllList.add(new ClassifyTopBean("APP新版界面开发",153,""));
-        categroyAllList.add(new ClassifyTopBean("周一会议提要",104,""));
+        categroyAllList.add(new ClassifyTopBean("web界面开发", 101, ""));
+        categroyAllList.add(new ClassifyTopBean("办公采购清单", 103, ""));
+        categroyAllList.add(new ClassifyTopBean("APP新版界面开发", 153, ""));
+        categroyAllList.add(new ClassifyTopBean("周一会议提要", 104, ""));
         categroyTopAdapter = new Fragment0_1_Adapter(context, categroyAllList);
         mClassifyAllRv.setHasFixedSize(true);
         mClassifyAllRv.setNestedScrollingEnabled(false);
         mClassifyAllRv.setAdapter(categroyTopAdapter);
     }
+
     private void init_2(View headView) {
         mSubjectRv = headView.findViewById(R.id.rv_subject);
         setOnMoreBtClickListener(headView, R.id.more_subject_tv);
@@ -137,6 +128,18 @@ public class Fragment0 extends BaseSearchFragment  {
         mSubjectRv.setAdapter(mTopicsAdapter);
     }
 
+    private void init_3(View headView) {
+        mDeletedBoardRv = headView.findViewById(R.id.rv_deleted_board);
+        setOnMoreBtClickListener(headView, R.id.deleted_board_more);
+        linearLayoutManager = new LinearLayoutManager(
+                context, LinearLayoutManager.VERTICAL, false);
+        mDeletedBoardRv.setLayoutManager(linearLayoutManager);
+
+        mTopicsAdapter = new Fragment0_1_Adapter(context, categroyAllList);
+        mDeletedBoardRv.setHasFixedSize(true);
+        mDeletedBoardRv.setNestedScrollingEnabled(false);
+        mDeletedBoardRv.setAdapter(mTopicsAdapter);
+    }
 
 
     //更多按钮设置点击监听

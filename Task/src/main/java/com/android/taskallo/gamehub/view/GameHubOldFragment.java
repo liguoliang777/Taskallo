@@ -39,7 +39,7 @@ import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.Log;
-import com.android.taskallo.game.view.GameDetailActivity;
+import com.android.taskallo.project.view.ProjectDetailActivity;
 import com.android.taskallo.user.view.LoginActivity;
 import com.android.taskallo.video.view.VideoDetailActivity;
 import com.android.taskallo.view.BannerView;
@@ -309,7 +309,7 @@ public class GameHubOldFragment extends BaseSearchFragment implements View.OnCli
                 @Override
                 public void onClick(View v) {
                     if (info.type == 1) {
-                        Intent intent = new Intent(getActivity(), GameDetailActivity.class);
+                        Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
                         intent.putExtra(KeyConstant.ID, info.gameId);
                         startActivity(intent);
                     } else if (info.type == 2) {

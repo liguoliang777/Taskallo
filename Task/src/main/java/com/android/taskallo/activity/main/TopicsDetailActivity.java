@@ -30,7 +30,7 @@ import com.android.taskallo.adapter.TopicsDetailAdapter;
 import com.android.taskallo.bean.PageAction;
 import com.android.taskallo.core.utils.ImageUtil;
 import com.android.taskallo.core.utils.KeyConstant;
-import com.android.taskallo.game.view.GameDetailActivity;
+import com.android.taskallo.project.view.ProjectDetailActivity;
 import com.android.taskallo.util.ConvUtil;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
@@ -145,7 +145,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     Intent i = new Intent();
-                    i.setClass(TopicsDetailActivity.this, GameDetailActivity.class);
+                    i.setClass(TopicsDetailActivity.this, ProjectDetailActivity.class);
                     i.putExtra(KeyConstant.ID, list.get(position - 1).getId());
                     startActivity(i);
                 }

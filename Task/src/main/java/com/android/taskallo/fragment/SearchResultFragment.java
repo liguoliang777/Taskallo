@@ -22,7 +22,7 @@ import java.util.List;
 import com.android.taskallo.R;
 import com.android.taskallo.adapter.SearchOtherAdapter;
 import com.android.taskallo.adapter.SearchVideoAdapter;
-import com.android.taskallo.game.view.GameDetailActivity;
+import com.android.taskallo.project.view.ProjectDetailActivity;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.video.view.VideoDetailActivity;
 
@@ -72,7 +72,7 @@ public class SearchResultFragment extends Fragment {
         gridView_game.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), GameDetailActivity.class);
+                Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
                 intent.putExtra("id", searchGameList.get(position).getId());
                 startActivity(intent);
             }

@@ -1,4 +1,4 @@
-package com.android.taskallo.game.view;
+package com.android.taskallo.project.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,12 +40,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 显示触屏游戏的首面
+ * 显示VR游戏列表的页面
  * Created by zeng on 2016/6/16.
  */
-public class CPGameActivity extends BaseFgActivity {
+public class VRGameActivity extends BaseFgActivity {
 
-    public static final String TAG = CPGameActivity.class.getSimpleName();
+    public static final String TAG = VRGameActivity.class.getSimpleName();
 
     private BannerView bannerView;
     private NoScrollListView listView;
@@ -60,7 +60,7 @@ public class CPGameActivity extends BaseFgActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_cp_game);
+        this.setContentView(R.layout.activity_vr_game);
 
         BaseTitleBar titleBar = (BaseTitleBar) findViewById(R.id.title_bar);
         titleBar.setOnLeftClickListener(new View.OnClickListener() {
@@ -72,7 +72,7 @@ public class CPGameActivity extends BaseFgActivity {
         titleBar.setOnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CPGameActivity.this, SearchActivity.class);
+                Intent intent = new Intent(VRGameActivity.this, SearchActivity.class);
                 startActivity(intent);
             }
         });
@@ -96,10 +96,10 @@ public class CPGameActivity extends BaseFgActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(CPGameActivity.this, GameDetailActivity.class);
+                Intent intent = new Intent(VRGameActivity.this, ProjectDetailActivity.class);
                 int position = v.getId();
                 intent.putExtra("id", gameInfoList.get(position).id);
-                CPGameActivity.this.startActivity(intent);
+                VRGameActivity.this.startActivity(intent);
             }
         });
 
@@ -110,10 +110,10 @@ public class CPGameActivity extends BaseFgActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(gameTypeList != null){
                     GameType gameType = gameTypeList.get(position);
-                    Intent intent = new Intent(CPGameActivity.this,SeeMoreActivity.class);
+                    Intent intent = new Intent(VRGameActivity.this,SeeMoreActivity.class);
                     intent.putExtra("categoryId",gameType.id);
                     intent.putExtra("title",gameType.typeName);
-                    CPGameActivity.this.startActivity(intent);
+                    VRGameActivity.this.startActivity(intent);
                 }
             }
         });
@@ -157,7 +157,7 @@ public class CPGameActivity extends BaseFgActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("markId", String.valueOf(4));
+                params.put("markId", String.valueOf(1));
                 params.put("appTypeId",String.valueOf(0));
                 return params;
             }
@@ -201,8 +201,8 @@ public class CPGameActivity extends BaseFgActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("categoryId",String.valueOf(99));
-                params.put("gameLabelId",String.valueOf(0));
+                params.put("categoryId",String.valueOf(0));
+                params.put("gameLabelId",String.valueOf(1));
                 params.put("pageSize", String.valueOf(10));
                 params.put("pageIndex", String.valueOf(1));
                 return params;
@@ -251,7 +251,7 @@ public class CPGameActivity extends BaseFgActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("typeName", "触屏游戏");
+                params.put("typeName", "VR游戏");
                 params.put("advTypeId", String.valueOf(0));
                 params.put("appTypeId", String.valueOf(0));
                 return params;
@@ -287,11 +287,11 @@ public class CPGameActivity extends BaseFgActivity {
                 @Override
                 public void onClick(View v) {
                     if (info.type == 1) {
-                        Intent intent = new Intent(CPGameActivity.this, GameDetailActivity.class);
+                        Intent intent = new Intent(VRGameActivity.this, ProjectDetailActivity.class);
                         intent.putExtra("id", info.gameId);
                         startActivity(intent);
                     } else if (info.type == 2) {
-                        Intent intent = new Intent(CPGameActivity.this, VideoDetailActivity.class);
+                        Intent intent = new Intent(VRGameActivity.this, VideoDetailActivity.class);
                         intent.putExtra("id", info.videoId);
                         startActivity(intent);
                     }

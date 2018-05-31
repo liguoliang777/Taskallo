@@ -40,7 +40,7 @@ import com.android.taskallo.core.fileload.FileLoadInfo;
 import com.android.taskallo.core.fileload.FileLoadManager;
 import com.android.taskallo.core.fileload.GameFileStatus;
 import com.android.taskallo.core.fileload.IFileLoad;
-import com.android.taskallo.game.view.SeeMoreActivity;
+import com.android.taskallo.project.view.SeeMoreActivity;
 import com.android.taskallo.util.ConvUtil;
 import com.android.taskallo.view.GameLoadProgressBar;
 

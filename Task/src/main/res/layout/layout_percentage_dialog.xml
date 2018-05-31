@@ -5,16 +5,6 @@
               android:background="@drawable/shape_white_empty"
               android:orientation="vertical">
 
-    <com.android.taskallo.view.ReviewScoreView
-        android:id="@+id/review_scoreView"
-        layout="@layout/layout_review_score"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        />
-
-    <include layout="@layout/layout_line_05dp_e6e6e6"/>
-
     <com.facebook.drawee.view.SimpleDraweeView
         xmlns:fresco="http://schemas.android.com/apk/res-auto"
         android:id="@+id/ic_percent_icon"

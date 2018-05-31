@@ -3,7 +3,7 @@ package com.android.taskallo.bean;
 import java.io.Serializable;
 import java.util.List;
 
-import com.android.taskallo.game.bean.GameStrategy;
+import com.android.taskallo.project.bean.GameStrategy;
 
 /**
  * 游戏软件的实体类

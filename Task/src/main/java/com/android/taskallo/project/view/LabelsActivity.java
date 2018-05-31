@@ -1,4 +1,4 @@
-package com.android.taskallo.game.view;
+package com.android.taskallo.project.view;
 
 import android.content.Context;
 import android.content.Intent;

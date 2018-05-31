@@ -41,7 +41,7 @@ import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.NetUtil;
 import com.android.taskallo.core.utils.UMEventNameConstant;
-import com.android.taskallo.game.view.GameDetailActivity;
+import com.android.taskallo.project.view.ProjectDetailActivity;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.LoadStateView;
 import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
@@ -350,7 +350,7 @@ public class RecommendFragment extends BaseSearchFragment {
                     map.put(KeyConstant.game_Name, dataBean.getGameName());
                     MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPositionClickCount, map);
 
-                    Intent intent = new Intent(context, GameDetailActivity.class);
+                    Intent intent = new Intent(context, ProjectDetailActivity.class);
                     intent.putExtra(KeyConstant.ID, dataBean.getGameId());
                     startActivity(intent);
                 }
@@ -445,7 +445,7 @@ public class RecommendFragment extends BaseSearchFragment {
     private View.OnClickListener headClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(context, GameDetailActivity.class);
+            Intent intent = new Intent(context, ProjectDetailActivity.class);
             switch (v.getId()) {
                 case R.id.recommend_head_llay_0:
                     RecommendListBean.DataBean dataBean = topList.get(0);

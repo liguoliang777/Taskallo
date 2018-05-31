@@ -36,8 +36,8 @@ import java.util.List;
 
 import com.android.taskallo.R;
 import com.android.taskallo.core.utils.KeyConstant;
-import com.android.taskallo.game.view.GameDetailActivity;
-import com.android.taskallo.game.view.SeeMoreActivity;
+import com.android.taskallo.project.view.ProjectDetailActivity;
+import com.android.taskallo.project.view.SeeMoreActivity;
 
 public class ClassifyAdapter extends BaseAdapter {
 
@@ -60,7 +60,7 @@ public class ClassifyAdapter extends BaseAdapter {
         wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
         inflater = LayoutInflater.from(context);
         intent = new Intent();
-        intent.setClass(context, GameDetailActivity.class);
+        intent.setClass(context, ProjectDetailActivity.class);
 
         labelGameIntent = new Intent();
         labelGameIntent.setClass(context, SeeMoreActivity.class);

@@ -1,4 +1,4 @@
-package com.android.taskallo.game.view;
+package com.android.taskallo.project.view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -31,7 +31,7 @@ import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.Log;
-import com.android.taskallo.game.bean.GameStrategy;
+import com.android.taskallo.project.bean.GameStrategy;
 import com.android.taskallo.view.AutoHeightViewPager;
 
 import static com.android.taskallo.R.id.strategy_content_tv;

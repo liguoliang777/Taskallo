@@ -1,4 +1,4 @@
-package com.android.taskallo.game.view;
+package com.android.taskallo.project.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -93,7 +93,7 @@ public class GameRankFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(context, GameDetailActivity.class);
+                Intent intent = new Intent(context, ProjectDetailActivity.class);
                 intent.putExtra("id", ((GameInfo)adapter.getItem(position)).id);
                 context.startActivity(intent);
             }

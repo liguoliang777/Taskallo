@@ -30,7 +30,7 @@ import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.DialogHelper;
 import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.fragment.SimpleDialogFragment;
-import com.android.taskallo.game.view.GameDetailActivity;
+import com.android.taskallo.project.view.ProjectDetailActivity;
 import com.android.taskallo.video.view.VideoDetailActivity;
 import com.android.taskallo.view.SimpleTitleBar;
 
@@ -112,7 +112,7 @@ public class ReviewActivity extends BaseFgActivity {
                 if (result.code == 0) {
 //                    showDialog(true, "评论成功！");
                     if (categoryId == 1) {
-                        Intent intent = new Intent(ReviewActivity.this, GameDetailActivity.class);
+                        Intent intent = new Intent(ReviewActivity.this, ProjectDetailActivity.class);
                         startActivity(intent);
                     } else if (categoryId == 2) {
                         Intent intent = new Intent(ReviewActivity.this, VideoDetailActivity.class);
@@ -181,7 +181,7 @@ public class ReviewActivity extends BaseFgActivity {
 
                 if (isSuccess) {
                     if (categoryId == 1) {
-                        Intent intent = new Intent(ReviewActivity.this, GameDetailActivity.class);
+                        Intent intent = new Intent(ReviewActivity.this, ProjectDetailActivity.class);
                         startActivity(intent);
                     } else if (categoryId == 2) {
                         Intent intent = new Intent(ReviewActivity.this, VideoDetailActivity.class);
