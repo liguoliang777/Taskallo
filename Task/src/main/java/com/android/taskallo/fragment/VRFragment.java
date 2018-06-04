@@ -36,7 +36,7 @@ import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.CommonUtil;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.Log;
-import com.android.taskallo.project.view.ProjectDetailActivity;
+import com.android.taskallo.project.view.ProjListActivity;
 import com.android.taskallo.project.view.VRGameActivity;
 import com.android.taskallo.video.view.VideoDetailActivity;
 import com.android.taskallo.view.BannerView;
@@ -221,7 +221,7 @@ public class VRFragment extends Fragment {
                 img.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, ProjectDetailActivity.class);
+                        Intent intent = new Intent(context, ProjListActivity.class);
                         if(info.gameId <= 0){
                             return;
                         }
@@ -390,7 +390,7 @@ public class VRFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (info.type == 1) {
-                        Intent intent = new Intent(context, ProjectDetailActivity.class);
+                        Intent intent = new Intent(context, ProjListActivity.class);
                         intent.putExtra("id", info.gameId);
                         startActivity(intent);
                     } else if (info.type == 2) {

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.android.taskallo.R;
 import com.android.taskallo.bean.ClassifyTopBean;
 import com.android.taskallo.core.utils.KeyConstant;
-import com.android.taskallo.project.view.ProjectDetailActivity;
+import com.android.taskallo.project.view.ProjListActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -70,7 +70,7 @@ public class Fragment0_1_Adapter extends RecyclerView.Adapter<Fragment0_1_Adapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ProjectDetailActivity.class);
+                Intent intent = new Intent(context, ProjListActivity.class);
                 intent.putExtra(KeyConstant.ID, categroyBean.getId() + "");//原生手柄 id
                 context.startActivity(intent);
             }

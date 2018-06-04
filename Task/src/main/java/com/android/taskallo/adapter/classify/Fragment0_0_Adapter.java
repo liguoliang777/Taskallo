@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.android.taskallo.R;
 import com.android.taskallo.core.utils.KeyConstant;
-import com.android.taskallo.project.view.ProjectDetailActivity;
+import com.android.taskallo.project.view.ProjListActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverTopBean;
 
@@ -66,7 +66,7 @@ public class Fragment0_0_Adapter extends RecyclerView.Adapter<Fragment0_0_Adapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ProjectDetailActivity.class);
+                Intent intent = new Intent(context, ProjListActivity.class);
                 intent.putExtra(KeyConstant.ID, discoverTopBean.getId());
                 context.startActivity(intent);
             }

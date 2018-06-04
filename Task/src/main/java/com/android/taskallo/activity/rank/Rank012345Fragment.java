@@ -36,7 +36,7 @@ import com.android.taskallo.bean.PageAction;
 import com.android.taskallo.core.utils.CommonUtil;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.NetUtil;
-import com.android.taskallo.project.view.ProjectDetailActivity;
+import com.android.taskallo.project.view.ProjListActivity;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.LoadStateView;
 import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
@@ -193,7 +193,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
         refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
+                Intent intent = new Intent(getActivity(), ProjListActivity.class);
                 intent.putExtra(KeyConstant.ID, list.get(position).getId());
                 startActivity(intent);
             }

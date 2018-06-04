@@ -93,7 +93,7 @@ public class GameRankFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(context, ProjectDetailActivity.class);
+                Intent intent = new Intent(context, ProjListActivity.class);
                 intent.putExtra("id", ((GameInfo)adapter.getItem(position)).id);
                 context.startActivity(intent);
             }

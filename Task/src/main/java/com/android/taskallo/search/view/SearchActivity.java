@@ -28,7 +28,7 @@ import com.android.taskallo.bean.SearchHistoryBean;
 import com.android.taskallo.core.db.DatabaseManager;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.TextUtil;
-import com.android.taskallo.project.view.ProjectDetailActivity;
+import com.android.taskallo.project.view.ProjListActivity;
 import com.android.taskallo.util.StringUtil;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.LoadStateView;
@@ -185,7 +185,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
         gridView_game.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(SearchActivity.this, ProjectDetailActivity.class);
+                Intent intent = new Intent(SearchActivity.this, ProjListActivity.class);
                 SearchGameVideoBean.DataBean.HotSearchGameListBean hotSearchGameListBean = searchGameList.get(position);
                 String advName = hotSearchGameListBean.getAdvName().trim();
                 dbManager.addSearchHistory(advName);
@@ -201,7 +201,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                 if (dataBean.getType() == 1) {
                     String keywordsStr = dataBean.getKeywords();
                     dbManager.addSearchHistory(keywordsStr);
-                    Intent intent = new Intent(SearchActivity.this, ProjectDetailActivity.class);
+                    Intent intent = new Intent(SearchActivity.this, ProjListActivity.class);
                     intent.putExtra(KeyConstant.ID, dataBean.getTypeId());
                     startActivity(intent);
                 } else {

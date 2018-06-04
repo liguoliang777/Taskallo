@@ -96,7 +96,7 @@ public class VRGameActivity extends BaseFgActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(VRGameActivity.this, ProjectDetailActivity.class);
+                Intent intent = new Intent(VRGameActivity.this, ProjListActivity.class);
                 int position = v.getId();
                 intent.putExtra("id", gameInfoList.get(position).id);
                 VRGameActivity.this.startActivity(intent);
@@ -287,7 +287,7 @@ public class VRGameActivity extends BaseFgActivity {
                 @Override
                 public void onClick(View v) {
                     if (info.type == 1) {
-                        Intent intent = new Intent(VRGameActivity.this, ProjectDetailActivity.class);
+                        Intent intent = new Intent(VRGameActivity.this, ProjListActivity.class);
                         intent.putExtra("id", info.gameId);
                         startActivity(intent);
                     } else if (info.type == 2) {

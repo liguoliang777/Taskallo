@@ -18,6 +18,8 @@ import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.project.ProjListItem.ItemView;
+import com.android.taskallo.project.ProjListItem.ItemViewCallback;
 import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -25,19 +27,21 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProjectDetailActivity extends BaseFgActivity {
+public class ProjListActivity extends BaseFgActivity {
     private String mProjectId;
-    private ProjectDetailActivity context;
+    private ProjListActivity context;
     private Button mTitleBackBt;
+    private ItemView mBoardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initStatusBar();
-        setContentView(R.layout.activity_project_detail);
+        setContentView(R.layout.activity_project_list);
         mProjectId = getIntent().getStringExtra(KeyConstant.ID);
         context = this;
         mTitleBackBt = (Button) findViewById(R.id.proj_detail_title_back);
@@ -49,6 +53,9 @@ public class ProjectDetailActivity extends BaseFgActivity {
         });
         mTitleBackBt.setText("项目名称");
 
+        mBoardView =(ItemView) findViewById(R.id.boardview);
+        mBoardView.setCallback(new ItemViewCallback());
+        mBoardView.setContext(context);
     }
 
     private void getGameInfo() {

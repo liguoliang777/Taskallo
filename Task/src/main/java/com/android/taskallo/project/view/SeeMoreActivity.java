@@ -9,6 +9,18 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.taskallo.App;
+import com.android.taskallo.R;
+import com.android.taskallo.activity.BaseFgActivity;
+import com.android.taskallo.adapter.MoreGameListAdapter;
+import com.android.taskallo.bean.PageAction;
+import com.android.taskallo.core.net.GsonRequest;
+import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.core.utils.Log;
+import com.android.taskallo.util.ToastUtil;
+import com.android.taskallo.view.LoadStateView;
+import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
+import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -22,19 +34,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimerTask;
-
-import com.android.taskallo.R;
-import com.android.taskallo.activity.BaseFgActivity;
-import com.android.taskallo.adapter.MoreGameListAdapter;
-import com.android.taskallo.bean.PageAction;
-import com.android.taskallo.core.net.GsonRequest;
-import com.android.taskallo.core.utils.Constant;
-import com.android.taskallo.core.utils.KeyConstant;
-import com.android.taskallo.core.utils.Log;
-import com.android.taskallo.util.ToastUtil;
-import com.android.taskallo.view.LoadStateView;
-import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
-import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
 
 
 /**
@@ -122,7 +121,7 @@ public class SeeMoreActivity extends BaseFgActivity {
         refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(content, ProjectDetailActivity.class);
+                Intent intent = new Intent(content, ProjListActivity.class);
                 intent.putExtra(KeyConstant.ID, adapter.getItem(position).getId());
                 startActivity(intent);
             }
