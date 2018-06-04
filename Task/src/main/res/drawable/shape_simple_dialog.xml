@@ -7,7 +7,7 @@
 
     <solid android:color="@color/f5f5f5"/><!-- 填充的颜色 -->
     
-    <corners android:radius="@dimen/dp_20"
+    <corners android:radius="@dimen/dm040"
             />
 
 </shape>

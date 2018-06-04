@@ -250,8 +250,11 @@
     <string name="str_public">公开</string>
     <string name="primary_cover">预选封面</string>
     <string name="str_private">私有</string>
+    <string name="enter_cannot_empty">输入内容不能为空</string>
     <string name="proj_cannot_empty">项目名不能为空</string>
     <string name="create_proj_success">项目创建成功</string>
     <string name="create_proj_faild">项目创建失败,稍后重试</string>
     <string name="get_img_faild">获取背景图失败</string>
+    <string name="card_title">卡片标题</string>
+    <string name="add_card">添加卡片</string>
 </resources>
