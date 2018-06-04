@@ -1,4 +1,4 @@
-package com.android.taskallo.project.ProjListItem;
+package com.android.taskallo.project.Item;
 
 
 import android.support.v7.widget.RecyclerView;

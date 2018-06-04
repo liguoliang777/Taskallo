@@ -73,7 +73,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme_NoActionBar_Fullscreen"/>
         <activity
-            android:name="com.android.taskallo.activity.main.MainHomeActivity"
+            android:name=".activity.main.MainHomeActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|navigation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -81,17 +81,14 @@
             android:name="com.android.taskallo.base.activity.GuideViewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.android.taskallo.base.activity.WelcomeActivity"
+            android:name=".base.activity.WelcomeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
-
         <activity
-            android:name="com.android.taskallo.activity.PadToolActivity"
-            android:configChanges="orientation|keyboard|keyboardHidden|navigation"
-            android:launchMode="singleTask"
+            android:name=".project.view.CardDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" />
+           />
 
         <activity
             android:name="com.android.taskallo.search.view.SearchActivity"

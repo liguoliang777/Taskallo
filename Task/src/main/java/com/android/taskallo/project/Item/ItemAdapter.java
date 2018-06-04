@@ -1,4 +1,4 @@
-package com.android.taskallo.project.ProjListItem;
+package com.android.taskallo.project.Item;
 
 
 import android.app.Dialog;
@@ -52,7 +52,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
         RecyclerView.Adapter adapter = new ItemItemAdapter(position, 10);
         holder.recyclerView.setAdapter(adapter);
-
         holder.mItemAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

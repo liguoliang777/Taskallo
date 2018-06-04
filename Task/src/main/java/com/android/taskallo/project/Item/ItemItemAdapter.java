@@ -1,6 +1,8 @@
-package com.android.taskallo.project.ProjListItem;
+package com.android.taskallo.project.Item;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.taskallo.R;
+import com.android.taskallo.project.view.CardDetailActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +20,7 @@ import java.util.List;
 public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.SimpleViewHolder> {
 
     private List<String> mData = new ArrayList<>();
+    private Context context;
 
     ItemItemAdapter(int index, int count) {
         for (int i = 0; i < count; i++) {
@@ -26,18 +30,28 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
 
     @Override
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_proj_item_item, parent, false);
+        context = parent.getContext();
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_proj_item_item, parent,
+                false);
         return new SimpleViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(SimpleViewHolder holder, int position) {
+    public void onBindViewHolder(final SimpleViewHolder holder, int position) {
         holder.mTextView.setText(mData.get(position));
         if (Long.parseLong(mData.get(position)) == ItemProvider.getInstance().getSelectedId()) {
             holder.itemView.setVisibility(View.INVISIBLE);
         } else {
             holder.itemView.setVisibility(View.VISIBLE);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, CardDetailActivity.class);
+                // intent.putExtra(KeyConstant.id,);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
