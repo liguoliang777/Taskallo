@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/app_title_height"
         android:layout_alignParentLeft="true"
-        android:background="@null"
+        android:background="@color/mainColor"
         android:clickable="true"
         android:drawableLeft="@drawable/ic_search_delete"
         android:gravity="center_vertical"
@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/app_title_height"
         android:layout_alignParentRight="true"
-        android:background="@null"
+        android:background="@color/mainColor"
         android:drawableRight="@drawable/ic_more"
         android:gravity="center"
         android:onClick="showCardPopupWindow"
@@ -54,24 +54,329 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/app_title_height"
         android:layout_alignParentRight="true"
-        android:background="@null"
-        android:drawableRight="@drawable/ic_help"
+        android:background="@color/mainColor"
+        android:drawableRight="@drawable/ic_search"
         android:gravity="center"
         android:paddingRight="@dimen/dm028"
         android:textColor="@color/white"
         android:visibility="gone" />
-    <!--
-        <com.rengwuxian.materialedittext.MaterialEditText xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_title_et"
+
+    <ScrollView
+        android:id="@+id/main_me_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_left_finish_bt"
+        android:background="@color/f5f5f5">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dm010"
-            android:paddingTop="@dimen/dm010"
-            android:singleLine="true"
-            android:textCursorDrawable="@drawable/shape_cursor_color"
-            app:met_autoValidate="true"
-            app:met_baseColor="@color/white"
-            app:met_primaryColor="@color/mainColor"
-            app:met_singleLineEllipsis="true" />-->
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/card_title_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/mainColor"
+                android:clickable="true"
+                android:focusableInTouchMode="true"
+                android:padding="@dimen/card_item_margin_left"
+                android:textColor="@color/white"
+                android:textCursorDrawable="@drawable/shape_cursor_color_white"
+                android:textSize="@dimen/dm035"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/mainColor"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dm020"
+                android:paddingLeft="@dimen/card_item_margin_left"
+                android:paddingRight="@dimen/card_item_margin_left">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/on_list"
+                    android:textColor="@color/color_80ffffff"
+                    android:textSize="@dimen/dm024" />
+
+                <TextView
+                    android:id="@+id/card_in_list_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:maxWidth="@dimen/dm420"
+                    android:paddingLeft="@dimen/dm005"
+                    android:paddingRight="@dimen/dm005"
+                    android:text="列表名称"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dm024" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/zhong"
+                    android:textColor="@color/color_80ffffff"
+                    android:textSize="@dimen/dm024" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/card_describe_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="@string/add_card_describe"
+                android:padding="@dimen/card_item_margin_left"
+                android:textColor="@color/color_333333"
+                android:textColorHint="@color/hint_color"
+                android:textCursorDrawable="@drawable/shape_cursor_color_main_color"
+                android:textSize="@dimen/dm024" />
+
+            <include layout="@layout/layout_line_1px_f0f0f0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dm020"
+                android:background="@color/white">
+
+                <ImageView
+                    android:layout_width="@dimen/dm036"
+                    android:layout_height="@dimen/dm036"
+                    android:layout_marginLeft="@dimen/card_item_margin_left"
+                    android:layout_marginRight="@dimen/card_item_margin_left"
+                    android:layout_marginTop="@dimen/dm020"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_card_time" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="截止日期"
+                    android:paddingBottom="@dimen/dm020"
+                    android:paddingTop="@dimen/dm020"
+                    android:src="@drawable/ic_card_time"
+                    android:textColor="@color/color_333333"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="@dimen/dm028"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="@dimen/dm036"
+                    android:layout_height="@dimen/dm036"
+                    android:layout_marginLeft="@dimen/card_item_margin_left"
+                    android:layout_marginRight="@dimen/card_item_margin_left"
+                    android:layout_marginTop="@dimen/dm020"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_card_time" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/card_item_tag_iv"
+                    android:layout_width="@dimen/dm036"
+                    android:layout_height="@dimen/dm036"
+                    android:layout_marginLeft="@dimen/card_item_margin_left"
+                    android:layout_marginRight="@dimen/card_item_margin_left"
+                    android:layout_marginTop="@dimen/dm020"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_card_time" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dm020"
+                    android:layout_marginTop="@dimen/dm020"
+                    android:layout_toRightOf="@id/card_item_tag_iv"
+                    android:text="添加标签"
+                    android:textColor="@color/hint_color"
+                    android:textSize="@dimen/dm028"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/card_item_tag_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/card_item_tag_iv"
+                    android:background="@color/transparent_medium"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dm020"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_card_time"
+                    android:textColorHint="@color/hint_color" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/card_item_member_iv"
+                    android:layout_width="@dimen/dm036"
+                    android:layout_height="@dimen/dm036"
+                    android:layout_marginLeft="@dimen/card_item_margin_left"
+                    android:layout_marginRight="@dimen/card_item_margin_left"
+                    android:layout_marginTop="@dimen/dm020"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_card_time" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dm020"
+                    android:layout_marginTop="@dimen/dm020"
+                    android:layout_toRightOf="@id/card_item_member_iv"
+                    android:text="添加成员"
+                    android:textColor="@color/hint_color"
+                    android:textSize="@dimen/dm028"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/card_item_member_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/card_item_member_iv"
+                    android:background="@color/transparent_medium"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dm020"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_card_time"
+                    android:textColorHint="@color/hint_color" />
+
+            </RelativeLayout>
+            <!--图像附件-->
+            <ListView
+                android:id="@+id/subtask_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </ListView>
+
+            <!--        <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dm020"
+                        android:background="@drawable/selector_bg_white_f2"
+                        android:clickable="true"
+                        android:onClick="onSubTaskAddBtClick">
+
+                        <ImageView
+                            android:id="@+id/card_item_subtask_iv"
+                            android:layout_width="@dimen/dm036"
+                            android:layout_height="@dimen/dm036"
+                            android:layout_marginLeft="@dimen/card_item_margin_left"
+                            android:layout_marginRight="@dimen/card_item_margin_left"
+                            android:layout_marginTop="@dimen/dm020"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_card_subtask" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dm020"
+                            android:layout_marginTop="@dimen/dm020"
+                            android:layout_toRightOf="@id/card_item_subtask_iv"
+                            android:text="子任务..."
+                               android:textStyle="bold"
+                             android:textSize="@dimen/dm028"
+                            android:textColor="@color/hint_color" />
+
+
+                    </RelativeLayout>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dm020"
+                android:background="@color/white">
+
+                <ImageView
+                    android:layout_width="@dimen/dm036"
+                    android:layout_height="@dimen/dm036"
+                    android:layout_marginLeft="@dimen/card_item_margin_left"
+                    android:layout_marginRight="@dimen/card_item_margin_left"
+                    android:layout_marginTop="@dimen/dm020"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_card_time" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/dm020"
+                    android:paddingTop="@dimen/dm020"
+                    android:scaleType="fitXY"
+                    android:text="所有活动"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/dm028"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="@dimen/dm036"
+                    android:layout_height="@dimen/dm036"
+                    android:layout_marginLeft="@dimen/card_item_margin_left"
+                    android:layout_marginRight="@dimen/card_item_margin_left"
+                    android:layout_marginTop="@dimen/dm020"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_card_time" />
+            </LinearLayout>
+
+            <include layout="@layout/layout_line_1px_f0f0f0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/f5f5f5">
+
+                <ImageView
+                    android:layout_width="@dimen/dm036"
+                    android:layout_height="@dimen/dm036"
+                    android:layout_marginLeft="@dimen/card_item_margin_left"
+                    android:layout_marginRight="@dimen/card_item_margin_left"
+                    android:layout_marginTop="@dimen/dm020"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_card_time" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/card_item_margin_left"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="添加评论"
+                    android:padding="@dimen/dm020"
+                    android:scaleType="fitXY"
+                    android:text=""
+                    android:textColor="@color/color_333333"
+                    android:textColorHint="@color/hint_color"
+                    android:textCursorDrawable="@drawable/shape_cursor_color_main_color"
+                    android:textSize="@dimen/dm028" />
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/event_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </ListView>
+        </LinearLayout>
+    </ScrollView>
+
 
 </RelativeLayout>

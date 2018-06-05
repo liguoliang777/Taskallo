@@ -70,6 +70,7 @@
     <color name="transparent_light2">#05000000</color>
     <color name="transparent_light">#15000000</color>
     <color name="transparent_medium">#55000000</color>
+    <color name="hint_color">#30000000</color>
     <color name="font_logout_red">#ff6666</color>
     <color name="color_nomal_4ea7ff">#4ea7ff</color>
     <color name="color_nomal_a1cefa">#a1cefa</color>
@@ -88,6 +89,7 @@
     <color name="color_189dd6">#189dd6</color>
     <color name="color_989999">#989999</color>
     <color name="color_808080">#808080</color>
+    <color name="color_80ffffff">#80ffffff</color>
     <color name="e5e5e5">#e5e5e5</color>
     <color name="f6f6f6">#f6f6f6</color>
     <color name="color_020202">#020202</color>

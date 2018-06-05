@@ -21,7 +21,7 @@
         android:padding="@dimen/dm024"
         android:singleLine="true"
         android:textColorHint="@color/cccccc"
-        android:textCursorDrawable="@drawable/shape_cursor_color" />
+        android:textCursorDrawable="@drawable/shape_cursor_color_main_color" />
 
     <include layout="@layout/layout_line_1px_f0f0f0" />
 
@@ -36,7 +36,7 @@
         android:padding="@dimen/dm024"
         android:singleLine="true"
         android:textColorHint="@color/cccccc"
-        android:textCursorDrawable="@drawable/shape_cursor_color" />
+        android:textCursorDrawable="@drawable/shape_cursor_color_main_color" />
 
     <include layout="@layout/layout_line_1px_f0f0f0" />
 

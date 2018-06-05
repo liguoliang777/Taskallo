@@ -259,4 +259,7 @@
     <string name="add_card">添加卡片</string>
     <string name="fragment_opened">展开</string>
     <string name="fragment_closed">收起</string>
+    <string name="on_list">在列表</string>
+    <string name="zhong">中</string>
+    <string name="add_card_describe">添加卡片描述</string>
 </resources>

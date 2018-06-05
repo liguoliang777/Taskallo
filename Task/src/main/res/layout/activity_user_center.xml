@@ -61,7 +61,7 @@
             android:id="@+id/tv_nickname"
             style="@style/px20_808080"
             android:layout_width="@dimen/dm450"
-            android:textCursorDrawable="@drawable/shape_cursor_color"
+            android:textCursorDrawable="@drawable/shape_cursor_color_main_color"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"

@@ -17,7 +17,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:hint="@string/card_title"
-        android:textCursorDrawable="@drawable/shape_cursor_color"
+        android:textCursorDrawable="@drawable/shape_cursor_color_main_color"
         app:met_autoValidate="true"
         app:met_baseColor="@color/color_1a"
         app:met_clearButton="true"
