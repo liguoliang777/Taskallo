@@ -64,4 +64,6 @@ public class KeyConstant {
     public static final String desc="desc";
     public static final String imgId="imgId";
     public static final String privacy="privacy";
+    public static final String cardId="cardId";
+    public static final String cardTitle="cardTitle";
 }

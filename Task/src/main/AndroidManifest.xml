@@ -57,10 +57,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="icon,label,theme,allowBackup">
+        <!--    <activity
+                android:name="com.android.taskallo.base.activity.BeginActivity"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme_NoActionBar_Fullscreen">
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
+            </activity>-->
         <activity
-            android:name="com.android.taskallo.base.activity.BeginActivity"
+            android:name=".project.view.CardDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme_NoActionBar_Fullscreen">
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -71,7 +80,7 @@
             android:configChanges="orientation|keyboard|keyboardHidden|navigation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme_NoActionBar_Fullscreen"/>
+            android:theme="@style/AppTheme_NoActionBar_Fullscreen" />
         <activity
             android:name=".activity.main.MainHomeActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|navigation"
@@ -85,10 +94,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
-        <activity
-            android:name=".project.view.CardDetailActivity"
-            android:screenOrientation="portrait"
-           />
+        <!--   <activity
+               android:name=".project.view.CardDetailActivity"
+               android:screenOrientation="portrait"
+              />-->
 
         <activity
             android:name="com.android.taskallo.search.view.SearchActivity"
@@ -178,8 +187,8 @@
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.project.view.SeeMoreActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
@@ -229,9 +238,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
 
-        <activity
-            android:name="com.soundcloud.android.crop.CropImageActivity"
-            />
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
 
         <activity android:name="com.android.taskallo.gamehub.view.ReportActivity" />
         <activity android:name="com.android.taskallo.gamehub.view.PostMsgActivity" />
@@ -256,10 +263,12 @@
             android:name="com.android.taskallo.activity.hub.CircleActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.android.taskallo.activity.main.VRActivity" />
-        <activity android:name="com.android.taskallo.activity.main.TopicsListActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name="com.android.taskallo.activity.main.TopicsDetailActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name="com.android.taskallo.activity.main.TopicsListActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name="com.android.taskallo.activity.main.TopicsDetailActivity"
+            android:launchMode="singleTask" />
         <activity android:name="com.android.taskallo.activity.manager.DownloadCenterActivity" />
         <activity android:name="com.android.taskallo.activity.manager.FeedbackSucceedActivity" />
         <activity android:name="com.android.taskallo.activity.manager.HelpAndFeedbackActivity" />
@@ -436,7 +445,7 @@
         <!-- baidu push结束 -->
 
         <!--android 7.0 适配-->
-       <provider
+        <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.android.taskallo.provider"
             android:exported="false"

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.taskallo.R;
+import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.project.view.CardDetailActivity;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
     }
 
     @Override
-    public void onBindViewHolder(final SimpleViewHolder holder, int position) {
+    public void onBindViewHolder(final SimpleViewHolder holder, final int position) {
         holder.mTextView.setText(mData.get(position));
         if (Long.parseLong(mData.get(position)) == ItemProvider.getInstance().getSelectedId()) {
             holder.itemView.setVisibility(View.INVISIBLE);
@@ -48,7 +49,8 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, CardDetailActivity.class);
-                // intent.putExtra(KeyConstant.id,);
+                intent.putExtra(KeyConstant.cardId, position + "");
+                intent.putExtra(KeyConstant.cardTitle, position + "");
                 context.startActivity(intent);
             }
         });
