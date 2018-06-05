@@ -257,4 +257,6 @@
     <string name="get_img_faild">获取背景图失败</string>
     <string name="card_title">卡片标题</string>
     <string name="add_card">添加卡片</string>
+    <string name="fragment_opened">展开</string>
+    <string name="fragment_closed">收起</string>
 </resources>

@@ -1,16 +1,15 @@
 package com.android.taskallo.activity.classify;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.android.taskallo.R;
-import com.android.taskallo.activity.main.TopicsListActivity;
 import com.android.taskallo.adapter.classify.Fragment0_0_Adapter;
 import com.android.taskallo.adapter.classify.Fragment0_1_Adapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
@@ -38,7 +37,7 @@ public class Fragment0 extends BaseSearchFragment {
     private Fragment0_1_Adapter categroyTopAdapter;
     private List<DiscoverTopBean> mEverydayList = new ArrayList();
     private Fragment0_1_Adapter mTopicsAdapter;
-    private RecyclerView mEverydayRv, mDeletedBoardRv, mSubjectRv;
+    private RecyclerView mEverydayRv, mDeletedRv, mFinishedRv;
     private RecyclerView mHotRecentRv;
     private Fragment0_0_Adapter mEverydayAdapter;
     private List<DiscoverTopBean> mHotRecentList = new ArrayList();
@@ -47,6 +46,7 @@ public class Fragment0 extends BaseSearchFragment {
     private DiscoverListBean.DataBean.DailyNewGamesListBean dailyNewGames;
     private DiscoverListBean.DataBean.WeeklyNewGamesListBean hotGames;
     private LinearLayoutManager linearLayoutManager;
+    private TextView mDeletedOpenClosedBt, mFinishedOpenClosedBt;
 
     public Fragment0() {
         android.util.Log.d(TAG, "DiscoverFragment: ()");
@@ -109,57 +109,68 @@ public class Fragment0 extends BaseSearchFragment {
         categroyAllList.add(new ClassifyTopBean("办公采购清单", 103, ""));
         categroyAllList.add(new ClassifyTopBean("APP新版界面开发", 153, ""));
         categroyAllList.add(new ClassifyTopBean("周一会议提要", 104, ""));
+        categroyAllList.add(new ClassifyTopBean("周一会议提要", 104, ""));
+        categroyAllList.add(new ClassifyTopBean("周一会议提要", 104, ""));
         categroyTopAdapter = new Fragment0_1_Adapter(context, categroyAllList);
         mClassifyAllRv.setHasFixedSize(true);
         mClassifyAllRv.setNestedScrollingEnabled(false);
         mClassifyAllRv.setAdapter(categroyTopAdapter);
     }
 
+    //收起.展开
     private void init_2(View headView) {
-        mSubjectRv = headView.findViewById(R.id.rv_subject);
-        setOnMoreBtClickListener(headView, R.id.more_subject_tv);
-        linearLayoutManager = new LinearLayoutManager(
-                context, LinearLayoutManager.VERTICAL, false);
-        mSubjectRv.setLayoutManager(linearLayoutManager);
-
-        mTopicsAdapter = new Fragment0_1_Adapter(context, categroyAllList);
-        mSubjectRv.setHasFixedSize(true);
-        mSubjectRv.setNestedScrollingEnabled(false);
-        mSubjectRv.setAdapter(mTopicsAdapter);
-    }
-
-    private void init_3(View headView) {
-        mDeletedBoardRv = headView.findViewById(R.id.rv_deleted_board);
-        setOnMoreBtClickListener(headView, R.id.deleted_board_more);
-        linearLayoutManager = new LinearLayoutManager(
-                context, LinearLayoutManager.VERTICAL, false);
-        mDeletedBoardRv.setLayoutManager(linearLayoutManager);
-
-        mTopicsAdapter = new Fragment0_1_Adapter(context, categroyAllList);
-        mDeletedBoardRv.setHasFixedSize(true);
-        mDeletedBoardRv.setNestedScrollingEnabled(false);
-        mDeletedBoardRv.setAdapter(mTopicsAdapter);
-    }
-
-
-    //更多按钮设置点击监听
-    private void setOnMoreBtClickListener(View headView, int moreBtId) {
-        headView.findViewById(moreBtId).setOnClickListener(mMoreBtClickListener);
-    }
-
-    //查看更多 按钮点击
-    View.OnClickListener mMoreBtClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int id = v.getId();
-            Intent intent = new Intent();
-            //每日新发现
-            if (id == R.id.more_subject_tv) {
-                intent.setClass(context, TopicsListActivity.class);
+        mFinishedRv = headView.findViewById(R.id.rv_subject);
+        mFinishedOpenClosedBt = (TextView) headView.findViewById(R.id
+                .fragment_0_finished_open_close_bt);
+        mFinishedOpenClosedBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mFinishedRv.getVisibility() == View.VISIBLE) {
+                    mFinishedRv.setVisibility(View.GONE);
+                    mFinishedOpenClosedBt.setText(R.string.fragment_opened);
+                } else {
+                    mFinishedRv.setVisibility(View.VISIBLE);
+                    mFinishedOpenClosedBt.setText(R.string.fragment_closed);
+                }
             }
-            context.startActivity(intent);
-        }
-    };
+        });
+        linearLayoutManager = new LinearLayoutManager(
+                context, LinearLayoutManager.VERTICAL, false);
+        mFinishedRv.setLayoutManager(linearLayoutManager);
+
+        mTopicsAdapter = new Fragment0_1_Adapter(context, categroyAllList);
+        mFinishedRv.setHasFixedSize(true);
+        mFinishedRv.setNestedScrollingEnabled(false);
+        mFinishedRv.setAdapter(mTopicsAdapter);
+
+    }
+
+    //回收站
+    private void init_3(View headView) {
+        mDeletedRv = headView.findViewById(R.id.rv_deleted_board);
+        mDeletedOpenClosedBt = (TextView) headView.findViewById(R.id
+                .fragment_0_deleted_open_close_bt);
+        mDeletedOpenClosedBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mDeletedRv.getVisibility() == View.VISIBLE) {
+                    mDeletedRv.setVisibility(View.GONE);
+                    mDeletedOpenClosedBt.setText(R.string.fragment_opened);
+                } else {
+                    mDeletedRv.setVisibility(View.VISIBLE);
+                    mDeletedOpenClosedBt.setText(R.string.fragment_closed);
+                }
+            }
+        });
+        linearLayoutManager = new LinearLayoutManager(
+                context, LinearLayoutManager.VERTICAL, false);
+        mDeletedRv.setLayoutManager(linearLayoutManager);
+
+        mTopicsAdapter = new Fragment0_1_Adapter(context, categroyAllList);
+        mDeletedRv.setHasFixedSize(true);
+        mDeletedRv.setNestedScrollingEnabled(false);
+        mDeletedRv.setAdapter(mTopicsAdapter);
+    }
 
 
     private final static String TAG = Fragment0.class.getSimpleName();
