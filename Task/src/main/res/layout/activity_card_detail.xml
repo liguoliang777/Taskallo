@@ -61,15 +61,23 @@
         android:textColor="@color/white"
         android:visibility="gone" />
 
-    <ScrollView
+    <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/top_left_finish_bt"
-        android:background="@color/f5f5f5">
+        android:layout_marginTop="@dimen/dm500"
+        android:background="@color/f5f5f5" />
+
+    <com.android.taskallo.view.PullScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_left_finish_bt"
+        android:background="@color/transparent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/f5f5f5"
             android:orientation="vertical">
             <!--   卡片标题       -->
             <EditText
@@ -260,6 +268,7 @@
                     android:visibility="invisible" />
 
             </RelativeLayout>
+
             <include layout="@layout/layout_line_1px_f0f0f0" />
             <!--子任务的列表 -->
             <ListView
@@ -322,11 +331,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="图像附件"
                     android:paddingBottom="@dimen/dm020"
                     android:paddingTop="@dimen/dm020"
+                    android:text="图像附件"
                     android:textColor="@color/color_333333"
                     android:textSize="@dimen/dm028" />
+
                 <ImageView
                     android:layout_width="@dimen/dm028"
                     android:layout_height="@dimen/dm028"
@@ -362,17 +372,16 @@
                     android:scaleType="fitXY"
                     android:text="所有活动"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/dm028"
-                   />
+                    android:textSize="@dimen/dm028" />
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
-                    android:paddingRight="@dimen/dm030"
-                    android:paddingLeft="@dimen/dm030"
-                    android:paddingTop="@dimen/dm020"
+                    android:layout_gravity="center_vertical"
                     android:paddingBottom="@dimen/dm020"
+                    android:paddingLeft="@dimen/dm030"
+                    android:paddingRight="@dimen/dm030"
+                    android:paddingTop="@dimen/dm020"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_list_menu" />
             </LinearLayout>
@@ -391,7 +400,7 @@
                     android:layout_marginRight="@dimen/card_item_margin_left"
                     android:layout_marginTop="@dimen/card_item_margin_left"
                     android:scaleType="fitXY"
-                    android:src="@drawable/home_add_post" />
+                    android:src="@drawable/ic_incard_message" />
 
                 <EditText
                     android:layout_width="0dp"
@@ -418,7 +427,7 @@
 
             </ListView>
         </LinearLayout>
-    </ScrollView>
+    </com.android.taskallo.view.PullScrollView>
 
 
 </RelativeLayout>
