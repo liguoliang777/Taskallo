@@ -252,10 +252,10 @@
                 android:layout_marginTop="@dimen/dm040"
                 android:scaleType="fitXY"
                 fresco:actualImageScaleType="fitXY"
-                fresco:failureImage="@drawable/ic_user_icon_bg"
-                fresco:placeholderImage="@drawable/ic_user_icon_bg"
-                fresco:placeholderImageScaleType="centerCrop"
-                fresco:progressBarImage="@drawable/ic_user_icon_bg"
+                fresco:failureImage="@drawable/ic_def_user_head_photo_bg"
+                fresco:placeholderImage="@drawable/ic_def_user_head_photo_bg"
+                fresco:placeholderImageScaleType="fitXY"
+                fresco:progressBarImage="@drawable/ic_def_user_head_photo_bg"
                 fresco:roundAsCircle="true" />
 
             <TextView

@@ -28,7 +28,7 @@
         android:layout_alignParentLeft="true"
         android:background="@color/mainColor"
         android:clickable="true"
-        android:drawableLeft="@drawable/ic_search_delete"
+        android:drawableLeft="@drawable/ic_card_cancel"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/title_left_bt_padding_left"
         android:paddingRight="@dimen/dm020"
@@ -55,14 +55,13 @@
         android:layout_height="@dimen/app_title_height"
         android:layout_alignParentRight="true"
         android:background="@color/mainColor"
-        android:drawableRight="@drawable/ic_search"
+        android:drawableRight="@drawable/ic_card_affirm"
         android:gravity="center"
         android:paddingRight="@dimen/dm028"
         android:textColor="@color/white"
         android:visibility="gone" />
 
     <ScrollView
-        android:id="@+id/main_me_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/top_left_finish_bt"
@@ -72,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+            <!--   卡片标题       -->
             <EditText
                 android:id="@+id/card_title_et"
                 android:layout_width="match_parent"
@@ -85,7 +84,7 @@
                 android:textCursorDrawable="@drawable/shape_cursor_color_white"
                 android:textSize="@dimen/dm035"
                 android:textStyle="bold" />
-
+            <!--   列表名称       -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -123,6 +122,7 @@
                     android:textSize="@dimen/dm024" />
             </LinearLayout>
 
+            <!--   卡片描述       -->
             <EditText
                 android:id="@+id/card_describe_et"
                 android:layout_width="match_parent"
@@ -136,12 +136,13 @@
                 android:textSize="@dimen/dm024" />
 
             <include layout="@layout/layout_line_1px_f0f0f0" />
-
+            <!--    截止日期   -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dm020"
-                android:background="@color/white">
+                android:background="@drawable/selector_bg_white_f2"
+                android:clickable="true">
 
                 <ImageView
                     android:layout_width="@dimen/dm036"
@@ -160,26 +161,26 @@
                     android:hint="截止日期"
                     android:paddingBottom="@dimen/dm020"
                     android:paddingTop="@dimen/dm020"
-                    android:src="@drawable/ic_card_time"
                     android:textColor="@color/color_333333"
                     android:textColorHint="@color/hint_color"
                     android:textSize="@dimen/dm028"
-                    android:textStyle="bold" />
+                    android:textStyle="italic" />
 
                 <ImageView
-                    android:layout_width="@dimen/dm036"
-                    android:layout_height="@dimen/dm036"
+                    android:layout_width="@dimen/dm028"
+                    android:layout_height="@dimen/dm028"
                     android:layout_marginLeft="@dimen/card_item_margin_left"
                     android:layout_marginRight="@dimen/card_item_margin_left"
                     android:layout_marginTop="@dimen/dm020"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_card_time" />
+                    android:src="@drawable/ic_incard_time_affirm" />
             </LinearLayout>
-
+            <!--添加标签-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white">
+                android:background="@drawable/selector_bg_white_f2"
+                android:clickable="true">
 
                 <ImageView
                     android:id="@+id/card_item_tag_iv"
@@ -189,7 +190,7 @@
                     android:layout_marginRight="@dimen/card_item_margin_left"
                     android:layout_marginTop="@dimen/dm020"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_card_time" />
+                    android:src="@drawable/ic_incard_label" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -200,7 +201,7 @@
                     android:text="添加标签"
                     android:textColor="@color/hint_color"
                     android:textSize="@dimen/dm028"
-                    android:textStyle="bold" />
+                    android:textStyle="italic" />
 
                 <LinearLayout
                     android:id="@+id/card_item_tag_layout"
@@ -208,19 +209,25 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/card_item_tag_iv"
-                    android:background="@color/transparent_medium"
+                    android:background="@color/white"
                     android:orientation="horizontal"
                     android:padding="@dimen/dm020"
+                    android:paddingBottom="@dimen/dm020"
+                    android:paddingRight="@dimen/dm020"
+                    android:paddingTop="@dimen/dm020"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_card_time"
-                    android:textColorHint="@color/hint_color" />
+                    android:textColorHint="@color/hint_color"
+                    android:visibility="invisible" />
 
             </RelativeLayout>
 
+            <!--添加成员-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white">
+                android:background="@drawable/selector_bg_white_f2"
+                android:clickable="true">
 
                 <ImageView
                     android:id="@+id/card_item_member_iv"
@@ -230,7 +237,7 @@
                     android:layout_marginRight="@dimen/card_item_margin_left"
                     android:layout_marginTop="@dimen/dm020"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_card_time" />
+                    android:src="@drawable/ic_incard_member" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -241,23 +248,25 @@
                     android:text="添加成员"
                     android:textColor="@color/hint_color"
                     android:textSize="@dimen/dm028"
-                    android:textStyle="bold" />
+                    android:textStyle="italic" />
 
                 <LinearLayout
                     android:id="@+id/card_item_member_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/card_item_member_iv"
-                    android:background="@color/transparent_medium"
+                    android:background="@color/white"
                     android:orientation="horizontal"
                     android:padding="@dimen/dm020"
+                    android:paddingBottom="@dimen/dm020"
+                    android:paddingRight="@dimen/dm020"
+                    android:paddingTop="@dimen/dm020"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_card_time"
-                    android:textColorHint="@color/hint_color" />
+                    android:textColorHint="@color/hint_color"
+                    android:visibility="invisible" />
 
             </RelativeLayout>
-            <!--图像附件-->
+            <!--清单列表 -->
             <ListView
                 android:id="@+id/subtask_list_view"
                 android:layout_width="match_parent"
@@ -265,6 +274,35 @@
                 android:orientation="vertical">
 
             </ListView>
+            <!--    添加子任务   -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dm020"
+                android:background="@drawable/selector_bg_white_f2"
+                android:clickable="true">
+
+                <ImageView
+                    android:layout_width="@dimen/dm036"
+                    android:layout_height="@dimen/dm036"
+                    android:layout_marginLeft="@dimen/card_item_margin_left"
+                    android:layout_marginRight="@dimen/card_item_margin_left"
+                    android:layout_marginTop="@dimen/dm020"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_incard_subtask" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="添加子任务"
+                    android:paddingBottom="@dimen/dm020"
+                    android:paddingTop="@dimen/dm020"
+                    android:textColor="@color/color_333333"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="@dimen/dm028" />
+            </LinearLayout>
 
             <!--        <RelativeLayout
                         android:layout_width="match_parent"
@@ -297,6 +335,7 @@
 
 
                     </RelativeLayout>-->
+            <!--所有活动-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -310,7 +349,7 @@
                     android:layout_marginRight="@dimen/card_item_margin_left"
                     android:layout_marginTop="@dimen/dm020"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_card_time" />
+                    android:src="@drawable/ic_incard_active" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -326,13 +365,13 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:layout_width="@dimen/dm036"
-                    android:layout_height="@dimen/dm036"
+                    android:layout_width="@dimen/dm028"
+                    android:layout_height="@dimen/dm028"
                     android:layout_marginLeft="@dimen/card_item_margin_left"
                     android:layout_marginRight="@dimen/card_item_margin_left"
                     android:layout_marginTop="@dimen/dm020"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_card_time" />
+                    android:src="@drawable/ic_list_menu" />
             </LinearLayout>
 
             <include layout="@layout/layout_line_1px_f0f0f0" />
@@ -349,7 +388,7 @@
                     android:layout_marginRight="@dimen/card_item_margin_left"
                     android:layout_marginTop="@dimen/dm020"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_card_time" />
+                    android:src="@drawable/ic_def_user_head_photo_bg" />
 
                 <EditText
                     android:layout_width="0dp"
