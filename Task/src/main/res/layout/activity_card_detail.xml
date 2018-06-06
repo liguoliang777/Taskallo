@@ -69,6 +69,8 @@
         android:background="@color/f5f5f5" />
 
     <com.android.taskallo.view.PullScrollView
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/top_left_finish_bt"
@@ -86,7 +88,6 @@
                 android:layout_height="wrap_content"
                 android:background="@color/mainColor"
                 android:clickable="true"
-                android:focusableInTouchMode="true"
                 android:padding="@dimen/card_item_margin_left"
                 android:textColor="@color/white"
                 android:textCursorDrawable="@drawable/shape_cursor_color_white"
@@ -175,13 +176,16 @@
                     android:textStyle="italic" />
 
                 <ImageView
-                    android:layout_width="@dimen/dm028"
-                    android:layout_height="@dimen/dm028"
-                    android:layout_marginLeft="@dimen/card_item_margin_left"
-                    android:layout_marginRight="@dimen/dm030"
-                    android:layout_marginTop="@dimen/dm020"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:paddingLeft="@dimen/dm030"
+                    android:paddingTop="@dimen/dm013"
+                    android:paddingBottom="@dimen/dm013"
+                    android:paddingRight="@dimen/dm030"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_incard_time_affirm" />
+                    android:src="@drawable/selector_ic_incard_time_checked" />
             </LinearLayout>
             <!--添加标签-->
             <RelativeLayout

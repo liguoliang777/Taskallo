@@ -37,7 +37,6 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         mCardTitleEt = (EditText) findViewById(R.id.card_title_et);
         mCardTitleEt.setText(mCardTitle);
         mCardTitleEt.setSelection(mCardTitle.length());
-
         mTop_Left_Finished_BT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
