@@ -7,6 +7,8 @@ public interface IHostFetcher {
 
     String HOST = "192.168.1.232:9800/";// 测试
 
+    String HOST_1 = "192.168.1.232:9807/";// 测试
+
     //String HOST = "opapi.xflqv.cn/";   //正式
 
 
