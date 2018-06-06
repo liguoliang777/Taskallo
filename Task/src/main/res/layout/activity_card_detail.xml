@@ -304,37 +304,43 @@
                     android:textSize="@dimen/dm028" />
             </LinearLayout>
 
-            <!--        <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dm020"
-                        android:background="@drawable/selector_bg_white_f2"
-                        android:clickable="true"
-                        android:onClick="onSubTaskAddBtClick">
 
-                        <ImageView
-                            android:id="@+id/card_item_subtask_iv"
-                            android:layout_width="@dimen/dm036"
-                            android:layout_height="@dimen/dm036"
-                            android:layout_marginLeft="@dimen/card_item_margin_left"
-                            android:layout_marginRight="@dimen/card_item_margin_left"
-                            android:layout_marginTop="@dimen/dm020"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/ic_card_subtask" />
+            <!--图像附件-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dm020"
+                android:background="@drawable/selector_bg_white_f2"
+                android:clickable="true">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/dm020"
-                            android:layout_marginTop="@dimen/dm020"
-                            android:layout_toRightOf="@id/card_item_subtask_iv"
-                            android:text="子任务..."
-                               android:textStyle="bold"
-                             android:textSize="@dimen/dm028"
-                            android:textColor="@color/hint_color" />
+                <ImageView
+                    android:layout_width="@dimen/dm036"
+                    android:layout_height="@dimen/dm036"
+                    android:layout_marginLeft="@dimen/card_item_margin_left"
+                    android:layout_marginRight="@dimen/card_item_margin_left"
+                    android:layout_marginTop="@dimen/dm020"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_incard_photo" />
 
-
-                    </RelativeLayout>-->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="图像附件"
+                    android:paddingBottom="@dimen/dm020"
+                    android:paddingTop="@dimen/dm020"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/dm028" />
+                <ImageView
+                    android:layout_width="@dimen/dm028"
+                    android:layout_height="@dimen/dm028"
+                    android:layout_marginLeft="@dimen/card_item_margin_left"
+                    android:layout_marginRight="@dimen/card_item_margin_left"
+                    android:layout_marginTop="@dimen/dm020"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_arrow_down" />
+            </LinearLayout>
             <!--所有活动-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -362,7 +368,7 @@
                     android:text="所有活动"
                     android:textColor="@color/color_333333"
                     android:textSize="@dimen/dm028"
-                    android:textStyle="bold" />
+                   />
 
                 <ImageView
                     android:layout_width="@dimen/dm028"
@@ -386,14 +392,14 @@
                     android:layout_height="@dimen/dm036"
                     android:layout_marginLeft="@dimen/card_item_margin_left"
                     android:layout_marginRight="@dimen/card_item_margin_left"
-                    android:layout_marginTop="@dimen/dm020"
+                    android:layout_marginTop="@dimen/card_item_margin_left"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_def_user_head_photo_bg" />
+                    android:src="@drawable/home_add_post" />
 
                 <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/card_item_margin_left"
+                    android:layout_marginRight="@dimen/dm050"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:hint="添加评论"

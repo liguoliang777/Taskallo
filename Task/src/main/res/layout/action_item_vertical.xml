@@ -11,7 +11,7 @@
         android:layout_width="100dp"
         android:layout_height="44dp"
         android:layout_gravity="center"
-        android:background="@drawable/action_item_btn"
+        android:background="@drawable/selector_popup_window_item_btn"
         android:gravity="center">
 
         <ImageView
