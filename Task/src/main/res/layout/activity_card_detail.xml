@@ -314,7 +314,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dm020"
-                android:background="@drawable/selector_bg_white_f2"
+                android:background="@color/white"
                 android:clickable="true">
 
                 <ImageView
@@ -344,8 +344,14 @@
                     android:layout_marginRight="@dimen/dm030"
                     android:layout_marginTop="@dimen/dm020"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_arrow_down" />
+                    android:src="@drawable/ic_incard_link" />
             </LinearLayout>
+
+            <include layout="@layout/layout_line_1px_f0f0f0" />
+
+            <GridView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
             <!--所有活动-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -405,7 +411,7 @@
                 <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dm050"
+                    android:layout_marginRight="@dimen/dm030"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:hint="添加评论"
