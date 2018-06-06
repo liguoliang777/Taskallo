@@ -2,6 +2,7 @@ package com.android.taskallo.project.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -53,8 +54,10 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     public void showCardPopupWindow(View v) {
         PopupMenu popupMenu = new PopupMenu(context, v);
         popupMenu.getMenuInflater().inflate(R.menu.card_menu, popupMenu.getMenu());
+        popupMenu.setGravity(Gravity.TOP);
         popupMenu.setOnMenuItemClickListener(this);
         popupMenu.show();
+
     }
 
     public boolean onMenuItemClick(MenuItem item) {
