@@ -239,9 +239,14 @@
         <item name="android:textColor">@color/color_333333</item>
     </style>
 
-    <style name="style_28px_333333_bold">
-        <item name="android:textStyle">bold</item>
+    <style name="px28_333333">
         <item name="android:textSize">@dimen/dm028</item>
+        <item name="android:textColor">@color/color_333333</item>
+    </style>
+
+
+    <style name="px20_333333">
+        <item name="android:textSize">@dimen/dm020</item>
         <item name="android:textColor">@color/color_333333</item>
     </style>
 

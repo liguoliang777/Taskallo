@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/tviv_item_tv"
-        style="@style/style_28px_333333_bold"
+        style="@style/px28_333333"
         android:layout_width="@dimen/fargment0_0_iv_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

@@ -67,7 +67,7 @@ public class Fragment0_0_Adapter extends RecyclerView.Adapter<Fragment0_0_Adapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProjListActivity.class);
-                intent.putExtra(KeyConstant.ID, discoverTopBean.getId());
+                intent.putExtra(KeyConstant.ID, discoverTopBean.getId()+"");
                 context.startActivity(intent);
             }
         });

@@ -51,7 +51,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         holder.recyclerView.setLayoutManager(new ItemLayoutManager(holder.itemView.getContext()));
 
-        RecyclerView.Adapter adapter = new ItemItemAdapter(position, 10);
+        RecyclerView.Adapter adapter = new ItemItemAdapter(context,position, 10);
         holder.recyclerView.setAdapter(adapter);
         holder.mItemAdd.setOnClickListener(new View.OnClickListener() {
             @Override

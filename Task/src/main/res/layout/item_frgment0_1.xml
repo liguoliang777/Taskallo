@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:width="0dp"
-        style="@style/style_28px_333333_bold"
+        style="@style/px28_333333"
         android:ellipsize="end"
         android:maxLines="1"
         android:text=""

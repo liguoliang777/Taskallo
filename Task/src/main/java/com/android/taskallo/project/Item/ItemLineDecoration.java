@@ -10,6 +10,6 @@ public class ItemLineDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        outRect.set(0, 0, 0, 18);
+        outRect.set(0, 0, 0, 19);
     }
 }

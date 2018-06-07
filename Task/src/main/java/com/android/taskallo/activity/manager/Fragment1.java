@@ -230,7 +230,6 @@ public class Fragment1 extends BaseSearchFragment {
     private void initGP() {
         listPopupWindow = new ListPopupWindow(content);
         listPopupWindow.setHeight(ListPopupWindow.WRAP_CONTENT);
-        //listPopupWindow.setAnimationStyle(R.style.Animations_PopDownMenu);
         pupopAdapter = new PupopAdapter(content, products);
         listPopupWindow.setAdapter(pupopAdapter);
         listPopupWindow.setAnchorView(mRadioGroup);

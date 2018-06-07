@@ -4,16 +4,93 @@
     android:layout_height="wrap_content"
     android:background="@drawable/shape_list_card_item"
     android:elevation="@dimen/dm002"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/item_item_margin_left"
+    android:paddingRight="@dimen/item_item_margin_left"
+    android:paddingTop="@dimen/item_item_margin_left"
+    android:paddingBottom="@dimen/item_item_margin_left_half"
+    >
+
+    <com.android.taskallo.project.Item.ExRadioGroup
+        android:id="@+id/item_item_label_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
     <TextView
-        android:id="@+id/content"
+        android:id="@+id/item_item_title_tv"
+        style="@style/px28_333333"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="content"
-        android:textAllCaps="false"
-        android:textSize="14dp">
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAllCaps="false" />
 
-    </TextView>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/item_item_margin_left"
+        android:paddingBottom="@dimen/item_item_margin_left"
+        >
+
+        <TextView
+            android:id="@+id/item_item_exist_subhead_tv"
+            style="@style/px20_333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_card_subhead" />
+
+        <TextView
+            android:id="@+id/item_item_exist_time_tv"
+            style="@style/px20_333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/item_item_margin_left"
+            android:drawableLeft="@drawable/ic_card_time"
+            android:drawablePadding="@dimen/dm006"
+            android:text="3月1日" />
+
+        <TextView
+            android:id="@+id/item_item_exist_link"
+            style="@style/px20_333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/item_item_margin_left"
+            android:drawableLeft="@drawable/ic_card_link"
+            android:drawablePadding="@dimen/dm006"
+            android:text="3" />
+
+        <TextView
+            android:id="@+id/item_item_exist_talk"
+            style="@style/px20_333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/item_item_margin_left"
+            android:drawableLeft="@drawable/ic_card_talk"
+            android:drawablePadding="@dimen/dm006"
+            android:text="7" />
+
+        <TextView
+            android:id="@+id/item_item_exist_subtask_finished_tv"
+            style="@style/px20_333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/item_item_margin_left"
+            android:drawableLeft="@drawable/ic_card_subtask"
+            android:drawablePadding="@dimen/dm006"
+            android:text="1/3" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_item_mention_people_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/item_item_margin_left_half"
+        android:paddingTop="@dimen/item_item_margin_left_half"
+        android:layout_gravity="right"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+    </LinearLayout>
 </LinearLayout>
