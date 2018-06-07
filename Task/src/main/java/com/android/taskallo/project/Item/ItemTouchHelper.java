@@ -2372,7 +2372,7 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
         if (childView == null) return false;
         int x = (int) event.getX();
         int y = (int) event.getY();
-        View header = childView.findViewById(R.id.item_title);
+        View header = childView.findViewById(R.id.proj_list_item_title);
         return header.getTop() < y && header.getBottom() > y;
     }
 }

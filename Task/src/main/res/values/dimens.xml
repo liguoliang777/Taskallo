@@ -125,4 +125,5 @@
     <dimen name="login_bt_margin_left_right">@dimen/dm064</dimen>
     <dimen name="me_item_line_margin_left">@dimen/dm100</dimen>
     <dimen name="card_item_margin_left">@dimen/dm024</dimen>
+    <dimen name="list_card_corner">@dimen/dm008</dimen>
 </resources>

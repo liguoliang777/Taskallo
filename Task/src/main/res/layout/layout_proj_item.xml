@@ -1,26 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="250dp"
+    android:layout_width="@dimen/dm450"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="25dp"
+    android:layout_marginLeft="@dimen/dm040"
     android:orientation="vertical">
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dm030"
-        android:background="@android:color/transparent"
-        />
-    <TextView
-        android:id="@+id/item_title"
+        android:layout_height="@dimen/dm025"
+        android:background="@android:color/transparent" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/color_card_list_color"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:text="标题"
-        android:textAllCaps="false"
-        android:textColor="@color/color_333333"
-        android:textSize="12dp"
-        android:textStyle="bold" />
+        android:layout_height="@dimen/dm080"
+        android:background="@drawable/shape_list_card_corner_top"
+        android:paddingLeft="@dimen/dm020">
+
+        <TextView
+            android:id="@+id/proj_list_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dm080"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:text="标题"
+            android:textAllCaps="false"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/dm024"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/proj_list_item_menu_bt"
+            android:layout_width="@dimen/dm080"
+            android:paddingRight="@dimen/dm020"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:drawableRight="@drawable/ic_list_menu" />
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/item_recycler_view"
@@ -29,23 +46,24 @@
         android:layout_weight="1"
         android:background="@color/color_card_list_color"
         android:fastScrollEnabled="true"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
+        android:paddingLeft="@dimen/dm008"
+        android:paddingRight="@dimen/dm008"
         android:scrollbarStyle="insideInset"
         android:transcriptMode="normal" />
 
     <Button
         android:id="@+id/item_add"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/dm080"
+        android:background="@drawable/shape_list_card_corner_bottom"
         android:gravity="center"
-        android:background="@color/color_card_list_color"
+        android:textColor="@color/color_808080"
         android:text="添加卡片"
         android:textAllCaps="false"
-        android:textSize="12dp" />
+        android:textSize="@dimen/dm024" />
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@android:color/transparent"
-       />
+        android:layout_height="@dimen/dm080"
+        android:background="@android:color/transparent" />
 </LinearLayout>

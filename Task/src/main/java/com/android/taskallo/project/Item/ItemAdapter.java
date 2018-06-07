@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.android.taskallo.R;
 import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.project.view.ProjListActivity;
+import com.android.taskallo.util.ToastUtil;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 
@@ -63,8 +64,37 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         }
         holder.recyclerView.getItemAnimator().setAddDuration(0);
         holder.recyclerView.getItemAnimator().setRemoveDuration(0);
+
+        holder.mMenuBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToastUtil.show(context,"点击");
+            }
+        });
     }
 
+    class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        RecyclerView recyclerView;
+        TextView mItemTitle;
+        Button mItemAdd;
+        private EditText mItemEnterEt;
+        private Button mMenuBt;
+
+        ItemViewHolder(View itemView) {
+            super(itemView);
+            init(itemView);
+        }
+
+        private void init(View itemView) {
+            recyclerView = itemView.findViewById(R.id.item_recycler_view);
+            mItemTitle = itemView.findViewById(R.id.proj_list_item_title);
+            mMenuBt = itemView.findViewById(R.id.proj_list_item_menu_bt);
+            mItemAdd = itemView.findViewById(R.id.item_add);
+        }
+    }
+
+    //添加卡片
     private void showAddCardAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.Dialog_add_card);
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -109,28 +139,5 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 }
             }
         });
-
-
-
     }
-
-    class ItemViewHolder extends RecyclerView.ViewHolder {
-
-        RecyclerView recyclerView;
-        TextView mItemTitle;
-        Button mItemAdd;
-        private EditText mItemEnterEt;
-
-        ItemViewHolder(View itemView) {
-            super(itemView);
-            init(itemView);
-        }
-
-        private void init(View itemView) {
-            recyclerView = itemView.findViewById(R.id.item_recycler_view);
-            mItemTitle = itemView.findViewById(R.id.item_title);
-            mItemAdd = itemView.findViewById(R.id.item_add);
-        }
-    }
-
 }

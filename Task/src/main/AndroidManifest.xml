@@ -123,6 +123,7 @@
         <activity
             android:name="com.android.taskallo.project.view.ProjListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.android.taskallo.activity.hub.HubItemActivity"
@@ -245,7 +246,6 @@
         <activity android:name="com.android.taskallo.gamehub.view.ChooseGameActivity" />
         <activity android:name="com.android.taskallo.gamehub.view.NoticeActivity" />
         <activity android:name="com.android.taskallo.gamehub.view.ShowViewActivity" />
-        <activity android:name="com.android.taskallo.gamehub.view.SearchPostActivity" />
         <activity
             android:name="com.android.taskallo.gamehub.view.MsgDetailActivity"
             android:screenOrientation="portrait"

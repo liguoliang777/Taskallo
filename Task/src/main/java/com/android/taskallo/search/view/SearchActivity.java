@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -29,8 +28,6 @@ import com.android.taskallo.core.db.DatabaseManager;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.project.view.ProjListActivity;
-import com.android.taskallo.util.StringUtil;
-import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.LoadStateView;
 import com.jzt.hol.android.jkda.sdk.bean.search.RequestSearchBean;
 import com.jzt.hol.android.jkda.sdk.bean.search.SearchBean;
@@ -352,7 +349,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.search_bt:
+          /*  case R.id.search_bt:
                 Log.d(TAG, "点击搜索: ");
                 String searchStr = et_search.getText().toString().trim();
                 if (StringUtil.isEmpty(searchStr)) {
@@ -360,11 +357,6 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                     ToastUtil.show(content, "请输入搜索内容");
                 } else {
                     searchName = searchStr;
-//                        et_search.setText("");
-//                        ll_show.setVisibility(View.VISIBLE);
-//                        resultListView.setVisibility(View.GONE);
-//                        loadStateView.setVisibility(View.GONE);
-
                     // 先隐藏键盘
                     ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus()
@@ -374,7 +366,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                     loadStateView.setState(LoadStateView.STATE_ING);
                     doSearch(true);
                 }
-                break;
+                break;*/
             case R.id.tv_clear:
                 dbManager.deleteAllSearchHistory(); //清除搜索历史
                 layout_history.setVisibility(View.GONE);

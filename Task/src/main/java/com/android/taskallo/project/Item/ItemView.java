@@ -6,7 +6,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -459,8 +464,9 @@ public class ItemView extends FrameLayout {
         mMirrorView.setLayoutParams(params);
         mMirrorView.setTranslationX(x);
         mMirrorView.setTranslationY(y);
-        Bitmap bitmap = Bitmap.createBitmap(selectedView.getWidth(), selectedView.getHeight(),
+        Bitmap b = Bitmap.createBitmap(selectedView.getWidth(), selectedView.getHeight(),
                 Bitmap.Config.RGB_565);
+        Bitmap bitmap = drawRadius(b);
         Canvas canvas = new Canvas(bitmap);
         selectedView.draw(canvas);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -472,8 +478,35 @@ public class ItemView extends FrameLayout {
         }
         mMirrorView.setVisibility(VISIBLE);
         mMirrorView.setRotation(3f);//小item的旋转角度
-        mMirrorView.setAlpha(1f);//小item的旋转角度
+        mMirrorView.setAlpha(1f);
         mRecyclerViewViewHolder.itemView.setAlpha(0);
+    }
+
+    public Bitmap drawRadius(Bitmap bitmap) {
+        try {
+            Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                    bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(output);
+            final Paint paint = new Paint();
+            final Rect rect = new Rect(0, 0, bitmap.getWidth(),
+                    bitmap.getHeight());
+            final RectF rectF = new RectF(new Rect(0, 0, bitmap.getWidth(),
+                    bitmap.getHeight()));
+            final float roundPx = 14;
+            paint.setAntiAlias(true);
+            canvas.drawARGB(0, 0, 0, 0);
+            paint.setColor(Color.BLACK);
+            canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+            final Rect src = new Rect(0, 0, bitmap.getWidth(),
+                    bitmap.getHeight());
+
+            canvas.drawBitmap(bitmap, src, rect, paint);
+            return output;
+        } catch (Exception e) {
+            return bitmap;
+        }
     }
 
     private boolean landUpInlineRecyclerView(MotionEvent event) {//最终到达,互相关联的rv里
@@ -519,10 +552,11 @@ public class ItemView extends FrameLayout {
         return view;
     }
 
+    //当前列表RV的title高度
     private int getCurrentColumnTitleHeight(MotionEvent event) {
         if (mTitleHeight == 0) {
             View child = mContentView.findChildViewUnder(event.getX(), event.getY());
-            mTitleHeight = child.findViewById(R.id.item_title).getHeight();
+            mTitleHeight = child.findViewById(R.id.proj_list_item_title).getHeight();
         }
         return mTitleHeight;
     }
