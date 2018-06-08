@@ -6,11 +6,9 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -31,9 +29,6 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
-import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 
@@ -53,11 +48,11 @@ public class ProjectAddActivity extends BaseFgActivity {
     private PopupWindow popupWindow;
     private boolean PUBLIC_PRIVATE = true; //0 共有 1私有
     private EditText mProjNameTv, mProjSubtitleTv;
-    private String mImgId = "1";
     private GridLayout imgLaout;
     private List<ImgInfo> gameLogoList;
     private String projSubtitle;
     private String projName;
+    private String selectedImgId = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +152,7 @@ public class ProjectAddActivity extends BaseFgActivity {
                         Map<String, String> params = new HashMap<>();
                         params.put(KeyConstant.desc, projSubtitle);
                         params.put(KeyConstant.name, projName);
-                        params.put(KeyConstant.imgId, mImgId);
+                        params.put(KeyConstant.imgId, selectedImgId);
                         params.put(KeyConstant.privacy, PUBLIC_PRIVATE ? "0" : "1");
                         return params;
                     }
@@ -195,17 +190,7 @@ public class ProjectAddActivity extends BaseFgActivity {
     };
 
     public void getImgList() {
-        final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup
-                .LayoutParams.WRAP_CONTENT, ViewGroup
-                .LayoutParams.WRAP_CONTENT);
-        params.width = getResources().getDimensionPixelSize(R.dimen.dm136);
-        params.height = getResources().getDimensionPixelSize(R.dimen.dm068);
 
-
-        int dmMargin = getResources().getDimensionPixelSize(R.dimen.dm008);
-        params.setMargins(dmMargin, dmMargin, dmMargin, dmMargin);
-
-        //请求数据
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, "网络异常,请检查网络设置");
             return;
@@ -223,24 +208,8 @@ public class ProjectAddActivity extends BaseFgActivity {
                 }
 
                 gameLogoList = result.data;
-                if (gameLogoList != null) {
-                    for (int i = 0; i < gameLogoList.size(); i++) {
-                        ImgInfo imgInfo = gameLogoList.get(i);
-                        if (imgInfo != null) {
-                            SimpleDraweeView picassoImageView = new SimpleDraweeView(context);
-                            final GenericDraweeHierarchy hierarchy =
-                                    GenericDraweeHierarchyBuilder.newInstance(getResources())
-                                            //设置圆形圆角参数
-                                            .setRoundingParams(new RoundingParams()
-                                                    .setCornersRadius(10))
-                                            .build();
-                            picassoImageView.setHierarchy(hierarchy);
-                            picassoImageView.setScaleType(ImageView.ScaleType.CENTER);
-                            picassoImageView.setLayoutParams(params);
-                            picassoImageView.setImageURI(imgInfo.imgUrl);
-                            imgLaout.addView(picassoImageView);
-                        }
-                    }
+                if (gameLogoList != null && context != null) {
+                    setImgsLayout();
                 }
 
             }
@@ -266,4 +235,60 @@ public class ProjectAddActivity extends BaseFgActivity {
                 };
         App.requestQueue.add(versionRequest);
     }
+
+    //设置图片集合
+    private void setImgsLayout() {
+        for (int i = 0; i < gameLogoList.size(); i++) {
+            final ImgInfo imgInfo = gameLogoList.get(i);
+            if (imgInfo != null) {
+                View v = getLayoutInflater().inflate(R.layout
+                        .layout_proj_add_gridlayout_adv, null);
+                SimpleDraweeView picassoImageView = (SimpleDraweeView) v.findViewById
+                        (R.id.proj_add_sdv);
+                picassoImageView.setImageURI(imgInfo.imgUrl);
+                imgLaout.addView(v);
+                final int finalI = i;
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        selectedImgId = imgInfo.id + "";
+                        if (imgLaout != null) {
+                            int childCount = imgLaout.getChildCount();
+                            for (int j = 0; j < childCount; j++) {
+                                View viewClick = imgLaout.getChildAt(j);
+                                viewClick.findViewById(R.id.proj_add_affim_tag)
+                                        .setVisibility(finalI == j ? View.VISIBLE :
+                                                View.INVISIBLE);
+
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    /*        final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup
+                .LayoutParams.WRAP_CONTENT, ViewGroup
+                .LayoutParams.WRAP_CONTENT);
+        params.width = getResources().getDimensionPixelSize(R.dimen.dm136);
+        params.height = getResources().getDimensionPixelSize(R.dimen.dm068);
+
+
+        int dmMargin = getResources().getDimensionPixelSize(R.dimen.dm008);
+        params.setMargins(dmMargin, dmMargin, dmMargin, dmMargin);
+
+         SimpleDraweeView picassoImageView = new SimpleDraweeView(context);
+                            final GenericDraweeHierarchy hierarchy =
+                                    GenericDraweeHierarchyBuilder.newInstance(getResources())
+                                            //设置圆形圆角参数
+                                            .setRoundingParams(new RoundingParams()
+                                                    .setCornersRadius(10))
+                                            .build();
+                            picassoImageView.setHierarchy(hierarchy);
+                            picassoImageView.setScaleType(ImageView.ScaleType.CENTER);
+                            picassoImageView.setLayoutParams(params);
+                            picassoImageView.setImageURI(imgInfo.imgUrl);
+
+        */
 }
