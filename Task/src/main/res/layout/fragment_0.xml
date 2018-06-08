@@ -64,21 +64,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dm020"
+                android:paddingBottom="@dimen/dm020"
                 android:text="个人看板" />
-
-            <!--  <TextView
-                  android:id="@+id/everyday_more_tv0"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_alignBottom="@id/discover_tviv_left_title_tv0"
-                  android:layout_alignParentRight="true"
-                  android:paddingBottom="@dimen/dm008"
-                  android:paddingLeft="@dimen/dm020"
-                  android:paddingRight="@dimen/dm020"
-                  android:paddingTop="@dimen/dm004"
-                  android:text="@string/see_more"
-                  android:textColor="@color/see_more"
-                  android:textSize="@dimen/dm020" />-->
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/discover_head_rv_classify"
@@ -87,7 +74,6 @@
                 android:layout_below="@id/discover_tviv_left_title_tv0"
                 android:layout_centerVertical="true"
                 android:paddingBottom="@dimen/dm010"
-                android:paddingTop="@dimen/dm020"
                 android:scrollbars="none" />
 
         </RelativeLayout>

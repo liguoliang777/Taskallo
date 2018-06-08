@@ -15,9 +15,8 @@ import com.android.taskallo.R;
 import com.android.taskallo.adapter.classify.Fragment0_0_Adapter;
 import com.android.taskallo.adapter.classify.Fragment0_1_Adapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
-import com.android.taskallo.bean.ClassifyTopBean;
 import com.android.taskallo.bean.JsonResult;
-import com.android.taskallo.bean.PageAction;
+import com.android.taskallo.bean.ProjItemInfo;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.KeyConstant;
@@ -44,8 +43,8 @@ import java.util.Map;
 @SuppressLint("WrongConstant")
 public class Fragment0 extends BaseSearchFragment {
     private FragmentActivity context;
-    private RecyclerView mClassifyAllRv;
-    private Fragment0_1_Adapter categroyTopAdapter;
+    private RecyclerView main1Rv;
+    private Fragment0_1_Adapter main1_Adapter;
     private List<DiscoverTopBean> mEverydayList = new ArrayList();
     private Fragment0_1_Adapter mTopicsAdapter;
     private RecyclerView mEverydayRv, mDeletedRv, mFinishedRv;
@@ -53,7 +52,7 @@ public class Fragment0 extends BaseSearchFragment {
     private Fragment0_0_Adapter mEverydayAdapter;
     private List<DiscoverTopBean> mHotRecentList = new ArrayList();
     private Fragment0_0_Adapter mHotRecentAdapter;
-    private List<ClassifyTopBean> categroyAllList = new ArrayList<>();
+    private List<ProjItemInfo> main1_List = new ArrayList<>();
     private DiscoverListBean.DataBean.DailyNewGamesListBean dailyNewGames;
     private DiscoverListBean.DataBean.WeeklyNewGamesListBean hotGames;
     private LinearLayoutManager linearLayoutManager;
@@ -84,15 +83,22 @@ public class Fragment0 extends BaseSearchFragment {
         init_2(view);
         init_3(view);
 
-        getListData_0();
+        //getData();
+        Log.d(TAG, "请求主界面数据=======initViewsAndEvents: ");
+    }
+
+    private void getData() {
+        getTypeData(0);
+        getTypeData(1);
+        getTypeData(2);
+        getTypeData(3);
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {//3
-        super.onActivityCreated(savedInstanceState);
-
+    public void onStart() {
+        super.onStart();
+        getData();
     }
-
 
     private void init0(View headView) {
         //如果Listview或者RecycleView显示不全，只有一个itme，请在ScrollView中添加  android:fillViewport="true"
@@ -114,18 +120,12 @@ public class Fragment0 extends BaseSearchFragment {
     private void init1(View headView) {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(context, 1);
         mGridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mClassifyAllRv = headView.findViewById(R.id.discover_head_rv_classify);//条目
-        mClassifyAllRv.setLayoutManager(mGridLayoutManager);
-        categroyAllList.add(new ClassifyTopBean("web界面开发", 101, ""));
-        categroyAllList.add(new ClassifyTopBean("办公采购清单", 103, ""));
-        categroyAllList.add(new ClassifyTopBean("APP新版界面开发", 153, ""));
-        categroyAllList.add(new ClassifyTopBean("周一会议提要", 104, ""));
-        categroyAllList.add(new ClassifyTopBean("周一会议提要", 104, ""));
-        categroyAllList.add(new ClassifyTopBean("周一会议提要", 104, ""));
-        categroyTopAdapter = new Fragment0_1_Adapter(context, categroyAllList);
-        mClassifyAllRv.setHasFixedSize(true);
-        mClassifyAllRv.setNestedScrollingEnabled(false);
-        mClassifyAllRv.setAdapter(categroyTopAdapter);
+        main1Rv = headView.findViewById(R.id.discover_head_rv_classify);//条目
+        main1Rv.setLayoutManager(mGridLayoutManager);
+        main1_Adapter = new Fragment0_1_Adapter(context, main1_List);
+        main1Rv.setHasFixedSize(true);
+        main1Rv.setNestedScrollingEnabled(false);
+        main1Rv.setAdapter(main1_Adapter);
     }
 
     //收起.展开
@@ -149,7 +149,7 @@ public class Fragment0 extends BaseSearchFragment {
                 context, LinearLayoutManager.VERTICAL, false);
         mFinishedRv.setLayoutManager(linearLayoutManager);
 
-        mTopicsAdapter = new Fragment0_1_Adapter(context, categroyAllList);
+        mTopicsAdapter = new Fragment0_1_Adapter(context, main1_List);
         mFinishedRv.setHasFixedSize(true);
         mFinishedRv.setNestedScrollingEnabled(false);
         mFinishedRv.setAdapter(mTopicsAdapter);
@@ -177,89 +177,80 @@ public class Fragment0 extends BaseSearchFragment {
                 context, LinearLayoutManager.VERTICAL, false);
         mDeletedRv.setLayoutManager(linearLayoutManager);
 
-        mTopicsAdapter = new Fragment0_1_Adapter(context, categroyAllList);
+        mTopicsAdapter = new Fragment0_1_Adapter(context, main1_List);
         mDeletedRv.setHasFixedSize(true);
         mDeletedRv.setNestedScrollingEnabled(false);
         mDeletedRv.setAdapter(mTopicsAdapter);
     }
 
 
-    private final static String TAG = Fragment0.class.getSimpleName();
+    private String TAG = Fragment0.class.getSimpleName();
+    private String PAGER = "/1/100";
 
     //请求数据
-    private void getListData_0() {
-        // 0表示默认状态，1表示已删除，2表示已收藏，3表示已完成',
-        String url = Constant.WEB_SITE1 + UrlConstant.URL_PROJECT_HOME+"/0/1/10";
+    private void getTypeData(final int type) {
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, "网络异常,请检查网络设置");
             return;
         }
-        //请求数据
-        Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
+        // 0 默认状态，1 已删除，2  收藏，3 已完成',
+        String url = Constant.WEB_SITE1 + UrlConstant.URL_PROJECT_HOME + "/" + type + PAGER;
+
+        Response.Listener<JsonResult<List<ProjItemInfo>>> successListener = new Response
+                .Listener<JsonResult<List<ProjItemInfo>>>() {
             @Override
-            public void onResponse(JsonResult result) {
-                Log.d(TAG, result.msg + ",请求主界面数据:" + result.data);
+            public void onResponse(JsonResult<List<ProjItemInfo>> result) {
                 if (result == null) {
                     ToastUtil.show(context, getString(R.string.server_exception));
                     return;
                 }
-                if (result.code == 0) {
-                    Log.d(TAG, "请求数据");
-
+                Log.d(TAG, result.msg + ",请求主界面数据:" + result.data);
+                if (result.code == 0 && context != null && result.data != null) {
+                    setData(result.data, type);
                 }
             }
         };
 
-        Request<JsonResult> versionRequest = new GsonRequest<JsonResult>(
-                Request.Method.GET, url,
-                successListener, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-                Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
-            }
-        }, new TypeToken<JsonResult>() {
-        }.getType()) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.Content_Type, Constant.application_json);
-                params.put(KeyConstant.Authorization, App.token);
-                params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
-                return params;
-            }
-        };
+        Request<JsonResult<List<ProjItemInfo>>> versionRequest = new
+                GsonRequest<JsonResult<List<ProjItemInfo>>>(
+                        Request.Method.GET, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult<List<ProjItemInfo>>>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
         App.requestQueue.add(versionRequest);
     }
 
     // 设置数据
-    public void setData(DiscoverListBean result) {
-        DiscoverListBean.DataBean data = result.getData();
-        if (data == null || context == null) {
-            return;
-        }
-        //----------------------- 每日最新 ------------------------------
-        dailyNewGames = data.getDailyNewGamesList();
-        if (null != dailyNewGames) {
-            mEverydayList = dailyNewGames.getList();
-            //每日新发现
-            mEverydayAdapter.setList(mEverydayList);
-            mEverydayRv.setAdapter(mEverydayAdapter);
+    public void setData(List<ProjItemInfo> dataList, int type) {
+        Log.d(TAG, "请求主界面数据 type==" + type);
+        switch (type) {
+            case 0:
+                main1_List = dataList;
+                main1_Adapter.setList(main1_List);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
         }
 
-        //近期最热
-        hotGames = data.getWeeklyNewGamesList();
-        if (null != hotGames) {
-            mHotRecentList = hotGames.getList();
-            //每日新发现
-            mHotRecentAdapter.setList(mHotRecentList);
-            mHotRecentRv.setAdapter(mHotRecentAdapter);
-        }
     }
-
-    private PageAction pageAction;
-    public static int PAGE_SIZE = 8;
-
 
     @Override
     public void onDestroy() {

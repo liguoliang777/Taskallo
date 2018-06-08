@@ -52,7 +52,7 @@ public class ProjectAddActivity extends BaseFgActivity {
     private List<ImgInfo> gameLogoList;
     private String projSubtitle;
     private String projName;
-    private String selectedImgId = "1";
+    private String selectedImgId = "4";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

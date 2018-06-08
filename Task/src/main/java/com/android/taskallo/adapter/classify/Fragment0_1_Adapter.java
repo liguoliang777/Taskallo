@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.taskallo.R;
-import com.android.taskallo.bean.ClassifyTopBean;
+import com.android.taskallo.bean.ProjItemInfo;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.project.view.ProjListActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -24,7 +24,7 @@ public class Fragment0_1_Adapter extends RecyclerView.Adapter<Fragment0_1_Adapte
 
     private final LayoutInflater mInflater;
     private Context context;
-    private List<ClassifyTopBean> list;
+    private List<ProjItemInfo> list;
 
     public interface OnItemClickLitener {
         void onItemClick(View view, int position, int text);
@@ -36,14 +36,14 @@ public class Fragment0_1_Adapter extends RecyclerView.Adapter<Fragment0_1_Adapte
         this.mOnItemClickLitener = mOnItemClickListener;
     }
 
-    public Fragment0_1_Adapter(Context context, List<ClassifyTopBean> list) {
+    public Fragment0_1_Adapter(Context context, List<ProjItemInfo> list) {
         super();
         this.context = context;
         this.list = list;
         mInflater = LayoutInflater.from(context);
     }
 
-    public void setList(List<ClassifyTopBean> list) {
+    public void setList(List<ProjItemInfo> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -58,20 +58,21 @@ public class Fragment0_1_Adapter extends RecyclerView.Adapter<Fragment0_1_Adapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        if (list == null) {
+        final ProjItemInfo categroyBean = list.get(position);
+
+        if (categroyBean == null) {
             return;
         }
-        final ClassifyTopBean categroyBean = list.get(position);
-        final String name = categroyBean.getName();
-
-        holder.tv_content.setText(name);
-        holder.iconIv.setImageURI("");
+        final String name = categroyBean.name;
+        holder.tv_content.setText(name == null ? "" : name);
+        holder.iconIv.setImageURI(categroyBean.projectImg);
         //为ItemView设置监听器
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProjListActivity.class);
-                intent.putExtra(KeyConstant.ID, categroyBean.getId() + "");//原生手柄 id
+                intent.putExtra(KeyConstant.ID, categroyBean.id + "");
+                intent.putExtra(KeyConstant.name, categroyBean.name);
                 context.startActivity(intent);
             }
         });
