@@ -220,7 +220,6 @@ public class ProjectAddActivity extends BaseFgActivity {
                                                     .setCornersRadius(10))
                                             .build();
                             picassoImageView.setHierarchy(hierarchy);
-                            picassoImageView.setLayoutParams(params);
                             picassoImageView.setScaleType(ImageView.ScaleType.CENTER);
                             picassoImageView.setLayoutParams(params);
                             picassoImageView.setImageURI(imgInfo.imgUrl);

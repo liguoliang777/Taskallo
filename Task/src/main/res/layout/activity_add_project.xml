@@ -19,6 +19,7 @@
         android:background="@color/white"
         android:hint="@string/enter_project_name"
         android:padding="@dimen/dm024"
+        android:clickable="true"
         android:singleLine="true"
         android:textColorHint="@color/cccccc"
         android:textCursorDrawable="@drawable/shape_cursor_color_main_color" />
