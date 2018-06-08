@@ -21,7 +21,7 @@
             android:background="@color/white"
             android:paddingLeft="@dimen/dm020"
             android:paddingTop="@dimen/dm030"
-            android:paddingBottom="@dimen/dm010"
+            android:paddingBottom="@dimen/dm020"
             android:scaleType="centerInside"
             android:text="星标看板" />
 

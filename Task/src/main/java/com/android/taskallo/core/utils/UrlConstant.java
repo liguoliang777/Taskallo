@@ -10,11 +10,13 @@ public class UrlConstant {
     public static final String URL_SEND_BINDING_CODE = "/user/sendBindingCode";
     public static final String URL_BINDING_EMAIL = "/user/bindingEmail";
     public static final String URL_ADD_PROJECT = "/project";
-    public static final String URL_IMG = "/img";
     public static final String URL_BINDING_PHONE_NUMBER = "/user/bindingPhoneNumber";
 
     //推荐头像地址开头
     public static final String RECOMMED_URL_START = "http://ngame.oss-cn-hangzhou.aliyuncs" +
             ".com/userRecommendAvatar/tuijian_touxiang_";
     public static final String URL_QUERY_NECESSARY= "/tools/queryAuxiliaryToolList";
+
+    public static final String URL_IMG = "/img";
+    public static final String URL_PROJECT_HOME = "/project/home";
 }

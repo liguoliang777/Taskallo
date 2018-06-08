@@ -6,20 +6,36 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.adapter.classify.Fragment0_0_Adapter;
 import com.android.taskallo.adapter.classify.Fragment0_1_Adapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
 import com.android.taskallo.bean.ClassifyTopBean;
+import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.PageAction;
+import com.android.taskallo.core.net.GsonRequest;
+import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.core.utils.NetUtil;
+import com.android.taskallo.core.utils.UrlConstant;
+import com.android.taskallo.util.ToastUtil;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
 import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverTopBean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 分类
@@ -67,6 +83,8 @@ public class Fragment0 extends BaseSearchFragment {
         init0(view);
         init_2(view);
         init_3(view);
+
+        getListData_0();
     }
 
     @Override
@@ -164,7 +182,55 @@ public class Fragment0 extends BaseSearchFragment {
         mDeletedRv.setNestedScrollingEnabled(false);
         mDeletedRv.setAdapter(mTopicsAdapter);
     }
+
+
     private final static String TAG = Fragment0.class.getSimpleName();
+
+    //请求数据
+    private void getListData_0() {
+        // 0表示默认状态，1表示已删除，2表示已收藏，3表示已完成',
+        String url = Constant.WEB_SITE_1 + UrlConstant.URL_PROJECT_HOME+"/0/1/10";
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            return;
+        }
+        //请求数据
+        Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                Log.d(TAG, result.msg + ",请求主界面数据:" + result.data);
+                if (result == null) {
+                    ToastUtil.show(context, getString(R.string.server_exception));
+                    return;
+                }
+                if (result.code == 0) {
+                    Log.d(TAG, "请求数据");
+
+                }
+            }
+        };
+
+        Request<JsonResult> versionRequest = new GsonRequest<JsonResult>(
+                Request.Method.GET, url,
+                successListener, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
+            }
+        }, new TypeToken<JsonResult>() {
+        }.getType()) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put(KeyConstant.Content_Type, Constant.application_json);
+                params.put(KeyConstant.Authorization, App.token);
+                params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                return params;
+            }
+        };
+        App.requestQueue.add(versionRequest);
+    }
 
     // 设置数据
     public void setData(DiscoverListBean result) {
