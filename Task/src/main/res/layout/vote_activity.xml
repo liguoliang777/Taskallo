@@ -9,7 +9,6 @@
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"
-        style="@style/MyCustomTabLayout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@android:color/white"
@@ -21,6 +20,5 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
         android:background="@color/white" />
 </LinearLayout>

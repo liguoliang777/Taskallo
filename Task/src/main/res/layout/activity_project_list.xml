@@ -37,13 +37,14 @@
             android:textSize="@dimen/title_size" />
 
         <ImageButton
-            android:id="@+id/proj_detail_top_more_back"
+            android:id="@+id/proj_detail_top_menu_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@null"
             android:maxLines="1"
+            android:onClick="onProjListTopMenuClick"
             android:paddingLeft="@dimen/dm020"
             android:paddingRight="@dimen/dm032"
             android:scaleType="centerInside"
@@ -54,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/proj_detail_top_more_back"
+            android:layout_toLeftOf="@id/proj_detail_top_menu_back"
             android:background="@null"
             android:paddingLeft="@dimen/dm020"
             android:paddingRight="@dimen/dm020"

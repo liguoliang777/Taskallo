@@ -17,6 +17,7 @@ import com.android.taskallo.bean.GameInfo;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.ImageUtil;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.project.Item.ItemView;
 import com.android.taskallo.project.Item.ItemViewCallback;
@@ -53,7 +54,7 @@ public class ProjListActivity extends BaseFgActivity {
         });
         mTitleBackBt.setText("项目名称");
 
-        mBoardView =(ItemView) findViewById(R.id.boardview);
+        mBoardView = (ItemView) findViewById(R.id.boardview);
         mBoardView.setCallback(new ItemViewCallback());
         mBoardView.setContext(context);
     }
@@ -166,5 +167,39 @@ public class ProjListActivity extends BaseFgActivity {
         }
     }
 
+    //菜单
+    public void onProjListTopMenuClick(View view) {
+        final Dialog dialog = new Dialog(context, R.style.Dialog_right_left);
+        dialog.setCanceledOnTouchOutside(true);
+        //填充对话框的布局
+        View inflate = LayoutInflater.from(this).inflate(R.layout.layout_proj_list_menu, null);
+
+        inflate.findViewById(R.id.proj_list_menu_dialog_1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        inflate.findViewById(R.id.proj_list_menu_dialog_empty_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        dialog.setContentView(inflate);//将布局设置给Dialog
+
+        setDialogWindow(dialog);
+    }
+
+    private void setDialogWindow(Dialog dialog) {
+        Window dialogWindow = dialog.getWindow();
+        dialogWindow.setGravity(Gravity.RIGHT);
+        WindowManager.LayoutParams params = dialogWindow.getAttributes();
+        //params.y = 20;  Dialog距离底部的距离
+        params.width = ImageUtil.getScreenWidth(context)-250;
+        params.height = ImageUtil.getScreenHeight(context);
+        dialogWindow.setAttributes(params);
+        dialog.show();
+    }
 
 }

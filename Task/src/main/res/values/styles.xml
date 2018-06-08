@@ -119,19 +119,6 @@
         <item name="android:windowEnterAnimation">@anim/actionsheet_dialog_in</item>
         <item name="android:windowExitAnimation">@anim/actionsheet_dialog_out</item>
     </style>
-    <!--标签tab 属性-->
-    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
-        <item name="textAllCaps">false</item>
-    </style>
-
-    <!--排行 一级标签tab 的属性-->
-    <style name="Rank_Fragment_TabLayout" parent="Widget.Design.TabLayout">
-        <item name="textAllCaps">true</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">@dimen/dm024</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:textStyle">bold</item>
-    </style>
 
     <!--主界面未绑定对话框-->
     <style name="Dialog_From_Bottom_Style" parent="@android:style/Theme.Holo.Dialog.MinWidth">
@@ -152,6 +139,18 @@
         <item name="android:windowAnimationStyle">@style/Animation_Bottom</item>
     </style>
 
+    <!--主界面未绑定对话框-->
+    <style name="Dialog_right_left" parent="@android:style/Theme.Holo.Dialog.MinWidth">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparent_light2</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:colorBackground">@color/transparent_light2</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+
+        <item name="android:windowAnimationStyle">@style/activity_right_in_style</item> <!-- 进入/退出动画 -->
+    </style>
+
     <style name="Dialog_add_card" parent="@android:style/Theme.Holo.Light.Dialog">
         <item name="android:windowIsFloating">true</item><!-- 是否浮现在activity之上 -->
         <item name="android:windowNoTitle">true</item><!-- 无标题 -->
@@ -163,7 +162,7 @@
         <item name="android:windowExitAnimation">@anim/anim_bottomdialog_out</item>
     </style>
 
-    <style name="activity_left_in_style" parent="@android:style/Animation">
+    <style name="activity_right_in_style" parent="@android:style/Animation">
         <item name="android:windowEnterAnimation">@anim/slide_in_anim</item>
         <item name="android:windowExitAnimation">@anim/slide_out_right</item>
     </style>

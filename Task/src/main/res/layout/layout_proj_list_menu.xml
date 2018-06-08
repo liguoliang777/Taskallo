@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/red"
+    android:orientation="vertical">
+
+    <Button
+        android:background="@drawable/selector_item_bg"
+        android:id="@+id/proj_list_menu_dialog_1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/diolg_bottom_height"
+        android:gravity="center"
+        android:text="归档" />
+
+    <include layout="@layout/layout_line_1px_f0f0f0"></include>
+
+    <Button
+        android:id="@+id/proj_list_menu__dialog2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/diolg_bottom_height"
+        android:background="@drawable/selector_item_bg"
+        android:gravity="center"
+        android:text="移动" />
+    <Button
+        android:id="@+id/proj_list_menu__dialog3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/diolg_bottom_height"
+        android:background="@drawable/selector_item_bg"
+        android:gravity="center"
+        android:text="复制" />
+
+    <include layout="@layout/layout_line_2px_f5f5f5" />
+
+
+    <View
+        android:id="@+id/proj_list_menu_dialog_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/font_green"
+        android:layout_weight="1"></View>
+</LinearLayout>

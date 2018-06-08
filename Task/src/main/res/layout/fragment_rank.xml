@@ -8,7 +8,6 @@
     <android.support.design.widget.TabLayout
         xmlns:tabs="http://schemas.android.com/apk/res-auto"
         android:id="@+id/rank_tablayout"
-        style="@style/Rank_Fragment_TabLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dm074"
         android:background="@color/bg_f2"
