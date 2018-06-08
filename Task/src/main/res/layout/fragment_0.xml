@@ -13,15 +13,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:background="@color/e5e5e5" />
+
         <TextView
             android:id="@+id/discover_tviv_left_title_tv1"
             style="@style/me_fragment_0_title_text_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:paddingBottom="@dimen/dm025"
             android:paddingLeft="@dimen/dm020"
-            android:paddingTop="@dimen/dm030"
-            android:paddingBottom="@dimen/dm020"
+            android:paddingTop="@dimen/dm020"
             android:scaleType="centerInside"
             android:text="星标看板" />
 
@@ -34,11 +39,20 @@
             android:paddingLeft="@dimen/dm020"
             android:scrollbars="none" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:background="@color/e5e5e5" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:layout_marginTop="@dimen/dm040"
+            android:background="@color/e5e5e5" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dm040"
             android:background="@color/white"
             android:descendantFocusability="blocksDescendants"
             android:orientation="vertical"
@@ -52,37 +66,46 @@
                 android:layout_marginLeft="@dimen/dm020"
                 android:text="个人看板" />
 
-          <!--  <TextView
-                android:id="@+id/everyday_more_tv0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/discover_tviv_left_title_tv0"
-                android:layout_alignParentRight="true"
-                android:paddingBottom="@dimen/dm008"
-                android:paddingLeft="@dimen/dm020"
-                android:paddingRight="@dimen/dm020"
-                android:paddingTop="@dimen/dm004"
-                android:text="@string/see_more"
-                android:textColor="@color/see_more"
-                android:textSize="@dimen/dm020" />-->
+            <!--  <TextView
+                  android:id="@+id/everyday_more_tv0"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignBottom="@id/discover_tviv_left_title_tv0"
+                  android:layout_alignParentRight="true"
+                  android:paddingBottom="@dimen/dm008"
+                  android:paddingLeft="@dimen/dm020"
+                  android:paddingRight="@dimen/dm020"
+                  android:paddingTop="@dimen/dm004"
+                  android:text="@string/see_more"
+                  android:textColor="@color/see_more"
+                  android:textSize="@dimen/dm020" />-->
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/discover_head_rv_classify"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/dm020"
-                android:paddingBottom="@dimen/dm010"
                 android:layout_below="@id/discover_tviv_left_title_tv0"
                 android:layout_centerVertical="true"
+                android:paddingBottom="@dimen/dm010"
+                android:paddingTop="@dimen/dm020"
                 android:scrollbars="none" />
 
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:background="@color/e5e5e5" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:layout_marginTop="@dimen/dm040"
+            android:background="@color/e5e5e5" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dm040"
             android:background="@color/white"
             android:orientation="vertical"
             android:paddingTop="@dimen/dm020">
@@ -110,19 +133,23 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_subject"
-                android:paddingBottom="@dimen/dm010"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/discover_tviv_left_title_tv3"
                 android:layout_centerVertical="true"
-                android:scrollbars="none" />
+                android:paddingBottom="@dimen/dm010"
+                android:scrollbars="none"
+                android:visibility="gone" />
         </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:background="@color/e5e5e5" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dm002"
-            android:layout_marginBottom="@dimen/dm030"
             android:background="@color/white"
             android:orientation="vertical"
             android:paddingTop="@dimen/dm020">
@@ -150,14 +177,20 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_deleted_board"
-                android:paddingBottom="@dimen/dm010"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/fragment_0_deleted_open_close_bt"
                 android:layout_centerVertical="true"
-                android:scrollbars="none" />
+                android:paddingBottom="@dimen/dm010"
+                android:scrollbars="none"
+                android:visibility="gone" />
         </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm002"
+            android:layout_marginBottom="@dimen/dm030"
+            android:background="@color/e5e5e5" />
     </LinearLayout>
 
 </com.android.taskallo.view.PullScrollView>
