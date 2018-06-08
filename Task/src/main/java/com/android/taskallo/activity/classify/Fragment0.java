@@ -15,13 +15,8 @@ import com.android.taskallo.adapter.classify.Fragment0_1_Adapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
 import com.android.taskallo.bean.ClassifyTopBean;
 import com.android.taskallo.bean.PageAction;
-import com.android.taskallo.core.utils.NetUtil;
-import com.android.taskallo.util.ToastUtil;
 import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverTopBean;
-import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBody;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.main.DiscoverClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +67,6 @@ public class Fragment0 extends BaseSearchFragment {
         init0(view);
         init_2(view);
         init_3(view);
-
-        getData();
     }
 
     @Override
@@ -171,44 +164,7 @@ public class Fragment0 extends BaseSearchFragment {
         mDeletedRv.setNestedScrollingEnabled(false);
         mDeletedRv.setAdapter(mTopicsAdapter);
     }
-
-
     private final static String TAG = Fragment0.class.getSimpleName();
-
-    //请求数据
-    private void getData() {
-        if (!NetUtil.isNetworkConnected(context)) {
-            ToastUtil.show(context, "网络异常,请检查网络设置");
-            return;
-        }
-        //请求数据
-        RecommendListBody bodyBean = new RecommendListBody();
-        new DiscoverClient(context, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<DiscoverListBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-//                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                       /* pullListView.onPullUpRefreshComplete();
-                        pullListView.onPullDownRefreshComplete();*/
-                        ToastUtil.show(context, getString(R.string.server_exception));
-                    }
-
-                    @Override
-                    public void onNext(DiscoverListBean result) {
-                     /*   pullListView.onPullUpRefreshComplete();
-                        pullListView.onPullDownRefreshComplete();
-                        pullListView.setLastUpdatedLabel(new Date().toLocaleString());*/
-                        if (result != null && result.getCode() == 0) {
-                            setData(result);
-                        } else {
-                            //请求失败
-                            android.util.Log.d(TAG, "请求失败");
-                        }
-
-                    }
-                });
-    }
 
     // 设置数据
     public void setData(DiscoverListBean result) {

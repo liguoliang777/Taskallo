@@ -18,6 +18,7 @@ public class KeyConstant {
     public static final String TYPE = "type";//注册渠道    （1手机，2QQ，3微信，4新浪微博）
     public static final String loginMode = "loginMode";//注册渠道    （1手机，2QQ，3微信，4新浪微博）
     public static final String APP_TYPE_ID = "appTypeId";//平台类型（0表示安卓)
+    public static final String appType = "appType";//平台类型（0表示安卓)
     public static final String head_Portrait = "headPortrait";
     public static final String USER_CODE = "userCode";
     public static final String PICTURE_STR = "pictureStr";
@@ -58,12 +59,14 @@ public class KeyConstant {
     public static final int EXTRA_NECESSARY = 1;
 
     public static final String authType = "authType";
-    public static final String email="email";
+    public static final String email = "email";
 
-    public static final String name="name";
-    public static final String desc="desc";
-    public static final String imgId="imgId";
-    public static final String privacy="privacy";
-    public static final String cardId="cardId";
-    public static final String cardTitle="cardTitle";
+    public static final String name = "name";
+    public static final String desc = "desc";
+    public static final String imgId = "imgId";
+    public static final String privacy = "privacy";
+    public static final String cardId = "cardId";
+    public static final String cardTitle = "cardTitle";
+    public static final String Authorization = "Authorization";
+    public static final String Content_Type = "Content-Type";
 }

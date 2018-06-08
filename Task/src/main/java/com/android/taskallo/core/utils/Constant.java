@@ -103,4 +103,5 @@ public class Constant {
 
     public static final String FILE_NAME_SD_CRAD_APP_PKGNAME = "file_name_sd_crad_app_pkgname";
     public static final String CONFIG_USER_EMAIL = "config_user_email";
+    public static final String application_json= "application/json";
 }

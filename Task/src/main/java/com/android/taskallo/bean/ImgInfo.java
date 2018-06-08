@@ -8,8 +8,8 @@ import java.io.Serializable;
  */
 public class ImgInfo implements Serializable {
 
-    public long id;
+    public int id;
     public String imgUrl;
-    public String imgSize;
+    public long imgSize;
 
 }

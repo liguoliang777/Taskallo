@@ -1,10 +1,9 @@
 package com.android.taskallo.base.activity;
 
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.core.utils.NetUtil;
 import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.util.ToastUtil;
@@ -37,7 +37,6 @@ import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -180,9 +179,6 @@ public class ProjectAddActivity extends BaseFgActivity {
         }
     };
 
-    /**
-     * 上传资料
-     */
     public void getImgList() {
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup
                 .LayoutParams.WRAP_CONTENT, ViewGroup
@@ -191,68 +187,67 @@ public class ProjectAddActivity extends BaseFgActivity {
         params.height = getResources().getDimensionPixelSize(R.dimen.dm068);
 
 
-
         int dmMargin = getResources().getDimensionPixelSize(R.dimen.dm008);
         params.setMargins(dmMargin, dmMargin, dmMargin, dmMargin);
 
-        final String url = Constant.WEB_SITE + UrlConstant.URL_ADD_PROJECT_IMG;
-        final Response.Listener<JsonResult<List<ImgInfo>>> successListener = new Response
+        //请求数据
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            return;
+        }
+        String url = Constant.WEB_SITE_1 + UrlConstant.URL_IMG;
+        //请求数据
+        Response.Listener<JsonResult<List<ImgInfo>>> successListener = new Response
                 .Listener<JsonResult<List<ImgInfo>>>() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onResponse(JsonResult<List<ImgInfo>> result) {
                 if (result == null || result.code != 0) {
                     ToastUtil.show(context, getString(R.string.get_img_faild));
-                    // return;
+                    int code = result.code;
+                    return;
                 }
 
-                //gameLogoList = result.data;
-                gameLogoList = new ArrayList<>();
-                gameLogoList.add(new ImgInfo());
-                gameLogoList.add(new ImgInfo());
-                gameLogoList.add(new ImgInfo());
-                gameLogoList.add(new ImgInfo());
-                gameLogoList.add(new ImgInfo());
-                gameLogoList.add(new ImgInfo());
-                gameLogoList.add(new ImgInfo());
-                gameLogoList.add(new ImgInfo());
+                gameLogoList = result.data;
                 if (gameLogoList != null) {
                     for (int i = 0; i < gameLogoList.size(); i++) {
                         ImgInfo imgInfo = gameLogoList.get(i);
                         if (imgInfo != null) {
                             SimpleDraweeView picassoImageView = new SimpleDraweeView(context);
-                            final GenericDraweeHierarchy hierarchy = GenericDraweeHierarchyBuilder.newInstance(getResources())
-                                    //设置圆形圆角参数
-                                    .setRoundingParams(new RoundingParams().setCornersRadius(10)).build();
+                            final GenericDraweeHierarchy hierarchy =
+                                    GenericDraweeHierarchyBuilder.newInstance(getResources())
+                                            //设置圆形圆角参数
+                                            .setRoundingParams(new RoundingParams()
+                                                    .setCornersRadius(10))
+                                            .build();
                             picassoImageView.setHierarchy(hierarchy);
                             picassoImageView.setLayoutParams(params);
                             picassoImageView.setScaleType(ImageView.ScaleType.CENTER);
                             picassoImageView.setLayoutParams(params);
-                            //picassoImageView.setImageURI(imgInfo.imgUrl);
-                            picassoImageView.setImageURI("http://res" +
-                                    ".youzi4.cc/photo_files/news/20180221/d6502340-e340-3b6d-f75d" +
-                                    "-01c51e2ef108.jpg");
+                            picassoImageView.setImageURI(imgInfo.imgUrl);
                             imgLaout.addView(picassoImageView);
                         }
                     }
                 }
+
             }
         };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-            }
-        };
-
         Request<JsonResult<List<ImgInfo>>> versionRequest = new
-                GsonRequest<JsonResult<List<ImgInfo>>>(Request.Method.POST, url,
-                        successListener, errorListener, new TypeToken<JsonResult<List<ImgInfo>>>() {
+                GsonRequest<JsonResult<List<ImgInfo>>>(
+                        Request.Method.GET, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult<List<ImgInfo>>>() {
                 }.getType()) {
                     @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        return null;
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
                     }
                 };
         App.requestQueue.add(versionRequest);
