@@ -38,5 +38,6 @@
         android:layout_height="@dimen/dm036"
         android:layout_marginRight="@dimen/dm020"
         android:scaleType="centerInside"
+        android:visibility="invisible"
         android:src="@drawable/ic_big_star_yellow" />
 </LinearLayout>
