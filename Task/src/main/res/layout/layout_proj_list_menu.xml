@@ -6,12 +6,12 @@
     android:orientation="vertical">
 
     <Button
-        android:background="@drawable/selector_item_bg"
-        android:id="@+id/proj_list_menu_dialog_1"
+        android:id="@+id/proj_list_menu_dialog_favorite_bt"
         android:layout_width="match_parent"
         android:layout_height="@dimen/diolg_bottom_height"
+        android:background="@drawable/selector_item_bg"
         android:gravity="center"
-        android:text="归档" />
+        android:text="星标收藏" />
 
     <include layout="@layout/layout_line_1px_f0f0f0"></include>
 
@@ -22,6 +22,7 @@
         android:background="@drawable/selector_item_bg"
         android:gravity="center"
         android:text="移动" />
+
     <Button
         android:id="@+id/proj_list_menu__dialog3"
         android:layout_width="match_parent"
@@ -37,6 +38,6 @@
         android:id="@+id/proj_list_menu_dialog_empty_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/font_green"
-        android:layout_weight="1"></View>
+        android:layout_weight="1"
+        android:background="@color/font_green"></View>
 </LinearLayout>

@@ -37,6 +37,7 @@ public class ProjListActivity extends BaseFgActivity {
     private ProjListActivity context;
     private Button mTitleBackBt;
     private ItemView mBoardView;
+    private String mProjectName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class ProjListActivity extends BaseFgActivity {
         initStatusBar();
         setContentView(R.layout.activity_project_list);
         mProjectId = getIntent().getStringExtra(KeyConstant.ID);
+        mProjectName = getIntent().getStringExtra(KeyConstant.name);
         context = this;
         mTitleBackBt = (Button) findViewById(R.id.proj_detail_title_back);
         mTitleBackBt.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +54,7 @@ public class ProjListActivity extends BaseFgActivity {
                 finish();
             }
         });
-        mTitleBackBt.setText("项目名称");
+        mTitleBackBt.setText(mProjectName);
 
         mBoardView = (ItemView) findViewById(R.id.boardview);
         mBoardView.setCallback(new ItemViewCallback());
@@ -98,40 +100,6 @@ public class ProjListActivity extends BaseFgActivity {
     }
 
 
-    //反馈
-    public void showFeedbackDialog() {
-        final Dialog dialog = new Dialog(this, R.style.Dialog_From_Bottom_Style);
-        //填充对话框的布局
-        View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_feedback, null);
-
-        View.OnClickListener mDialogClickLstener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-                int id = v.getId();
-                if (id == R.id.choose_01_tv) {
-
-                } else if (id == R.id.choose_02_tv) {
-
-                } else {
-                    return;
-                }
-            }
-        };
-        inflate.findViewById(R.id.choose_01_tv).setOnClickListener(mDialogClickLstener);
-        inflate.findViewById(R.id.choose_02_tv).setOnClickListener(mDialogClickLstener);
-        inflate.findViewById(R.id.choose_cancel_tv).setOnClickListener(mDialogClickLstener);
-
-        dialog.setContentView(inflate);//将布局设置给Dialog
-        Window dialogWindow = dialog.getWindow(); //获取当前Activity所在的窗体
-        dialogWindow.setGravity(Gravity.BOTTOM);//设置Dialog从窗体底部弹出
-        WindowManager.LayoutParams params = dialogWindow.getAttributes();   //获得窗体的属性
-        //params.y = 20;  Dialog距离底部的距离
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;//设置Dialog距离底部的距离
-        dialogWindow.setAttributes(params); //将属性设置给窗体
-        dialog.show();//显示对话框
-    }
-
     public void showPercentDialog() {
         final Dialog mUnboundDialog = new Dialog(context);
         mUnboundDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -167,25 +135,31 @@ public class ProjListActivity extends BaseFgActivity {
         }
     }
 
-    //菜单
+    //todo 菜单
     public void onProjListTopMenuClick(View view) {
         final Dialog dialog = new Dialog(context, R.style.Dialog_right_left);
         dialog.setCanceledOnTouchOutside(true);
         //填充对话框的布局
         View inflate = LayoutInflater.from(this).inflate(R.layout.layout_proj_list_menu, null);
 
-        inflate.findViewById(R.id.proj_list_menu_dialog_1).setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener mDialogClickLstener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.cancel();
+                switch (v.getId()) {
+                    case R.id.proj_list_menu_dialog_favorite_bt:
+                        dialog.cancel();
+                        break;
+                    case R.id.proj_list_menu_dialog_empty_view:
+                        dialog.cancel();
+                        break;
+                }
             }
-        });
-        inflate.findViewById(R.id.proj_list_menu_dialog_empty_view).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
+        };
+        inflate.findViewById(R.id.proj_list_menu_dialog_favorite_bt).setOnClickListener
+                (mDialogClickLstener);
+        inflate.findViewById(R.id.proj_list_menu_dialog_empty_view).setOnClickListener
+                (mDialogClickLstener);
         dialog.setContentView(inflate);//将布局设置给Dialog
 
         setDialogWindow(dialog);
@@ -196,7 +170,7 @@ public class ProjListActivity extends BaseFgActivity {
         dialogWindow.setGravity(Gravity.RIGHT);
         WindowManager.LayoutParams params = dialogWindow.getAttributes();
         //params.y = 20;  Dialog距离底部的距离
-        params.width = ImageUtil.getScreenWidth(context)-250;
+        params.width = ImageUtil.getScreenWidth(context) - 250;
         params.height = ImageUtil.getScreenHeight(context);
         dialogWindow.setAttributes(params);
         dialog.show();
