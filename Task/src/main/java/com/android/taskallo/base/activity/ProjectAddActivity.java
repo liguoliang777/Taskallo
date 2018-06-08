@@ -56,6 +56,8 @@ public class ProjectAddActivity extends BaseFgActivity {
     private String mImgId = "1";
     private GridLayout imgLaout;
     private List<ImgInfo> gameLogoList;
+    private String projSubtitle;
+    private String projName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,33 +113,38 @@ public class ProjectAddActivity extends BaseFgActivity {
     }
 
     /**
-     * 上传资料
+     * 上传
      */
     public void postAddProjectData() {
-        final String projName = mProjNameTv.getText().toString();
-        final String projSubtitle = mProjSubtitleTv.getText().toString();
+        projName = mProjNameTv.getText().toString();
+        projSubtitle = mProjSubtitleTv.getText().toString();
         if (TextUtil.isEmpty(projName)) {
             ToastUtil.show(context, getString(R.string.proj_cannot_empty));
             return;
         }
-        String url = Constant.WEB_SITE + UrlConstant.URL_ADD_PROJECT;
+        if (TextUtil.isEmpty(projSubtitle)) {
+            projSubtitle = ",";
+        }
+        String url = Constant.WEB_SITE1 + UrlConstant.URL_ADD_PROJECT;
         Response.Listener<JsonResult> successListener = new Response
                 .Listener<JsonResult>() {
             @Override
             public void onResponse(JsonResult result) {
+                Log.d(TAG, result.code + "创建项目:" + result.msg);
                 if (result == null || result.code != 0) {
                     ToastUtil.show(context, getString(R.string.create_proj_faild));
                     return;
                 }
                 ToastUtil.show(context, getString(R.string.create_proj_success));
                 finish();
+                //项目列表界面.
             }
         };
 
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
+                Log.d(TAG, " 创建项目: " + volleyError.getMessage());
             }
         };
 
@@ -148,10 +155,19 @@ public class ProjectAddActivity extends BaseFgActivity {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
-                        params.put(KeyConstant.name, projName);
                         params.put(KeyConstant.desc, projSubtitle);
+                        params.put(KeyConstant.name, projName);
                         params.put(KeyConstant.imgId, mImgId);
                         params.put(KeyConstant.privacy, PUBLIC_PRIVATE ? "0" : "1");
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
                         return params;
                     }
                 };
@@ -163,7 +179,6 @@ public class ProjectAddActivity extends BaseFgActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.title_right_bt:
-                    //保存项目
                     postAddProjectData();
                     break;
                 case R.id.left_bt:
@@ -195,7 +210,7 @@ public class ProjectAddActivity extends BaseFgActivity {
             ToastUtil.show(context, "网络异常,请检查网络设置");
             return;
         }
-        String url = Constant.WEB_SITE_1 + UrlConstant.URL_IMG;
+        String url = Constant.WEB_SITE1 + UrlConstant.URL_IMG;
         //请求数据
         Response.Listener<JsonResult<List<ImgInfo>>> successListener = new Response
                 .Listener<JsonResult<List<ImgInfo>>>() {

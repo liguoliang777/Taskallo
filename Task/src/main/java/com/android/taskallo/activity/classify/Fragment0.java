@@ -189,7 +189,7 @@ public class Fragment0 extends BaseSearchFragment {
     //请求数据
     private void getListData_0() {
         // 0表示默认状态，1表示已删除，2表示已收藏，3表示已完成',
-        String url = Constant.WEB_SITE_1 + UrlConstant.URL_PROJECT_HOME+"/0/1/10";
+        String url = Constant.WEB_SITE1 + UrlConstant.URL_PROJECT_HOME+"/0/1/10";
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, "网络异常,请检查网络设置");
             return;

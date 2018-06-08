@@ -23,10 +23,9 @@ package com.android.taskallo.core.utils;
  */
 public class Constant {
 
-    public static final String WEB_SITE = "http://192.168.1.232:9800";   //------测试
-
-
-    public static final String WEB_SITE_1 = "http://192.168.1.232:9807";   //------测试
+    //测试服务器
+    public static final String WEB_SITE = "http://192.168.1.232:9800";//用户
+    public static final String WEB_SITE1 = "http://192.168.1.232:9807"; //项目
 
     //public static final String WEB_SITE = "http://192.168.1.232:9800";    //------正式
 
