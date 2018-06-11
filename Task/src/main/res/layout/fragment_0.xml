@@ -13,42 +13,47 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dm002"
-            android:background="@color/e5e5e5" />
-
-        <TextView
-            android:id="@+id/discover_tviv_left_title_tv1"
-            style="@style/me_fragment_0_title_text_style"
+        <LinearLayout
+            android:id="@+id/fragment0_layout_0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingBottom="@dimen/dm025"
-            android:paddingLeft="@dimen/dm020"
-            android:paddingTop="@dimen/dm020"
-            android:scaleType="centerInside"
-            android:text="星标看板" />
+            android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/everyday_discover_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:minHeight="@dimen/dm180"
-            android:paddingLeft="@dimen/dm020"
-            android:scrollbars="none" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dm002"
+                android:background="@color/e5e5e5" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dm002"
-            android:background="@color/e5e5e5" />
+            <TextView
+                style="@style/me_fragment_0_title_text_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dm025"
+                android:paddingLeft="@dimen/dm020"
+                android:paddingTop="@dimen/dm020"
+                android:scaleType="centerInside"
+                android:text="星标看板" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dm002"
-            android:layout_marginTop="@dimen/dm040"
-            android:background="@color/e5e5e5" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fragment0_rv_0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/dm020"
+                android:scrollbars="none" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dm002"
+                android:background="@color/e5e5e5" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dm002"
+                android:layout_marginTop="@dimen/dm040"
+                android:background="@color/e5e5e5" />
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -68,7 +73,7 @@
                 android:text="个人看板" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/discover_head_rv_classify"
+                android:id="@+id/fragment0_rv_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/discover_tviv_left_title_tv0"

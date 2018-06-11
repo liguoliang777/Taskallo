@@ -20,6 +20,8 @@ import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.ImageUtil;
 import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.core.utils.NetUtil;
+import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.project.Item.ItemView;
 import com.android.taskallo.project.Item.ItemViewCallback;
 import com.android.taskallo.util.ToastUtil;
@@ -46,7 +48,6 @@ public class ProjListActivity extends BaseFgActivity {
         initStatusBar();
         setContentView(R.layout.activity_project_list);
         mProjectId = getIntent().getStringExtra(KeyConstant.ID);
-        Log.d(TAG, "菜单:" + mProjectId);
         mProjectName = getIntent().getStringExtra(KeyConstant.name);
         context = this;
         mTitleBackBt = (Button) findViewById(R.id.proj_detail_title_back);
@@ -147,10 +148,9 @@ public class ProjListActivity extends BaseFgActivity {
         View.OnClickListener mDialogClickLstener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.cancel();
                 switch (v.getId()) {
                     case R.id.proj_list_menu_dialog_favorite_bt:
-                        dialog.cancel();
+                        favoriteProj(dialog);
                         break;
                     case R.id.proj_list_menu_dialog_empty_view:
                         dialog.cancel();
@@ -165,6 +165,60 @@ public class ProjListActivity extends BaseFgActivity {
         dialog.setContentView(inflate);//将布局设置给Dialog
 
         setDialogWindow(dialog);
+    }
+
+    //请求数据
+    private void favoriteProj(final Dialog dialog) {
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            return;
+        }
+        // 0 默认状态，1 已删除，2  收藏，3 已完成
+        String url = Constant.WEB_SITE1 + UrlConstant.url_project_favorite + "/" + mProjectId;
+
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null) {
+                    ToastUtil.show(context, getString(R.string.server_exception));
+                    return;
+                }
+                Log.d(TAG, result.msg + ",请求主界面数据:" + result.data);
+                if (result.code == 0 && result.data != null) {
+                    dialog.cancel();
+                }
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(
+                        Request.Method.PUT, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("ID", mProjectId);
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 
     private void setDialogWindow(Dialog dialog) {

@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.taskallo.App;
@@ -57,6 +58,7 @@ public class Fragment0 extends BaseSearchFragment {
     private DiscoverListBean.DataBean.WeeklyNewGamesListBean hotGames;
     private LinearLayoutManager linearLayoutManager;
     private TextView mDeletedOpenClosedBt, mFinishedOpenClosedBt;
+    private LinearLayout layout0;
 
     public Fragment0() {
         android.util.Log.d(TAG, "DiscoverFragment: ()");
@@ -99,7 +101,8 @@ public class Fragment0 extends BaseSearchFragment {
 
     private void init0(View headView) {
         //如果Listview或者RecycleView显示不全，只有一个itme，请在ScrollView中添加  android:fillViewport="true"
-        main0Rv = headView.findViewById(R.id.everyday_discover_recyclerview);
+        layout0 = headView.findViewById(R.id.fragment0_layout_0);
+        main0Rv = headView.findViewById(R.id.fragment0_rv_0);
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(context, 2);
         mGridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         main0Rv.setLayoutManager(mGridLayoutManager);
@@ -114,7 +117,7 @@ public class Fragment0 extends BaseSearchFragment {
     private void init1(View headView) {
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(context, 1);
         mGridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        main1Rv = headView.findViewById(R.id.discover_head_rv_classify);//条目
+        main1Rv = headView.findViewById(R.id.fragment0_rv_1);//条目
         main1Rv.setLayoutManager(mGridLayoutManager);
         main1_Adapter = new Fragment0_1_Adapter(context, main1_List);
         main1Rv.setHasFixedSize(true);
@@ -187,7 +190,7 @@ public class Fragment0 extends BaseSearchFragment {
             ToastUtil.show(context, "网络异常,请检查网络设置");
             return;
         }
-        // 0 默认状态，1 已删除，2  收藏，3 已完成',
+        // 0 默认状态，1 已删除，2  收藏，3 已完成
         String url = Constant.WEB_SITE1 + UrlConstant.URL_PROJECT_HOME + "/" + type + PAGER;
 
         Response.Listener<JsonResult<List<ProjItemInfo>>> successListener = new Response
@@ -238,7 +241,14 @@ public class Fragment0 extends BaseSearchFragment {
                 break;
             case 1:
                 break;
-            case 2:
+            case 2://收藏,星标
+                if (dataList == null || dataList.size() == 0) {
+                    layout0.setVisibility(View.GONE);
+                    return;
+                }
+                layout0.setVisibility(View.VISIBLE);
+                main0_List = dataList;
+                main0_Adapter.setList(main1_List);
                 break;
             case 3:
                 break;
