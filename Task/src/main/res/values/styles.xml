@@ -23,14 +23,11 @@
 
     <!-- 星形评分空间样式 -->
     <style name="RatingBarSmall" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/rating_bar_small</item>
+        <item name="android:progressDrawable">@drawable/ic_star_small_normal</item>
         <item name="android:minHeight">13dp</item>
         <item name="android:maxHeight">30dp</item>
     </style>
 
-    <style name="RatingBarBig" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/rating_bar_big</item>
-    </style>
 
     <!--<style name="CommentDetailRatingCount">-->
     <!--<item name="android:progressDrawable">@drawable/shape_circle_blue_in_white</item>-->

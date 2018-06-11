@@ -39,5 +39,5 @@
         android:layout_marginRight="@dimen/dm020"
         android:scaleType="centerInside"
         android:visibility="invisible"
-        android:src="@drawable/ic_big_star_yellow" />
+        android:src="@drawable/ic_star_small_normal" />
 </LinearLayout>
