@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class ProjItemInfo implements Serializable {
 
-    public long id;
+    public String projectId;
     public String projectImg;
     public long updateTime;
     public Object listItemVOList;

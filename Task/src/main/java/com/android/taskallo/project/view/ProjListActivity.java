@@ -2,6 +2,7 @@ package com.android.taskallo.project.view;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,7 @@ public class ProjListActivity extends BaseFgActivity {
         initStatusBar();
         setContentView(R.layout.activity_project_list);
         mProjectId = getIntent().getStringExtra(KeyConstant.ID);
+        Log.d(TAG, "菜单:" + mProjectId);
         mProjectName = getIntent().getStringExtra(KeyConstant.name);
         context = this;
         mTitleBackBt = (Button) findViewById(R.id.proj_detail_title_back);
