@@ -201,7 +201,6 @@ public class Fragment0 extends BaseSearchFragment {
                     ToastUtil.show(context, getString(R.string.server_exception));
                     return;
                 }
-                Log.d(TAG, result.msg + ",请求主界面数据:" + result.data);
                 if (result.code == 0 && context != null && result.data != null) {
                     setData(result.data, type);
                 }
@@ -231,9 +230,9 @@ public class Fragment0 extends BaseSearchFragment {
         App.requestQueue.add(versionRequest);
     }
 
-    // 设置数据
+    // 0 默认状态，1 已删除，2  收藏，3 已完成
     public void setData(List<ProjItemInfo> dataList, int type) {
-        Log.d(TAG, "请求主界面数据 type==" + type);
+        Log.d(TAG, type+"请求,类型:" +dataList.size() );
         switch (type) {
             case 0:
                 main1_List = dataList;
@@ -248,7 +247,7 @@ public class Fragment0 extends BaseSearchFragment {
                 }
                 layout0.setVisibility(View.VISIBLE);
                 main0_List = dataList;
-                main0_Adapter.setList(main1_List);
+                main0_Adapter.setList(main0_List);
                 break;
             case 3:
                 break;
