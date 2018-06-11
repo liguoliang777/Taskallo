@@ -3,6 +3,7 @@ package com.android.taskallo.project.Item;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -14,22 +15,26 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.android.taskallo.R;
 import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.project.view.ProjListActivity;
-import com.android.taskallo.util.ToastUtil;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
 
+    private int dm_margin_left;
     ProjListActivity context;
     private LayoutInflater from;
 
     public ItemAdapter(Context context) {
+        dm_margin_left = context.getResources().
+                getDimensionPixelOffset(R.dimen.dm_200);
         from = LayoutInflater.from(context);
     }
 
@@ -51,7 +56,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         holder.recyclerView.setLayoutManager(new ItemLayoutManager(holder.itemView.getContext()));
 
-        RecyclerView.Adapter adapter = new ItemItemAdapter(context,position, 10);
+        RecyclerView.Adapter adapter = new ItemItemAdapter(context, position, 10);
         holder.recyclerView.setAdapter(adapter);
         holder.mItemAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,9 +73,44 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         holder.mMenuBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtil.show(context,"点击");
+                showPopWindow(view);
             }
         });
+
+    }
+
+    Button listCopyListBt;
+    PopupWindow popWindow;//分享提醒
+
+    private void showPopWindow(View v) {
+        View inflate = from.inflate(R.layout.layout_proj_list_menu, null);
+        listCopyListBt = (Button) inflate.findViewById(R.id.list_copy_list_bt);
+
+        popWindow = new PopupWindow(inflate, LinearLayout.LayoutParams
+                .WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        inflate.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        int[] location = new int[2];
+        // 使其聚集 ，要想监听菜单里控件的事件就必须要调用此方法
+        popWindow.setFocusable(true);
+        // 设置允许在外点击消失
+        popWindow.setOutsideTouchable(false);
+        // 获得位置 这里的v是目标控件，就是你要放在这个v的上面还是下面
+        v.getLocationOnScreen(location);
+        // 设置背景，这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+        popWindow.setBackgroundDrawable(new BitmapDrawable());
+        //软键盘不会挡着popupwindow
+        popWindow.setSoftInputMode(WindowManager.LayoutParams
+                .SOFT_INPUT_ADJUST_RESIZE);
+
+        popWindow.showAsDropDown(v, dm_margin_left,dm_margin_left/10);
+        listCopyListBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //前往去分享
+                popWindow.dismiss();
+            }
+        });
+
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -92,11 +132,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             mMenuBt = itemView.findViewById(R.id.proj_list_item_menu_bt);
             mItemAdd = itemView.findViewById(R.id.item_add);
         }
+
     }
 
     //添加卡片
     private void showAddCardAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.Dialog_add_card);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.Dialog_add_card);
         LayoutInflater inflater = LayoutInflater.from(context);
         View v = inflater.inflate(R.layout.layout_dialog_add_card, null);
         Button btnPositive = (Button) v.findViewById(R.id.dialog_add_card_ok);

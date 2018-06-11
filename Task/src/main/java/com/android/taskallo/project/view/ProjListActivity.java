@@ -161,7 +161,7 @@ public class ProjListActivity extends BaseFgActivity {
         final Dialog dialog = new Dialog(context, R.style.Dialog_right_left);
         dialog.setCanceledOnTouchOutside(true);
         //填充对话框的布局
-        View inflate = LayoutInflater.from(this).inflate(R.layout.layout_proj_list_menu, null);
+        View inflate = LayoutInflater.from(this).inflate(R.layout.layout_proj_detail_menu, null);
 
         View.OnClickListener mDialogClickLstener = new View.OnClickListener() {
             @Override

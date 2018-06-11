@@ -1,179 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/f5f5f5"
+    android:background="@android:drawable/dialog_holo_light_frame"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/layout_public_private"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/diolg_bottom_height"
+    <Button
+        android:id="@+id/list_copy_list_bt"
+        style="@style/px24_0079bf"
+        android:layout_width="@dimen/dm260"
+        android:layout_height="@dimen/popup_height"
         android:background="@drawable/selector_item_bg"
-        android:clickable="true"
-        android:layout_marginTop="@dimen/dm020"
+        android:gravity="left|center_vertical"
         android:paddingLeft="@dimen/dm024"
-        android:paddingRight="@dimen/dm024">
+        android:text="复制列表" />
 
-        <TextView
-            style="@style/px24_333333"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="可见范围" />
-
-        <TextView
-            style="@style/px20_808080"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="公开" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/layout_memeber_list"
+    <Button
+        style="@style/px24_0079bf"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/diolg_bottom_height"
-        android:layout_marginTop="@dimen/dm001"
+        android:layout_height="@dimen/popup_height"
         android:background="@drawable/selector_item_bg"
-        android:clickable="true"
+        android:gravity="left|center_vertical"
         android:paddingLeft="@dimen/dm024"
-        android:paddingRight="@dimen/dm024">
+        android:text="删除列表" />
 
-        <TextView
-            style="@style/px24_333333"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="成员列表" />
-
-        <TextView
-            style="@style/px20_808080"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="0" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/proj_list_menu_dialog_favorite_bt"
+    <Button
+        style="@style/px24_0079bf"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/diolg_bottom_height"
-        android:layout_marginTop="@dimen/dm001"
+        android:layout_height="@dimen/popup_height"
         android:background="@drawable/selector_item_bg"
-        android:clickable="true"
+        android:gravity="left|center_vertical"
         android:paddingLeft="@dimen/dm024"
-        android:paddingRight="@dimen/dm024">
+        android:text="移动所有卡片" />
 
-        <TextView
-            style="@style/px24_333333"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="星标收藏" />
-
-        <ImageView
-            android:id="@+id/proj_list_menu_dialog_favorite_iv"
-            style="@style/px20_808080"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_star_small_black" />
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/proj_list_menu_email_bt"
-        style="@style/px24_333333"
+    <Button
+        style="@style/px24_0079bf"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/diolg_bottom_height"
-        android:layout_marginTop="@dimen/dm001"
+        android:layout_height="@dimen/popup_height"
         android:background="@drawable/selector_item_bg"
-        android:clickable="true"
-        android:gravity="center_vertical"
+        android:gravity="left|center_vertical"
         android:paddingLeft="@dimen/dm024"
-        android:paddingRight="@dimen/dm024"
-        android:text="邮箱订阅" />
-
-    <include layout="@layout/layout_line_1px_e6e6e6" />
-
-    <TextView
-        android:id="@+id/proj_list_menu_has_filed_cad_bt"
-        style="@style/px24_333333"
-        android:clickable="true"
+        android:text="@string/this_colum_to_finished_filed" />
+    <Button
+        style="@style/px24_0079bf"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/diolg_bottom_height"
-        android:layout_marginTop="@dimen/dm020"
+        android:layout_height="@dimen/popup_height"
         android:background="@drawable/selector_item_bg"
-        android:gravity="center_vertical"
+        android:gravity="left|center_vertical"
         android:paddingLeft="@dimen/dm024"
-        android:paddingRight="@dimen/dm024"
-        android:text="已归档看卡片" />
-
-    <TextView
-        android:id="@+id/proj_list_menu_has_filed_list_bt"
-        style="@style/px24_333333"
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/diolg_bottom_height"
-        android:layout_marginTop="@dimen/dm001"
-        android:background="@drawable/selector_item_bg"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dm024"
-        android:paddingRight="@dimen/dm024"
-        android:text="已归档列表" />
-
-    <include layout="@layout/layout_line_1px_e6e6e6" />
-
-
-    <TextView
-        android:id="@+id/proj_list_menu_copy_proj_bt"
-        style="@style/px24_333333"
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/diolg_bottom_height"
-        android:layout_marginTop="@dimen/dm020"
-        android:background="@drawable/selector_item_bg"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dm024"
-        android:paddingRight="@dimen/dm024"
-        android:text="复制项目" />
-
-    <TextView
-        android:id="@+id/proj_list_menu_delete_proj_bt"
-        style="@style/px24_333333"
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/diolg_bottom_height"
-        android:layout_marginTop="@dimen/dm001"
-        android:background="@drawable/selector_item_bg"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dm024"
-        android:paddingRight="@dimen/dm024"
-        android:text="删除项目" />
-
-    <include layout="@layout/layout_line_1px_e6e6e6" />
-
-    <TextView
-        android:id="@+id/proj_list_menu_activity_bt"
-        style="@style/px24_333333"
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/diolg_bottom_height"
-        android:layout_marginTop="@dimen/dm020"
-        android:background="@drawable/selector_item_bg"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dm024"
-        android:paddingRight="@dimen/dm024"
-        android:text="活动" />
-
-    <include layout="@layout/layout_line_1px_e6e6e6" />
-
-    <View
-        android:id="@+id/proj_list_menu_dialog_empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"></View>
+        android:text="消息提醒" />
 </LinearLayout>

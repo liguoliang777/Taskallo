@@ -1,11 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="android:Theme.Holo.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/mainColor</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:popupMenuStyle">@style/MyPopupMenu</item>
     </style>
 
     <style name="AppTheme_NoActionBar_Fullscreen" parent="android:Theme.NoTitleBar.Fullscreen">
@@ -202,15 +203,10 @@
 
     <!--广告-->
     <style name="FullscreenTheme" parent="AppTheme">
-        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowBackground">@null</item>
         <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
         <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
-    </style>
-
-    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
-        <item name="android:background">@color/black_overlay</item>
     </style>
 
     <declare-styleable name="CountDownView">
@@ -250,6 +246,10 @@
         <item name="android:textSize">@dimen/dm020</item>
         <item name="android:textColor">@color/color_808080</item>
     </style>
+    <style name="px24_0079bf">
+        <item name="android:textSize">@dimen/dm024</item>
+        <item name="android:textColor">@color/color_0079bf</item>
+    </style>
 
     <style name="style_px24_cccccc">
         <item name="android:textSize">@dimen/dm024</item>
@@ -269,5 +269,9 @@
     <style name="style_18px_808080">
         <item name="android:textSize">@dimen/dm018</item>
         <item name="android:textColor">@color/color_808080</item>
+    </style>
+
+    <style name="MyPopupMenu" >
+        <item name="android:popupBackground">@android:drawable/dialog_holo_light_frame</item>
     </style>
 </resources>

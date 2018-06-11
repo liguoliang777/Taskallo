@@ -2,7 +2,6 @@ package com.android.taskallo.project.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -54,7 +53,6 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     public void showCardPopupWindow(View v) {
         PopupMenu popupMenu = new PopupMenu(context, v);
         popupMenu.getMenuInflater().inflate(R.menu.card_menu, popupMenu.getMenu());
-        popupMenu.setGravity(Gravity.TOP);
         popupMenu.setOnMenuItemClickListener(this);
         popupMenu.show();
 
@@ -63,10 +61,10 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.card_menu_0:
-                Toast.makeText(this, "开始游戏", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.card_menu_1:
-                Toast.makeText(this, "结束游戏", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
                 break;
 
             default:

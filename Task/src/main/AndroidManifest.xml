@@ -69,7 +69,7 @@
         <activity
             android:name=".project.view.CardDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
         <activity
             android:name=".user.view.LoginActivity"
