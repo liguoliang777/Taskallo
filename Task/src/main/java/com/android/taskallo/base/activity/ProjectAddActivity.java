@@ -1,11 +1,13 @@
 package com.android.taskallo.base.activity;
 
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -177,6 +179,12 @@ public class ProjectAddActivity extends BaseFgActivity {
                     postAddProjectData();
                     break;
                 case R.id.left_bt:
+                    InputMethodManager inputMethodManager = (InputMethodManager)
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                    inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
+                                    .getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
                     finish();
                     break;
                 case R.id.proj_public_or_private:

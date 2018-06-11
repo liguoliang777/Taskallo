@@ -45,11 +45,11 @@ public class Fragment0 extends BaseSearchFragment {
     private FragmentActivity context;
     private RecyclerView main1Rv;
     private Fragment0_1_Adapter main1_Adapter;
-    private List<DiscoverTopBean> mEverydayList = new ArrayList();
+    private List<ProjItemInfo> main0_List = new ArrayList();
     private Fragment0_1_Adapter mTopicsAdapter;
-    private RecyclerView mEverydayRv, mDeletedRv, mFinishedRv;
+    private RecyclerView main0Rv, mDeletedRv, mFinishedRv;
     private RecyclerView mHotRecentRv;
-    private Fragment0_0_Adapter mEverydayAdapter;
+    private Fragment0_0_Adapter main0_Adapter;
     private List<DiscoverTopBean> mHotRecentList = new ArrayList();
     private Fragment0_0_Adapter mHotRecentAdapter;
     private List<ProjItemInfo> main1_List = new ArrayList<>();
@@ -78,13 +78,10 @@ public class Fragment0 extends BaseSearchFragment {
     @Override
     protected void initViewsAndEvents(View view) {
         context = getActivity();
-        init1(view);
         init0(view);
-        init_2(view);
-        init_3(view);
-
-        //getData();
-        Log.d(TAG, "请求主界面数据=======initViewsAndEvents: ");
+        init1(view);
+        init2(view);
+        init3(view);
     }
 
     private void getData() {
@@ -102,19 +99,16 @@ public class Fragment0 extends BaseSearchFragment {
 
     private void init0(View headView) {
         //如果Listview或者RecycleView显示不全，只有一个itme，请在ScrollView中添加  android:fillViewport="true"
-        mEverydayRv = headView.findViewById(R.id.everyday_discover_recyclerview);
+        main0Rv = headView.findViewById(R.id.everyday_discover_recyclerview);
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(context, 2);
         mGridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mEverydayRv.setLayoutManager(mGridLayoutManager);
-        mEverydayList.add(new DiscoverTopBean());
-        mEverydayList.add(new DiscoverTopBean());
-        mEverydayList.add(new DiscoverTopBean());
-        mEverydayAdapter = new Fragment0_0_Adapter(context, mEverydayList);
-        mEverydayRv.setHasFixedSize(true);
-        mEverydayRv.setNestedScrollingEnabled(false);
-        mEverydayRv.setAdapter(mEverydayAdapter);
-    /*    mEverydayRv.addItemDecoration(new RecyclerViewDivider(context,
-                R.dimen.main_margin_left_px, R.dimen.main_margin_20px, mEverydayList.size()));*/
+        main0Rv.setLayoutManager(mGridLayoutManager);
+        main0_Adapter = new Fragment0_0_Adapter(context, main0_List);
+        main0Rv.setHasFixedSize(true);
+        main0Rv.setNestedScrollingEnabled(false);
+        main0Rv.setAdapter(main0_Adapter);
+    /*    main0Rv.addItemDecoration(new RecyclerViewDivider(context,
+                R.dimen.main_margin_left_px, R.dimen.main_margin_20px, main0_List.size()));*/
     }
 
     private void init1(View headView) {
@@ -129,7 +123,7 @@ public class Fragment0 extends BaseSearchFragment {
     }
 
     //收起.展开
-    private void init_2(View headView) {
+    private void init2(View headView) {
         mFinishedRv = headView.findViewById(R.id.rv_subject);
         mFinishedOpenClosedBt = (TextView) headView.findViewById(R.id
                 .fragment_0_finished_open_close_bt);
@@ -157,7 +151,7 @@ public class Fragment0 extends BaseSearchFragment {
     }
 
     //回收站
-    private void init_3(View headView) {
+    private void init3(View headView) {
         mDeletedRv = headView.findViewById(R.id.rv_deleted_board);
         mDeletedOpenClosedBt = (TextView) headView.findViewById(R.id
                 .fragment_0_deleted_open_close_bt);

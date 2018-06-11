@@ -143,7 +143,6 @@
 
         <activity
             android:name="com.android.taskallo.base.activity.ProjectAddActivity"
-            android:windowSoftInputMode="adjustResize|stateVisible"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
