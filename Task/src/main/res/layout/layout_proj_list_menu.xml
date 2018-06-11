@@ -11,6 +11,7 @@
         android:layout_height="@dimen/diolg_bottom_height"
         android:background="@drawable/selector_item_bg"
         android:clickable="true"
+        android:layout_marginTop="@dimen/dm020"
         android:paddingLeft="@dimen/dm024"
         android:paddingRight="@dimen/dm024">
 
@@ -56,42 +57,123 @@
             android:text="0" />
     </RelativeLayout>
 
-    <Button
+    <RelativeLayout
         android:id="@+id/proj_list_menu_dialog_favorite_bt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/diolg_bottom_height"
+        android:layout_marginTop="@dimen/dm001"
+        android:background="@drawable/selector_item_bg"
+        android:clickable="true"
+        android:paddingLeft="@dimen/dm024"
+        android:paddingRight="@dimen/dm024">
+
+        <TextView
+            style="@style/px24_333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="星标收藏" />
+
+        <ImageView
+            android:id="@+id/proj_list_menu_dialog_favorite_iv"
+            style="@style/px20_808080"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_star_small_black" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/proj_list_menu_email_bt"
         style="@style/px24_333333"
         android:layout_width="match_parent"
         android:layout_height="@dimen/diolg_bottom_height"
         android:layout_marginTop="@dimen/dm001"
         android:background="@drawable/selector_item_bg"
-        android:drawableRight="@drawable/ic_star_small_black"
-        android:gravity="left|center_vertical"
+        android:clickable="true"
+        android:gravity="center_vertical"
         android:paddingLeft="@dimen/dm024"
         android:paddingRight="@dimen/dm024"
-        android:text="星标收藏" />
-
-    <Button
-        android:id="@+id/proj_list_menu_email_bt"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/diolg_bottom_height"
-        android:background="@drawable/selector_item_bg"
-        android:gravity="center"
         android:text="邮箱订阅" />
 
-    <Button
-        android:id="@+id/proj_list_menu__dialog3"
+    <include layout="@layout/layout_line_1px_e6e6e6" />
+
+    <TextView
+        android:id="@+id/proj_list_menu_has_filed_cad_bt"
+        style="@style/px24_333333"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/diolg_bottom_height"
+        android:layout_marginTop="@dimen/dm020"
         android:background="@drawable/selector_item_bg"
-        android:gravity="center"
-        android:text="复制" />
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dm024"
+        android:paddingRight="@dimen/dm024"
+        android:text="已归档看卡片" />
 
-    <include layout="@layout/layout_line_2px_f5f5f5" />
+    <TextView
+        android:id="@+id/proj_list_menu_has_filed_list_bt"
+        style="@style/px24_333333"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/diolg_bottom_height"
+        android:layout_marginTop="@dimen/dm001"
+        android:background="@drawable/selector_item_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dm024"
+        android:paddingRight="@dimen/dm024"
+        android:text="已归档列表" />
 
+    <include layout="@layout/layout_line_1px_e6e6e6" />
+
+
+    <TextView
+        android:id="@+id/proj_list_menu_copy_proj_bt"
+        style="@style/px24_333333"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/diolg_bottom_height"
+        android:layout_marginTop="@dimen/dm020"
+        android:background="@drawable/selector_item_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dm024"
+        android:paddingRight="@dimen/dm024"
+        android:text="复制项目" />
+
+    <TextView
+        android:id="@+id/proj_list_menu_delete_proj_bt"
+        style="@style/px24_333333"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/diolg_bottom_height"
+        android:layout_marginTop="@dimen/dm001"
+        android:background="@drawable/selector_item_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dm024"
+        android:paddingRight="@dimen/dm024"
+        android:text="删除项目" />
+
+    <include layout="@layout/layout_line_1px_e6e6e6" />
+
+    <TextView
+        android:id="@+id/proj_list_menu_activity_bt"
+        style="@style/px24_333333"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/diolg_bottom_height"
+        android:layout_marginTop="@dimen/dm020"
+        android:background="@drawable/selector_item_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dm024"
+        android:paddingRight="@dimen/dm024"
+        android:text="活动" />
+
+    <include layout="@layout/layout_line_1px_e6e6e6" />
 
     <View
         android:id="@+id/proj_list_menu_dialog_empty_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/font_green"></View>
+        android:layout_weight="1"></View>
 </LinearLayout>
