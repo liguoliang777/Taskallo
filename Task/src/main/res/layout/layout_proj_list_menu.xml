@@ -5,26 +5,77 @@
     android:background="@color/f5f5f5"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/proj_list_menu_dialog_favorite_bt"
+    <RelativeLayout
+        android:id="@+id/layout_public_private"
         android:layout_width="match_parent"
         android:layout_height="@dimen/diolg_bottom_height"
-        style="@style/style_px24_333333"
+        android:background="@drawable/selector_item_bg"
+        android:clickable="true"
+        android:paddingLeft="@dimen/dm024"
+        android:paddingRight="@dimen/dm024">
+
+        <TextView
+            style="@style/px24_333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="可见范围" />
+
+        <TextView
+            style="@style/px20_808080"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="公开" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_memeber_list"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/diolg_bottom_height"
+        android:layout_marginTop="@dimen/dm001"
+        android:background="@drawable/selector_item_bg"
+        android:clickable="true"
+        android:paddingLeft="@dimen/dm024"
+        android:paddingRight="@dimen/dm024">
+
+        <TextView
+            style="@style/px24_333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="成员列表" />
+
+        <TextView
+            style="@style/px20_808080"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="0" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/proj_list_menu_dialog_favorite_bt"
+        style="@style/px24_333333"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/diolg_bottom_height"
+        android:layout_marginTop="@dimen/dm001"
+        android:background="@drawable/selector_item_bg"
+        android:drawableRight="@drawable/ic_star_small_black"
+        android:gravity="left|center_vertical"
         android:paddingLeft="@dimen/dm024"
         android:paddingRight="@dimen/dm024"
-        android:layout_marginTop="@dimen/dm001"
-        android:drawableRight="@drawable/ic_star_small_black"
-        android:background="@drawable/selector_item_bg"
-        android:gravity="left|center_vertical"
         android:text="星标收藏" />
 
     <Button
-        android:id="@+id/proj_list_menu__dialog2"
+        android:id="@+id/proj_list_menu_email_bt"
         android:layout_width="match_parent"
         android:layout_height="@dimen/diolg_bottom_height"
         android:background="@drawable/selector_item_bg"
         android:gravity="center"
-        android:text="可见范围" />
+        android:text="邮箱订阅" />
 
     <Button
         android:id="@+id/proj_list_menu__dialog3"
