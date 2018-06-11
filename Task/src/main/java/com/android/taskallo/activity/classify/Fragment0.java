@@ -232,7 +232,7 @@ public class Fragment0 extends BaseSearchFragment {
 
     // 0 默认状态，1 已删除，2  收藏，3 已完成
     public void setData(List<ProjItemInfo> dataList, int type) {
-        Log.d(TAG, type+"请求,类型:" +dataList.size() );
+        Log.d(TAG, type+",请求,类型:" +dataList.size() );
         switch (type) {
             case 0:
                 main1_List = dataList;

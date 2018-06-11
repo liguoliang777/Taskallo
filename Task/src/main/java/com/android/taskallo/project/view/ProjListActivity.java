@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
-import com.android.taskallo.bean.GameInfo;
 import com.android.taskallo.bean.JsonResult;
+import com.android.taskallo.bean.ProjDetailInfo;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.ImageUtil;
@@ -47,6 +47,7 @@ public class ProjListActivity extends BaseFgActivity {
         super.onCreate(savedInstanceState);
         initStatusBar();
         setContentView(R.layout.activity_project_list);
+
         mProjectId = getIntent().getStringExtra(KeyConstant.ID);
         mProjectName = getIntent().getStringExtra(KeyConstant.name);
         context = this;
@@ -62,44 +63,61 @@ public class ProjListActivity extends BaseFgActivity {
         mBoardView = (ItemView) findViewById(R.id.boardview);
         mBoardView.setCallback(new ItemViewCallback());
         mBoardView.setContext(context);
+
+        getListInfo();
     }
 
-    private void getGameInfo() {
-        String url = Constant.WEB_SITE + Constant.URL_GAME_DETAIL;
-        Response.Listener<JsonResult<GameInfo>> successListener = new Response
-                .Listener<JsonResult<GameInfo>>() {
+    //获取列表数据
+    private void getListInfo() {
+        String url = Constant.WEB_SITE1 + UrlConstant.URL_PROJECT_DETAIL + "/" + mProjectId;
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            return;
+        }
+
+        Response.Listener<JsonResult<ProjDetailInfo>> successListener = new Response
+                .Listener<JsonResult<ProjDetailInfo>>() {
             @Override
-            public void onResponse(JsonResult<GameInfo> result) {
-                if (result == null || result.code != 0) {
+            public void onResponse(JsonResult<ProjDetailInfo> result) {
+                if (result == null) {
                     ToastUtil.show(context, getString(R.string.server_exception));
                     return;
                 }
 
-
+                ProjDetailInfo projDetailInfo = result.data;
+                if (result.code == 0 && context != null && projDetailInfo != null) {
+                    setData(projDetailInfo);
+                }
             }
         };
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-            }
-        };
+        Request<JsonResult<ProjDetailInfo>> versionRequest = new
+                GsonRequest<JsonResult<ProjDetailInfo>>(
+                        Request.Method.GET, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult<ProjDetailInfo>>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
+    }
 
-        Request<JsonResult<GameInfo>> request = new GsonRequest<JsonResult<GameInfo>>(Request
-                .Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult<GameInfo>>() {
-        }.getType()) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);
-                return params;
-            }
-        };
-        App.requestQueue.add(request);
+    //设置数据
+    private void setData(ProjDetailInfo projDetailInfo) {
+        String projectImg = projDetailInfo.projectImg;
+        Log.d(TAG, "列表详情:" + projectImg);
     }
 
 
@@ -138,7 +156,7 @@ public class ProjListActivity extends BaseFgActivity {
         }
     }
 
-    //todo 菜单
+    // 菜单
     public void onProjListTopMenuClick(View view) {
         final Dialog dialog = new Dialog(context, R.style.Dialog_right_left);
         dialog.setCanceledOnTouchOutside(true);
