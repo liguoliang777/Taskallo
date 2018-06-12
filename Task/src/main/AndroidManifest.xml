@@ -123,7 +123,7 @@
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.android.taskallo.project.view.ProjListActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />

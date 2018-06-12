@@ -113,7 +113,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
         } else {
-            ItemViewHolder holder = (ItemViewHolder) hold;
+            final ItemViewHolder holder = (ItemViewHolder) hold;
             holder.itemItemRV.setLayoutManager(
                     new ItemLayoutManager(holder.itemView.getContext()));
             RecyclerView.Adapter adapter = new ItemItemAdapter(context, position, 10);
@@ -136,6 +136,24 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     showPopWindow(view);
                 }
             });
+            holder.mItemTitle.setSelection(holder.mItemTitle.getText().length());
+            holder.mItemTitle.requestFocus();
+            holder.mItemTitle.setFocusable(true);
+            holder.mItemTitle.requestFocusFromTouch();
+
+            holder.mItemTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                }
+            });
+            holder.mItemTitle.setOnFocusChangeListener(new android.view.View
+                    .OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    ToastUtil.show(context, ".."+hasFocus);
+
+                }
+            });
         }
     }
 
@@ -150,9 +168,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 .WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
         inflate.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         int[] location = new int[2];
-        // 使其聚集 ，要想监听菜单里控件的事件就必须要调用此方法
         popWindow.setFocusable(true);
-        // 设置允许在外点击消失
         popWindow.setOutsideTouchable(false);
         // 获得位置 这里的v是目标控件，就是你要放在这个v的上面还是下面
         v.getLocationOnScreen(location);
@@ -176,9 +192,8 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
         RecyclerView itemItemRV;
-        TextView mItemTitle;
+        EditText mItemTitle;
         Button mItemAdd;
-        private EditText mItemEnterEt;
         private Button mMenuBt;
 
         ItemViewHolder(View itemView) {
@@ -205,6 +220,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 .dialog_add_card_title);
         etContent.setHint(hintText);
         etContent.setFloatingLabelText(context.getString(hintText));
+
         etContent.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
