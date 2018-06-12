@@ -1,6 +1,8 @@
 package com.android.taskallo.project.view;
 
 import android.app.Dialog;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -41,6 +43,7 @@ public class ProjListActivity extends BaseFgActivity {
     private Button mTitleBackBt;
     private ItemView mBoardView;
     private String mProjectName = "";
+    private String mProjectImg = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class ProjListActivity extends BaseFgActivity {
 
         mProjectId = getIntent().getStringExtra(KeyConstant.ID);
         mProjectName = getIntent().getStringExtra(KeyConstant.name);
+        mProjectImg = getIntent().getStringExtra(KeyConstant.projectImg);
         context = this;
         mTitleBackBt = (Button) findViewById(R.id.proj_detail_title_back);
         mTitleBackBt.setOnClickListener(new View.OnClickListener() {
@@ -62,9 +66,28 @@ public class ProjListActivity extends BaseFgActivity {
 
         mBoardView = (ItemView) findViewById(R.id.boardview);
         mBoardView.setCallback(new ItemViewCallback());
-        mBoardView.setContext(context,mProjectId);
+        mBoardView.setContext(context, mProjectId);
+
+        setBackground();
 
         getListInfo();
+    }
+
+    private void setBackground() {
+        if (!NetUtil.isNetworkConnected(context)) {
+            return;
+        }
+        new AsyncTask<String, Void, Drawable>() {
+            @Override
+            protected Drawable doInBackground(String... strings) {
+                return ImageUtil.loadImageFromNetwork(mProjectImg);
+            }
+
+            @Override
+            protected void onPostExecute(Drawable drawable) {
+                mBoardView.setBackground(drawable);
+            }
+        }.execute();
     }
 
     //获取列表数据
@@ -116,10 +139,8 @@ public class ProjListActivity extends BaseFgActivity {
 
     //设置数据
     private void setData(ProjDetailInfo projDetailInfo) {
-        String projectImg = projDetailInfo.projectImg;
-        Log.d(TAG, "列表详情:" + projectImg);
-    }
 
+    }
 
     public void showPercentDialog() {
         final Dialog mUnboundDialog = new Dialog(context);

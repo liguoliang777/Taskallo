@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -18,6 +19,8 @@ import android.widget.PopupWindow;
 import com.android.taskallo.R;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * 获取图片的Base64字符串
@@ -29,6 +32,7 @@ public class ImageUtil {
     private static int mScreenWidth;
     private static int mScreenHeight;
     private static float scale;
+
     // 根据路径获得图片并压缩，返回bitmap用于显示
     public static Bitmap getSmallBitmap(String filePath) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -45,13 +49,14 @@ public class ImageUtil {
     }
 
     //计算图片的缩放值
-    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int
+            reqHeight) {
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
 
         if (height > reqHeight || width > reqWidth) {
-            final int heightRatio = Math.round((float) height/ (float) reqHeight);
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
             final int widthRatio = Math.round((float) width / (float) reqWidth);
             inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
         }
@@ -150,7 +155,8 @@ public class ImageUtil {
      * @param popShowWidth  被显示在PopupWindow上的View的宽度，一般是传attachOnView的getWidth()
      * @return PopupWindow
      */
-    public static PopupWindow showPopupWindow(Activity context, View attachOnView, View popView, final int popShowHeight, final
+    public static PopupWindow showPopupWindow(Activity context, View attachOnView, View popView,
+                                              final int popShowHeight, final
     int popShowWidth) {
         final int defaultBotom = -60;//距离底部
         if (popView != null && popView.getParent() != null) {
@@ -196,5 +202,22 @@ public class ImageUtil {
         popupWindow.showAtLocation(attachOnView, Gravity.NO_GRAVITY, x, h + y);
         popupWindow.update();
         return popupWindow;
+    }
+
+    public static Drawable loadImageFromNetwork(String imageUrl) {
+        Drawable drawable = null;
+        try {
+            // 可以在这里通过第二个参数(文件名)来判断，是否本地有此图片
+            drawable = Drawable.createFromStream(new URL(imageUrl).openStream(), null);
+        } catch (IOException e) {
+            android.util.Log.d("skythinking", e.getMessage());
+        }
+        if (drawable == null) {
+            //Log.d("skythinking", "null drawable");
+        } else {
+            //Log.d("skythinking", "not null drawable");
+        }
+
+        return drawable;
     }
 }

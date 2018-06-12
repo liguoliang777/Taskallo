@@ -226,7 +226,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         final Dialog dialog = builder.create();
         dialog.show();
         dialog.getWindow().setContentView(v);//自定义布局应该在这里添加，要在dialog.show()的后面
-       dialog.getWindow().clearFlags(
+        dialog.getWindow().clearFlags(
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
                         WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         dialog.getWindow().setGravity(Gravity.CENTER);//可以设置显示的位置
@@ -268,6 +268,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
                 Log.d("", result.msg + ",添加列表:" + result.data);
                 if (result.code == 0 && result.data != null) {
+                    ToastUtil.show(context, "列表创建成功");
                     dialog.cancel();
                 }
             }
@@ -280,6 +281,8 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         volleyError.printStackTrace();
+                        ToastUtil.show(context, context.getString(R.string.server_exception));
+
                     }
                 }, new TypeToken<JsonResult>() {
                 }.getType()) {

@@ -71,4 +71,5 @@ public class KeyConstant {
     public static final String Content_Type = "Content-Type";
     public static final String projectId="projectId";
     public static final String listItemName="listItemName";
+    public static final String projectImg="projectImg";
 }

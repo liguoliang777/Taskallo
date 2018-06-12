@@ -58,21 +58,22 @@ public class Fragment0_1_Adapter extends RecyclerView.Adapter<Fragment0_1_Adapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final ProjItemInfo categroyBean = list.get(position);
+        final ProjItemInfo projInfo = list.get(position);
 
-        if (categroyBean == null) {
+        if (projInfo == null) {
             return;
         }
-        final String name = categroyBean.name;
+        final String name = projInfo.name;
         holder.tv_content.setText(name == null ? "" : name);
-        holder.iconIv.setImageURI(categroyBean.projectImg);
+        holder.iconIv.setImageURI(projInfo.projectImg);
         //为ItemView设置监听器
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProjListActivity.class);
-                intent.putExtra(KeyConstant.ID, categroyBean.projectId);
-                intent.putExtra(KeyConstant.name, categroyBean.name);
+                intent.putExtra(KeyConstant.ID, projInfo.projectId);
+                intent.putExtra(KeyConstant.name, projInfo.name);
+                intent.putExtra(KeyConstant.projectImg, projInfo.projectImg);
                 context.startActivity(intent);
             }
         });
