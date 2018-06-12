@@ -3,10 +3,10 @@
     android:useLevel="false">
 
     <!-- 填充 -->
-    <solid android:color="@color/cccccc" />
+    <solid android:color="@color/transparent_medium" />
     <!--圆角-->
     <corners
-        android:radius="@dimen/list_card_corner"
+        android:radius="@dimen/dm015"
      />
 
 </shape>

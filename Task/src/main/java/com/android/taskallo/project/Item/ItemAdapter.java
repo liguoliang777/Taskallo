@@ -23,6 +23,7 @@ import com.android.taskallo.R;
 import com.android.taskallo.bean.ListInfo;
 import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.project.view.ProjListActivity;
+import com.android.taskallo.util.ToastUtil;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.List;
@@ -63,11 +64,11 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     /*底部Item*/
     class FootHolder extends RecyclerView.ViewHolder {
-        public TextView textViewFoot;
+        public TextView footBt;
 
         public FootHolder(View itemView) {
             super(itemView);
-            textViewFoot =  itemView.findViewById(R.id.proj_list_item_footer_add);
+            footBt = itemView.findViewById(R.id.proj_list_item_footer_add);
         }
     }
 
@@ -88,7 +89,12 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(final RecyclerView.ViewHolder hold, int position) {
         if (hold instanceof FootHolder) {//最后一个
             FootHolder footHolder = (FootHolder) hold;
-            footHolder.textViewFoot.setText("添加卡片");
+            footHolder.footBt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showAddCardAlertDialog(R.string.list_title);
+                }
+            });
         } else {
             ItemViewHolder holder = (ItemViewHolder) hold;
             holder.itemItemRV.setLayoutManager(
@@ -98,7 +104,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             holder.mItemAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showAddCardAlertDialog();
+                    showAddCardAlertDialog(R.string.card_title);
                 }
             });
             if (holder.itemItemRV.getItemDecorationAt(0) == null) {
@@ -173,13 +179,15 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     //添加卡片
-    private void showAddCardAlertDialog() {
+    private void showAddCardAlertDialog(final int hintText) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.Dialog_add_card);
         LayoutInflater inflater = LayoutInflater.from(context);
         View v = inflater.inflate(R.layout.layout_dialog_add_card, null);
         Button btnPositive = (Button) v.findViewById(R.id.dialog_add_card_ok);
         final MaterialEditText etContent = (MaterialEditText) v.findViewById(R.id
                 .dialog_add_card_title);
+        etContent.setHint(hintText);
+        etContent.setFloatingLabelText(context.getString(hintText));
         etContent.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -214,6 +222,14 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     etContent.setError(context.getString(R.string.enter_cannot_empty));
                 } else {
                     dialog.dismiss();
+                }
+                //添加卡片
+                if (hintText == R.string.card_title) {
+                    ToastUtil.show(context, "卡片");
+                } else {
+                    ToastUtil.show(context, "列表");
+                    //添加列表
+
                 }
             }
         });

@@ -19,10 +19,12 @@
             android:clickable="true"
             android:id="@+id/proj_list_item_footer_add"
             android:layout_width="@dimen/dm440"
-            android:layout_height="@dimen/dm080"
+            android:layout_height="@dimen/dm075"
             android:layout_alignParentRight="true"
             android:background="@drawable/selector_list_add_bt"
             android:gravity="center"
+            android:textSize="@dimen/dm024"
+            android:text="添加列表"
             android:textColor="@color/white" />
 
         <View
