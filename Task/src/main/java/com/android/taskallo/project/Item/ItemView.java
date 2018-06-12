@@ -32,9 +32,12 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 
 import com.android.taskallo.R;
+import com.android.taskallo.bean.ListInfo;
 import com.android.taskallo.project.view.ProjListActivity;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemView extends FrameLayout {
     private static final String TAG = ItemProvider.TAG;
@@ -82,10 +85,6 @@ public class ItemView extends FrameLayout {
         //noinspection deprecation
         mTouchSlop = ViewConfiguration.getTouchSlop();
         mScaledTouchSlop = viewConfiguration.getScaledTouchSlop();
-        initGestureDetector();
-    }
-
-    private void initGestureDetector() {
         if (mGestureDetector == null) {
             mGestureDetector = new GestureDetectorCompat(getContext(), new
                     BoardViewGestureDetector());
@@ -96,16 +95,22 @@ public class ItemView extends FrameLayout {
         mCallback = callback;
     }
 
+    List<ListInfo> list = new ArrayList();
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        list.add(new ListInfo());
+        list.add(new ListInfo());
+        list.add(new ListInfo());
+
         mContentView = new RecyclerView(getContext());
         mContentView.setLayoutParams(generateDefaultLayoutParams());
         mContentView.setLayoutManager(new ItemLayoutManager(getContext(), LinearLayoutManager
                 .HORIZONTAL, false));
         mContentView.setHasFixedSize(true);
         addView(mContentView);
-        adapter = new ItemAdapter(getContext());
+        adapter = new ItemAdapter(getContext(), list);
         mContentView.setAdapter(adapter);
         mContentView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -520,6 +525,9 @@ public class ItemView extends FrameLayout {
             return false;
         }
         View recyclerView = view.findViewById(R.id.item_recycler_view); //单个列表(RecyclerView)
+        if (recyclerView == null) {
+            return false;
+        }
         return y > recyclerView.getTop() && y < recyclerView.getBottom();
     }
 
@@ -531,7 +539,11 @@ public class ItemView extends FrameLayout {
         if (child == null) {
             return null;
         }
-        return child.findViewById(R.id.item_recycler_view); //单个列表(RecyclerView)
+        RecyclerView viewById = child.findViewById(R.id.item_recycler_view);
+        if (viewById == null) {
+            return null;
+        }
+        return viewById; //单个列表(RecyclerView)
     }
 
     private View findRecyclerViewChild(MotionEvent event) {
@@ -540,6 +552,9 @@ public class ItemView extends FrameLayout {
         View child = mContentView.findChildViewUnder(x, y);
         mCurrentSelectedLayout = child;
         mCurrentSelectedRecyclerView = child.findViewById(R.id.item_recycler_view); //单个列表
+        if (mCurrentSelectedRecyclerView == null) {
+            return null;
+        }
         // (RecyclerView)
         int titleHeight = getCurrentColumnTitleHeight(event);
         View view = mCurrentSelectedRecyclerView.findChildViewUnder(x - child.getLeft(),

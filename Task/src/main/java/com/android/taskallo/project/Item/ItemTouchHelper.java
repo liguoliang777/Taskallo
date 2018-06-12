@@ -1290,7 +1290,7 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
      * <p>
      * If user drags an layout_proj_item_item, ItemTouchHelper will call
      * {@link android.support.v7.widget.helper.ItemTouchHelper.Callback#onMove(RecyclerView, RecyclerView.ViewHolder, RecyclerView.ViewHolder)
-     * onMove(recyclerView, dragged, target)}.
+     * onMove(itemItemRV, dragged, target)}.
      * Upon receiving this callback, you should move the layout_proj_item_item from the old position
      * ({@code dragged.getAdapterPosition()}) to new position ({@code target.getAdapterPosition()})
      * in your adapter and also call {@link RecyclerView.Adapter#notifyItemMoved(int, int)}.
@@ -1365,7 +1365,7 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
          * For example, if you have a use case where you only want the text to move when user
          * swipes over the view, you can do the following:
          * <pre>
-         *     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder){
+         *     public void clearView(RecyclerView itemItemRV, RecyclerView.ViewHolder viewHolder){
          *         getDefaultUIUtil().clearView(((ItemTouchViewHolder) viewHolder).textView);
          *     }
          *     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
@@ -1373,18 +1373,18 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
          *             getDefaultUIUtil().onSelected(((ItemTouchViewHolder) viewHolder).textView);
          *         }
          *     }
-         *     public void onChildDraw(Canvas c, RecyclerView recyclerView,
+         *     public void onChildDraw(Canvas c, RecyclerView itemItemRV,
          *             RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState,
          *             boolean isCurrentlyActive) {
-         *         getDefaultUIUtil().onDraw(c, recyclerView,
+         *         getDefaultUIUtil().onDraw(c, itemItemRV,
          *                 ((ItemTouchViewHolder) viewHolder).textView, dX, dY,
          *                 actionState, isCurrentlyActive);
          *         return true;
          *     }
-         *     public void onChildDrawOver(Canvas c, RecyclerView recyclerView,
+         *     public void onChildDrawOver(Canvas c, RecyclerView itemItemRV,
          *             RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState,
          *             boolean isCurrentlyActive) {
-         *         getDefaultUIUtil().onDrawOver(c, recyclerView,
+         *         getDefaultUIUtil().onDrawOver(c, itemItemRV,
          *                 ((ItemTouchViewHolder) viewHolder).textView, dX, dY,
          *                 actionState, isCurrentlyActive);
          *         return true;
@@ -2114,7 +2114,7 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
      * ItemTouchHelper mIth = new ItemTouchHelper(
      *     new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
      *         ItemTouchHelper.LEFT) {
-     *         public abstract boolean onMove(RecyclerView recyclerView,
+     *         public abstract boolean onMove(RecyclerView itemItemRV,
      *             ViewHolder viewHolder, ViewHolder target) {
      *             final int fromPos = viewHolder.getAdapterPosition();
      *             final int toPos = target.getAdapterPosition();
@@ -2373,6 +2373,9 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
         int x = (int) event.getX();
         int y = (int) event.getY();
         View header = childView.findViewById(R.id.proj_list_item_title);
+        if (header==null) {
+            return false;
+        }
         return header.getTop() < y && header.getBottom() > y;
     }
 }

@@ -20,22 +20,27 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.android.taskallo.R;
+import com.android.taskallo.bean.ListInfo;
 import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.project.view.ProjListActivity;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import java.util.List;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
+public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private final int ITEM_TYPE_FOOTER = 2;
+    private List<ListInfo> mList;
     private int dm_margin_left;
     ProjListActivity context;
     private LayoutInflater from;
 
-    public ItemAdapter(Context context) {
+    public ItemAdapter(Context context, List<ListInfo> list) {
         dm_margin_left = context.getResources().
                 getDimensionPixelOffset(R.dimen.dm_200);
         from = LayoutInflater.from(context);
+        mList = list;
     }
 
     public void setContext(ProjListActivity context) {
@@ -44,39 +49,71 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @Override
     public int getItemCount() {
-        return 5;
+        return mList == null ? 1 : mList.size() + 1;
     }
 
     @Override
-    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ItemViewHolder(from.inflate(R.layout.layout_proj_item, parent, false));
-    }
-
-    @Override
-    public void onBindViewHolder(final ItemViewHolder holder, int position) {
-        holder.recyclerView.setLayoutManager(new ItemLayoutManager(holder.itemView.getContext()));
-
-        RecyclerView.Adapter adapter = new ItemItemAdapter(context, position, 10);
-        holder.recyclerView.setAdapter(adapter);
-        holder.mItemAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAddCardAlertDialog();
-            }
-        });
-        if (holder.recyclerView.getItemDecorationAt(0) == null) {
-            holder.recyclerView.addItemDecoration(new ItemLineDecoration());
+    public int getItemViewType(int position) {
+        if (position + 1 == getItemCount()) {
+            return ITEM_TYPE_FOOTER;
+        } else {
+            return 0;
         }
-        holder.recyclerView.getItemAnimator().setAddDuration(0);
-        holder.recyclerView.getItemAnimator().setRemoveDuration(0);
+    }
 
-        holder.mMenuBt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPopWindow(view);
+    /*底部Item*/
+    class FootHolder extends RecyclerView.ViewHolder {
+        public TextView textViewFoot;
+
+        public FootHolder(View itemView) {
+            super(itemView);
+            textViewFoot =  itemView.findViewById(R.id.proj_list_item_footer_add);
+        }
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == ITEM_TYPE_FOOTER) {
+            View view = from.inflate(R.layout.layout_proj_item_footer, parent, false);
+            FootHolder viewHolder = new FootHolder(view);
+            return viewHolder;
+        } else {
+            View inflate = from.inflate(R.layout.layout_proj_item, parent, false);
+            ItemViewHolder itemViewHolder = new ItemViewHolder(inflate);
+            return itemViewHolder;
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder hold, int position) {
+        if (hold instanceof FootHolder) {//最后一个
+            FootHolder footHolder = (FootHolder) hold;
+            footHolder.textViewFoot.setText("添加卡片");
+        } else {
+            ItemViewHolder holder = (ItemViewHolder) hold;
+            holder.itemItemRV.setLayoutManager(
+                    new ItemLayoutManager(holder.itemView.getContext()));
+            RecyclerView.Adapter adapter = new ItemItemAdapter(context, position, 10);
+            holder.itemItemRV.setAdapter(adapter);
+            holder.mItemAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showAddCardAlertDialog();
+                }
+            });
+            if (holder.itemItemRV.getItemDecorationAt(0) == null) {
+                holder.itemItemRV.addItemDecoration(new ItemLineDecoration());
             }
-        });
+            holder.itemItemRV.getItemAnimator().setAddDuration(0);
+            holder.itemItemRV.getItemAnimator().setRemoveDuration(0);
 
+            holder.mMenuBt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showPopWindow(view);
+                }
+            });
+        }
     }
 
     Button listCopyListBt;
@@ -102,7 +139,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         popWindow.setSoftInputMode(WindowManager.LayoutParams
                 .SOFT_INPUT_ADJUST_RESIZE);
 
-        popWindow.showAsDropDown(v, dm_margin_left,dm_margin_left/10);
+        popWindow.showAsDropDown(v, dm_margin_left, dm_margin_left / 10);
         listCopyListBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,7 +152,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        RecyclerView recyclerView;
+        RecyclerView itemItemRV;
         TextView mItemTitle;
         Button mItemAdd;
         private EditText mItemEnterEt;
@@ -127,7 +164,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         }
 
         private void init(View itemView) {
-            recyclerView = itemView.findViewById(R.id.item_recycler_view);
+            itemItemRV = itemView.findViewById(R.id.item_recycler_view);
             mItemTitle = itemView.findViewById(R.id.proj_list_item_title);
             mMenuBt = itemView.findViewById(R.id.proj_list_item_menu_bt);
             mItemAdd = itemView.findViewById(R.id.item_add);
