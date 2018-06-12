@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +20,28 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.android.taskallo.App;
 import com.android.taskallo.R;
+import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.ListInfo;
+import com.android.taskallo.core.net.GsonRequest;
+import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.core.utils.NetUtil;
 import com.android.taskallo.core.utils.TextUtil;
+import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.project.view.ProjListActivity;
 import com.android.taskallo.util.ToastUtil;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -34,8 +49,9 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int ITEM_TYPE_FOOTER = 2;
     private List<ListInfo> mList;
     private int dm_margin_left;
-    ProjListActivity context;
+    private ProjListActivity context;
     private LayoutInflater from;
+    private String mProjectId;
 
     public ItemAdapter(Context context, List<ListInfo> list) {
         dm_margin_left = context.getResources().
@@ -44,8 +60,9 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mList = list;
     }
 
-    public void setContext(ProjListActivity context) {
+    public void setContext(ProjListActivity context, String projectId) {
         this.context = context;
+        this.mProjectId = projectId;
     }
 
     @Override
@@ -209,29 +226,80 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         final Dialog dialog = builder.create();
         dialog.show();
         dialog.getWindow().setContentView(v);//自定义布局应该在这里添加，要在dialog.show()的后面
-        dialog.getWindow().clearFlags(
+       dialog.getWindow().clearFlags(
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
                         WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        dialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL);//可以设置显示的位置
+        dialog.getWindow().setGravity(Gravity.CENTER);//可以设置显示的位置
         btnPositive.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                String str = etContent.getText().toString();
-                if (TextUtil.isEmpty(str)) {
+                String title = etContent.getText().toString();
+                if (TextUtil.isEmpty(title)) {
                     etContent.setError(context.getString(R.string.enter_cannot_empty));
-                } else {
-                    dialog.dismiss();
                 }
-                //添加卡片 todo
+                //添加卡片
                 if (hintText == R.string.card_title) {
                     ToastUtil.show(context, "卡片");
                 } else {
-                    ToastUtil.show(context, "列表");
-                    //添加列表
+                    addList(dialog, title);
 
                 }
             }
         });
+    }
+
+    //添加列表
+    private void addList(final Dialog dialog, final String title) {
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            return;
+        }
+        // 0 默认状态，1 已删除，2  收藏，3 已完成
+        String url = Constant.WEB_SITE1 + UrlConstant.url_item;
+
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null) {
+                    ToastUtil.show(context, context.getString(R.string.server_exception));
+                    return;
+                }
+                Log.d("", result.msg + ",添加列表:" + result.data);
+                if (result.code == 0 && result.data != null) {
+                    dialog.cancel();
+                }
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(
+                        Request.Method.POST, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                    }
+                }, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.projectId, mProjectId);
+                        params.put(KeyConstant.listItemName, title);
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 }

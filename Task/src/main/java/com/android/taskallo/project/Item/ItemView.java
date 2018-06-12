@@ -40,35 +40,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemView extends FrameLayout {
-    private static final String TAG = ItemProvider.TAG;
-
+    private final String TAG = ItemProvider.TAG;
     private static final int ACTION_BIND = 0;
     private static final int ACTION_UPDATE = 1;
-
     private View mMirrorView;
     private View mCurrentSelectedLayout;
     private RecyclerView mContentView;
     private RecyclerView mCurrentSelectedRecyclerView;
-
     private GestureDetectorCompat mGestureDetector;
-
     private RecyclerView.ViewHolder mRecyclerViewViewHolder;
-
     private float mInitialTouchX, mInitialTouchY;
     private MotionEvent mCurrentTouchEvent, mLastMoveEvent, mLongPressEvent;
-
     private boolean mCanMove = true;
-
     private int mTitleHeight;
     private int mInsertPosition = -1;
-
     private int mTouchSlop;
     private int mScaledTouchSlop;
-
     private Callback mCallback;
-
     private int mRootViewHeight;
-    private ProjListActivity context;
     private ItemAdapter adapter;
 
     public ItemView(@NonNull Context context) {
@@ -635,9 +624,8 @@ public class ItemView extends FrameLayout {
         }
     }
 
-    public void setContext(ProjListActivity mainActivity) {
-        context = mainActivity;
-        adapter.setContext(context);
+    public void setContext(ProjListActivity mainActivity, String projectId) {
+        adapter.setContext(mainActivity,projectId);
     }
 
     private class BoardViewGestureDetector extends GestureDetector.SimpleOnGestureListener {

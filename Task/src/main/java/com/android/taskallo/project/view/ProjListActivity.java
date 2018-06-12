@@ -62,7 +62,7 @@ public class ProjListActivity extends BaseFgActivity {
 
         mBoardView = (ItemView) findViewById(R.id.boardview);
         mBoardView.setCallback(new ItemViewCallback());
-        mBoardView.setContext(context);
+        mBoardView.setContext(context,mProjectId);
 
         getListInfo();
     }
