@@ -8,6 +8,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.taskallo.App;
+import com.android.taskallo.R;
+import com.android.taskallo.adapter.LvCommentAdapter;
+import com.android.taskallo.bean.Comment;
+import com.android.taskallo.bean.JsonResult;
+import com.android.taskallo.bean.User;
+import com.android.taskallo.core.net.GsonRequest;
+import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.Log;
+import com.android.taskallo.user.view.LoginActivity;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -17,17 +27,6 @@ import com.google.gson.reflect.TypeToken;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.android.taskallo.R;
-import com.android.taskallo.App;
-import com.android.taskallo.adapter.LvCommentAdapter;
-import com.android.taskallo.bean.Comment;
-import com.android.taskallo.bean.JsonResult;
-import com.android.taskallo.bean.User;
-import com.android.taskallo.core.net.GsonRequest;
-import com.android.taskallo.user.view.LoginActivity;
-import com.android.taskallo.core.utils.Constant;
-import com.android.taskallo.core.utils.Log;
 
 /**
  * 显示评论列表
@@ -117,7 +116,6 @@ public class ReviewListActivity extends BaseFgActivity {
                 Log.d(TAG,"-------------------------count: "+count);
 
                 if (lastItem >= (count - 1) && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE ) {
-                    //TODO 执行上滑分页加载
                     if(count < totals && !isLoading){
                         isLoading = true;
                         pageIndex += 1;

@@ -150,19 +150,16 @@ public class HeaderLoadingLayout extends LoadingLayout {
 
 	@Override
 	public void onPull(float scale) {
-		// TODO Auto-generated method stub
 		super.onPull(scale);
 	}
 
 	@Override
 	protected void onLoadingDrawableSet(Drawable imageDrawable) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void onNoMoreData() {
-		// TODO Auto-generated method stub
-		
+
 	}
 }

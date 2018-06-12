@@ -16,15 +16,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.core.utils.DialogHelper;
 import com.android.taskallo.widget.TouchImageView;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * 帖子详情-查看大图
@@ -211,20 +211,17 @@ public class ShowViewActivity extends BaseFgActivity {
 
         @Override
         public int getItemPosition(Object object) {
-            // TODO Auto-generated method stub
             return super.getItemPosition(object);
         }
 
         @Override
         public void destroyItem(View arg0, int arg1, Object arg2) {
-            // TODO Auto-generated method stub
             // 移除旧的View
             ((ViewPager) arg0).removeView(imgViews.get(arg1));
         }
 
         @Override
         public Object instantiateItem(View arg0, int arg1) {
-            // TODO Auto-generated method stub
             // 获取新的view
             ((ViewPager) arg0).addView(imgViews.get(arg1));
             return imgViews.get(arg1);
@@ -232,24 +229,20 @@ public class ShowViewActivity extends BaseFgActivity {
 
         @Override
         public void restoreState(Parcelable arg0, ClassLoader arg1) {
-            // TODO Auto-generated method stub
 
         }
 
         @Override
         public Parcelable saveState() {
-            // TODO Auto-generated method stub
             return null;
         }
 
         @Override
         public void startUpdate(View arg0) {
-            // TODO Auto-generated method stub
         }
 
         @Override
         public void finishUpdate(View arg0) {
-            // TODO Auto-generated method stub
         }
     }
 
@@ -259,12 +252,10 @@ public class ShowViewActivity extends BaseFgActivity {
 
         @Override
         public void onPageScrollStateChanged(int arg0) {
-            // TODO Auto-generated method stub
         }
 
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
-            // TODO Auto-generated method stub
         }
 
         @Override

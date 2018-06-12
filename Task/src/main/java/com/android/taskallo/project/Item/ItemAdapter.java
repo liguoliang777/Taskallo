@@ -223,7 +223,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 } else {
                     dialog.dismiss();
                 }
-                //添加卡片
+                //添加卡片 todo
                 if (hintText == R.string.card_title) {
                     ToastUtil.show(context, "卡片");
                 } else {

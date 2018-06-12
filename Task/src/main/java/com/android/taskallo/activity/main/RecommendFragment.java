@@ -13,6 +13,19 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.taskallo.R;
+import com.android.taskallo.adapter.RecommendListAdapter;
+import com.android.taskallo.base.fragment.BaseSearchFragment;
+import com.android.taskallo.bean.PageAction;
+import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.core.utils.Log;
+import com.android.taskallo.core.utils.NetUtil;
+import com.android.taskallo.core.utils.UMEventNameConstant;
+import com.android.taskallo.project.view.ProjListActivity;
+import com.android.taskallo.util.ToastUtil;
+import com.android.taskallo.view.LoadStateView;
+import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
+import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
@@ -32,20 +45,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
-import com.android.taskallo.R;
-import com.android.taskallo.adapter.RecommendListAdapter;
-import com.android.taskallo.base.fragment.BaseSearchFragment;
-import com.android.taskallo.bean.PageAction;
-import com.android.taskallo.core.utils.KeyConstant;
-import com.android.taskallo.core.utils.Log;
-import com.android.taskallo.core.utils.NetUtil;
-import com.android.taskallo.core.utils.UMEventNameConstant;
-import com.android.taskallo.project.view.ProjListActivity;
-import com.android.taskallo.util.ToastUtil;
-import com.android.taskallo.view.LoadStateView;
-import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
-import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
 
 /**
  * 精选
@@ -256,7 +255,7 @@ public class RecommendFragment extends BaseSearchFragment {
         } else {
             pullListView.setPullLoadEnabled(true);
         }*/
-        //设置上拉刷新后停留的地方  // TODO: 2017/7/17 0017
+        //设置上拉刷新后停留的地方
 
         if (0 == pageAction.getCurrentPage() && result.getData().size() <= 2) {
             //pullListView.setScrollLoadEnabled(false);
@@ -264,7 +263,7 @@ public class RecommendFragment extends BaseSearchFragment {
             //pullListView.setPullLoadEnabled(false);
             pullListView.getRefreshableView().setSelection(0);
         }
-        if (pageAction.getCurrentPage() > 0 && result.getData().size() > 2) {//// TODO: 2017/7/17 0017
+        if (pageAction.getCurrentPage() > 0 && result.getData().size() > 2) {
             int index = pullListView.getRefreshableView().getFirstVisiblePosition();
             View v = pullListView.getRefreshableView().getChildAt(0);
             int top = (v == null) ? 0 : (v.getTop() - v.getHeight());

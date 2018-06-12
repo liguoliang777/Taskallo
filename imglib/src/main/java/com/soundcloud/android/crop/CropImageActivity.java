@@ -256,7 +256,6 @@ public class CropImageActivity extends MonitoredActivity {
     }
 
     /*
-     * TODO
      * This should use the decode/crop/encode single step API so that the whole
      * (possibly large) Bitmap doesn't need to be read into memory
      */

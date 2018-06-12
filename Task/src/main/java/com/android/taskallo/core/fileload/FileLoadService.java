@@ -8,6 +8,16 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import com.android.taskallo.App;
+import com.android.taskallo.bean.ThreadInfo;
+import com.android.taskallo.core.db.DatabaseHelper;
+import com.android.taskallo.core.db.DatabaseManager;
+import com.android.taskallo.core.utils.CommonUtil;
+import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.FileUtil;
+import com.android.taskallo.core.utils.Log;
+import com.android.taskallo.util.StringUtil;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -22,16 +32,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
-
-import com.android.taskallo.App;
-import com.android.taskallo.bean.ThreadInfo;
-import com.android.taskallo.core.db.DatabaseHelper;
-import com.android.taskallo.core.db.DatabaseManager;
-import com.android.taskallo.core.utils.CommonUtil;
-import com.android.taskallo.core.utils.Constant;
-import com.android.taskallo.core.utils.FileUtil;
-import com.android.taskallo.core.utils.Log;
-import com.android.taskallo.util.StringUtil;
 
 /**
  * 处理文件下载的服务
@@ -141,7 +141,7 @@ public class FileLoadService extends Service {
         }
 
         //2.查询本机上已安装的游戏
-        //TODO 添加监听器，动态获取是否安装或删除游戏
+        // 添加监听器，动态获取是否安装或删除游戏
         final PackageManager packageManager = this.getPackageManager();
         List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
         if (packageInfos != null) {
@@ -463,7 +463,7 @@ public class FileLoadService extends Service {
                 //获取文件在数据库中的ID
                 fileInfo.setId(dbManager.getLastRowId(DatabaseHelper.TABLE_NAME_FILEINFO));
 
-                //TODO 使用线程池开始下载文件
+                //使用线程池开始下载文件
                 downloadByPool(fileInfo);
 
             }else {

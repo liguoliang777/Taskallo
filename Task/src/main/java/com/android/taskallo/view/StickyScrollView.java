@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.ScrollView;
 
-import java.util.ArrayList;
-
 import com.android.taskallo.R;
+
+import java.util.ArrayList;
 
 /**
  * @author  sjolander.emil@gmail.com
@@ -253,7 +253,6 @@ public class StickyScrollView extends ScrollView {
             ev.offsetLocation(0, -1
                     * ((getScrollY() + stickyViewTopOffset) - getTopForViewRelativeOnlyChild(currentlyStickingView)));
 
-            // XKJ add TODO: remove this
             currentlyStickingView.invalidate();
         }
         return super.dispatchTouchEvent(ev);

@@ -7,15 +7,15 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.os.IBinder;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-
 import com.android.taskallo.App;
 import com.android.taskallo.core.utils.AppInstallHelper;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.TextUtil;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 文件下载接口实现类
@@ -220,7 +220,6 @@ public class FileLoadManager implements IFileLoad {
 
             } else {     //已安装了旧版本
 
-                //TODO 做下载操作
                 if (FileLoadService.gameFileStatusMap == null) {
                     return new GameFileStatus(GameFileStatus.STATE_HAS_INSTALL_OLD);
                 }

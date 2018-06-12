@@ -69,7 +69,7 @@
     <color name="all_claasify_item_2">#2e995b</color>
 
     <color name="transparent_light2">#05000000</color>
-    <color name="transparent_light">#15000000</color>
+    <color name="transparent_light">#40000000</color>
     <color name="transparent_medium">#55000000</color>
     <color name="hint_color">#30000000</color>
     <color name="font_logout_red">#ff6666</color>

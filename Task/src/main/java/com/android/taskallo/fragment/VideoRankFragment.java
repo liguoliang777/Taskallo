@@ -12,21 +12,20 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.android.taskallo.App;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.List;
-
 import com.android.taskallo.R;
-import com.android.taskallo.video.view.VideoDetailActivity;
 import com.android.taskallo.adapter.GvVrVideoAdapter;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.VideoInfo;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.Log;
+import com.android.taskallo.video.view.VideoDetailActivity;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.List;
 
 /**
  * 显示视频排行榜的页面
@@ -102,7 +101,6 @@ public class VideoRankFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                //TODO 提示检测错误，隐藏等待窗口
                 Log.d(TAG, "HTTP请求失败：网络连接错误！");
             }
         };

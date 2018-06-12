@@ -119,7 +119,6 @@ public class FooterLoadingLayout extends LoadingLayout {
 
 	@Override
 	protected void onLoadingDrawableSet(Drawable imageDrawable) {
-		// TODO Auto-generated method stub
-		
+
 	}
 }

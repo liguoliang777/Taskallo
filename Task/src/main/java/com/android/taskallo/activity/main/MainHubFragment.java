@@ -11,19 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBodyBean;
-import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
-import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.GameHubMainClient;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.android.taskallo.R;
 import com.android.taskallo.activity.hub.HubFragmentAdapter;
 import com.android.taskallo.activity.hub.HubItemActivity;
@@ -36,6 +23,18 @@ import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.LoadStateView;
 import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
 import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBodyBean;
+import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
+import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
+import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
+import com.jzt.hol.android.jkda.sdk.services.gamehub.GameHubMainClient;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 精选
@@ -182,7 +181,7 @@ public class MainHubFragment extends BaseSearchFragment {
             //pullListView.setPullLoadEnabled(false);
             pullListView.getRefreshableView().setSelection(0);
         }
-        if (pageAction.getCurrentPage() > 0 && result.getData().size() > 2) {//// TODO: 2017/7/17 0017
+        if (pageAction.getCurrentPage() > 0 && result.getData().size() > 2) {
             int index = pullListView.getRefreshableView().getFirstVisiblePosition();
             View v = pullListView.getRefreshableView().getChildAt(0);
             int top = (v == null) ? 0 : (v.getTop() - v.getHeight());

@@ -3,7 +3,7 @@
     android:useLevel="false">
 
     <!-- 填充 -->
-    <solid android:color="@color/hint_color" />
+    <solid android:color="@color/transparent_light" />
     <!--圆角-->
     <corners
         android:radius="@dimen/dm015"

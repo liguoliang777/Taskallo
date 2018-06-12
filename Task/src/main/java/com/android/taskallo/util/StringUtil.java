@@ -395,7 +395,6 @@ public class StringUtil {
      * @return true 有空格 false 无空格
      */
     static boolean findSpace(String tag) {
-        // TODO Auto-generated method stub
         if (null == tag) {
             return false;
         }
