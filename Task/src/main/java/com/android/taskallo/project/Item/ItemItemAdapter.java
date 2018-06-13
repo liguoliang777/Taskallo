@@ -146,6 +146,11 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
         Collections.swap(mItemItemList, fromPos, toPos);
     }
 
+    public void setList(List<BoardVOListBean> boardVOList) {
+        mItemItemList = boardVOList;
+        notifyDataSetChanged();
+    }
+
     static class SimpleViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout mItemItemMentionPeopleLayout;
         private ExRadioGroup mItemItemLabelLayout;

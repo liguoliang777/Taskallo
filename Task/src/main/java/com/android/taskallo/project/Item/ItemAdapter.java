@@ -179,7 +179,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             footHolder.footBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showAddCardAlertDialog(R.string.list_title, "");
+                    showAddCardAlertDialog(R.string.list_title, "", null, null);
                 }
             });
         } else {
@@ -191,20 +191,23 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             final String itemId = itemInfo.listItemId;
             final String listItemName = itemInfo.listItemName;
             List<BoardVOListBean> boardVOList = itemInfo.boardVOList;
-
+            if (boardVOList == null) {
+                boardVOList = new ArrayList<>();
+            }
+            final  List<BoardVOListBean> boardVOListFinal=boardVOList;
             final ItemViewHolder holder = (ItemViewHolder) hold;
             holder.itemItemRV.setLayoutManager(
                     new ItemLayoutManager(holder.itemView.getContext()));
             //卡片
 
-            RecyclerView.Adapter adapter = new ItemItemAdapter(context, itemId, listItemName,
-                    boardVOList);
+            final ItemItemAdapter adapter = new ItemItemAdapter(context, itemId, listItemName,
+                    boardVOListFinal);
             holder.itemItemRV.setAdapter(adapter);
 
             holder.mItemAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showAddCardAlertDialog(R.string.card_title, itemId);
+                    showAddCardAlertDialog(R.string.card_title, itemId, adapter, boardVOListFinal);
                 }
             });
             if (holder.itemItemRV.getItemDecorationAt(0) == null) {
@@ -307,7 +310,8 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     //添加卡片
-    private void showAddCardAlertDialog(final int hintText, final String itemId) {
+    private void showAddCardAlertDialog(final int hintText, final String itemId, final
+    ItemItemAdapter adapter, final List<BoardVOListBean> boardVOList) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.Dialog_add_card);
         LayoutInflater inflater = LayoutInflater.from(context);
         View v = inflater.inflate(R.layout.layout_dialog_add_card, null);
@@ -352,7 +356,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
                 //添加卡片
                 if (hintText == R.string.card_title) {
-                    addCard(dialog, title, itemId);
+                    addCard(dialog, title, itemId, adapter, boardVOList);
                 } else {
                     addList(dialog, title);
                 }
@@ -361,7 +365,8 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     //添加列表
-    private void addCard(final Dialog dialog, final String title, final String itemId) {
+    private void addCard(final Dialog dialog, final String title, final String itemId,
+                         final ItemItemAdapter adapter, final List<BoardVOListBean> boardVOList) {
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, "网络异常,请检查网络设置");
             return;
@@ -379,8 +384,8 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
                 BoardVOListBean data = result.data;
                 if (result.code == 0 && data != null && context != null) {
-                    ToastUtil.show(context, "卡片创建成功");
-                    mItemItemList.add(data);
+                    boardVOList.add(data);
+                    adapter.setList(boardVOList);
                     dialog.cancel();
                 }
             }
