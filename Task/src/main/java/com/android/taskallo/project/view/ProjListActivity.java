@@ -41,7 +41,7 @@ public class ProjListActivity extends BaseFgActivity {
     private String mProjectId;
     private ProjListActivity context;
     private Button mTitleBackBt;
-    private ItemView mBoardView;
+    private ItemView mItemView;
     private String mProjectName = "";
     private String mProjectImg = "";
 
@@ -64,9 +64,9 @@ public class ProjListActivity extends BaseFgActivity {
         });
         mTitleBackBt.setText(mProjectName);
 
-        mBoardView = (ItemView) findViewById(R.id.boardview);
-        mBoardView.setCallback(new ItemViewCallback());
-        mBoardView.setContext(context, mProjectId);
+        mItemView = (ItemView) findViewById(R.id.boardview);
+        mItemView.setCallback(new ItemViewCallback());
+        mItemView.setContext(context, mProjectId);
 
         setBackground();
 
@@ -85,7 +85,7 @@ public class ProjListActivity extends BaseFgActivity {
 
             @Override
             protected void onPostExecute(Drawable drawable) {
-                mBoardView.setBackground(drawable);
+                mItemView.setBackground(drawable);
             }
         }.execute();
     }
@@ -109,7 +109,7 @@ public class ProjListActivity extends BaseFgActivity {
 
                 ProjDetailInfo projDetailInfo = result.data;
                 if (result.code == 0 && context != null && projDetailInfo != null) {
-                    setData(projDetailInfo);
+                    mItemView.setData(projDetailInfo.listItemVOList);
                 }
             }
         };
@@ -135,11 +135,6 @@ public class ProjListActivity extends BaseFgActivity {
                     }
                 };
         App.requestQueue.add(versionRequest);
-    }
-
-    //设置数据
-    private void setData(ProjDetailInfo projDetailInfo) {
-
     }
 
     public void showPercentDialog() {
@@ -206,7 +201,7 @@ public class ProjListActivity extends BaseFgActivity {
         setDialogWindow(dialog);
     }
 
-    //请求数据
+    //收藏项目
     private void favoriteProj(final Dialog dialog) {
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, "网络异常,请检查网络设置");

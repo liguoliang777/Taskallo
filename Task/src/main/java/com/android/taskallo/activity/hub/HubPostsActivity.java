@@ -11,6 +11,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.taskallo.App;
+import com.android.taskallo.R;
+import com.android.taskallo.activity.BaseFgActivity;
+import com.android.taskallo.adapter.HubAdapter;
+import com.android.taskallo.bean.PostsInfo;
+import com.android.taskallo.core.net.GsonRequest;
+import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.ImageUtil;
+import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -26,16 +35,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.android.taskallo.R;
-import com.android.taskallo.activity.BaseFgActivity;
-import com.android.taskallo.adapter.HubAdapter;
-import com.android.taskallo.bean.PostsInfo;
-import com.android.taskallo.core.net.GsonRequest;
-import com.android.taskallo.core.utils.Constant;
-import com.android.taskallo.core.utils.ImageUtil;
-import com.android.taskallo.core.utils.KeyConstant;
-import com.android.taskallo.util.ToastUtil;
 
 /**
  * 圈子
@@ -110,7 +109,7 @@ public class HubPostsActivity extends BaseFgActivity {
             public void onLoadmore(RefreshLayout refreshlayout) {
                 refreshlayout.finishLoadmore(0);
             /*    mDatas.add("新数据11");
-                mAdapter.setData(mDatas);*/
+                mAdapter.setList(mDatas);*/
             }
         });
 

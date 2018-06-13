@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.bean.JsonResult;
-import com.android.taskallo.bean.ListInfo;
+import com.android.taskallo.bean.ListItemVOListBean;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.KeyConstant;
@@ -48,13 +48,13 @@ import java.util.Map;
 public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int ITEM_TYPE_FOOTER = 2;
-    private List<ListInfo> mList;
+    private List<ListItemVOListBean> mList;
     private int dm_margin_left;
     private ProjListActivity context;
     private LayoutInflater from;
     private String mProjectId;
 
-    public ItemAdapter(Context context, List<ListInfo> list) {
+    public ItemAdapter(Context context, List<ListItemVOListBean> list) {
         dm_margin_left = context.getResources().
                 getDimensionPixelOffset(R.dimen.dm_200);
         from = LayoutInflater.from(context);
@@ -64,6 +64,11 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void setContext(ProjListActivity context, String projectId) {
         this.context = context;
         this.mProjectId = projectId;
+    }
+
+    public void setList(List<ListItemVOListBean> list) {
+        mList = list;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -198,7 +203,6 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         listCopyListBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //前往去分享
                 popWindow.dismiss();
             }
         });

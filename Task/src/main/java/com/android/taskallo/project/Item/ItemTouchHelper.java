@@ -225,7 +225,7 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
      */
     VelocityTracker mVelocityTracker;
 
-    //re-used list for selecting a swap target
+    //re-used itemList for selecting a swap target
     private List<RecyclerView.ViewHolder> mSwapTargets;
 
     //re used for for sorting swap targets
@@ -587,7 +587,7 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
                                 postDispatchSwipe(this, swipeDir);
                             }
                         }
-                        // removed from the list after it is drawn for the last time
+                        // removed from the itemList after it is drawn for the last time
                         if (mOverdrawChild == prevSelected.itemView) {
                             removeChildDrawingOrderCallbackIfNecessary(prevSelected.itemView);
                         }
@@ -829,7 +829,7 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
         if (mSelected != null && holder == mSelected) {
             select(null, ACTION_STATE_IDLE);
         } else {
-            endRecoverAnimation(holder, false); // this may push it into pending cleanup list.
+            endRecoverAnimation(holder, false); // this may push it into pending cleanup itemList.
             if (mPendingCleanup.remove(holder.itemView)) {
                 mCallback.clearView(mRecyclerView, holder);
             }
@@ -1693,7 +1693,7 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
         }
 
         /**
-         * Called by ItemTouchHelper to select a drop target from the list of ViewHolders that
+         * Called by ItemTouchHelper to select a drop target from the itemList of ViewHolders that
          * are under the dragged View.
          * <p>
          * Default implementation filters the View with which dragged layout_proj_item_item have changed position
@@ -1707,7 +1707,7 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
          * override it, make sure it does not do any expensive operations.
          *
          * @param selected    The ViewHolder being dragged by the user.
-         * @param dropTargets The list of ViewHolder that are under the dragged View and
+         * @param dropTargets The itemList of ViewHolder that are under the dragged View and
          *                    candidate as a drop.
          * @param curX        The updated left value of the dragged View after drag translations
          *                    are applied. This value does not include margins added by
@@ -2065,7 +2065,7 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
          * You can override this method to decide how much RecyclerView should scroll in response
          * to this action. Default implementation calculates a value based on the amount of View
          * out of bounds and the time it spent there. The longer user keeps the View out of bounds,
-         * the faster the list will scroll. Similarly, the larger portion of the View is out of
+         * the faster the itemList will scroll. Similarly, the larger portion of the View is out of
          * bounds, the faster the RecyclerView will scroll.
          *
          * @param recyclerView        The RecyclerView instance to which ItemTouchHelper is

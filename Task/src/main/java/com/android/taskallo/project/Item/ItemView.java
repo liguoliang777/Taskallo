@@ -32,7 +32,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 
 import com.android.taskallo.R;
-import com.android.taskallo.bean.ListInfo;
+import com.android.taskallo.bean.ListItemVOListBean;
 import com.android.taskallo.project.view.ProjListActivity;
 
 import java.lang.reflect.Method;
@@ -84,14 +84,11 @@ public class ItemView extends FrameLayout {
         mCallback = callback;
     }
 
-    List<ListInfo> list = new ArrayList();
+    List<ListItemVOListBean> itemList = new ArrayList();
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        list.add(new ListInfo());
-        list.add(new ListInfo());
-        list.add(new ListInfo());
 
         mContentView = new RecyclerView(getContext());
         mContentView.setLayoutParams(generateDefaultLayoutParams());
@@ -99,7 +96,7 @@ public class ItemView extends FrameLayout {
                 .HORIZONTAL, false));
         mContentView.setHasFixedSize(true);
         addView(mContentView);
-        adapter = new ItemAdapter(getContext(), list);
+        adapter = new ItemAdapter(getContext(), itemList);
         mContentView.setAdapter(adapter);
         mContentView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -625,7 +622,11 @@ public class ItemView extends FrameLayout {
     }
 
     public void setContext(ProjListActivity mainActivity, String projectId) {
-        adapter.setContext(mainActivity,projectId);
+        adapter.setContext(mainActivity, projectId);
+    }
+
+    public void setData(List<ListItemVOListBean> listItemVOList) {
+        adapter.setList(listItemVOList);
     }
 
     private class BoardViewGestureDetector extends GestureDetector.SimpleOnGestureListener {
