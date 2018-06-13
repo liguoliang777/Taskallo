@@ -152,6 +152,8 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         InputMethodManager imm = (InputMethodManager) context
                                 .getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(holder.mItemTitle.getWindowToken(), 0);
+
+                        postTitle(newTitleStr);
                     }
 
                 }
@@ -164,6 +166,11 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
         }
+    }
+
+    //修改标题
+    private void postTitle(String newTitleStr) {
+
     }
 
     Button listCopyListBt;
