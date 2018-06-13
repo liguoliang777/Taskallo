@@ -347,7 +347,6 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     ToastUtil.show(context, "卡片");
                 } else {
                     addList(dialog, title);
-
                 }
             }
         });
@@ -362,24 +361,26 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         // 0 默认状态，1 已删除，2  收藏，3 已完成
         String url = Constant.WEB_SITE1 + UrlConstant.url_item;
 
-        Response.Listener<JsonResult> successListener = new Response
-                .Listener<JsonResult>() {
+        Response.Listener<JsonResult<ListItemVOListBean>> successListener = new Response
+                .Listener<JsonResult<ListItemVOListBean>>() {
             @Override
-            public void onResponse(JsonResult result) {
+            public void onResponse(JsonResult<ListItemVOListBean> result) {
                 if (result == null) {
                     ToastUtil.show(context, context.getString(R.string.server_exception));
                     return;
                 }
-                Log.d("", result.msg + ",添加列表:" + result.data);
-                if (result.code == 0 && result.data != null) {
+                ListItemVOListBean data = result.data;
+                if (result.code == 0 && data != null && context != null) {
                     ToastUtil.show(context, "列表创建成功");
+                    mList.add(data);
+                    notifyDataSetChanged();
                     dialog.cancel();
                 }
             }
         };
 
-        Request<JsonResult> versionRequest = new
-                GsonRequest<JsonResult>(
+        Request<JsonResult<ListItemVOListBean>> versionRequest = new
+                GsonRequest<JsonResult<ListItemVOListBean>>(
                         Request.Method.POST, url,
                         successListener, new Response.ErrorListener() {
                     @Override
@@ -388,7 +389,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         ToastUtil.show(context, context.getString(R.string.server_exception));
 
                     }
-                }, new TypeToken<JsonResult>() {
+                }, new TypeToken<JsonResult<ListItemVOListBean>>() {
                 }.getType()) {
                     @Override
                     public Map<String, String> getParams() throws AuthFailureError {
