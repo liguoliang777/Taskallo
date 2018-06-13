@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -137,21 +138,29 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
             holder.mItemTitle.setSelection(holder.mItemTitle.getText().length());
-            holder.mItemTitle.requestFocus();
-            holder.mItemTitle.setFocusable(true);
-            holder.mItemTitle.requestFocusFromTouch();
 
-            holder.mItemTitle.setOnClickListener(new View.OnClickListener() {
+
+            holder.mSaveBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    String newTitleStr = holder.mItemTitle.getText().toString();
+                    if (TextUtil.isAnyEmpty(newTitleStr)) {
+                        ToastUtil.show(context, "标题不能为空");
+                    } else {
+                        //提交新标题
+                        holder.mItemTitle.clearFocus();
+                        InputMethodManager imm = (InputMethodManager) context
+                                .getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(holder.mItemTitle.getWindowToken(), 0);
+                    }
+
                 }
             });
             holder.mItemTitle.setOnFocusChangeListener(new android.view.View
                     .OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    ToastUtil.show(context, ".."+hasFocus);
-
+                    holder.mSaveBt.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
                 }
             });
         }
@@ -193,8 +202,8 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         RecyclerView itemItemRV;
         EditText mItemTitle;
-        Button mItemAdd;
-        private Button mMenuBt;
+        Button mItemAdd, mMenuBt;
+        Button mSaveBt;
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -205,6 +214,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             itemItemRV = itemView.findViewById(R.id.item_recycler_view);
             mItemTitle = itemView.findViewById(R.id.proj_list_item_title);
             mMenuBt = itemView.findViewById(R.id.proj_list_item_menu_bt);
+            mSaveBt = itemView.findViewById(R.id.proj_list_item_title_save_bt);
             mItemAdd = itemView.findViewById(R.id.item_add);
         }
 
