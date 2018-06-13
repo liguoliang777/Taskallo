@@ -194,7 +194,7 @@ public class Rank012345Fragment extends BaseSearchFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), ProjListActivity.class);
-                intent.putExtra(KeyConstant.ID, list.get(position).getId());
+                intent.putExtra(KeyConstant.id, list.get(position).getId());
                 startActivity(intent);
             }
         });

@@ -350,7 +350,7 @@ public class RecommendFragment extends BaseSearchFragment {
                     MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPositionClickCount, map);
 
                     Intent intent = new Intent(context, ProjListActivity.class);
-                    intent.putExtra(KeyConstant.ID, dataBean.getGameId());
+                    intent.putExtra(KeyConstant.id, dataBean.getGameId());
                     startActivity(intent);
                 }
             }
@@ -454,7 +454,7 @@ public class RecommendFragment extends BaseSearchFragment {
                     map.put(KeyConstant.game_Name, dataBean.getGameName());
                     MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPositionClickCount, map);
 
-                    intent.putExtra(KeyConstant.ID, dataBean.getGameId());
+                    intent.putExtra(KeyConstant.id, dataBean.getGameId());
                     startActivity(intent);
                     break;
                 case R.id.recommend_head_llay_1:
@@ -464,7 +464,7 @@ public class RecommendFragment extends BaseSearchFragment {
                     map1.put(KeyConstant.index, 2 + "");
                     map1.put(KeyConstant.game_Name, dataBean1.getGameName());
                     MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPositionClickCount, map1);
-                    intent.putExtra(KeyConstant.ID, dataBean1.getGameId());
+                    intent.putExtra(KeyConstant.id, dataBean1.getGameId());
                     startActivity(intent);
                     break;
                 case R.id.recommend_topics_more_tv://专题

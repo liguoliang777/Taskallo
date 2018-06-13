@@ -101,7 +101,7 @@ public class CircleAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, HubItemActivity.class);
-                    intent.putExtra(KeyConstant.ID, postInfo.getId());
+                    intent.putExtra(KeyConstant.id, postInfo.getId());
                     mContext.startActivity(intent);
                 }
             });

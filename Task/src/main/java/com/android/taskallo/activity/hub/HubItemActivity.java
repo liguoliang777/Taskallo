@@ -78,7 +78,7 @@ public class HubItemActivity extends AppCompatActivity {
         //initStatusBar();
         setContentView(R.layout.activity_game_hub_detail);
         initView();
-        postId = getIntent().getIntExtra(KeyConstant.ID, 0);
+        postId = getIntent().getIntExtra(KeyConstant.id, 0);
         mContext = this;
         //请求数据
         getData();
@@ -221,7 +221,7 @@ public class HubItemActivity extends AppCompatActivity {
 
         super.onNewIntent(intent);
         setIntent(intent);
-        postId = getIntent().getIntExtra(KeyConstant.ID, 0);
+        postId = getIntent().getIntExtra(KeyConstant.id, 0);
         Log.d(TAG, "onNewIntent: " + postId);
 
     }

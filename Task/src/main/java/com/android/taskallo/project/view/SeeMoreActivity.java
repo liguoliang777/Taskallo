@@ -122,7 +122,7 @@ public class SeeMoreActivity extends BaseFgActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(content, ProjListActivity.class);
-                intent.putExtra(KeyConstant.ID, adapter.getItem(position).getId());
+                intent.putExtra(KeyConstant.id, adapter.getItem(position).getId());
                 startActivity(intent);
             }
         });

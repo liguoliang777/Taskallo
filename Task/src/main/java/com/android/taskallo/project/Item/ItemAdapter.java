@@ -108,6 +108,67 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
+    //收藏项目
+    private void postTitleName(final EditText mItemTitleEt, final String oldTitleStr, final
+    String newTitleStr, final String itemId) {
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            mItemTitleEt.setText(oldTitleStr);
+            return;
+        }
+        String url = Constant.WEB_SITE1 + UrlConstant.url_item + "/" + mProjectId;
+
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (context == null) {
+                    return;
+                }
+                if (result == null) {
+                    mItemTitleEt.setText(oldTitleStr);
+                    ToastUtil.show(context, context.getString(R.string.server_exception));
+                    return;
+                }
+                if (result.code == 0 && result.data != null) {
+                    mItemTitleEt.setText(newTitleStr);
+                }
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(
+                        Request.Method.PUT, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        mItemTitleEt.setText(oldTitleStr);
+                        Log.d("", "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.id, itemId);
+                        params.put(KeyConstant.listItemName, newTitleStr);
+                        params.put(KeyConstant.projectId, mProjectId);
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
+    }
+
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder hold, int position) {
         if (hold instanceof FootHolder) {//最后一个
@@ -119,6 +180,13 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
         } else {
+            final ListItemVOListBean itemInfo = mList.get(position);
+            if (itemInfo == null) {
+                return;
+            }
+
+            final String itemId = itemInfo.listItemId;
+
             final ItemViewHolder holder = (ItemViewHolder) hold;
             holder.itemItemRV.setLayoutManager(
                     new ItemLayoutManager(holder.itemView.getContext()));
@@ -142,23 +210,26 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     showPopWindow(view);
                 }
             });
-            holder.mItemTitle.setSelection(holder.mItemTitle.getText().length());
+
+            final String listItemName = itemInfo.listItemName;
+            holder.mItemTitle.setText(listItemName);
+            holder.mItemTitle.setSelection(listItemName.length());
 
 
             holder.mSaveBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     String newTitleStr = holder.mItemTitle.getText().toString();
-                    if (TextUtil.isAnyEmpty(newTitleStr)) {
-                        ToastUtil.show(context, "标题不能为空");
-                    } else {
-                        //提交新标题
-                        holder.mItemTitle.clearFocus();
-                        InputMethodManager imm = (InputMethodManager) context
-                                .getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(holder.mItemTitle.getWindowToken(), 0);
+                    //提交新标题
 
-                        postTitle(newTitleStr);
+                    holder.mItemTitle.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) context
+                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(holder.mItemTitle.getWindowToken(), 0);
+                    if (TextUtil.isAnyEmpty(newTitleStr)) {
+                        holder.mItemTitle.setText(listItemName);
+                    } else {
+                        postTitleName(holder.mItemTitle, listItemName, newTitleStr, itemId);
                     }
 
                 }
@@ -173,10 +244,6 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    //修改标题
-    private void postTitle(String newTitleStr) {
-
-    }
 
     Button listCopyListBt;
     PopupWindow popWindow;//分享提醒

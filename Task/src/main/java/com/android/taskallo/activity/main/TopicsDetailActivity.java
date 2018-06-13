@@ -146,7 +146,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
                 if (position > 0) {
                     Intent i = new Intent();
                     i.setClass(TopicsDetailActivity.this, ProjListActivity.class);
-                    i.putExtra(KeyConstant.ID, list.get(position - 1).getId());
+                    i.putExtra(KeyConstant.id, list.get(position - 1).getId());
                     startActivity(i);
                 }
             }

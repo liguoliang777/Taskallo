@@ -265,7 +265,7 @@ public class MainHubFragment extends BaseSearchFragment {
                     MobclickAgent.onEvent(context, UMEventNameConstant.mainRecommendPositionClickCount, map);
 */
                     Intent intent = new Intent(context, HubItemActivity.class);
-                    intent.putExtra(KeyConstant.ID, dataBean.getId());
+                    intent.putExtra(KeyConstant.id, dataBean.getId());
                     startActivity(intent);
             }
         });

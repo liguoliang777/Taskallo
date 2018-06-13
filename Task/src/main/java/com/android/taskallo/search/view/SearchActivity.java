@@ -186,7 +186,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                 SearchGameVideoBean.DataBean.HotSearchGameListBean hotSearchGameListBean = searchGameList.get(position);
                 String advName = hotSearchGameListBean.getAdvName().trim();
                 dbManager.addSearchHistory(advName);
-                intent.putExtra(KeyConstant.ID, hotSearchGameListBean.getGameId());
+                intent.putExtra(KeyConstant.id, hotSearchGameListBean.getGameId());
                 startActivity(intent);
             }
         });
@@ -199,11 +199,11 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
                     String keywordsStr = dataBean.getKeywords();
                     dbManager.addSearchHistory(keywordsStr);
                     Intent intent = new Intent(SearchActivity.this, ProjListActivity.class);
-                    intent.putExtra(KeyConstant.ID, dataBean.getTypeId());
+                    intent.putExtra(KeyConstant.id, dataBean.getTypeId());
                     startActivity(intent);
                 } else {
                  /*   Intent intent = new Intent(SearchActivity.this, VideoDetailActivity.class);
-                    intent.putExtra(KeyConstant.ID, dataBean.getTypeId());
+                    intent.putExtra(KeyConstant.id, dataBean.getTypeId());
                     startActivity(intent);*/
                 }
             }

@@ -196,7 +196,7 @@ public class CircleActivity extends BaseFgActivity {
                                         @Override
                                         public void onClick(View view) {
                                             Intent intent = new Intent();
-                                            intent.putExtra(KeyConstant.ID, mData.getId());
+                                            intent.putExtra(KeyConstant.id, mData.getId());
                                             intent.setClass(mContext, HubItemActivity.class);
                                             mContext.startActivity(intent);
                                         }

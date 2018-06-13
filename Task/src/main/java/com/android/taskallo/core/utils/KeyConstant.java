@@ -7,7 +7,7 @@ package com.android.taskallo.core.utils;
 public class KeyConstant {
     public static final String GAME_ID = "gameId";
     public static final String gameName = "gameName";
-    public static final String ID = "id";
+    public static final String id = "id";
     public static final String loginName = "loginName";
     public static final String NICK_NAME = "nickName";
     public static final String MOBILE_NUMBER = "mobileNumber";

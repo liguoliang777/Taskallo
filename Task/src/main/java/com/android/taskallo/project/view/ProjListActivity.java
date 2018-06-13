@@ -51,7 +51,7 @@ public class ProjListActivity extends BaseFgActivity {
         initStatusBar();
         setContentView(R.layout.activity_project_list);
 
-        mProjectId = getIntent().getStringExtra(KeyConstant.ID);
+        mProjectId = getIntent().getStringExtra(KeyConstant.id);
         mProjectName = getIntent().getStringExtra(KeyConstant.name);
         mProjectImg = getIntent().getStringExtra(KeyConstant.projectImg);
         context = this;
