@@ -2,6 +2,8 @@ package com.android.taskallo.project.Item;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.android.taskallo.bean.BoardVOListBean;
+
 
 public class ItemViewCallback implements ItemView.Callback {
 
@@ -15,9 +17,9 @@ public class ItemViewCallback implements ItemView.Callback {
     }
 
     @Override
-    public String onRemoved(RecyclerView recyclerView, int position) {
+    public BoardVOListBean onRemoved(RecyclerView recyclerView, int position) {
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
-        String data = "error data";
+        BoardVOListBean data = new BoardVOListBean();
         if (adapter instanceof ItemItemAdapter) {
             data = ((ItemItemAdapter) adapter).remove(position);
         }
@@ -26,7 +28,7 @@ public class ItemViewCallback implements ItemView.Callback {
     }
 
     @Override
-    public void onInserted(RecyclerView recyclerView, int position, String data) {
+    public void onInserted(RecyclerView recyclerView, int position, BoardVOListBean data) {
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
         if (adapter instanceof ItemItemAdapter) {
             ((ItemItemAdapter) adapter).add(position, data);

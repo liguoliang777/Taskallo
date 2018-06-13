@@ -32,6 +32,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 
 import com.android.taskallo.R;
+import com.android.taskallo.bean.BoardVOListBean;
 import com.android.taskallo.bean.ListItemVOListBean;
 import com.android.taskallo.project.view.ProjListActivity;
 
@@ -190,7 +191,7 @@ public class ItemView extends FrameLayout {
             return;
         }
         //单个列表(RecyclerView)
-        mCurrentRecyclerView = mContentView.getChildAt(1).findViewById(R.id.item_recycler_view);
+        mCurrentRecyclerView = mContentView.getChildAt(0).findViewById(R.id.item_recycler_view);
         int mCurrentRecyclerViewTop = mCurrentRecyclerView.getTop();
         int mCurrentRecyclerViewBottom = mCurrentRecyclerView.getBottom();
 
@@ -252,7 +253,7 @@ public class ItemView extends FrameLayout {
 
         // 跨RecyclerView
         if (targetRecycler != null && targetRecycler != mCurrentSelectedRecyclerView) {
-            String data = "error data";
+            BoardVOListBean data = new BoardVOListBean();
             if (mCallback != null) {
                 int pos = ((ItemItemAdapter) mCurrentSelectedRecyclerView.getAdapter())
                         .getPositionFromId();
@@ -410,7 +411,7 @@ public class ItemView extends FrameLayout {
                             } else {
                                 mCurrentSelectedRecyclerView.getAdapter().notifyItemChanged(posi);
                             }
-                            ItemProvider.getInstance().setSelectedId(RecyclerView.NO_ID);
+                            ItemProvider.getInstance().setSelectedId(RecyclerView.NO_ID + "");
                             mRecyclerViewViewHolder = null;
                         }
 
@@ -436,7 +437,7 @@ public class ItemView extends FrameLayout {
             mRecyclerViewViewHolder = selected;
             int position = mRecyclerViewViewHolder.getAdapterPosition();
             ItemItemAdapter adapter = (ItemItemAdapter) mCurrentSelectedRecyclerView.getAdapter();
-            long id = adapter.getIdByPosition(position);
+            String id = adapter.getIdByPosition(position);
             ItemProvider.getInstance().setSelectedId(id);
             if (actionState == ACTION_BIND) {
                 onBindSelected(mRecyclerViewViewHolder.itemView);
@@ -725,8 +726,8 @@ public class ItemView extends FrameLayout {
     public interface Callback {
         void onMoved(RecyclerView recyclerView, int from, int to);
 
-        String onRemoved(RecyclerView recyclerView, int position);
+        BoardVOListBean onRemoved(RecyclerView recyclerView, int position);
 
-        void onInserted(RecyclerView recyclerView, int position, String data);
+        void onInserted(RecyclerView recyclerView, int position, BoardVOListBean data);
     }
 }

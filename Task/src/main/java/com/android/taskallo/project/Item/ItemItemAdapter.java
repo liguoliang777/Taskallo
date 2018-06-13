@@ -3,6 +3,7 @@ package com.android.taskallo.project.Item;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.taskallo.R;
+import com.android.taskallo.bean.BoardVOListBean;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.project.view.CardDetailActivity;
 import com.android.taskallo.project.view.ProjListActivity;
@@ -21,22 +23,26 @@ import java.util.List;
 
 public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.SimpleViewHolder> {
 
-    private List<String> mData = new ArrayList<>();
+    private String mItemId, mListItemName;
+    private List<BoardVOListBean> mItemItemList = new ArrayList<>();
     ProjListActivity context;
     private int width, height, margin;
     private View codeBtn;
     private LinearLayout.LayoutParams layoutParams;
 
-    ItemItemAdapter(ProjListActivity c, int index, int count) {
+    public ItemItemAdapter(ProjListActivity c, String itemId, String listItemName,
+                           List<BoardVOListBean> boardVOList) {
         context = c;
         width = context.getResources().getDimensionPixelSize(R.dimen.dm044);
         height = context.getResources().getDimensionPixelSize(R.dimen.dm023);
         margin = context.getResources().getDimensionPixelSize(R.dimen.dm012);
         layoutParams = new LinearLayout.LayoutParams(width, height);
-        layoutParams.setMargins(0, 0, margin, margin);//4个参数按顺序分别是左上右下
-        for (int i = 0; i < count; i++) {
-            mData.add(String.valueOf(index) + String.valueOf(i));
-        }
+        layoutParams.setMargins(0, 0, margin, margin);
+
+        //数据
+        mItemId = itemId;
+        mListItemName = listItemName;
+        mItemItemList = boardVOList;
     }
 
     @Override
@@ -48,12 +54,17 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
 
     @Override
     public void onBindViewHolder(final SimpleViewHolder holder, final int position) {
-        if (mData == null) {
+        if (mItemItemList == null) {
             return;
         }
-        String titleStr = mData.get(position);
-        holder.mItemTitleTv.setText(titleStr == null ? "" : titleStr);
-        if (Long.parseLong(titleStr) == ItemProvider.getInstance().getSelectedId()) {
+        BoardVOListBean boardVOListBean = mItemItemList.get(position);
+        if (boardVOListBean == null) {
+            return;
+        }
+        String cardTitle = boardVOListBean.boardName;
+        Log.d("http", "卡片标题: " + cardTitle);
+        holder.mItemTitleTv.setText(cardTitle == null ? "" : cardTitle);
+        if (boardVOListBean.boardId.equals(ItemProvider.getInstance().getSelectedId())) {
             holder.itemView.setVisibility(View.INVISIBLE);
         } else {
             holder.itemView.setVisibility(View.VISIBLE);
@@ -67,6 +78,7 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
                 context.startActivity(intent);
             }
         });
+
         if (labelColorIdArr == null || labelColorIdArr.length == 0) {
         } else {
             setLabelColorLayout(labelColorIdArr, holder.mItemItemLabelLayout);
@@ -94,35 +106,44 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mItemItemList == null ? 0 : mItemItemList.size();
     }
 
-    int getPositionFromId() {
-        for (int i = 0; i < mData.size(); i++) {
-            if (Long.parseLong(mData.get(i)) == ItemProvider.getInstance().getSelectedId()) {
+    public int getPositionFromId() {
+        for (int i = 0; i < mItemItemList.size(); i++) {
+            if (mItemItemList.get(i).boardId.equals(ItemProvider.getInstance()
+                    .getSelectedId())) {
                 return i;
             }
         }
         return RecyclerView.NO_POSITION;
     }
 
-    String remove(int position) {
-        return mData.remove(position);
-    }
+    public BoardVOListBean remove(int position) {
+        if (mItemItemList == null) {
+            return null;
+        } else {
+            return mItemItemList.remove(position);
 
-    void add(int position, String data) {
-        mData.add(position, data);
-    }
-
-    long getIdByPosition(int position) {
-        if (position > mData.size() - 1) {
-            return RecyclerView.NO_ID;
         }
-        return Long.parseLong(mData.get(position));
+    }
+
+    public void add(int position, BoardVOListBean data) {
+        if (mItemItemList == null) {
+            mItemItemList = new ArrayList<>();
+        }
+        mItemItemList.add(position, data);
+    }
+
+    public String getIdByPosition(int position) {
+        if (mItemItemList == null || position > mItemItemList.size() - 1) {
+            return RecyclerView.NO_ID + "";
+        }
+        return mItemItemList.get(position).boardId;
     }
 
     void swap(int fromPos, int toPos) {
-        Collections.swap(mData, fromPos, toPos);
+        Collections.swap(mItemItemList, fromPos, toPos);
     }
 
     static class SimpleViewHolder extends RecyclerView.ViewHolder {

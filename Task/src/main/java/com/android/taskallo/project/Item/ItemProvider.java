@@ -7,7 +7,7 @@ class ItemProvider {
 
     static final String TAG = "BoardView";
 
-    private long mSelectedId = RecyclerView.NO_ID;
+    private String mSelectedId = RecyclerView.NO_ID+"";
     private boolean isSmall = false;
     private float mFac = 1;
     private static ItemProvider INSTANCE;
@@ -22,11 +22,11 @@ class ItemProvider {
     private ItemProvider() {
     }
 
-    void setSelectedId(long selectedId) {
+    void setSelectedId(String selectedId) {
         mSelectedId = selectedId;
     }
 
-    long getSelectedId() {
+    String getSelectedId() {
         return mSelectedId;
     }
 

@@ -194,10 +194,10 @@ public class Fragment1Adapter extends BaseAdapter implements StickyListHeadersAd
             msgContent.setText(toolInfo.getToolVersion());
             proCardName.setText(toolInfo.getToolSize());
             msgTime.setText(toolInfo.getToolDesc());  */
-            headPhoto.setImageURI(toolInfo.getToolLogo());
+            headPhoto.setImageURI("");
             msgTypeOrUser.setText("通知类型/用户名");
             msgContent.setText("通知的内容详情提要,通知的内容详情提要");
-            proCardName.setText("项目名" + "――――" + "卡片名");
+            proCardName.setText("项目名" + "―――" + "卡片名");
             msgTime.setText("10:53:05");
         }
     }

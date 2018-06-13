@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.android.taskallo.App;
 import com.android.taskallo.R;
+import com.android.taskallo.bean.BoardVOListBean;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.ListItemVOListBean;
 import com.android.taskallo.core.net.GsonRequest;
@@ -40,6 +41,7 @@ import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +51,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int ITEM_TYPE_FOOTER = 2;
     private List<ListItemVOListBean> mList;
+    private List<BoardVOListBean> mItemItemList = new ArrayList<>();
     private int dm_margin_left;
     private ProjListActivity context;
     private LayoutInflater from;
@@ -176,7 +179,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             footHolder.footBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showAddCardAlertDialog(R.string.list_title);
+                    showAddCardAlertDialog(R.string.list_title, "");
                 }
             });
         } else {
@@ -186,16 +189,22 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
 
             final String itemId = itemInfo.listItemId;
+            final String listItemName = itemInfo.listItemName;
+            List<BoardVOListBean> boardVOList = itemInfo.boardVOList;
 
             final ItemViewHolder holder = (ItemViewHolder) hold;
             holder.itemItemRV.setLayoutManager(
                     new ItemLayoutManager(holder.itemView.getContext()));
-            RecyclerView.Adapter adapter = new ItemItemAdapter(context, position, 10);
+            //卡片
+
+            RecyclerView.Adapter adapter = new ItemItemAdapter(context, itemId, listItemName,
+                    boardVOList);
             holder.itemItemRV.setAdapter(adapter);
+
             holder.mItemAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showAddCardAlertDialog(R.string.card_title);
+                    showAddCardAlertDialog(R.string.card_title, itemId);
                 }
             });
             if (holder.itemItemRV.getItemDecorationAt(0) == null) {
@@ -211,7 +220,6 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
 
-            final String listItemName = itemInfo.listItemName;
             holder.mItemTitle.setText(listItemName);
             holder.mItemTitle.setSelection(listItemName.length());
 
@@ -299,7 +307,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     //添加卡片
-    private void showAddCardAlertDialog(final int hintText) {
+    private void showAddCardAlertDialog(final int hintText, final String itemId) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.Dialog_add_card);
         LayoutInflater inflater = LayoutInflater.from(context);
         View v = inflater.inflate(R.layout.layout_dialog_add_card, null);
@@ -344,12 +352,71 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
                 //添加卡片
                 if (hintText == R.string.card_title) {
-                    ToastUtil.show(context, "卡片");
+                    addCard(dialog, title, itemId);
                 } else {
                     addList(dialog, title);
                 }
             }
         });
+    }
+
+    //添加列表
+    private void addCard(final Dialog dialog, final String title, final String itemId) {
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            return;
+        }
+        // 0 默认状态，1 已删除，2  收藏，3 已完成
+        String url = Constant.WEB_SITE1 + UrlConstant.url_board;
+
+        Response.Listener<JsonResult<BoardVOListBean>> successListener = new Response
+                .Listener<JsonResult<BoardVOListBean>>() {
+            @Override
+            public void onResponse(JsonResult<BoardVOListBean> result) {
+                if (result == null) {
+                    ToastUtil.show(context, context.getString(R.string.server_exception));
+                    return;
+                }
+                BoardVOListBean data = result.data;
+                if (result.code == 0 && data != null && context != null) {
+                    ToastUtil.show(context, "卡片创建成功");
+                    mItemItemList.add(data);
+                    dialog.cancel();
+                }
+            }
+        };
+
+        Request<JsonResult<BoardVOListBean>> versionRequest = new
+                GsonRequest<JsonResult<BoardVOListBean>>(
+                        Request.Method.POST, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        ToastUtil.show(context, context.getString(R.string.server_exception));
+
+                    }
+                }, new TypeToken<JsonResult<BoardVOListBean>>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.projectId, mProjectId);
+                        params.put(KeyConstant.listItemId, itemId);
+                        params.put(KeyConstant.boardName, title);
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 
     //添加列表
@@ -371,7 +438,9 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
                 ListItemVOListBean data = result.data;
                 if (result.code == 0 && data != null && context != null) {
-                    ToastUtil.show(context, "列表创建成功");
+                    if (mList == null) {
+                        mList = new ArrayList<>();
+                    }
                     mList.add(data);
                     notifyDataSetChanged();
                     dialog.cancel();

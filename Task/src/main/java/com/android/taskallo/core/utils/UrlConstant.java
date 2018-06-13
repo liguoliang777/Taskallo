@@ -22,4 +22,5 @@ public class UrlConstant {
     public static final String URL_PROJECT_DETAIL = "/project";
     public static final String url_project_favorite = "/project/favorite";
     public static final String url_item="/item";
+    public static final String url_board="/board";
 }
