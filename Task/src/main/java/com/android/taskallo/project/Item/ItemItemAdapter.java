@@ -75,6 +75,7 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
 
                 Bundle bundle = new Bundle();
                 bundle.putString(KeyConstant.listItemName, mListItemName);
+                bundle.putString(KeyConstant.listItemId, mItemId);
                 bundle.putSerializable(KeyConstant.cardBean, boardVOListBean);
 
                 intent.putExtras(bundle);

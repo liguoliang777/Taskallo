@@ -13,8 +13,8 @@ public class BoardVOListBean implements Serializable {
     public String listItemId;
     public String boardName;
     public String boardDesc;
-    public int expiryTime;
-    public Object updateTime;
+    public String updateTime;
+    public String expiryTime;
     public Object boardFileVOList;
     public List<ProjectLabelVOListBean> projectLabelVOList;
     public List<SubtaskVOListBean> subtaskVOList;
@@ -35,7 +35,7 @@ public class BoardVOListBean implements Serializable {
     }
 
     public static class UserBasicVOListBean implements Serializable {
-        public int id;
+        public String id;
         public String nickName;
         public String headPortrait;
     }
