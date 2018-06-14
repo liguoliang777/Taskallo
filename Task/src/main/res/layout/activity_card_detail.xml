@@ -119,7 +119,7 @@
                     android:maxWidth="@dimen/dm420"
                     android:paddingLeft="@dimen/dm005"
                     android:paddingRight="@dimen/dm005"
-                    android:text="列表名称"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="@dimen/dm024" />
 

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 用户登录的Token信息
+ *
  * Created by zeng on 2016/6/12.
  */
 public class BoardVOListBean implements Serializable {
@@ -20,21 +20,21 @@ public class BoardVOListBean implements Serializable {
     public List<SubtaskVOListBean> subtaskVOList;
     public List<UserBasicVOListBean> userBasicVOList;
 
-    public static class ProjectLabelVOListBean {
+    public static class ProjectLabelVOListBean  implements Serializable {
 
         public String labelId;
         public String labelName;
         public String labelColour;
     }
 
-    public static class SubtaskVOListBean {
+    public static class SubtaskVOListBean implements Serializable {
         public String subtaskId;
         public String subtaskName;
         public long updateTime;
         public Object termVOList;
     }
 
-    public static class UserBasicVOListBean {
+    public static class UserBasicVOListBean implements Serializable {
         public int id;
         public String nickName;
         public String headPortrait;

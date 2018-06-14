@@ -1,25 +1,34 @@
 package com.android.taskallo.project.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
+import com.android.taskallo.bean.BoardVOListBean;
 import com.android.taskallo.core.utils.KeyConstant;
+
+import java.io.Serializable;
 
 public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         .OnMenuItemClickListener {
     private Button mTop_Left_Finished_BT, mTop_Left_Delete_BT, mTopEditSaveBt;
-    private String mCardTitle = "";
+    private String mListTitle = "";
     private String mCardId = "";
     private CardDetailActivity context;
-    private EditText mCardTitleEt;
+    private EditText mCardTitleEt,mCardDescEt;
+    private TextView mListTitleTv;
+    private BoardVOListBean mCardBean;
+    private String mBoardId;
+    private String mListItemId;
+    private String mBoardName;
+    private String mBoardDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,16 +36,40 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         initStatusBar();
         setContentView(R.layout.activity_card_detail);
         context = this;
-        Intent intent = getIntent();
-        mCardTitle = intent.getStringExtra(KeyConstant.cardTitle);
-        mCardTitle = mCardTitle == null ? "" : mCardTitle;
-        mCardId = intent.getStringExtra(KeyConstant.cardId);
+        Bundle bundle = getIntent().getExtras();
+        Serializable serializable = bundle.getSerializable(KeyConstant.cardBean);
+
+        if (serializable != null && serializable instanceof BoardVOListBean) {
+            mCardBean = (BoardVOListBean)serializable;
+
+            mBoardId = mCardBean.boardId;
+            mListItemId = mCardBean.listItemId;
+            mBoardName = mCardBean.boardName;
+            mBoardDesc = mCardBean.boardDesc==null?"": mCardBean.boardDesc;
+        }
+
+        mListTitle = bundle.getString(KeyConstant.listItemName);
 
         mTop_Left_Finished_BT = (Button) findViewById(R.id.top_left_finish_bt);
         mTop_Left_Delete_BT = (Button) findViewById(R.id.top_left_delete_bt);
+
         mCardTitleEt = (EditText) findViewById(R.id.card_title_et);
-        mCardTitleEt.setText(mCardTitle);
-        mCardTitleEt.setSelection(mCardTitle.length());
+        mCardDescEt = (EditText) findViewById(R.id.card_describe_et);
+        mListTitle = mListTitle == null ? "" : mListTitle;
+
+        //列表标题
+        mListTitleTv = (TextView) findViewById(R.id.card_in_list_tv);
+        mListTitleTv.setText(mListTitle);
+
+        //卡片标题
+        mCardTitleEt.setText(mBoardName);
+        mCardTitleEt.setSelection(mBoardName.length());
+
+        //卡片描述
+        mCardDescEt.setText(mBoardDesc);
+        mCardDescEt.setSelection(mBoardDesc.length());
+
+
         mTop_Left_Finished_BT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

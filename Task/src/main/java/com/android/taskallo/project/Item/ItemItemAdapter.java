@@ -2,8 +2,8 @@ package com.android.taskallo.project.Item;
 
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,12 +57,11 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
         if (mItemItemList == null) {
             return;
         }
-        BoardVOListBean boardVOListBean = mItemItemList.get(position);
+        final BoardVOListBean boardVOListBean = mItemItemList.get(position);
         if (boardVOListBean == null) {
             return;
         }
         String cardTitle = boardVOListBean.boardName;
-        Log.d("http", "卡片标题: " + cardTitle);
         holder.mItemTitleTv.setText(cardTitle == null ? "" : cardTitle);
         if (boardVOListBean.boardId.equals(ItemProvider.getInstance().getSelectedId())) {
             holder.itemView.setVisibility(View.INVISIBLE);
@@ -73,8 +72,12 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, CardDetailActivity.class);
-                intent.putExtra(KeyConstant.cardId, position + "");
-                intent.putExtra(KeyConstant.cardTitle, position + "");
+
+                Bundle bundle = new Bundle();
+                bundle.putString(KeyConstant.listItemName, mListItemName);
+                bundle.putSerializable(KeyConstant.cardBean, boardVOListBean);
+
+                intent.putExtras(bundle);
                 context.startActivity(intent);
             }
         });

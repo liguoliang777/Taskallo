@@ -76,4 +76,5 @@ public class KeyConstant {
 
     public static final String boardName="boardName";
     public static final String expiryTime="expiryTime";
+    public static final String cardBean="cardBean";
 }
