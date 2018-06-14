@@ -125,6 +125,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     break;
                 case R.id.top_left_delete_bt:
                     closeInputMethod();
+                    break;
                 case R.id.top_left_finish_bt:
                     finish();
                     break;
