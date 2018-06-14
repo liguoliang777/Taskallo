@@ -1,6 +1,7 @@
 package com.android.taskallo.project.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -97,6 +98,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 } else {
                     EditText inputEt = (EditText) view;
                     mEdit3TypeContentStr = inputEt.getText().toString();
+                    Log.d(TAG, "改变:"+mEdit3TypeContentStr);
+                    postChange();
                 }
 
             }
@@ -120,7 +123,6 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             switch (id) {
                 case R.id.edit_right_save_bt:
                     closeInputMethod();
-                    //保存
 
                     break;
                 case R.id.top_left_delete_bt:
@@ -133,6 +135,10 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             }
         }
     };
+
+    private void postChange() {
+
+    }
 
 
     //顶部弹窗
