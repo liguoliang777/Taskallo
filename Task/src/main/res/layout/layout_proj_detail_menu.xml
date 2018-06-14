@@ -9,9 +9,9 @@
         android:id="@+id/layout_public_private"
         android:layout_width="match_parent"
         android:layout_height="@dimen/diolg_bottom_height"
+        android:layout_marginTop="@dimen/dm020"
         android:background="@drawable/selector_item_bg"
         android:clickable="true"
-        android:layout_marginTop="@dimen/dm020"
         android:paddingLeft="@dimen/dm024"
         android:paddingRight="@dimen/dm024">
 
@@ -84,42 +84,29 @@
             android:src="@drawable/selector_favorite_bt" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/proj_list_menu_email_bt"
-        style="@style/px24_333333"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/diolg_bottom_height"
-        android:layout_marginTop="@dimen/dm001"
-        android:background="@drawable/selector_item_bg"
-        android:clickable="true"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dm024"
-        android:paddingRight="@dimen/dm024"
-        android:text="邮箱订阅" />
-
     <include layout="@layout/layout_line_1px_e6e6e6" />
 
     <TextView
         android:id="@+id/proj_list_menu_has_filed_cad_bt"
         style="@style/px24_333333"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/diolg_bottom_height"
         android:layout_marginTop="@dimen/dm020"
         android:background="@drawable/selector_item_bg"
+        android:clickable="true"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dm024"
         android:paddingRight="@dimen/dm024"
-        android:text="已归档看卡片" />
+        android:text="已归档卡片" />
 
     <TextView
         android:id="@+id/proj_list_menu_has_filed_list_bt"
         style="@style/px24_333333"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/diolg_bottom_height"
         android:layout_marginTop="@dimen/dm001"
         android:background="@drawable/selector_item_bg"
+        android:clickable="true"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dm024"
         android:paddingRight="@dimen/dm024"
@@ -131,11 +118,11 @@
     <TextView
         android:id="@+id/proj_list_menu_copy_proj_bt"
         style="@style/px24_333333"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/diolg_bottom_height"
         android:layout_marginTop="@dimen/dm020"
         android:background="@drawable/selector_item_bg"
+        android:clickable="true"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dm024"
         android:paddingRight="@dimen/dm024"
@@ -144,11 +131,11 @@
     <TextView
         android:id="@+id/proj_list_menu_delete_proj_bt"
         style="@style/px24_333333"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/diolg_bottom_height"
         android:layout_marginTop="@dimen/dm001"
         android:background="@drawable/selector_item_bg"
+        android:clickable="true"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dm024"
         android:paddingRight="@dimen/dm024"
@@ -159,15 +146,31 @@
     <TextView
         android:id="@+id/proj_list_menu_activity_bt"
         style="@style/px24_333333"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/diolg_bottom_height"
         android:layout_marginTop="@dimen/dm020"
         android:background="@drawable/selector_item_bg"
+        android:clickable="true"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dm024"
         android:paddingRight="@dimen/dm024"
         android:text="活动" />
+
+    <include layout="@layout/layout_line_1px_e6e6e6" />
+
+    <TextView
+        android:id="@+id/proj_list_menu_filed_bt"
+        style="@style/px24_333333"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/diolg_bottom_height"
+        android:layout_marginTop="@dimen/dm020"
+        android:background="@drawable/selector_item_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dm024"
+        android:paddingRight="@dimen/dm024"
+        android:text="归档项目"
+        android:textColor="@color/mainColorDrak" />
 
     <include layout="@layout/layout_line_1px_e6e6e6" />
 

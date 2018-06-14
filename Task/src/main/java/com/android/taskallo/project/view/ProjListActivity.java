@@ -192,6 +192,10 @@ public class ProjListActivity extends BaseFgActivity {
                     case R.id.proj_list_menu_dialog_favorite_bt:
                         favoriteProj(dialog);
                         break;
+                        case R.id.proj_list_menu_filed_bt:
+                            //归档项目
+                        //favoriteProj(dialog);
+                        break;
                     case R.id.proj_list_menu_dialog_empty_view:
                         dialog.cancel();
                         break;
