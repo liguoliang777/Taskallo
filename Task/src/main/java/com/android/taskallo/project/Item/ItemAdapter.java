@@ -364,7 +364,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         });
     }
 
-    //添加列表
+    //添加卡片
     private void addCard(final Dialog dialog, final String title, final String itemId,
                          final ItemItemAdapter adapter, final List<BoardVOListBean> boardVOList) {
         if (!NetUtil.isNetworkConnected(context)) {

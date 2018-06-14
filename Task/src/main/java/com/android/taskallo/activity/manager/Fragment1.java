@@ -180,7 +180,6 @@ public class Fragment1 extends BaseSearchFragment {
             String toolName = necessaryListInfo.getToolName();
             List<NecessaryListInfo.AuxiliaryToolsBean> singeToolList = necessaryListInfo
                     .getAuxiliaryTools();
-            Log.d(TAG, "数据: " + singeToolList.size());
             if (singeToolList != null) {
                 for (int j = 0; j < singeToolList.size(); j++) {
                     mToolInfo = singeToolList.get(j);

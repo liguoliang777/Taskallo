@@ -3,6 +3,7 @@ package com.android.taskallo.project.view;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupMenu;
@@ -18,17 +19,22 @@ import java.io.Serializable;
 
 public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         .OnMenuItemClickListener {
-    private Button mTop_Left_Finished_BT, mTop_Left_Delete_BT, mTopEditSaveBt;
+    private Button mTopFinishedBT, mCancelBT, mTopEditSaveBt;
     private String mListTitle = "";
     private String mCardId = "";
     private CardDetailActivity context;
-    private EditText mCardTitleEt,mCardDescEt;
+    private EditText mCardTitleEt, mCardTalkEt, mCardDescEt;
     private TextView mListTitleTv;
     private BoardVOListBean mCardBean;
     private String mBoardId;
     private String mListItemId;
     private String mBoardName;
     private String mBoardDesc;
+    private int TYPE_TITLE = 1;
+    private int TYPE_DESC = 2;
+    private int TYPE_TALK = 3;
+    private int EDITING_TYPE = 0;
+    private String mEdit3TypeContentStr = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,21 +46,22 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         Serializable serializable = bundle.getSerializable(KeyConstant.cardBean);
 
         if (serializable != null && serializable instanceof BoardVOListBean) {
-            mCardBean = (BoardVOListBean)serializable;
+            mCardBean = (BoardVOListBean) serializable;
 
             mBoardId = mCardBean.boardId;
             mListItemId = mCardBean.listItemId;
             mBoardName = mCardBean.boardName;
-            mBoardDesc = mCardBean.boardDesc==null?"": mCardBean.boardDesc;
+            mBoardDesc = mCardBean.boardDesc == null ? "" : mCardBean.boardDesc;
         }
 
         mListTitle = bundle.getString(KeyConstant.listItemName);
 
-        mTop_Left_Finished_BT = (Button) findViewById(R.id.top_left_finish_bt);
-        mTop_Left_Delete_BT = (Button) findViewById(R.id.top_left_delete_bt);
+        mTopFinishedBT = (Button) findViewById(R.id.top_left_finish_bt);
+        mCancelBT = (Button) findViewById(R.id.top_left_delete_bt);
 
         mCardTitleEt = (EditText) findViewById(R.id.card_title_et);
         mCardDescEt = (EditText) findViewById(R.id.card_describe_et);
+        mCardTalkEt = (EditText) findViewById(R.id.card_detail_talk_et);
         mListTitle = mListTitle == null ? "" : mListTitle;
 
         //列表标题
@@ -70,17 +77,62 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         mCardDescEt.setSelection(mBoardDesc.length());
 
 
-        mTop_Left_Finished_BT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        mTopFinishedBT.setOnClickListener(onBtClickListener);
 
         mTopEditSaveBt = (Button) findViewById(R.id.edit_right_save_bt);
-        //mTop_Right_SaveTv.setVisibility(View.VISIBLE);
+
+        mCancelBT.setOnClickListener(onBtClickListener);
+        mTopEditSaveBt.setOnClickListener(onBtClickListener);
+
+        //卡片标题
+        View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                initCancelOkVisibility(b);
+
+                int id = view.getId();
+                if (b) {
+                    EDITING_TYPE = id == R.id.card_title_et ?
+                            TYPE_TITLE : id == R.id.card_describe_et ? TYPE_DESC : TYPE_TALK;
+                } else {
+                    EditText inputEt = (EditText) view;
+                    mEdit3TypeContentStr = inputEt.getText().toString();
+                }
+
+            }
+        };
+        mCardTitleEt.setOnFocusChangeListener(onFocusChangeListener);//标题
+        mCardDescEt.setOnFocusChangeListener(onFocusChangeListener);//描述
+        mCardTalkEt.setOnFocusChangeListener(onFocusChangeListener);//讨论输入框
 
     }
+
+    private void initCancelOkVisibility(boolean b) {
+        mTopEditSaveBt.setVisibility(b ? View.VISIBLE : View.GONE);
+        mCancelBT.setVisibility(b ? View.VISIBLE : View.GONE);
+    }
+
+    //取消
+    View.OnClickListener onBtClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+            switch (id) {
+                case R.id.edit_right_save_bt:
+                    closeInputMethod();
+                    //保存
+
+                    break;
+                case R.id.top_left_delete_bt:
+                    closeInputMethod();
+                case R.id.top_left_finish_bt:
+                    finish();
+                    break;
+
+            }
+        }
+    };
+
 
     //顶部弹窗
     public void showCardPopupWindow(View v) {
@@ -111,18 +163,14 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
     }
 
-/*    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        InputMethodManager imm= (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (getCurrentFocus() != null) {
-                if (getCurrentFocus().getWindowToken() != null) {
-                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                            InputMethodManager.HIDE_NOT_ALWAYS);
-                }
-            }
-        }
-        return super.onTouchEvent(event);
+    private void closeInputMethod() {
+        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(context
+                                .getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);//关闭输入法
+        mCardDescEt.clearFocus();
+        mCardTitleEt.clearFocus();
+        mCardTalkEt.clearFocus();
+    }
 
-    }*/
 }

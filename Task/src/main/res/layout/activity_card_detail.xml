@@ -79,6 +79,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:background="@color/f5f5f5"
             android:orientation="vertical">
             <!--   卡片标题       -->
@@ -87,7 +89,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/mainColor"
-                android:clickable="true"
                 android:padding="@dimen/card_item_margin_left"
                 android:textColor="@color/white"
                 android:textCursorDrawable="@drawable/shape_cursor_color_white"
@@ -401,6 +402,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:background="@color/f5f5f5">
 
                 <ImageView
@@ -413,6 +416,7 @@
                     android:src="@drawable/ic_incard_message" />
 
                 <EditText
+                    android:id="@+id/card_detail_talk_et"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dm030"
@@ -438,6 +442,5 @@
             </ListView>
         </LinearLayout>
     </com.android.taskallo.view.PullScrollView>
-
 
 </RelativeLayout>
