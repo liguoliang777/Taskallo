@@ -70,7 +70,13 @@ public class ProjListActivity extends BaseFgActivity {
 
         setBackground();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         getListInfo();
+
     }
 
     private void setBackground() {

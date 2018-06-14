@@ -114,6 +114,12 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     //不是取消
                     if (!isCancel) {
                         postChange();
+                    } else {
+                        if (EDITING_TYPE == TYPE_TITLE) {
+                            mCardTitleEt.setText(postBoardName);
+                        } else if (EDITING_TYPE == TYPE_DESC) {
+                            mCardDescEt.setText(postDesc);
+                        }
                     }
                 }
 
