@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,20 +18,27 @@ import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.BoardVOListBean;
 import com.android.taskallo.bean.JsonResult;
+import com.android.taskallo.bean.MemberInfo;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.NetUtil;
 import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.core.utils.UrlConstant;
+import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CardDetailActivity extends BaseFgActivity implements PopupMenu
@@ -50,6 +59,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     private int TYPE_TALK = 3;
     private int EDITING_TYPE = 0;
     private String postStr, newStr;
+    private LinearLayout mMemberLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +84,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
         mTopFinishedBT = (Button) findViewById(R.id.top_left_finish_bt);
         mCancelBT = (Button) findViewById(R.id.top_left_delete_bt);
+        mMemberLayout = (LinearLayout) findViewById(R.id.card_item_member_layout);
 
         mCardTitleEt = (EditText) findViewById(R.id.card_title_et);
         mCardDescEt = (EditText) findViewById(R.id.card_describe_et);
@@ -129,6 +140,13 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         mCardDescEt.setOnFocusChangeListener(onFocusChangeListener);//描述
         mCardTalkEt.setOnFocusChangeListener(onFocusChangeListener);//讨论输入框
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //获取成员列表
+        getMemberInfo();
     }
 
     private void initCancelOkVisibility(boolean b) {
@@ -218,6 +236,87 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
     }
 
+    //获取看板成员
+    private void getMemberInfo() {
+        String url = Constant.WEB_SITE1 + UrlConstant.URL_MEMEBER + "/" + mBoardId;
+        if (!NetUtil.isNetworkConnected(context)) {
+            return;
+        }
+
+        Response.Listener<JsonResult<List<MemberInfo>>> successListener = new Response
+                .Listener<JsonResult<List<MemberInfo>>>() {
+            @Override
+            public void onResponse(JsonResult<List<MemberInfo>> result) {
+                if (result == null) {
+                    ToastUtil.show(context, getString(R.string.server_exception));
+                    return;
+                }
+
+                List<MemberInfo> memberInfoList = result.data;
+                if (result.code == 0 && context != null && memberInfoList != null &&
+                        memberInfoList.size() > 0) {
+                    mMemberLayout.setVisibility(View.VISIBLE);
+                    setMemberInfo(memberInfoList);
+                } else {
+                    mMemberLayout.setVisibility(View.INVISIBLE);
+                }
+            }
+        };
+
+        Request<JsonResult<List<MemberInfo>>> versionRequest = new
+                GsonRequest<JsonResult<List<MemberInfo>>>(
+                        Request.Method.GET, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult<List<MemberInfo>>>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
+    }
+
+    private void setMemberInfo(List<MemberInfo> memberInfoList) {
+        int size = memberInfoList.size();
+        int widthHeight = getResources().getDimensionPixelOffset(R.dimen.dm050);
+        for (int i = 0; i < size; i++) {
+            MemberInfo img = memberInfoList.get(i);
+            SimpleDraweeView picassoImageView = new SimpleDraweeView(context);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup
+                    .LayoutParams.WRAP_CONTENT, ViewGroup
+                    .LayoutParams.WRAP_CONTENT);
+
+            params.width = widthHeight;
+            params.height = widthHeight;
+            params.setMargins(0, 0, widthHeight / 4, 0);
+            picassoImageView.setLayoutParams(params);
+
+            GenericDraweeHierarchy hierarchy = GenericDraweeHierarchyBuilder.newInstance
+                    (getResources())
+                    //设置圆形圆角参数；RoundingParams.asCircle()是将图像设置成圆形
+                    .setRoundingParams(RoundingParams.asCircle())
+                    //设置淡入淡出动画持续时间(单位：毫秒ms)
+                    .setFadeDuration(0)
+                    //构建
+                    .build();
+            picassoImageView.setHierarchy(hierarchy);
+
+            picassoImageView.setImageURI(img.headPortrait);
+
+
+            mMemberLayout.addView(picassoImageView);
+        }
+    }
 
     //顶部弹窗
     public void showCardPopupWindow(View v) {

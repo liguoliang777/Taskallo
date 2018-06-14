@@ -169,11 +169,6 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
-            android:name="com.android.taskallo.project.view.VRGameActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" />
-        <activity
             android:name="com.android.taskallo.project.view.LabelsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

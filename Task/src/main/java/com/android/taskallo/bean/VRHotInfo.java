@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class VRHotInfo implements Serializable {
 
-    public List<HotInfo> videoHotInfo;
-    public List<HotInfo> gameHotInfo;
-    public List<HotInfo> QJ360HotInfo;
+    public List<MemberInfo> videoHotInfo;
+    public List<MemberInfo> gameHotInfo;
+    public List<MemberInfo> QJ360HotInfo;
 }

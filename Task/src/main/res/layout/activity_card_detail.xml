@@ -236,6 +236,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
                 android:background="@drawable/selector_bg_white_f2"
                 android:clickable="true">
 
@@ -261,14 +263,14 @@
                     android:textStyle="italic" />
 
                 <LinearLayout
+                    android:background="@drawable/selector_bg_white_f2"
                     android:id="@+id/card_item_member_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/card_item_member_iv"
-                    android:background="@color/white"
                     android:orientation="horizontal"
-                    android:padding="@dimen/dm020"
-                    android:scaleType="fitXY"
+                    android:paddingTop="@dimen/dm015"
+                    android:paddingBottom="@dimen/dm025"
                     android:textColorHint="@color/hint_color"
                     android:visibility="invisible" />
 
