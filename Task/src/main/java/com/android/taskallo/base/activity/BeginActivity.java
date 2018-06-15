@@ -22,7 +22,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.android.taskallo.App;
 import com.android.taskallo.R;
@@ -37,7 +36,6 @@ import com.android.taskallo.core.utils.SPUtils;
 import com.android.taskallo.push.model.PushMessage;
 import com.android.taskallo.user.view.LoginActivity;
 import com.android.taskallo.util.ConvUtil;
-import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -149,8 +147,6 @@ public class BeginActivity extends FragmentActivity {
         preferences = getSharedPreferences(Constant.CONFIG_FILE_NAME, MODE_PRIVATE);
         userName = preferences.getString(Constant.CONFIG_USER_PHONE, "");
         pwd = preferences.getString(Constant.CONFIG_USER_PWD, "");
-        Log.d(TAG, "登陆:" + pwd);
-        Intent intent;
         if (pwd != null && !"".equals(pwd)) {
             String url = Constant.WEB_SITE + Constant.URL_USER_LOGIN;
 
@@ -159,7 +155,7 @@ public class BeginActivity extends FragmentActivity {
                 @Override
                 public void onResponse(JsonResult result) {
                     if (result == null) {
-                        Toast.makeText(mContext, "服务端异常", Toast.LENGTH_SHORT).show();
+                        startLoginActivity();
                         return;
                     }
                     if (result.code == 0) {
@@ -170,7 +166,7 @@ public class BeginActivity extends FragmentActivity {
                         startActivity(new Intent(mContext, MainHomeActivity.class));
                         finish();
                     } else {
-                        ToastUtil.show(mContext, "登录失败，" + result.msg);
+                        startLoginActivity();
                     }
                 }
             };
@@ -179,7 +175,7 @@ public class BeginActivity extends FragmentActivity {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    ToastUtil.show(mContext, "登录失败，请检查网络连接!");
+                    startLoginActivity();
                     Log.d(TAG, "HTTP请求失败：网络连接错误！" + volleyError.getMessage());
                 }
             };
@@ -199,9 +195,7 @@ public class BeginActivity extends FragmentActivity {
             };
             App.requestQueue.add(versionRequest1);
         } else {
-            intent = new Intent(mContext, LoginActivity.class);
-            startActivity(intent);
-            finish();
+            startLoginActivity();
         }
         //去掉欢迎的滑动页
 /*        if (isFirstInstall) {
@@ -218,6 +212,12 @@ public class BeginActivity extends FragmentActivity {
             finish();
 
         } else {*/
+    }
+
+    private void startLoginActivity() {
+        Intent intent = new Intent(mContext, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {

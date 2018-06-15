@@ -394,7 +394,7 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                ToastUtil.show(mContext, "登录失败，请检查网络连接!");
+                ToastUtil.show(mContext, getString(R.string.no_network));
                 Log.d(TAG, "HTTP请求失败：网络连接错误！" + volleyError.getMessage());
                 if (null != mContext && !mContext.isFinishing()) {
                     dialogHelper.hideAlert();

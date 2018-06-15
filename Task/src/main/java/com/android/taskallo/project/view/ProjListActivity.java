@@ -110,6 +110,7 @@ public class ProjListActivity extends BaseFgActivity {
         String url = Constant.WEB_SITE1 + UrlConstant.URL_PROJECT_DETAIL + "/" + mProjectId;
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, "网络异常,请检查网络设置");
+            mItemView.setPadding(100, 0, 0, 0);
             return;
         }
 
