@@ -9,7 +9,7 @@ public class UrlConstant {
     public static final String URL_MODIFY_PASSWORD = "/user/modifyPassword";
     public static final String URL_SEND_BINDING_CODE = "/user/sendBindingCode";
     public static final String URL_BINDING_EMAIL = "/user/bindingEmail";
-    public static final String URL_ADD_PROJECT = "/project";
+    public static final String URL_PROJECT = "/project";
     public static final String URL_BINDING_PHONE_NUMBER = "/user/bindingPhoneNumber";
 
     //推荐头像地址开头

@@ -212,6 +212,10 @@ public class ProjListActivity extends BaseFgActivity {
                         //归档项目
                         filedProj(dialog);
                         break;
+                    case R.id.proj_list_menu_delete_proj_bt:
+                        //删除项目
+                        deleteProj(dialog);
+                        break;
                     case R.id.proj_list_menu_dialog_empty_view:
                         dialog.cancel();
                         break;
@@ -220,13 +224,67 @@ public class ProjListActivity extends BaseFgActivity {
         };
         inflate.findViewById(R.id.proj_menu_dialog_favorite_bt).setOnClickListener
                 (mDialogClickLstener);
-        inflate.findViewById(R.id.proj_list_menu_filed_bt).setOnClickListener
+        inflate.findViewById(R.id.proj_list_menu_filed_bt).setOnClickListener(mDialogClickLstener);
+        inflate.findViewById(R.id.proj_list_menu_delete_proj_bt).setOnClickListener
                 (mDialogClickLstener);
         inflate.findViewById(R.id.proj_list_menu_dialog_empty_view).setOnClickListener
                 (mDialogClickLstener);
         dialog.setContentView(inflate);//将布局设置给Dialog
 
         setDialogWindow(dialog);
+    }
+
+    //删除项目
+    private void deleteProj(final Dialog dialog) {
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            return;
+        }
+        String url = Constant.WEB_SITE1 + UrlConstant.URL_PROJECT + "/1";
+
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null) {
+                    ToastUtil.show(context, context.getString(R.string.server_exception));
+                    return;
+                }
+                if (result.code == 0 && context != null) {
+                    dialog.cancel();
+                    finish();
+                }
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(Request.Method.DELETE, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        ToastUtil.show(context, context.getString(R.string.server_exception));
+
+                    }
+                }, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.id, mProjectId);
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 
     //归档项目

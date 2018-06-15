@@ -49,7 +49,7 @@ public class Fragment0 extends BaseSearchFragment {
     private RecyclerView main0Rv, mDeletedRv, mFinishedRv;
     private Fragment0_0_Adapter main0_Adapter;
     private Fragment0_1_Adapter mDeleteAdapter;
-    private List<ProjItemInfo> main1_List = new ArrayList<>();
+    private List<ProjItemInfo> m123List = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
     private TextView mDeletedOpenClosedBt, mFinishedOpenClosedBt;
     private LinearLayout layout0;
@@ -113,7 +113,7 @@ public class Fragment0 extends BaseSearchFragment {
         mGridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         main1Rv = headView.findViewById(R.id.fragment0_rv_1);//条目
         main1Rv.setLayoutManager(mGridLayoutManager);
-        main1_Adapter = new Fragment0_1_Adapter(context, main1_List);
+        main1_Adapter = new Fragment0_1_Adapter(context, m123List);
         main1Rv.setHasFixedSize(true);
         main1Rv.setNestedScrollingEnabled(false);
         main1Rv.setAdapter(main1_Adapter);
@@ -140,7 +140,7 @@ public class Fragment0 extends BaseSearchFragment {
                 context, LinearLayoutManager.VERTICAL, false);
         mFinishedRv.setLayoutManager(linearLayoutManager);
 
-        mFinishedAdapter = new Fragment0_1_Adapter(context, main1_List);
+        mFinishedAdapter = new Fragment0_1_Adapter(context, m123List);
         mFinishedRv.setHasFixedSize(true);
         mFinishedRv.setNestedScrollingEnabled(false);
         mFinishedRv.setAdapter(mFinishedAdapter);
@@ -168,10 +168,10 @@ public class Fragment0 extends BaseSearchFragment {
                 context, LinearLayoutManager.VERTICAL, false);
         mDeletedRv.setLayoutManager(linearLayoutManager);
 
-        mDeleteAdapter = new Fragment0_1_Adapter(context, main1_List);
+        mDeleteAdapter = new Fragment0_1_Adapter(context, m123List);
         mDeletedRv.setHasFixedSize(true);
         mDeletedRv.setNestedScrollingEnabled(false);
-        mDeletedRv.setAdapter(mFinishedAdapter);
+        mDeletedRv.setAdapter(mDeleteAdapter);
     }
 
 
@@ -180,6 +180,7 @@ public class Fragment0 extends BaseSearchFragment {
 
     //请求数据
     private void getTypeData(final int type) {
+        Log.d("http", "类型:" + type);
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, "网络异常,请检查网络设置");
             return;
@@ -229,13 +230,11 @@ public class Fragment0 extends BaseSearchFragment {
         Log.d(TAG, type + ",请求,类型:" + dataList.size());
         switch (type) {
             case 0:
-                main1_List = dataList;
-                main1_Adapter.setList(main1_List);
+                main1_Adapter.setList(dataList);
                 break;
             case 1:
-                main1_List = dataList;
-                mDeleteAdapter.setList(main1_List);
-                mDeletedRv.setAdapter(mFinishedAdapter);
+                mDeleteAdapter.setList(dataList);
+                mDeletedRv.setAdapter(mDeleteAdapter);
                 break;
             case 2://收藏
                 if (dataList == null || dataList.size() == 0) {
@@ -247,8 +246,7 @@ public class Fragment0 extends BaseSearchFragment {
                 main0_Adapter.setList(main0_List);
                 break;
             case 3:
-                main1_List = dataList;
-                mFinishedAdapter.setList(main1_List);
+                mFinishedAdapter.setList(dataList);
                 mFinishedRv.setAdapter(mFinishedAdapter);
                 break;
         }

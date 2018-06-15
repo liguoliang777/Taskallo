@@ -122,7 +122,7 @@ public class ProjectAddActivity extends BaseFgActivity {
         if (TextUtil.isEmpty(projSubtitle)) {
             projSubtitle = ",";
         }
-        String url = Constant.WEB_SITE1 + UrlConstant.URL_ADD_PROJECT;
+        String url = Constant.WEB_SITE1 + UrlConstant.URL_PROJECT;
         Response.Listener<JsonResult> successListener = new Response
                 .Listener<JsonResult>() {
             @Override
