@@ -169,7 +169,7 @@
         android:gravity="center"
         android:paddingLeft="@dimen/dm024"
         android:paddingRight="@dimen/dm024"
-        android:text="归档项目"
+        android:text="归档看板"
         android:textColor="@color/mainColorDrak" />
 
     <include layout="@layout/layout_line_1px_e6e6e6" />

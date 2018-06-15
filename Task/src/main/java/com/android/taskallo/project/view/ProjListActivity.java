@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.taskallo.App;
@@ -41,9 +42,11 @@ public class ProjListActivity extends BaseFgActivity {
     private String mProjectId;
     private ProjListActivity context;
     private Button mTitleBackBt;
+    private ImageButton mTitleSearchBt,mTitleMsgBt,mTitleMenuBt;
     private ItemView mItemView;
     private String mProjectName = "";
     private String mProjectImg = "";
+    private TextView mFeildEmptyTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,10 @@ public class ProjListActivity extends BaseFgActivity {
         mProjectImg = getIntent().getStringExtra(KeyConstant.projectImg);
         context = this;
         mTitleBackBt = (Button) findViewById(R.id.proj_detail_title_back);
+        mTitleMenuBt = (ImageButton) findViewById(R.id.proj_detail_top_menu_back);
+        mTitleMsgBt = (ImageButton) findViewById(R.id.proj_detail_top_msg_bt);
+        mTitleSearchBt = (ImageButton) findViewById(R.id.proj_detail_top_search_bt);
+        mFeildEmptyTv = (TextView) findViewById(R.id.proj_feild_empty_tv);
         mTitleBackBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -231,6 +238,10 @@ public class ProjListActivity extends BaseFgActivity {
                 }
                 Log.d(TAG, result.msg + ",归档成功:" + result.data);
                 if (result.code == 0) {
+                    mFeildEmptyTv.setVisibility(View.VISIBLE);
+                    mTitleMenuBt.setVisibility(View.GONE);
+                    mTitleMsgBt.setVisibility(View.GONE);
+                    mTitleSearchBt.setVisibility(View.GONE);
                     dialog.cancel();
                 } else {
                     ToastUtil.show(context, getString(R.string.server_exception));
@@ -240,7 +251,7 @@ public class ProjListActivity extends BaseFgActivity {
 
         Request<JsonResult> versionRequest = new
                 GsonRequest<JsonResult>(
-                        Request.Method.GET, url,
+                        Request.Method.PUT, url,
                         successListener, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
@@ -249,6 +260,13 @@ public class ProjListActivity extends BaseFgActivity {
                     }
                 }, new TypeToken<JsonResult>() {
                 }.getType()) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.id, mProjectId);
+                        return params;
+                    }
+
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
