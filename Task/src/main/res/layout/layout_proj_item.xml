@@ -49,6 +49,7 @@
             android:layout_toLeftOf="@id/proj_list_item_menu_bt"
             android:background="@null"
             android:focusable="true"
+            android:longClickable="false"
             android:focusableInTouchMode="true"
             android:gravity="center_vertical"
             android:paddingRight="@dimen/dm010"

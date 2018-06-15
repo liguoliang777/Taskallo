@@ -173,7 +173,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder hold, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder hold, final int position) {
         if (hold instanceof FootHolder) {//最后一个
             FootHolder footHolder = (FootHolder) hold;
             footHolder.footBt.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +194,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (boardVOList == null) {
                 boardVOList = new ArrayList<>();
             }
-            final  List<BoardVOListBean> boardVOListFinal=boardVOList;
+            final List<BoardVOListBean> boardVOListFinal = boardVOList;
             final ItemViewHolder holder = (ItemViewHolder) hold;
             holder.itemItemRV.setLayoutManager(
                     new ItemLayoutManager(holder.itemView.getContext()));
@@ -219,7 +219,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             holder.mMenuBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showPopWindow(view);
+                    showPopWindow(view, position, itemId);
                 }
             });
 
@@ -256,12 +256,10 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
 
-    Button listCopyListBt;
     PopupWindow popWindow;//分享提醒
 
-    private void showPopWindow(View v) {
+    private void showPopWindow(View v, final int position, final String itemId) {
         View inflate = from.inflate(R.layout.layout_proj_list_menu, null);
-        listCopyListBt = (Button) inflate.findViewById(R.id.list_copy_list_bt);
 
         popWindow = new PopupWindow(inflate, LinearLayout.LayoutParams
                 .WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
@@ -278,13 +276,78 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 .SOFT_INPUT_ADJUST_RESIZE);
 
         popWindow.showAsDropDown(v, dm_margin_left, dm_margin_left / 10);
-        listCopyListBt.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener itemMenuPopupClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 popWindow.dismiss();
-            }
-        });
+                switch (view.getId()) {
 
+                    case R.id.item_menu_copy_bt:
+                        break;
+                    case R.id.item_menu_delete_bt:
+                        deleteList(position, itemId);
+                        break;
+                }
+            }
+        };
+        inflate.findViewById(R.id.item_menu_copy_bt).setOnClickListener(itemMenuPopupClickListener);
+        inflate.findViewById(R.id.item_menu_delete_bt).setOnClickListener
+                (itemMenuPopupClickListener);
+
+    }
+
+    //删除列表
+    private void deleteList(final int position, final String itemId) {
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            return;
+        }
+        String url = Constant.WEB_SITE1 + UrlConstant.url_item + "/" + mProjectId + "/" + itemId;
+
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null) {
+                    ToastUtil.show(context, context.getString(R.string.server_exception));
+                    return;
+                }
+                if (result.code == 0 && mList != null && context != null) {
+                    mList.remove(position);
+                    setList(mList);
+                }
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(Request.Method.DELETE, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        ToastUtil.show(context, context.getString(R.string.server_exception));
+
+                    }
+                }, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.projectId, mProjectId);
+                        params.put(KeyConstant.id, itemId);
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
