@@ -29,8 +29,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
-import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverListBean;
-import com.jzt.hol.android.jkda.sdk.bean.main.DiscoverTopBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,15 +45,11 @@ public class Fragment0 extends BaseSearchFragment {
     private RecyclerView main1Rv;
     private Fragment0_1_Adapter main1_Adapter;
     private List<ProjItemInfo> main0_List = new ArrayList();
-    private Fragment0_1_Adapter mTopicsAdapter;
+    private Fragment0_1_Adapter mFinishedAdapter;
     private RecyclerView main0Rv, mDeletedRv, mFinishedRv;
-    private RecyclerView mHotRecentRv;
     private Fragment0_0_Adapter main0_Adapter;
-    private List<DiscoverTopBean> mHotRecentList = new ArrayList();
-    private Fragment0_0_Adapter mHotRecentAdapter;
+    private Fragment0_1_Adapter mDeleteAdapter;
     private List<ProjItemInfo> main1_List = new ArrayList<>();
-    private DiscoverListBean.DataBean.DailyNewGamesListBean dailyNewGames;
-    private DiscoverListBean.DataBean.WeeklyNewGamesListBean hotGames;
     private LinearLayoutManager linearLayoutManager;
     private TextView mDeletedOpenClosedBt, mFinishedOpenClosedBt;
     private LinearLayout layout0;
@@ -125,7 +119,7 @@ public class Fragment0 extends BaseSearchFragment {
         main1Rv.setAdapter(main1_Adapter);
     }
 
-    //收起.展开
+    //完成看板
     private void init2(View headView) {
         mFinishedRv = headView.findViewById(R.id.rv_subject);
         mFinishedOpenClosedBt = (TextView) headView.findViewById(R.id
@@ -146,10 +140,10 @@ public class Fragment0 extends BaseSearchFragment {
                 context, LinearLayoutManager.VERTICAL, false);
         mFinishedRv.setLayoutManager(linearLayoutManager);
 
-        mTopicsAdapter = new Fragment0_1_Adapter(context, main1_List);
+        mFinishedAdapter = new Fragment0_1_Adapter(context, main1_List);
         mFinishedRv.setHasFixedSize(true);
         mFinishedRv.setNestedScrollingEnabled(false);
-        mFinishedRv.setAdapter(mTopicsAdapter);
+        mFinishedRv.setAdapter(mFinishedAdapter);
 
     }
 
@@ -174,10 +168,10 @@ public class Fragment0 extends BaseSearchFragment {
                 context, LinearLayoutManager.VERTICAL, false);
         mDeletedRv.setLayoutManager(linearLayoutManager);
 
-        mTopicsAdapter = new Fragment0_1_Adapter(context, main1_List);
+        mDeleteAdapter = new Fragment0_1_Adapter(context, main1_List);
         mDeletedRv.setHasFixedSize(true);
         mDeletedRv.setNestedScrollingEnabled(false);
-        mDeletedRv.setAdapter(mTopicsAdapter);
+        mDeletedRv.setAdapter(mFinishedAdapter);
     }
 
 
@@ -232,15 +226,18 @@ public class Fragment0 extends BaseSearchFragment {
 
     // 0 默认状态，1 已删除，2  收藏，3 已完成
     public void setData(List<ProjItemInfo> dataList, int type) {
-        Log.d(TAG, type+",请求,类型:" +dataList.size() );
+        Log.d(TAG, type + ",请求,类型:" + dataList.size());
         switch (type) {
             case 0:
                 main1_List = dataList;
                 main1_Adapter.setList(main1_List);
                 break;
             case 1:
+                main1_List = dataList;
+                mDeleteAdapter.setList(main1_List);
+                mDeletedRv.setAdapter(mFinishedAdapter);
                 break;
-            case 2://收藏,星标
+            case 2://收藏
                 if (dataList == null || dataList.size() == 0) {
                     layout0.setVisibility(View.GONE);
                     return;
@@ -250,6 +247,9 @@ public class Fragment0 extends BaseSearchFragment {
                 main0_Adapter.setList(main0_List);
                 break;
             case 3:
+                main1_List = dataList;
+                mFinishedAdapter.setList(main1_List);
+                mFinishedRv.setAdapter(mFinishedAdapter);
                 break;
         }
 
