@@ -18,6 +18,7 @@ import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.JsonResult;
+import com.android.taskallo.bean.ListItemVOListBean;
 import com.android.taskallo.bean.ProjDetailInfo;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
@@ -36,13 +37,14 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProjListActivity extends BaseFgActivity {
     private String mProjectId;
     private ProjListActivity context;
     private Button mTitleBackBt;
-    private ImageButton mTitleSearchBt,mTitleMsgBt,mTitleMenuBt;
+    private ImageButton mTitleSearchBt, mTitleMsgBt, mTitleMenuBt;
     private ItemView mItemView;
     private String mProjectName = "";
     private String mProjectImg = "";
@@ -122,7 +124,13 @@ public class ProjListActivity extends BaseFgActivity {
 
                 ProjDetailInfo projDetailInfo = result.data;
                 if (result.code == 0 && context != null && projDetailInfo != null) {
-                    mItemView.setData(projDetailInfo.listItemVOList);
+                    List<ListItemVOListBean> listItemVOList = projDetailInfo.listItemVOList;
+                    if (listItemVOList != null && listItemVOList.size() > 0) {
+                        mItemView.setData(listItemVOList);
+                    } else {
+                        mItemView.setPadding(100, 0, 0, 0);
+                    }
+
                 }
             }
         };
