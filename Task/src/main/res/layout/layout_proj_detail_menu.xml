@@ -58,7 +58,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/proj_list_menu_dialog_favorite_bt"
+        android:id="@+id/proj_menu_dialog_favorite_bt"
         android:layout_width="match_parent"
         android:layout_height="@dimen/diolg_bottom_height"
         android:layout_marginTop="@dimen/dm001"

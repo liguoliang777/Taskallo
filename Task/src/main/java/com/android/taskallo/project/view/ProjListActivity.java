@@ -189,12 +189,12 @@ public class ProjListActivity extends BaseFgActivity {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
-                    case R.id.proj_list_menu_dialog_favorite_bt:
+                    case R.id.proj_menu_dialog_favorite_bt:
                         favoriteProj(dialog);
                         break;
-                        case R.id.proj_list_menu_filed_bt:
-                            //归档项目
-                        //favoriteProj(dialog);
+                    case R.id.proj_list_menu_filed_bt:
+                        //归档项目
+                        filedProj(dialog);
                         break;
                     case R.id.proj_list_menu_dialog_empty_view:
                         dialog.cancel();
@@ -202,13 +202,63 @@ public class ProjListActivity extends BaseFgActivity {
                 }
             }
         };
-        inflate.findViewById(R.id.proj_list_menu_dialog_favorite_bt).setOnClickListener
+        inflate.findViewById(R.id.proj_menu_dialog_favorite_bt).setOnClickListener
+                (mDialogClickLstener);
+        inflate.findViewById(R.id.proj_list_menu_filed_bt).setOnClickListener
                 (mDialogClickLstener);
         inflate.findViewById(R.id.proj_list_menu_dialog_empty_view).setOnClickListener
                 (mDialogClickLstener);
         dialog.setContentView(inflate);//将布局设置给Dialog
 
         setDialogWindow(dialog);
+    }
+
+    //归档项目
+    private void filedProj(final Dialog dialog) {
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            return;
+        }
+        String url = Constant.WEB_SITE1 + UrlConstant.url_project_failed + "/" + mProjectId;
+
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null) {
+                    ToastUtil.show(context, getString(R.string.server_exception));
+                    return;
+                }
+                Log.d(TAG, result.msg + ",归档成功:" + result.data);
+                if (result.code == 0) {
+                    dialog.cancel();
+                } else {
+                    ToastUtil.show(context, getString(R.string.server_exception));
+                }
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(
+                        Request.Method.GET, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 
     //收藏项目
@@ -228,8 +278,8 @@ public class ProjListActivity extends BaseFgActivity {
                     ToastUtil.show(context, getString(R.string.server_exception));
                     return;
                 }
-                Log.d(TAG, result.msg + ",请求主界面数据:" + result.data);
                 if (result.code == 0 && result.data != null) {
+                    ToastUtil.show(context, "项目收藏成功");
                     dialog.cancel();
                 }
             }
