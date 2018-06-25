@@ -25,4 +25,5 @@ public class UrlConstant {
     public static final String url_item = "/item";
     public static final String url_board = "/board";
     public static final String URL_MEMEBER = "/member";
+    public static final String url_label = "/label";
 }

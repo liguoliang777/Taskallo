@@ -170,7 +170,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
-            android:name="com.android.taskallo.project.view.LabelsActivity"
+            android:name="com.android.taskallo.project.TagAddActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
@@ -251,10 +251,10 @@
             android:name="com.android.taskallo.activity.hub.CircleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.android.taskallo.activity.main.TagListActivity"
+            android:name="com.android.taskallo.project.TagListActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.android.taskallo.activity.main.TopicsDetailActivity"
+            android:name="com.android.taskallo.activity.main.TagEditActivity"
             android:launchMode="singleTask" />
         <activity android:name="com.android.taskallo.activity.manager.DownloadCenterActivity" />
         <activity android:name="com.android.taskallo.activity.manager.FeedbackSucceedActivity" />

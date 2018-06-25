@@ -42,7 +42,7 @@ import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
  * Created by gp on 2017/4/13 0013.
  */
 
-public class TopicsDetailActivity extends BaseFgActivity {
+public class TagEditActivity extends BaseFgActivity {
 
     private SimpleDraweeView sdv_img;
     private TextView tv_info;
@@ -52,7 +52,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
     private String desc, url;
     private PageAction pageAction;
     public static int PAGE_SIZE = 10;
-    private TopicsDetailActivity content;
+    private TagEditActivity content;
     private Object categoryId;
     private RelativeLayout mTitleRlay;
     private Button leftBt;
@@ -69,7 +69,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
             tintManager.setStatusBarTintResource(R.color.transparent);
         }
         setContentView(R.layout.topics_detail_activity);
-        content = TopicsDetailActivity.this;
+        content = TagEditActivity.this;
         title = getIntent().getStringExtra(KeyConstant.TITLE);
         categoryId = getIntent().getExtras().get(KeyConstant.category_Id);
         Log.d(TAG, "categoryId: " + categoryId);
@@ -145,7 +145,7 @@ public class TopicsDetailActivity extends BaseFgActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     Intent i = new Intent();
-                    i.setClass(TopicsDetailActivity.this, ProjListActivity.class);
+                    i.setClass(TagEditActivity.this, ProjListActivity.class);
                     i.putExtra(KeyConstant.id, list.get(position - 1).getId());
                     startActivity(i);
                 }

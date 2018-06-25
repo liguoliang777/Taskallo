@@ -18,6 +18,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.taskallo.R;
+import com.android.taskallo.bean.GameCategorys;
+import com.android.taskallo.bean.GameImage;
+import com.android.taskallo.bean.GameInfo;
+import com.android.taskallo.core.utils.CommonUtil;
+import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.fragment.ImageDialogFragment;
+import com.android.taskallo.gamehub.view.ShowViewActivity;
+import com.android.taskallo.project.TagAddActivity;
+import com.android.taskallo.project.presenter.HomeFragmentChangeLayoutListener;
+import com.android.taskallo.util.ToastUtil;
+import com.android.taskallo.view.AutoHeightViewPager;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.Serializable;
@@ -26,18 +38,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import com.android.taskallo.R;
-import com.android.taskallo.bean.GameCategorys;
-import com.android.taskallo.bean.GameImage;
-import com.android.taskallo.bean.GameInfo;
-import com.android.taskallo.core.utils.CommonUtil;
-import com.android.taskallo.core.utils.KeyConstant;
-import com.android.taskallo.fragment.ImageDialogFragment;
-import com.android.taskallo.project.presenter.HomeFragmentChangeLayoutListener;
-import com.android.taskallo.gamehub.view.ShowViewActivity;
-import com.android.taskallo.util.ToastUtil;
-import com.android.taskallo.view.AutoHeightViewPager;
 
 import static com.android.taskallo.R.id.tv_show_all2;
 
@@ -290,7 +290,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
             //所有标签页面
             case R.id.game_detail_next_bt:
                 if (null != gameInfo) {
-                    Intent intent = new Intent(context, LabelsActivity.class);
+                    Intent intent = new Intent(context, TagAddActivity.class);
                     intent.putExtra(KeyConstant.game_Name, gameInfo.gameName);
                     intent.putExtra(KeyConstant.GAME_LABELS, (Serializable) gameLabels);
                     startActivity(intent);

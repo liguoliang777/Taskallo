@@ -1,4 +1,4 @@
-package com.android.taskallo.project.view;
+package com.android.taskallo.project;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,24 +11,25 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.GameCategorys;
 import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.project.view.SeeMoreActivity;
 import com.android.taskallo.util.ToastUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zeng on 2016/8/24.
  */
-public class LabelsActivity extends BaseFgActivity {
+public class TagAddActivity extends BaseFgActivity {
 
     private RecyclerView mRecyclerView;
     private LabelsItemAdapter mAdapter;
     private List<GameCategorys> mDatas = new ArrayList<>();
-    private LabelsActivity content;
+    private TagAddActivity content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

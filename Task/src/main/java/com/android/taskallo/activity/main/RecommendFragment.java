@@ -436,7 +436,7 @@ public class RecommendFragment extends BaseSearchFragment {
 
         //横向滑动控件
         horizontalViewContainer = (LinearLayout) view.findViewById(R.id.horizontalView_container);
-        singeTopicsDetailIntent.setClass(context, TopicsDetailActivity.class);
+        singeTopicsDetailIntent.setClass(context, TagEditActivity.class);
         wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
     }
 

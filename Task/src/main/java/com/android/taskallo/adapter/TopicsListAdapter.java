@@ -2,36 +2,35 @@
 package com.android.taskallo.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.android.taskallo.R;
+import com.android.taskallo.bean.TagInfo;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 
 import java.util.List;
 
-import com.android.taskallo.R;
-
 
 /**
- *
  * @author gp
  */
 public class TopicsListAdapter extends BaseAdapter {
 
     private Context context;
-    private List<YunduanBean.DataBean> list;
+    private List<TagInfo> list;
 
-    public TopicsListAdapter(Context context, List<YunduanBean.DataBean> list) {
+    public TopicsListAdapter(Context context, List<TagInfo> list) {
         super();
         this.context = context;
         this.list = list;
     }
 
-    public void setList(List<YunduanBean.DataBean> list) {
+    public void setList(List<TagInfo> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -59,23 +58,33 @@ public class TopicsListAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.topics_item, parent, false);
-            holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-            holder.sdv_img = (SimpleDraweeView) convertView.findViewById(R.id.sdv_img);
+            convertView = LayoutInflater.from(context).inflate(R.layout.tag_list_item, parent,
+                    false);
+            holder.tv_title = (TextView) convertView.findViewById(R.id.tag_item_tv);
+            holder.itemBgSDV = (SimpleDraweeView) convertView.findViewById(R.id.tag_item_bg);
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        YunduanBean.DataBean item = list.get(position);
-        holder.sdv_img.setImageURI(item.getLogoUrl());
-        holder.tv_title.setText(item.getTypeName());
+        TagInfo item = list.get(position);
+        if (item != null) {
+            String labelColour = item.labelColour;
+            if (labelColour != null) {
+                holder.itemBgSDV.setBackgroundColor(Color.parseColor(labelColour));
+            }
+            String labelName = item.labelName;
+            if (labelName != null) {
+                holder.tv_title.setText(labelName);
+            }
+            
+        }
 
         return convertView;
     }
 
     class ViewHolder {
-        private SimpleDraweeView sdv_img;
+        private SimpleDraweeView itemBgSDV;
         private TextView tv_title;
 
     }

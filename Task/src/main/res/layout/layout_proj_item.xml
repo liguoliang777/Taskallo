@@ -34,7 +34,7 @@
             android:layout_centerVertical="true"
             android:background="@color/color_card_list_color"
             android:clickable="true"
-            android:drawableRight="@drawable/ic_card_affirm"
+            android:drawableRight="@drawable/ic_card_confim"
             android:paddingLeft="@dimen/dm008"
             android:paddingRight="@dimen/dm020"
             android:visibility="gone" />
