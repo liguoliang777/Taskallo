@@ -40,9 +40,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:theme="@style/me_top_item_switch_style"
             android:layout_centerVertical="true"
             android:paddingRight="@dimen/dm024"
-            android:theme="@style/me_top_item_switch_style" />
+             />
 
         <View
             android:layout_width="match_parent"

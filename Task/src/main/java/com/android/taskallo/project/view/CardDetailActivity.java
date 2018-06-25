@@ -1,5 +1,6 @@
 package com.android.taskallo.project.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
+import com.android.taskallo.activity.main.TagListActivity;
 import com.android.taskallo.bean.BoardVOListBean;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.MemberInfo;
@@ -44,8 +46,7 @@ import java.util.Map;
 public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         .OnMenuItemClickListener {
     private Button mTopFinishedBT, mCancelBT, mTopEditSaveBt;
-    private String mListTitle = "";
-    private String mCardId = "";
+    private String mListTitle = "", mProjectId;
     private CardDetailActivity context;
     private EditText mCardTitleEt, mCardTalkEt, mCardDescEt;
     private TextView mListTitleTv;
@@ -80,6 +81,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         }
 
         mListTitle = bundle.getString(KeyConstant.listItemName);
+        mProjectId = bundle.getString(KeyConstant.projectId);
         mListItemId = bundle.getString(KeyConstant.listItemId);
 
         mTopFinishedBT = (Button) findViewById(R.id.top_left_finish_bt);
@@ -405,4 +407,12 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         mCardTalkEt.clearFocus();
     }
 
+    public void onCradDetailTagAddBtClick(View view) {
+        Intent intent = new Intent(context, TagListActivity.class);
+        intent.putExtra(KeyConstant.projectId, mProjectId);
+        intent.putExtra(KeyConstant.boardId, mBoardId);
+
+        startActivity(intent);
+
+    }
 }

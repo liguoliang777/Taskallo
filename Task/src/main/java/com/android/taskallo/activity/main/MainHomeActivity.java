@@ -29,7 +29,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.taskallo.App;
@@ -69,6 +68,7 @@ import com.android.taskallo.user.view.LoginActivity;
 import com.android.taskallo.user.view.SendBindCodeActivity;
 import com.android.taskallo.user.view.UserCenterActivity;
 import com.android.taskallo.util.ToastUtil;
+import com.android.taskallo.view.PullScrollView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -138,7 +138,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private Button menu_game_hub_bt;
-    private ScrollView mMeLayout;
+    private PullScrollView mMeLayout;
     private String mToken = "";
     private TextView mNameTv;
     private TextView mPhoneTv;
@@ -159,7 +159,7 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
         //home = (LinearLayout) findViewById(R.id.main_tab_0);
         //game = (LinearLayout) findViewById(R.id.menu_game_ll);
         menu_game_hub = (RelativeLayout) findViewById(R.id.main_tab_2);
-        mMeLayout = (ScrollView) findViewById(R.id.main_me_layout);
+        mMeLayout = (PullScrollView) findViewById(R.id.main_me_layout);
         video = (LinearLayout) findViewById(R.id.main_tab_1);
         manager = (LinearLayout) findViewById(R.id.main_tab_3);
 
@@ -456,7 +456,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
             transaction.add(R.id.main_list_fragments, fragment0);
         }
         if (null == fragment1) {
-            //通知
             fragment1 = new Fragment1(context);
             Bundle bundleYG = new Bundle();
             bundleYG.putLong("labelId", PushMessage.MSG_TYPE_TZ);

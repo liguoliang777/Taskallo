@@ -82,6 +82,7 @@
             android:name=".activity.main.MainHomeActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|navigation"
             android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.android.taskallo.base.activity.GuideViewActivity"
@@ -250,7 +251,7 @@
             android:name="com.android.taskallo.activity.hub.CircleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.android.taskallo.activity.main.TopicsListActivity"
+            android:name="com.android.taskallo.activity.main.TagListActivity"
             android:launchMode="singleTask" />
         <activity
             android:name="com.android.taskallo.activity.main.TopicsDetailActivity"

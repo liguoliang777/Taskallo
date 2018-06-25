@@ -32,7 +32,7 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="系统基本设置"
+        android:text=""
         android:textColor="@color/white"
         android:textSize="@dimen/title_size"/>
 
@@ -47,7 +47,7 @@
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_20"
         android:visibility="gone"
-        android:text="保存"
+        android:text=""
         android:textColor="@color/white"
         android:textSize="@dimen/dp_16" />
 </RelativeLayout>

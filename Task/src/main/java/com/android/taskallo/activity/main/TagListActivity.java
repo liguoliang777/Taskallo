@@ -7,6 +7,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 
+import com.android.taskallo.R;
+import com.android.taskallo.activity.BaseFgActivity;
+import com.android.taskallo.adapter.TopicsListAdapter;
+import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.view.LoadStateView;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
 import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
@@ -15,32 +20,29 @@ import com.jzt.hol.android.jkda.sdk.services.main.YunduanClient;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android.taskallo.R;
-import com.android.taskallo.activity.BaseFgActivity;
-import com.android.taskallo.adapter.TopicsListAdapter;
-import com.android.taskallo.core.utils.KeyConstant;
-import com.android.taskallo.view.LoadStateView;
-
 
 /**
  * 全部专题
  * Created by gp on 2017/4/13 0013.
  */
 
-public class TopicsListActivity extends BaseFgActivity {
+public class TagListActivity extends BaseFgActivity {
 
-    private Button tv_title;
+    private Button tv_title,addTagBt;
     List<YunduanBean.DataBean> list = new ArrayList<>();
     TopicsListAdapter adapter;
-    private TopicsListActivity content;
+    private TagListActivity content;
     private GridView gview;
+    private String mProjId, mBoardId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initStatusBar();
         setContentView(R.layout.selected_topics_activity);
-        content = TopicsListActivity.this;
+        content = TagListActivity.this;
+        mProjId = getIntent().getStringExtra(KeyConstant.projectId);
+        mBoardId = getIntent().getStringExtra(KeyConstant.boardId);
         init();
     }
 
@@ -50,7 +52,12 @@ public class TopicsListActivity extends BaseFgActivity {
         loadStateView = (LoadStateView) findViewById(R.id.load_state_view2);
         loadStateView.isShowLoadBut(false);
         tv_title = (Button) findViewById(R.id.left_bt);
-        tv_title.setText("全部专题");
+        addTagBt = (Button) findViewById(R.id.title_right_bt);
+        tv_title.setText("标签");
+
+        addTagBt.setVisibility(View.VISIBLE);
+        addTagBt.setText("");
+        addTagBt.setCompoundDrawables(null,null,getResources().getDrawable(R.drawable.ic_add),null);
         gview = (GridView) findViewById(R.id.gview);
         tv_title.setOnClickListener(new View.OnClickListener() {
             @Override

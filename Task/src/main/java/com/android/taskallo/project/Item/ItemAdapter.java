@@ -200,7 +200,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     new ItemLayoutManager(holder.itemView.getContext()));
             //卡片
 
-            final ItemItemAdapter adapter = new ItemItemAdapter(context, itemId, listItemName,
+            final ItemItemAdapter adapter = new ItemItemAdapter(context, mProjectId,itemId, listItemName,
                     boardVOListFinal);
             holder.itemItemRV.setAdapter(adapter);
 

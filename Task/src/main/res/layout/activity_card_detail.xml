@@ -190,6 +190,7 @@
             </LinearLayout>
             <!--添加标签-->
             <RelativeLayout
+                android:onClick="onCradDetailTagAddBtClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/selector_bg_white_f2"
@@ -226,7 +227,6 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/dm020"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_card_time"
                     android:textColorHint="@color/hint_color"
                     android:visibility="invisible" />
 

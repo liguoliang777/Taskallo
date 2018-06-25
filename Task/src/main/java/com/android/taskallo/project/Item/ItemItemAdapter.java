@@ -23,24 +23,25 @@ import java.util.List;
 
 public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.SimpleViewHolder> {
 
-    private String mItemId, mListItemName;
+    private String mItemId, mListItemName,mProjectId;
     private List<BoardVOListBean> mItemItemList = new ArrayList<>();
     ProjListActivity context;
     private int width, height, margin;
     private View codeBtn;
     private LinearLayout.LayoutParams layoutParams;
 
-    public ItemItemAdapter(ProjListActivity c, String itemId, String listItemName,
+    public ItemItemAdapter(ProjListActivity c, String projectId, String itemId, String listItemName,
                            List<BoardVOListBean> boardVOList) {
         context = c;
         width = context.getResources().getDimensionPixelSize(R.dimen.dm044);
-        height = context.getResources().getDimensionPixelSize(R.dimen.dm023);
+        height = context.getResources().getDimensionPixelSize(R.dimen.dm022);
         margin = context.getResources().getDimensionPixelSize(R.dimen.dm012);
         layoutParams = new LinearLayout.LayoutParams(width, height);
         layoutParams.setMargins(0, 0, margin, margin);
 
         //数据
         mItemId = itemId;
+        mProjectId = projectId;
         mListItemName = listItemName;
         mItemItemList = boardVOList;
     }
@@ -76,6 +77,7 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
                 Bundle bundle = new Bundle();
                 bundle.putString(KeyConstant.listItemName, mListItemName);
                 bundle.putString(KeyConstant.listItemId, mItemId);
+                bundle.putString(KeyConstant.projectId, mProjectId);
                 bundle.putSerializable(KeyConstant.cardBean, boardVOListBean);
 
                 intent.putExtras(bundle);
