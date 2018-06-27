@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -14,7 +13,7 @@ import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.activity.main.TagEditActivity;
-import com.android.taskallo.adapter.TopicsListAdapter;
+import com.android.taskallo.adapter.TagListAdapter;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.TagInfo;
 import com.android.taskallo.core.net.GsonRequest;
@@ -44,7 +43,7 @@ public class TagListActivity extends BaseFgActivity {
 
     private Button tv_title, addTagBt;
     List<TagInfo> tagList = new ArrayList<>();
-    TopicsListAdapter tagAdapter;
+    TagListAdapter tagAdapter;
     private TagListActivity context;
     private GridView gview;
     private String mProjId, mBoardId;
@@ -57,6 +56,7 @@ public class TagListActivity extends BaseFgActivity {
         context = TagListActivity.this;
         mProjId = getIntent().getStringExtra(KeyConstant.projectId);
         mBoardId = getIntent().getStringExtra(KeyConstant.boardId);
+        initDefTagData();
         init();
     }
 
@@ -78,29 +78,22 @@ public class TagListActivity extends BaseFgActivity {
             @Override
             public void onClick(View v) {
                 //todo 添加标签
-
+                Intent i = new Intent();
+                i.setClass(context, TagEditActivity.class);
+                //i.putExtra(KeyConstant.category_Id, dataBean.labelId);
+                //i.putExtra(KeyConstant.TITLE, dataBean.labelName);
+                //i.putExtra(KeyConstant.DESC, dataBean.labelColour);
+                startActivity(i);
             }
         });
         gview = (GridView) findViewById(R.id.gview);
-        tagAdapter = new TopicsListAdapter(this, tagList);
+        tagAdapter = new TagListAdapter(this, tagList);
         gview.setAdapter(tagAdapter);
 
         tv_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 context.finish();
-            }
-        });
-        gview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent();
-                i.setClass(context, TagEditActivity.class);
-                TagInfo dataBean = tagList.get(position);
-                i.putExtra(KeyConstant.category_Id, dataBean.labelId);
-                i.putExtra(KeyConstant.TITLE, dataBean.labelName);
-                i.putExtra(KeyConstant.DESC, dataBean.labelColour);
-                startActivity(i);
             }
         });
         getData();
@@ -154,12 +147,18 @@ public class TagListActivity extends BaseFgActivity {
     }
 
     private void setData(List<TagInfo> result) {
-        tagList=result;
-        tagList.add(new TagInfo());
-        tagList.add(new TagInfo());
-        tagList.add(new TagInfo());
-        tagList.add(new TagInfo());
-        tagAdapter.setList(tagList);
+        if (result != null && result.size() > 0) {
+            tagList = result;
+            tagAdapter.setList(tagList);
+        }
     }
 
+    private void initDefTagData() {
+        tagList.add(new TagInfo("0", "", "#f27979"));
+        tagList.add(new TagInfo("0", "", "#fec055"));
+        tagList.add(new TagInfo("0", "", "#95e645"));
+        tagList.add(new TagInfo("0", "", "#4590e5"));
+        tagList.add(new TagInfo("0", "", "#a87afb"));
+        tagList.add(new TagInfo("0", "", "#d94bee"));
+    }
 }

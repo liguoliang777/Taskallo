@@ -2,37 +2,38 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dm065">
+    android:layout_height="@dimen/dm080">
 
-    <ImageView
+    <Button
         android:id="@+id/tag_item_edit"
-        android:layout_width="@dimen/dm080"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:paddingLeft="@dimen/dm010"
+        android:paddingLeft="@dimen/dm036"
+        android:paddingRight="@dimen/dm025"
+        android:text="编辑"
+        android:background="@null"
+        android:gravity="center"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_me_top_edit"
-        android:textColor="@color/white"
+        android:textColor="@color/color_808080"
         android:textSize="@dimen/dm024" />
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <Button
         android:id="@+id/tag_item_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@id/tag_item_edit"
         android:scaleType="fitXY"
-        fresco:actualImageScaleType="fitXY"
-        fresco:placeholderImage="@color/transparent"
-        fresco:placeholderImageScaleType="fitXY"
-        fresco:roundedCornerRadius="@dimen/dm005" />
+      />
 
     <ImageView
-        android:id="@+id/tag_item_selected_bt"
-        android:layout_width="@dimen/dm060"
+        android:id="@+id/tag_item_selected_tag"
+        android:layout_width="@dimen/dm080"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         android:layout_toLeftOf="@id/tag_item_edit"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_card_confim" />
+        android:src="@drawable/ic_seleted" />
 
     <TextView
         android:id="@+id/tag_item_tv"
@@ -41,7 +42,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:layout_height="match_parent"
-        android:layout_toLeftOf="@id/tag_item_selected_bt"
+        android:layout_toLeftOf="@id/tag_item_selected_tag"
         android:gravity="center_vertical"
         android:text=""
         android:textColor="@color/white"

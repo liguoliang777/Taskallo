@@ -55,7 +55,7 @@
         android:layout_height="@dimen/app_title_height"
         android:layout_alignParentRight="true"
         android:background="@color/mainColor"
-        android:drawableRight="@drawable/ic_card_confim"
+        android:drawableRight="@drawable/ic_seleted"
         android:gravity="center"
         android:paddingRight="@dimen/dm030"
         android:textColor="@color/white"
