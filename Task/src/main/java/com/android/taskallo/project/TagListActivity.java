@@ -91,6 +91,7 @@ public class TagListActivity extends BaseFgActivity {
             @Override
             public void onClick(View v) {
                 defAvatarDialog.show();
+
             }
         });
         gview = (GridView) findViewById(R.id.gview);
@@ -112,9 +113,10 @@ public class TagListActivity extends BaseFgActivity {
         View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_def_tag, null);
         GridView gridView = (GridView) inflate.findViewById(R.id.tag_add_grid_view);
         gridView.setAdapter(new AvatarAdapter());
+
         defAvatarDialog.setContentView(inflate);//将布局设置给Dialog
         Window dialogWindow = defAvatarDialog.getWindow(); //获取当前Activity所在的窗体
-        dialogWindow.setGravity(Gravity.CENTER);//设置Dialog从窗体底部弹出
+        dialogWindow.setGravity(Gravity.BOTTOM);//设置Dialog从窗体底部弹出
         WindowManager.LayoutParams params = dialogWindow.getAttributes();   //获得窗体的属性
         //params.y = 20;  Dialog距离底部的距离
         params.width = WindowManager.LayoutParams.MATCH_PARENT;//设置Dialog距离底部的距离
@@ -184,6 +186,7 @@ public class TagListActivity extends BaseFgActivity {
         tagList.add(new TagInfo("0", "", "#a87afb"));
         tagList.add(new TagInfo("0", "", "#d94bee"));
     }
+
     //默认头像适配器
     public class AvatarAdapter extends BaseAdapter {
         public AvatarAdapter() {
@@ -212,14 +215,16 @@ public class TagListActivity extends BaseFgActivity {
                 holder = new AvatarAdapter.ViewHolder();
                 convertView = View.inflate(parent.getContext(), R.layout.gridview_rag_add, null);
                 holder.mTagColorBt = (Button) convertView.findViewById(R.id.tag_add_color_bt);
-                holder.itemSelectedTag = (ImageView) convertView.findViewById(R.id.tag_add_selected_tag);
+                holder.itemSelectedTag = (ImageView) convertView.findViewById(R.id
+                        .tag_add_selected_tag);
                 convertView.setTag(holder);
             } else {
                 holder = (AvatarAdapter.ViewHolder) convertView.getTag();
             }
             String labelColour = tagList.get(position).labelColour;
             if (labelColour != null) {
-                ShapeDrawable drawable = new ShapeDrawable(new RoundRectShape(outerRadian, null, null));
+                ShapeDrawable drawable = new ShapeDrawable(new RoundRectShape(outerRadian, null,
+                        null));
                 drawable.getPaint().setStyle(Paint.Style.FILL);
                 drawable.getPaint().setColor(Color.parseColor(labelColour));
                 //构建Controller
