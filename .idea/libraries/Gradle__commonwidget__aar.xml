@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: commonwidget:@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/commonwidget.aar/b5ddd1f96c6cff4ba4ae976c8547d524/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/commonwidget.aar/b5ddd1f96c6cff4ba4ae976c8547d524/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/commonwidget.aar/ae25458f53bc02a16a6ad23dc734b2f7/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/commonwidget.aar/ae25458f53bc02a16a6ad23dc734b2f7/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -2,6 +2,7 @@
 package com.android.taskallo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
@@ -110,6 +111,7 @@ public class TagListAdapter extends BaseAdapter {
             holder.itemEditBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Intent intent = new Intent();
 
                 }
             });

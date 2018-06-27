@@ -28,7 +28,7 @@
             android:src="@drawable/ic_tongbu" />
 
         <TextView
-            style="@style/style_px24_333333_bold"
+            style="@style/px24_333333_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -68,7 +68,7 @@
             android:src="@drawable/ic_team" />
 
         <TextView
-            style="@style/style_px24_333333_bold"
+            style="@style/px24_333333_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -103,7 +103,7 @@
             android:src="@drawable/ic_change_pwd" />
 
         <TextView
-            style="@style/style_px24_333333_bold"
+            style="@style/px24_333333_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -133,7 +133,7 @@
             android:src="@drawable/ic_clean" />
 
         <TextView
-            style="@style/style_px24_333333_bold"
+            style="@style/px24_333333_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -181,7 +181,7 @@
             android:src="@drawable/ic_help" />
 
         <TextView
-            style="@style/style_px24_333333_bold"
+            style="@style/px24_333333_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -211,7 +211,7 @@
             android:src="@drawable/ic_privacy" />
 
         <TextView
-            style="@style/style_px24_333333_bold"
+            style="@style/px24_333333_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -241,7 +241,7 @@
             android:src="@drawable/ic_feedback" />
 
         <TextView
-            style="@style/style_px24_333333_bold"
+            style="@style/px24_333333_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -271,7 +271,7 @@
             android:src="@drawable/ic_share" />
 
         <TextView
-            style="@style/style_px24_333333_bold"
+            style="@style/px24_333333_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

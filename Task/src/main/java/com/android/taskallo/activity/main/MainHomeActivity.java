@@ -115,7 +115,6 @@ public class MainHomeActivity extends BaseFgActivity implements View.OnClickList
     private boolean isRunningBackground = false;
     private boolean isDownloading = false;
     private boolean isChecking = false;
-    private RecommendFragment recommendFragment;
     private RankFragment rankingFragment;
     private Fragment0 fragment0;
     private int currentMenu;

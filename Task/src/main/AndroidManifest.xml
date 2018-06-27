@@ -253,9 +253,6 @@
         <activity
             android:name="com.android.taskallo.project.TagListActivity"
             android:launchMode="singleTask" />
-        <activity
-            android:name="com.android.taskallo.activity.main.TagEditActivity"
-            android:launchMode="singleTask" />
         <activity android:name="com.android.taskallo.activity.manager.DownloadCenterActivity" />
         <activity android:name="com.android.taskallo.activity.manager.FeedbackSucceedActivity" />
         <activity android:name="com.android.taskallo.activity.manager.HelpAndFeedbackActivity" />

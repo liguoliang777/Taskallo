@@ -1,18 +1,28 @@
 package com.android.taskallo.project;
 
-import android.content.Intent;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
-import com.android.taskallo.activity.main.TagEditActivity;
 import com.android.taskallo.adapter.TagListAdapter;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.TagInfo;
@@ -40,13 +50,14 @@ import java.util.Map;
  */
 
 public class TagListActivity extends BaseFgActivity {
-
+    float[] outerRadian = new float[]{10, 10, 10, 10, 10, 10, 10, 10};
     private Button tv_title, addTagBt;
     List<TagInfo> tagList = new ArrayList<>();
     TagListAdapter tagAdapter;
     private TagListActivity context;
     private GridView gview;
     private String mProjId, mBoardId;
+    private Dialog defAvatarDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +85,12 @@ public class TagListActivity extends BaseFgActivity {
         dra.setBounds(0, 0, dra.getMinimumWidth(), dra.getMinimumHeight());
         addTagBt.setCompoundDrawables(null, null, dra, null);
 
+
+        initDialog();
         addTagBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo 添加标签
-                Intent i = new Intent();
-                i.setClass(context, TagEditActivity.class);
-                //i.putExtra(KeyConstant.category_Id, dataBean.labelId);
-                //i.putExtra(KeyConstant.TITLE, dataBean.labelName);
-                //i.putExtra(KeyConstant.DESC, dataBean.labelColour);
-                startActivity(i);
+                defAvatarDialog.show();
             }
         });
         gview = (GridView) findViewById(R.id.gview);
@@ -98,6 +105,22 @@ public class TagListActivity extends BaseFgActivity {
         });
         getData();
     }
+
+    private void initDialog() {
+        defAvatarDialog = new Dialog(this, R.style.Dialog_From_Bottom_Style);
+        //填充对话框的布局
+        View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_def_tag, null);
+        GridView gridView = (GridView) inflate.findViewById(R.id.tag_add_grid_view);
+        gridView.setAdapter(new AvatarAdapter());
+        defAvatarDialog.setContentView(inflate);//将布局设置给Dialog
+        Window dialogWindow = defAvatarDialog.getWindow(); //获取当前Activity所在的窗体
+        dialogWindow.setGravity(Gravity.CENTER);//设置Dialog从窗体底部弹出
+        WindowManager.LayoutParams params = dialogWindow.getAttributes();   //获得窗体的属性
+        //params.y = 20;  Dialog距离底部的距离
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;//设置Dialog距离底部的距离
+        dialogWindow.setAttributes(params); //将属性设置给窗体
+    }
+
 
     public void getData() {
         String url = Constant.WEB_SITE1 + UrlConstant.url_label + "/" + mProjId + "/" + mBoardId;
@@ -160,5 +183,68 @@ public class TagListActivity extends BaseFgActivity {
         tagList.add(new TagInfo("0", "", "#4590e5"));
         tagList.add(new TagInfo("0", "", "#a87afb"));
         tagList.add(new TagInfo("0", "", "#d94bee"));
+    }
+    //默认头像适配器
+    public class AvatarAdapter extends BaseAdapter {
+        public AvatarAdapter() {
+            super();
+        }
+
+        @Override
+        public int getCount() {
+            return tagList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return tagList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, final ViewGroup parent) {
+            final AvatarAdapter.ViewHolder holder;
+            if (convertView == null) {
+                holder = new AvatarAdapter.ViewHolder();
+                convertView = View.inflate(parent.getContext(), R.layout.gridview_rag_add, null);
+                holder.mTagColorBt = (Button) convertView.findViewById(R.id.tag_add_color_bt);
+                holder.itemSelectedTag = (ImageView) convertView.findViewById(R.id.tag_add_selected_tag);
+                convertView.setTag(holder);
+            } else {
+                holder = (AvatarAdapter.ViewHolder) convertView.getTag();
+            }
+            String labelColour = tagList.get(position).labelColour;
+            if (labelColour != null) {
+                ShapeDrawable drawable = new ShapeDrawable(new RoundRectShape(outerRadian, null, null));
+                drawable.getPaint().setStyle(Paint.Style.FILL);
+                drawable.getPaint().setColor(Color.parseColor(labelColour));
+                //构建Controller
+                holder.mTagColorBt.setBackground(drawable);
+            }
+            holder.mTagColorBt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int visibility = holder.itemSelectedTag.getVisibility();
+                    if (visibility == View.VISIBLE) {
+                        //取消关联
+                        holder.itemSelectedTag.setVisibility(View.INVISIBLE);
+                    } else {
+                        //关联
+                        holder.itemSelectedTag.setVisibility(View.VISIBLE);
+
+                    }
+                }
+            });
+            return convertView;
+        }
+
+        class ViewHolder {
+            private Button mTagColorBt;
+            private ImageView itemSelectedTag;
+        }
     }
 }
