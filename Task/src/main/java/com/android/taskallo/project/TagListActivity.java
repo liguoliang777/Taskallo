@@ -136,7 +136,7 @@ public class TagListActivity extends BaseFgActivity {
         View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_def_tag, null);
         GridView gridView = (GridView) inflate.findViewById(R.id.tag_add_grid_view);
         Button cancelBt = (Button) inflate.findViewById(R.id.tag_add_cancel_bt);
-        Button deletedBt = (Button) inflate.findViewById(R.id.tag_add_delete_tv);
+        final Button deletedBt = (Button) inflate.findViewById(R.id.tag_add_delete_tv);
         TextView titleTopTv = (TextView) inflate.findViewById(R.id.tag_add_title_tv);
         titleTopTv.setText(item == null ? "新增标签" : "编辑标签");
         deletedBt.setVisibility(item == null ? View.GONE : View.VISIBLE);
@@ -144,6 +144,9 @@ public class TagListActivity extends BaseFgActivity {
             @Override
             public void onClick(View v) {
                 //删除标签
+                if (item != null) {
+                    deleteTagThread(item.labelId);
+                }
             }
         });
         tagTitleEt = (EditText) inflate.findViewById(R.id.tag_add_title_et);
@@ -194,6 +197,59 @@ public class TagListActivity extends BaseFgActivity {
         //params.y = 20;  Dialog距离底部的距离
         params.width = WindowManager.LayoutParams.MATCH_PARENT;//设置Dialog距离底部的距离
         dialogWindow.setAttributes(params); //将属性设置给窗体
+    }
+
+    //删除标签
+    private void deleteTagThread(String labelId) {
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            return;
+        }
+        String url = Constant.WEB_SITE1 + UrlConstant.url_label + "/" + mBoardId + "/" + labelId;
+
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null) {
+                    ToastUtil.show(context, getString(R.string.server_exception));
+                    return;
+                }
+                if (result.code == 0) {
+                    getData();
+                    defAvatarDialog.cancel();
+                }
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(Request.Method.DELETE, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        ToastUtil.show(context, context.getString(R.string.server_exception));
+
+                    }
+                }, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.id, mBoardId);
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 
     private void updateTagThread(String labelId, final String tagTitle, final String labelColour) {
@@ -354,7 +410,7 @@ public class TagListActivity extends BaseFgActivity {
             defTaglist = result;
             tagAdapter.setList(defTaglist);
         } else {
-            ToastUtil.show(context, "暂无标签");
+            ToastUtil.show(context, "该项目下标签数据为空");
         }
     }
 
