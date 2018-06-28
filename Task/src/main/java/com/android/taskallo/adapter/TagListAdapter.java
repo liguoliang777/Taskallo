@@ -13,11 +13,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.taskallo.App;
 import com.android.taskallo.R;
+import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.TagInfo;
+import com.android.taskallo.core.net.GsonRequest;
+import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.project.TagListActivity;
+import com.android.taskallo.util.ToastUtil;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -28,12 +42,14 @@ public class TagListAdapter extends BaseAdapter {
     private TagListActivity context;
     private List<TagInfo> list;
     private ShapeDrawable drawable;
+    private String mBoardId;
     float[] outerRadian = new float[]{10, 10, 10, 10, 10, 10, 10, 10};
 
-    public TagListAdapter(TagListActivity context, List<TagInfo> list) {
+    public TagListAdapter(TagListActivity context, List<TagInfo> list, String mBoardId) {
         super();
         this.context = context;
         this.list = list;
+        this.mBoardId = mBoardId;
     }
 
     public void setList(List<TagInfo> list) {
@@ -69,7 +85,8 @@ public class TagListAdapter extends BaseAdapter {
             holder.tv_title = (TextView) convertView.findViewById(R.id.tag_item_tv);
             holder.itemColorBt = (Button) convertView.findViewById(R.id.tag_item_bg);
             holder.itemEditBt = (Button) convertView.findViewById(R.id.tag_item_edit);
-            holder.itemSelectedTag = (ImageView) convertView.findViewById(R.id.tag_item_selected_tag);
+            holder.itemSelectedTag = (ImageView) convertView.findViewById(R.id
+                    .tag_item_selected_tag);
 
             convertView.setTag(holder);
         } else {
@@ -91,11 +108,10 @@ public class TagListAdapter extends BaseAdapter {
                     int visibility = holder.itemSelectedTag.getVisibility();
                     if (visibility == View.VISIBLE) {
                         //取消关联
-                        holder.itemSelectedTag.setVisibility(View.INVISIBLE);
+                        cancelRelationTagThread(item.labelId, holder.itemSelectedTag);
                     } else {
                         //关联
-                        holder.itemSelectedTag.setVisibility(View.VISIBLE);
-
+                        relationTagThread(item.labelId, holder.itemSelectedTag);
                     }
                 }
             });
@@ -119,6 +135,93 @@ public class TagListAdapter extends BaseAdapter {
 
 
         return convertView;
+    }
+
+    //关联
+    private void relationTagThread(final String labelId, final ImageView itemSelectedTag) {
+        String url = Constant.WEB_SITE1 + UrlConstant.url_relation + "/" + mBoardId + "/" + labelId;
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null || result.code != 0) {
+                    ToastUtil.show(context, context.getString(R.string.requery_failed));
+                    return;
+                }
+                itemSelectedTag.setVisibility(View.VISIBLE);
+
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                ToastUtil.show(context, context.getString(R.string.requery_failed));
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(Request.Method.PUT, url,
+                        successListener, errorListener, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.boardId, mBoardId);
+                        params.put(KeyConstant.labelId, labelId);
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
+    }
+  //关联
+    private void cancelRelationTagThread(final String labelId, final ImageView itemSelectedTag) {
+        String url = Constant.WEB_SITE1 + UrlConstant.url_relation + "/" + mBoardId + "/" + labelId;
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null || result.code != 0) {
+                    ToastUtil.show(context, context.getString(R.string.requery_failed));
+                    return;
+                }
+                itemSelectedTag.setVisibility(View.INVISIBLE);
+
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                ToastUtil.show(context, context.getString(R.string.requery_failed));
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(Request.Method.DELETE, url,
+                        successListener, errorListener, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 
     class ViewHolder {

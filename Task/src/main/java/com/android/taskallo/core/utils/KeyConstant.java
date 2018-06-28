@@ -80,5 +80,6 @@ public class KeyConstant {
     public static final String expiryTime = "expiryTime";
     public static final String cardBean = "cardBean";
     public static final String labelName = "labelName";
+    public static final String labelId = "labelId";
     public static final String labelColour = "labelColour";
 }

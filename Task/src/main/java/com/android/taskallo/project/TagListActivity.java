@@ -104,7 +104,7 @@ public class TagListActivity extends BaseFgActivity {
         });
         gview = (GridView) findViewById(R.id.gview);
 
-        tagAdapter = new TagListAdapter(this, defTaglist);
+        tagAdapter = new TagListAdapter(this, defTaglist,mBoardId);
         gview.setAdapter(tagAdapter);
 
         tv_title.setOnClickListener(new View.OnClickListener() {
