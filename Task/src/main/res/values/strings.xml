@@ -129,7 +129,7 @@
 
     <!-- 网络加载相关 -->
     <string name="loading">玩命加载中...</string>
-    <string name="load_end">加载失败，请稍后重试...</string>
+    <string name="load_end">加载失败，稍后重试</string>
     <string name="reload">重新加载</string>
 
     <!-- About相关 -->

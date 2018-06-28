@@ -69,14 +69,16 @@ public class KeyConstant {
     public static final String cardTitle = "cardTitle";
     public static final String Authorization = "Authorization";
     public static final String Content_Type = "Content-Type";
-    public static final String projectId="projectId";
-    public static final String boardId="boardId";
-    public static final String listItemName="listItemName";
-    public static final String listItemId="listItemId";
-    public static final String projectImg="projectImg";
+    public static final String projectId = "projectId";
+    public static final String boardId = "boardId";
+    public static final String listItemName = "listItemName";
+    public static final String listItemId = "listItemId";
+    public static final String projectImg = "projectImg";
 
-    public static final String boardName="boardName";
-    public static final String boardDesc="boardDesc";
-    public static final String expiryTime="expiryTime";
-    public static final String cardBean="cardBean";
+    public static final String boardName = "boardName";
+    public static final String boardDesc = "boardDesc";
+    public static final String expiryTime = "expiryTime";
+    public static final String cardBean = "cardBean";
+    public static final String labelName = "labelName";
+    public static final String labelColour = "labelColour";
 }

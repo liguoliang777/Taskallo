@@ -1,12 +1,14 @@
 package com.android.taskallo.project;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,8 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -60,6 +64,7 @@ public class TagListActivity extends BaseFgActivity {
     private String mProjId, mBoardId;
     private Dialog defAvatarDialog;
     private AvatarAdapter mAvatarAdapter;
+    private List<TagInfo> defTaglist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,12 +97,21 @@ public class TagListActivity extends BaseFgActivity {
         addTagBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 defAvatarDialog.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        showInputMethod();
+                    }
+                }, 100);
 
             }
         });
         gview = (GridView) findViewById(R.id.gview);
-        tagAdapter = new TagListAdapter(this, tagList);
+
+        defTaglist = tagList.subList(0, 6);
+        tagAdapter = new TagListAdapter(this, defTaglist);
         gview.setAdapter(tagAdapter);
 
         tv_title.setOnClickListener(new View.OnClickListener() {
@@ -109,11 +123,40 @@ public class TagListActivity extends BaseFgActivity {
         getData();
     }
 
+    private void showInputMethod() {
+        //自动弹出键盘
+        InputMethodManager inputManager = (InputMethodManager) context.getSystemService(Context
+                .INPUT_METHOD_SERVICE);
+        inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        //强制隐藏Android输入法窗口
+        // inputManager.hideSoftInputFromWindow(edit.getWindowToken(),0);
+    }
+
     private void initDialog() {
         defAvatarDialog = new Dialog(this, R.style.Dialog_From_Bottom_Style);
         //填充对话框的布局
         View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_def_tag, null);
         GridView gridView = (GridView) inflate.findViewById(R.id.tag_add_grid_view);
+        Button cancelBt = (Button) inflate.findViewById(R.id.tag_add_cancel_bt);
+        final EditText tagTitleEt = (EditText) inflate.findViewById(R.id.tag_add_title_et);
+        Button addBt = (Button) inflate.findViewById(R.id.tag_add_ok_bt);
+        cancelBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                defAvatarDialog.cancel();
+            }
+        });
+        addBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //添加
+                String s = tagTitleEt.getText().toString();
+                String tagTitle = s == null ? "" : s;
+
+                TagInfo tagInfo = tagList.get(selectedPosition);
+                addTagThread(tagTitle, tagInfo.labelColour);
+            }
+        });
         mAvatarAdapter = new AvatarAdapter();
         gridView.setAdapter(mAvatarAdapter);
 
@@ -124,6 +167,56 @@ public class TagListActivity extends BaseFgActivity {
         //params.y = 20;  Dialog距离底部的距离
         params.width = WindowManager.LayoutParams.MATCH_PARENT;//设置Dialog距离底部的距离
         dialogWindow.setAttributes(params); //将属性设置给窗体
+    }
+
+    //添加标签
+    private void addTagThread(final String tagTitle, final String labelColour) {
+        String url = Constant.WEB_SITE1 + UrlConstant.url_label;
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null || result.code != 0) {
+                    ToastUtil.show(context, getString(R.string.requery_failed));
+                    return;
+                }
+                getData();
+                defAvatarDialog.cancel();
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                ToastUtil.show(context, getString(R.string.requery_failed));
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(Request.Method.POST, url,
+                        successListener, errorListener, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.projectId, mProjId);
+                        params.put(KeyConstant.boardId, mBoardId);
+                        params.put(KeyConstant.labelName, tagTitle);
+                        params.put(KeyConstant.labelColour, labelColour);
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 
 
@@ -176,19 +269,24 @@ public class TagListActivity extends BaseFgActivity {
 
     private void setData(List<TagInfo> result) {
         if (result != null && result.size() > 0) {
-            tagAdapter.setList(result);
+            defTaglist.addAll(result);
+            tagAdapter.setList(defTaglist);
         }
     }
 
+
     private void initDefTagData() {
-        tagList.add(new TagInfo("0", "", "#f27979"));
+        tagList.add(new TagInfo("0", "", "#00CD66"));
+        tagList.add(new TagInfo("0", "", "#CDCD00"));
         tagList.add(new TagInfo("0", "", "#fec055"));
+        tagList.add(new TagInfo("0", "", "#CD4F39"));
         tagList.add(new TagInfo("0", "", "#95e645"));
         tagList.add(new TagInfo("0", "", "#4590e5"));
         tagList.add(new TagInfo("0", "", "#a87afb"));
         tagList.add(new TagInfo("0", "", "#d94bee"));
         tagList.add(new TagInfo("0", "", "#45d1e5"));
         tagList.add(new TagInfo("0", "", "#1a1a1a"));
+        tagList.add(new TagInfo("0", "", "#cccccc"));
     }
 
     //默认头像适配器
