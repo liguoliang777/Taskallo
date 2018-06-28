@@ -29,6 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,7 @@ public class TagListAdapter extends BaseAdapter {
     private ShapeDrawable drawable;
     private String mBoardId;
     float[] outerRadian = new float[]{10, 10, 10, 10, 10, 10, 10, 10};
+    private List<TagInfo> relationInfo = new ArrayList<>();
 
     public TagListAdapter(TagListActivity context, List<TagInfo> list, String mBoardId) {
         super();
@@ -101,6 +103,16 @@ public class TagListAdapter extends BaseAdapter {
                 drawable.getPaint().setColor(Color.parseColor(labelColour));
                 //构建Controller
                 holder.itemColorBt.setBackground(drawable);
+
+                for (TagInfo tagInfo : relationInfo) {
+                    if (tagInfo != null) {
+                        String relationLabelColour = tagInfo.labelColour;
+                        if (labelColour.equals(relationLabelColour)) {
+                            holder.itemSelectedTag.setVisibility(View.VISIBLE);
+                            break;
+                        }
+                    }
+                }
             }
             holder.itemColorBt.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -184,7 +196,8 @@ public class TagListAdapter extends BaseAdapter {
                 };
         App.requestQueue.add(versionRequest);
     }
-  //关联
+
+    //关联
     private void cancelRelationTagThread(final String labelId, final ImageView itemSelectedTag) {
         String url = Constant.WEB_SITE1 + UrlConstant.url_relation + "/" + mBoardId + "/" + labelId;
         Response.Listener<JsonResult> successListener = new Response
@@ -222,6 +235,11 @@ public class TagListAdapter extends BaseAdapter {
                     }
                 };
         App.requestQueue.add(versionRequest);
+    }
+
+    public void setRelationData(List<TagInfo> relationInfo) {
+        this.relationInfo = relationInfo;
+        notifyDataSetChanged();
     }
 
     class ViewHolder {

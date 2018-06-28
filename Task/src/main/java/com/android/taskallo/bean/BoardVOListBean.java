@@ -16,16 +16,9 @@ public class BoardVOListBean implements Serializable {
     public String updateTime;
     public String expiryTime;
     public Object boardFileVOList;
-    public List<ProjectLabelVOListBean> projectLabelVOList;
+    public List<TagInfo> projectLabelVOList;
     public List<SubtaskVOListBean> subtaskVOList;
     public List<UserBasicVOListBean> userBasicVOList;
-
-    public static class ProjectLabelVOListBean  implements Serializable {
-
-        public String labelId;
-        public String labelName;
-        public String labelColour;
-    }
 
     public static class SubtaskVOListBean implements Serializable {
         public String subtaskId;

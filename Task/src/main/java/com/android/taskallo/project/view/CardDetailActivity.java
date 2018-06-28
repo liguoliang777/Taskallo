@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
+import com.android.taskallo.bean.TagInfo;
 import com.android.taskallo.project.TagListActivity;
 import com.android.taskallo.bean.BoardVOListBean;
 import com.android.taskallo.bean.JsonResult;
@@ -329,7 +330,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
     }
 
-    //删除项目
+    //删除卡片
     private void deleteCard() {
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, "网络异常,请检查网络设置");
@@ -409,9 +410,12 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
     public void onCradDetailTagAddBtClick(View view) {
         Intent intent = new Intent(context, TagListActivity.class);
-        intent.putExtra(KeyConstant.projectId, mProjectId);
-        intent.putExtra(KeyConstant.boardId, mBoardId);
-
+        List<TagInfo> tagInfo = mCardBean.projectLabelVOList;
+        intent.putExtra(KeyConstant.tagInfo, (Serializable) tagInfo);
+        Bundle bundle = new Bundle();
+        bundle.putString(KeyConstant.projectId, mProjectId);
+        bundle.putString(KeyConstant.boardId, mBoardId);
+        intent.putExtras(bundle);
         startActivity(intent);
 
     }

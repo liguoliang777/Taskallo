@@ -72,9 +72,15 @@ public class TagListActivity extends BaseFgActivity {
         initStatusBar();
         setContentView(R.layout.selected_topics_activity);
         context = TagListActivity.this;
-        mProjId = getIntent().getStringExtra(KeyConstant.projectId);
-        mBoardId = getIntent().getStringExtra(KeyConstant.boardId);
+        Bundle bundle = getIntent().getExtras();
+        mProjId = bundle.getString(KeyConstant.projectId);
+        mBoardId = bundle.getString(KeyConstant.boardId);
+
+        //defTaglist = (List<TagInfo>) getIntent().getSerializableExtra(KeyConstant.tagInfo);
         init();
+        getData();
+        //获取已经关联的数据
+        getRelationData();
     }
 
     private void init() {
@@ -96,16 +102,14 @@ public class TagListActivity extends BaseFgActivity {
             public void onClick(View v) {
                 initDialog(null, "", "");
                 defAvatarDialog.show();
-
                 showInputMethod();
-
-
             }
         });
         gview = (GridView) findViewById(R.id.gview);
 
-        tagAdapter = new TagListAdapter(this, defTaglist,mBoardId);
+        tagAdapter = new TagListAdapter(this, defTaglist, mBoardId);
         gview.setAdapter(tagAdapter);
+
 
         tv_title.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +117,54 @@ public class TagListActivity extends BaseFgActivity {
                 context.finish();
             }
         });
-        getData();
+    }
+
+    private void getRelationData() {
+        String url = Constant.WEB_SITE1 + UrlConstant.url_label + UrlConstant.url_label + "/" +
+                mBoardId;
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            return;
+        }
+
+        Response.Listener<JsonResult<List<TagInfo>>> successListener = new Response
+                .Listener<JsonResult<List<TagInfo>>>() {
+            @Override
+            public void onResponse(JsonResult<List<TagInfo>> result) {
+                if (result == null) {
+                    ToastUtil.show(context, getString(R.string.server_exception));
+                    return;
+                }
+
+                List<TagInfo> relationInfo = result.data;
+                if (result.code == 0 && context != null && relationInfo != null) {
+                    tagAdapter.setRelationData(relationInfo);
+                }
+            }
+        };
+
+        Request<JsonResult<List<TagInfo>>> versionRequest = new
+                GsonRequest<JsonResult<List<TagInfo>>>(
+                        Request.Method.GET, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult<List<TagInfo>>>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        Log.d(TAG, "token1111:" + App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 
     private void showInputMethod() {
@@ -359,6 +410,7 @@ public class TagListActivity extends BaseFgActivity {
 
 
     public void getData() {
+        //getRelationData();
         String url = Constant.WEB_SITE1 + UrlConstant.url_label + "/" + mProjId + "/" + mBoardId;
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, "网络异常,请检查网络设置");
