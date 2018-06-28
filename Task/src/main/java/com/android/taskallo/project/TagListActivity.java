@@ -57,7 +57,6 @@ public class TagListActivity extends BaseFgActivity {
     private int selectedPosition = 0;
     float[] outerRadian = new float[]{10, 10, 10, 10, 10, 10, 10, 10};
     private Button tv_title, addTagBt;
-    private List<TagInfo> tagList = new ArrayList<>();
     private TagListAdapter tagAdapter;
     private TagListActivity context;
     private GridView gview;
@@ -75,7 +74,6 @@ public class TagListActivity extends BaseFgActivity {
         context = TagListActivity.this;
         mProjId = getIntent().getStringExtra(KeyConstant.projectId);
         mBoardId = getIntent().getStringExtra(KeyConstant.boardId);
-        initDefTagData();
         init();
     }
 
@@ -93,22 +91,14 @@ public class TagListActivity extends BaseFgActivity {
         dra.setBounds(0, 0, dra.getMinimumWidth(), dra.getMinimumHeight());
         addTagBt.setCompoundDrawables(null, null, dra, null);
 
-
-        initDialog();
         addTagBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                initDialog(null, "", "");
                 defAvatarDialog.show();
-                if (tagTitleEt != null) {
-                    tagTitleEt.setText("");
-                }
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        showInputMethod();
-                    }
-                }, 100);
+
+                showInputMethod();
+
 
             }
         });
@@ -127,21 +117,38 @@ public class TagListActivity extends BaseFgActivity {
     }
 
     private void showInputMethod() {
-        //自动弹出键盘
-        InputMethodManager inputManager = (InputMethodManager) context.getSystemService(Context
-                .INPUT_METHOD_SERVICE);
-        inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-        //强制隐藏Android输入法窗口
-        // inputManager.hideSoftInputFromWindow(edit.getWindowToken(),0);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //自动弹出键盘
+                InputMethodManager inputManager = (InputMethodManager) context.getSystemService
+                        (Context
+                                .INPUT_METHOD_SERVICE);
+                inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }, 100);
     }
 
-    private void initDialog() {
+
+    private void initDialog(final TagInfo item, String titleStr, String labelColour) {
         defAvatarDialog = new Dialog(this, R.style.Dialog_From_Bottom_Style);
         //填充对话框的布局
         View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_def_tag, null);
         GridView gridView = (GridView) inflate.findViewById(R.id.tag_add_grid_view);
         Button cancelBt = (Button) inflate.findViewById(R.id.tag_add_cancel_bt);
+        Button deletedBt = (Button) inflate.findViewById(R.id.tag_add_delete_tv);
+        TextView titleTopTv = (TextView) inflate.findViewById(R.id.tag_add_title_tv);
+        titleTopTv.setText(item == null ? "新增标签" : "编辑标签");
+        deletedBt.setVisibility(item == null ? View.GONE : View.VISIBLE);
+        deletedBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //删除标签
+            }
+        });
         tagTitleEt = (EditText) inflate.findViewById(R.id.tag_add_title_et);
+        tagTitleEt.setText(titleStr);
+        tagTitleEt.setSelection(titleStr.length());
         Button addBt = (Button) inflate.findViewById(R.id.tag_add_ok_bt);
         cancelBt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,12 +163,29 @@ public class TagListActivity extends BaseFgActivity {
                 String s = tagTitleEt.getText().toString();
                 String tagTitle = s == null ? "" : s;
 
-                TagInfo tagInfo = tagList.get(selectedPosition);
-                addTagThread(tagTitle, tagInfo.labelColour);
+                String labelColour = tagStrArr[selectedPosition];
+
+                if (item == null) {
+                    //添加
+                    addTagThread(tagTitle, labelColour);
+                } else {
+                    //编辑完成
+                    updateTagThread(item.labelId, tagTitle, labelColour);
+                }
             }
         });
         mAvatarAdapter = new AvatarAdapter();
         gridView.setAdapter(mAvatarAdapter);
+        if (item != null) {
+            for (int i = 0; i < tagStrArr.length; i++) {
+                String arrLaberColor = tagStrArr[i];
+                if (arrLaberColor.equals(labelColour)) {
+                    selectedPosition = i;
+                    mAvatarAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+
 
         defAvatarDialog.setContentView(inflate);//将布局设置给Dialog
         Window dialogWindow = defAvatarDialog.getWindow(); //获取当前Activity所在的窗体
@@ -170,6 +194,60 @@ public class TagListActivity extends BaseFgActivity {
         //params.y = 20;  Dialog距离底部的距离
         params.width = WindowManager.LayoutParams.MATCH_PARENT;//设置Dialog距离底部的距离
         dialogWindow.setAttributes(params); //将属性设置给窗体
+    }
+
+    private void updateTagThread(String labelId, final String tagTitle, final String labelColour) {
+        String url = Constant.WEB_SITE1 + UrlConstant.url_label + "/" + labelId;
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null || result.code != 0) {
+                    if (result.code == -311) {
+                        ToastUtil.show(context, "该标签名字已经存在");
+                    } else {
+                        ToastUtil.show(context, getString(R.string.requery_failed));
+                    }
+                    return;
+                }
+
+                getData();
+                defAvatarDialog.cancel();
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                ToastUtil.show(context, getString(R.string.requery_failed));
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(Request.Method.PUT, url,
+                        successListener, errorListener, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.projectId, mProjId);
+                        params.put(KeyConstant.boardId, mBoardId);
+                        params.put(KeyConstant.labelName, tagTitle);
+                        params.put(KeyConstant.labelColour, labelColour);
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 
     //添加标签
@@ -273,27 +351,21 @@ public class TagListActivity extends BaseFgActivity {
 
     private void setData(List<TagInfo> result) {
         if (result != null && result.size() > 0) {
-            defTaglist=result;
+            defTaglist = result;
             tagAdapter.setList(defTaglist);
         } else {
             ToastUtil.show(context, "暂无标签");
         }
     }
 
+    String tagStrArr[] = new String[]{"#00CD66", "#CDCD00", "#fec055", "#CD4F39",
+            "#95e645", "#4590e5", "#a87afb", "#d94bee", "#45d1e5", "#1a1a1a", "#cccccc"
+    };
 
-    private void initDefTagData() {
-        tagList.clear();
-        tagList.add(new TagInfo("0", "", "#00CD66"));
-        tagList.add(new TagInfo("0", "", "#CDCD00"));
-        tagList.add(new TagInfo("0", "", "#fec055"));
-        tagList.add(new TagInfo("0", "", "#CD4F39"));
-        tagList.add(new TagInfo("0", "", "#95e645"));
-        tagList.add(new TagInfo("0", "", "#4590e5"));
-        tagList.add(new TagInfo("0", "", "#a87afb"));
-        tagList.add(new TagInfo("0", "", "#d94bee"));
-        tagList.add(new TagInfo("0", "", "#45d1e5"));
-        tagList.add(new TagInfo("0", "", "#1a1a1a"));
-        tagList.add(new TagInfo("0", "", "#cccccc"));
+    public void updateTag(TagInfo item) {
+        initDialog(item, item.labelName == null ? "" : item.labelName, item.labelColour);
+        defAvatarDialog.show();
+        showInputMethod();
     }
 
     //默认头像适配器
@@ -305,12 +377,12 @@ public class TagListActivity extends BaseFgActivity {
 
         @Override
         public int getCount() {
-            return tagList.size();
+            return tagStrArr.length;
         }
 
         @Override
         public Object getItem(int position) {
-            return tagList.get(position);
+            return tagStrArr[position];
         }
 
         @Override
@@ -324,7 +396,7 @@ public class TagListActivity extends BaseFgActivity {
             Button mTagColorBt = (Button) convertView.findViewById(R.id.tag_add_color_bt);
             ImageView itemSelectedTag = (ImageView) convertView.findViewById(R.id
                     .tag_add_selected_tag);
-            String labelColour = tagList.get(position).labelColour;
+            String labelColour = tagStrArr[position];
             if (labelColour != null) {
                 ShapeDrawable drawable = new ShapeDrawable(new RoundRectShape(outerRadian, null,
                         null));

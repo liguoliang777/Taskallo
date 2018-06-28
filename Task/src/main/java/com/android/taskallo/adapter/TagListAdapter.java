@@ -1,8 +1,6 @@
 
 package com.android.taskallo.adapter;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
@@ -17,6 +15,7 @@ import android.widget.TextView;
 
 import com.android.taskallo.R;
 import com.android.taskallo.bean.TagInfo;
+import com.android.taskallo.project.TagListActivity;
 
 import java.util.List;
 
@@ -26,12 +25,12 @@ import java.util.List;
  */
 public class TagListAdapter extends BaseAdapter {
 
-    private Context context;
+    private TagListActivity context;
     private List<TagInfo> list;
     private ShapeDrawable drawable;
     float[] outerRadian = new float[]{10, 10, 10, 10, 10, 10, 10, 10};
 
-    public TagListAdapter(Context context, List<TagInfo> list) {
+    public TagListAdapter(TagListActivity context, List<TagInfo> list) {
         super();
         this.context = context;
         this.list = list;
@@ -76,7 +75,7 @@ public class TagListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        TagInfo item = list.get(position);
+        final TagInfo item = list.get(position);
         if (item != null) {
             String labelColour = item.labelColour;
             if (labelColour != null) {
@@ -111,7 +110,7 @@ public class TagListAdapter extends BaseAdapter {
             holder.itemEditBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent();
+                    context.updateTag(item);
 
                 }
             });
