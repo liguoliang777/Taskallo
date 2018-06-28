@@ -8,63 +8,70 @@
     <Button
         android:id="@+id/tag_add_cancel_bt"
         style="@style/px24_333333"
-        android:background="@null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/dm036"
-        android:paddingTop="@dimen/dm020"
+        android:background="@null"
         android:paddingBottom="@dimen/dm020"
+        android:paddingLeft="@dimen/dm036"
         android:paddingRight="@dimen/dm036"
+        android:paddingTop="@dimen/dm020"
         android:text="@string/cancel" />
 
-    <Button
-        android:paddingLeft="@dimen/dm036"
-        android:paddingTop="@dimen/dm020"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:paddingBottom="@dimen/dm020"
-        android:paddingRight="@dimen/dm036"
+        android:paddingTop="@dimen/dm020"
+        android:text="新建标签"
+        android:textColor="@color/color_1a"
+        android:textSize="@dimen/dm028"
+        android:textStyle="bold" />
+
+    <Button
         android:id="@+id/tag_add_ok_bt"
-        android:background="@null"
-        android:textStyle="bold"
-        android:textSize="@dimen/dm024"
-        android:textColor="@color/mainColorDrak"
+        style="@style/px24_333333"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="添加" />
+        android:background="@null"
+        android:paddingBottom="@dimen/dm020"
+        android:paddingLeft="@dimen/dm036"
+        android:paddingRight="@dimen/dm036"
+        android:paddingTop="@dimen/dm020"
+        android:text="完成" />
 
     <EditText
         android:id="@+id/tag_add_title_et"
         style="@style/px24_333333"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/dm080"
         android:layout_below="@id/tag_add_cancel_bt"
         android:background="@color/white"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:hint="标签名称(选填)"
+        android:minHeight="@dimen/dm080"
         android:paddingLeft="@dimen/dm036"
         android:paddingRight="@dimen/dm036"
         android:textColorHint="@color/cccccc"
         android:textCursorDrawable="@drawable/shape_cursor_color_main_color" />
 
     <GridView
-        android:layout_below="@id/tag_add_title_et"
         android:id="@+id/tag_add_grid_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tag_add_title_et"
+        android:layout_marginBottom="@dimen/dm080"
         android:layout_marginLeft="@dimen/dm036"
         android:layout_marginRight="@dimen/dm036"
         android:layout_marginTop="@dimen/dm036"
-        android:layout_marginBottom="@dimen/dm080"
         android:horizontalSpacing="@dimen/dm027"
-        android:verticalSpacing="@dimen/dm020"
         android:listSelector="@color/transparent"
         android:numColumns="4"
         android:scrollbars="none"
         android:stretchMode="columnWidth"
-        />
-
+        android:verticalSpacing="@dimen/dm020" />
 
 
 </RelativeLayout>

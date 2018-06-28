@@ -2,7 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dm078">
+    android:paddingLeft="@dimen/dm025"
+    android:paddingTop="@dimen/dm020"
+    android:paddingRight="@dimen/dm025"
+    android:layout_height="@dimen/dm098">
 
     <Button
         android:id="@+id/tag_item_edit"

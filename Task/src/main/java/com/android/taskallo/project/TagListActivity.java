@@ -57,14 +57,15 @@ public class TagListActivity extends BaseFgActivity {
     private int selectedPosition = 0;
     float[] outerRadian = new float[]{10, 10, 10, 10, 10, 10, 10, 10};
     private Button tv_title, addTagBt;
-    List<TagInfo> tagList = new ArrayList<>();
-    TagListAdapter tagAdapter;
+    private List<TagInfo> tagList = new ArrayList<>();
+    private TagListAdapter tagAdapter;
     private TagListActivity context;
     private GridView gview;
     private String mProjId, mBoardId;
     private Dialog defAvatarDialog;
     private AvatarAdapter mAvatarAdapter;
-    private List<TagInfo> defTaglist;
+    private List<TagInfo> defTaglist = new ArrayList<>();
+    private EditText tagTitleEt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,9 @@ public class TagListActivity extends BaseFgActivity {
             public void onClick(View v) {
 
                 defAvatarDialog.show();
+                if (tagTitleEt != null) {
+                    tagTitleEt.setText("");
+                }
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -110,7 +114,6 @@ public class TagListActivity extends BaseFgActivity {
         });
         gview = (GridView) findViewById(R.id.gview);
 
-        defTaglist = tagList.subList(0, 6);
         tagAdapter = new TagListAdapter(this, defTaglist);
         gview.setAdapter(tagAdapter);
 
@@ -138,7 +141,7 @@ public class TagListActivity extends BaseFgActivity {
         View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_def_tag, null);
         GridView gridView = (GridView) inflate.findViewById(R.id.tag_add_grid_view);
         Button cancelBt = (Button) inflate.findViewById(R.id.tag_add_cancel_bt);
-        final EditText tagTitleEt = (EditText) inflate.findViewById(R.id.tag_add_title_et);
+        tagTitleEt = (EditText) inflate.findViewById(R.id.tag_add_title_et);
         Button addBt = (Button) inflate.findViewById(R.id.tag_add_ok_bt);
         cancelBt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,6 +183,7 @@ public class TagListActivity extends BaseFgActivity {
                     ToastUtil.show(context, getString(R.string.requery_failed));
                     return;
                 }
+
                 getData();
                 defAvatarDialog.cancel();
             }
@@ -269,13 +273,16 @@ public class TagListActivity extends BaseFgActivity {
 
     private void setData(List<TagInfo> result) {
         if (result != null && result.size() > 0) {
-            defTaglist.addAll(result);
+            defTaglist=result;
             tagAdapter.setList(defTaglist);
+        } else {
+            ToastUtil.show(context, "暂无标签");
         }
     }
 
 
     private void initDefTagData() {
+        tagList.clear();
         tagList.add(new TagInfo("0", "", "#00CD66"));
         tagList.add(new TagInfo("0", "", "#CDCD00"));
         tagList.add(new TagInfo("0", "", "#fec055"));
@@ -313,17 +320,10 @@ public class TagListActivity extends BaseFgActivity {
 
         @Override
         public View getView(final int position, View convertView, final ViewGroup parent) {
-            final AvatarAdapter.ViewHolder holder;
-            if (convertView == null) {
-                holder = new AvatarAdapter.ViewHolder();
-                convertView = View.inflate(parent.getContext(), R.layout.gridview_rag_add, null);
-                holder.mTagColorBt = (Button) convertView.findViewById(R.id.tag_add_color_bt);
-                holder.itemSelectedTag = (ImageView) convertView.findViewById(R.id
-                        .tag_add_selected_tag);
-                convertView.setTag(holder);
-            } else {
-                holder = (AvatarAdapter.ViewHolder) convertView.getTag();
-            }
+            convertView = View.inflate(parent.getContext(), R.layout.gridview_rag_add, null);
+            Button mTagColorBt = (Button) convertView.findViewById(R.id.tag_add_color_bt);
+            ImageView itemSelectedTag = (ImageView) convertView.findViewById(R.id
+                    .tag_add_selected_tag);
             String labelColour = tagList.get(position).labelColour;
             if (labelColour != null) {
                 ShapeDrawable drawable = new ShapeDrawable(new RoundRectShape(outerRadian, null,
@@ -331,12 +331,12 @@ public class TagListActivity extends BaseFgActivity {
                 drawable.getPaint().setStyle(Paint.Style.FILL);
                 drawable.getPaint().setColor(Color.parseColor(labelColour));
                 //构建Controller
-                holder.mTagColorBt.setBackground(drawable);
+                mTagColorBt.setBackground(drawable);
             }
             if (selectedPosition == position) {
-                holder.itemSelectedTag.setVisibility(View.VISIBLE);
+                itemSelectedTag.setVisibility(View.VISIBLE);
             } else {
-                holder.itemSelectedTag.setVisibility(View.INVISIBLE);
+                itemSelectedTag.setVisibility(View.INVISIBLE);
             }
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -348,11 +348,6 @@ public class TagListActivity extends BaseFgActivity {
 
 
             return convertView;
-        }
-
-        class ViewHolder {
-            private Button mTagColorBt;
-            private ImageView itemSelectedTag;
         }
     }
 }
