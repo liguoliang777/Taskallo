@@ -50,6 +50,7 @@ import java.util.Map;
  */
 
 public class TagListActivity extends BaseFgActivity {
+    private int selectedPosition = 0;
     float[] outerRadian = new float[]{10, 10, 10, 10, 10, 10, 10, 10};
     private Button tv_title, addTagBt;
     List<TagInfo> tagList = new ArrayList<>();
@@ -58,6 +59,7 @@ public class TagListActivity extends BaseFgActivity {
     private GridView gview;
     private String mProjId, mBoardId;
     private Dialog defAvatarDialog;
+    private AvatarAdapter mAvatarAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +114,8 @@ public class TagListActivity extends BaseFgActivity {
         //填充对话框的布局
         View inflate = LayoutInflater.from(this).inflate(R.layout.layout_dialog_def_tag, null);
         GridView gridView = (GridView) inflate.findViewById(R.id.tag_add_grid_view);
-        gridView.setAdapter(new AvatarAdapter());
+        mAvatarAdapter = new AvatarAdapter();
+        gridView.setAdapter(mAvatarAdapter);
 
         defAvatarDialog.setContentView(inflate);//将布局设置给Dialog
         Window dialogWindow = defAvatarDialog.getWindow(); //获取当前Activity所在的窗体
@@ -173,8 +176,7 @@ public class TagListActivity extends BaseFgActivity {
 
     private void setData(List<TagInfo> result) {
         if (result != null && result.size() > 0) {
-            tagList = result;
-            tagAdapter.setList(tagList);
+            tagAdapter.setList(result);
         }
     }
 
@@ -185,10 +187,13 @@ public class TagListActivity extends BaseFgActivity {
         tagList.add(new TagInfo("0", "", "#4590e5"));
         tagList.add(new TagInfo("0", "", "#a87afb"));
         tagList.add(new TagInfo("0", "", "#d94bee"));
+        tagList.add(new TagInfo("0", "", "#45d1e5"));
+        tagList.add(new TagInfo("0", "", "#1a1a1a"));
     }
 
     //默认头像适配器
     public class AvatarAdapter extends BaseAdapter {
+
         public AvatarAdapter() {
             super();
         }
@@ -230,20 +235,20 @@ public class TagListActivity extends BaseFgActivity {
                 //构建Controller
                 holder.mTagColorBt.setBackground(drawable);
             }
-            holder.mTagColorBt.setOnClickListener(new View.OnClickListener() {
+            if (selectedPosition == position) {
+                holder.itemSelectedTag.setVisibility(View.VISIBLE);
+            } else {
+                holder.itemSelectedTag.setVisibility(View.INVISIBLE);
+            }
+            convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int visibility = holder.itemSelectedTag.getVisibility();
-                    if (visibility == View.VISIBLE) {
-                        //取消关联
-                        holder.itemSelectedTag.setVisibility(View.INVISIBLE);
-                    } else {
-                        //关联
-                        holder.itemSelectedTag.setVisibility(View.VISIBLE);
-
-                    }
+                    selectedPosition = position;
+                    notifyDataSetChanged();
                 }
             });
+
+
             return convertView;
         }
 
