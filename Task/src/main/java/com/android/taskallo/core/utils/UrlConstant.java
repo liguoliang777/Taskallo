@@ -27,4 +27,5 @@ public class UrlConstant {
     public static final String URL_MEMEBER = "/member";
     public static final String url_label = "/label";
     public static final String url_relation = "/relation";
+    public static final String url_subtask = "/subtask";
 }

@@ -56,6 +56,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,8 +82,11 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     private ExRadioGroup cardLayout;
     private LinearLayout.LayoutParams layoutParams;
     private int heightDM;
-    private ExpandableListView expandableLV;
+    private ExpandableListView subtaskLV;
     private boolean isTopClick = false;
+    private String SUBTASK_DEF_NAME = "子任务";
+    private MyExpandableListAdapter mSubtaskLvAdapter;
+    private String oldTitle = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,41 +151,97 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         layoutParams.setMargins(0, 0, 10, 10);
 
         //----------------------------------------------------------------------------------------------------
-        expandableLV = (ExpandableListView) findViewById(R.id.expandable_lv);
+        subtaskLV = (ExpandableListView) findViewById(R.id.expandable_lv);
         //给ExpandableListAdapter设置适配器---自定义适配器需要继承BaseExpandableListAdapter()实现其中的方法
-        MyExpandableListAdapter myExpandableListAdapter = new MyExpandableListAdapter();
+        mSubtaskLvAdapter = new MyExpandableListAdapter(subtaskData);
         //设置适配器
-        expandableLV.setAdapter(myExpandableListAdapter);
+        subtaskLV.setAdapter(mSubtaskLvAdapter);
 
-        reSetLVHeight(expandableLV);
+        reSetLVHeight(subtaskLV);
         //去掉group默认的箭头
-        expandableLV.setGroupIndicator(null);
+        subtaskLV.setGroupIndicator(null);
         //设置组可拉伸的监听器,拉伸时会调用其中的onGroupExpand()方法
-        expandableLV.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+        subtaskLV.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                reSetLVHeight(expandableLV);
+                reSetLVHeight(subtaskLV);
                 /*     *//**
                  * 实现打开只能打开一个组的功能,打开一个组,已将打开的组会自动收缩
                  *//*
                 if(lastGroupPosition != groupPosition){
-                    expandableLV.collapseGroup(lastGroupPosition);
+                    subtaskLV.collapseGroup(lastGroupPosition);
                 }
                 lastGroupPosition  = groupPosition;*/
             }
         });
 
         //设置组收缩的监听器,收缩时会调用其中的onGroupCollapse()方法
-        expandableLV.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+        subtaskLV.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                reSetLVHeight(expandableLV);
+                reSetLVHeight(subtaskLV);
             }
         });
 
 
+    }
+
+    //添加标签
+    private void addSubtask(final String SUBTASK_DEF_NAME) {
+        String url = Constant.WEB_SITE1 + UrlConstant.url_subtask;
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null || result.code != 0) {
+                    ToastUtil.show(context, getString(R.string.requery_failed));
+                    return;
+                }
+                //添加子任务成功
+                if (context != null) {
+                    //把返回的集合添加到子任务集合里面去
+                    subtaskData.add("子任务");
+                    if (subtaskData != null) {
+                        mSubtaskLvAdapter.setData(subtaskData);
+                        reSetLVHeight(subtaskLV);
+                    }
+                }
+
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                ToastUtil.show(context, getString(R.string.requery_failed));
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(Request.Method.POST, url,
+                        successListener, errorListener, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.subtaskName, SUBTASK_DEF_NAME);
+                        params.put(KeyConstant.boardId, mBoardId);
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 
     //卡片标题
@@ -189,7 +249,6 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         @Override
         public void onFocusChange(View view, boolean b) {
             initCancelOkVisibility(b);
-            Log.d(TAG, "onFocusChange: 444");
             int id = view.getId();
             if (b) {
                 isCancel = false;
@@ -234,21 +293,28 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         listView.setLayoutParams(params);
     }
 
-    private String groupData[] = {"同事", "老师", "朋友"};
+    private List<String> subtaskData = new ArrayList<String>() {
+    };
     private String childData[][] = {{"小小", "小明", "饭饭", "流浪"}, {"李老师", "张老师", "吴老师", "肖老师",
             "柳老师"}, {"雯雯", "哔哔", "嘻嘻"}};
 
     public void onCradSubTaskAddBtClick(View view) {
-        //todo 添加子任务
+        addSubtask(SUBTASK_DEF_NAME);
     }
 
     class MyExpandableListAdapter extends BaseExpandableListAdapter {
         /**
          * 得到组的数量
          */
+        private List<String> mSubtaskData = new ArrayList<>();
+
+        public MyExpandableListAdapter(List<String> subtaskData) {
+            mSubtaskData = subtaskData;
+        }
+
         @Override
         public int getGroupCount() {
-            return groupData.length;
+            return mSubtaskData.size();
         }
 
         /**
@@ -256,7 +322,11 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
          */
         @Override
         public int getChildrenCount(int groupPosition) {
-            return childData[groupPosition].length;
+            int lengthInt = 0;
+            if (groupPosition < childData.length) {
+                lengthInt = childData[groupPosition].length;
+            }
+            return lengthInt;
         }
 
         /**
@@ -264,7 +334,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
          */
         @Override
         public Object getGroup(int groupPosition) {
-            return groupData[groupPosition];
+            return mSubtaskData.get(groupPosition);
         }
 
         /**
@@ -272,7 +342,12 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
          */
         @Override
         public Object getChild(int groupPosition, int childPosition) {
-            return childData[groupPosition][childPosition];
+            if (groupPosition < childData.length) {
+                return childData[groupPosition][childPosition];
+
+            } else {
+                return null;
+            }
         }
 
         /**
@@ -296,7 +371,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
          */
         @Override
         public boolean hasStableIds() {
-            return true;
+            return false;
         }
 
         /**
@@ -322,7 +397,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     .group_item_subtask_jt);
             ImageButton mMenuBt = (ImageButton) view.findViewById(R.id
                     .group_item_subtask_menu_bt);
-            mSubtaskTitleET.setText(groupData[groupPosition]);
+            String text = mSubtaskData.get(groupPosition);
+            mSubtaskTitleET.setText(text == null ? "" : text);
 
             //判断isExpanded就可以控制是按下还是关闭，同时更换图片
             if (isExpanded) {
@@ -344,9 +420,14 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             mSubtaskTitleET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    Log.d(TAG, "onFocusChange: 4445555");
                     if (!hasFocus) {
-                        //提交标题
+                        String newTitle = mSubtaskTitleET.getText().toString();
+                        if (TextUtil.isEmpty(newTitle)) {
+                            mSubtaskTitleET.setText(oldTitle);
+                        }
+                        //todo 提交标题
+                    } else {
+                        oldTitle = mSubtaskTitleET.getText().toString();
                     }
                 }
             });
@@ -373,7 +454,10 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     .LAYOUT_INFLATER_SERVICE);
             convertView = systemService.inflate(R.layout.expandable_childe_item, null);
             TextView child_text = (TextView) convertView.findViewById(R.id.child_text);
-            child_text.setText(childData[groupPosition][childPosition]);
+            if (groupPosition < childData.length) {
+                String[] childDatum = childData[groupPosition];
+                child_text.setText(childDatum[childPosition]);
+            }
             return convertView;
         }
 
@@ -382,6 +466,11 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             return false;
         }
 
+        public void setData(List<String> subtaskData) {
+            mSubtaskData = subtaskData;
+            Log.d(TAG, "添加数据::" + mSubtaskData.size());
+            notifyDataSetChanged();
+        }
     }
 
     private void closeInputMethod() {
