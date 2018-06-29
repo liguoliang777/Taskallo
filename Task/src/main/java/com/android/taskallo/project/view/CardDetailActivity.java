@@ -82,6 +82,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     private LinearLayout.LayoutParams layoutParams;
     private int heightDM;
     private ExpandableListView expandableLV;
+    private boolean isTopClick = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,31 +135,6 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         mCancelBT.setOnClickListener(onBtClickListener);
         mTopEditSaveBt.setOnClickListener(onBtClickListener);
 
-        //卡片标题
-        View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                initCancelOkVisibility(b);
-                int id = view.getId();
-                if (b) {
-                    isCancel = false;
-                    EDITING_TYPE = id == R.id.card_title_et ?
-                            TYPE_TITLE : id == R.id.card_describe_et ? TYPE_DESC : TYPE_TALK;
-                } else {
-                    //不是取消
-                    if (!isCancel) {
-                        postChange();
-                    } else {
-                        if (EDITING_TYPE == TYPE_TITLE) {
-                            mCardTitleEt.setText(postBoardName);
-                        } else if (EDITING_TYPE == TYPE_DESC) {
-                            mCardDescEt.setText(postDesc);
-                        }
-                    }
-                }
-
-            }
-        };
         mCardTitleEt.setOnFocusChangeListener(onFocusChangeListener);//标题
         mCardDescEt.setOnFocusChangeListener(onFocusChangeListener);//描述
         mCardTalkEt.setOnFocusChangeListener(onFocusChangeListener);//讨论输入框
@@ -207,6 +183,33 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
 
     }
+
+    //卡片标题
+    private View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(View view, boolean b) {
+            initCancelOkVisibility(b);
+            Log.d(TAG, "onFocusChange: 444");
+            int id = view.getId();
+            if (b) {
+                isCancel = false;
+                EDITING_TYPE = id == R.id.card_title_et ?
+                        TYPE_TITLE : id == R.id.card_describe_et ? TYPE_DESC : TYPE_TALK;
+            } else {
+                //不是取消
+                if (!isCancel) {
+                    postChange();
+                } else {
+                    if (EDITING_TYPE == TYPE_TITLE) {
+                        mCardTitleEt.setText(postBoardName);
+                    } else if (EDITING_TYPE == TYPE_DESC) {
+                        mCardDescEt.setText(postDesc);
+                    }
+                }
+            }
+
+        }
+    };
 
     public void reSetLVHeight(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
@@ -300,7 +303,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
          * 确定一个组的展示视图--groupPosition表示的当前需要展示的组的索引
          */
         @Override
-        public View getGroupView(final int groupPosition, boolean isExpanded,
+        public View getGroupView(final int groupPosition, final boolean isExpanded,
                                  View convertView, ViewGroup parent) {
 
             LayoutInflater systemService = (LayoutInflater) getSystemService(Context
@@ -314,12 +317,12 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     return false;
                 }
             });
-            final EditText mTitleET = (EditText) view.findViewById(R.id.group_text);
+            final EditText mSubtaskTitleET = (EditText) view.findViewById(R.id.group_text);
             ImageView groupItemSubtaskJt = (ImageView) view.findViewById(R.id
                     .group_item_subtask_jt);
             ImageButton mMenuBt = (ImageButton) view.findViewById(R.id
                     .group_item_subtask_menu_bt);
-            mTitleET.setText(groupData[groupPosition]);
+            mSubtaskTitleET.setText(groupData[groupPosition]);
 
             //判断isExpanded就可以控制是按下还是关闭，同时更换图片
             if (isExpanded) {
@@ -328,7 +331,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 groupItemSubtaskJt.setImageResource(R.drawable.ic_incard_subtask_down);
             }
 
-            mTitleET.setOnTouchListener(new View.OnTouchListener() {
+            mSubtaskTitleET.setOnTouchListener(new View.OnTouchListener() {
 
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -338,12 +341,11 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     return false;
                 }
             });
-            mTitleET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            mSubtaskTitleET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
+                    Log.d(TAG, "onFocusChange: 4445555");
                     if (!hasFocus) {
-                        //关闭输入法
-                        //closeInputMethod();
                         //提交标题
                     }
                 }
@@ -351,8 +353,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             mMenuBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mTitleET.clearFocus();
-                    closeInputMethodClearFocus();
+                    closeInputMethod();
+                    mSubtaskTitleET.clearFocus();
                     ToastUtil.show(context, "点击菜单" + groupPosition);
                 }
             });
