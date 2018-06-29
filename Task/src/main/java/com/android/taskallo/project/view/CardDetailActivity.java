@@ -1,8 +1,13 @@
 package com.android.taskallo.project.view;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +22,18 @@ import android.widget.Toast;
 import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
-import com.android.taskallo.bean.TagInfo;
-import com.android.taskallo.project.TagListActivity;
 import com.android.taskallo.bean.BoardVOListBean;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.MemberInfo;
+import com.android.taskallo.bean.TagInfo;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.NetUtil;
 import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.core.utils.UrlConstant;
+import com.android.taskallo.project.Item.ExRadioGroup;
+import com.android.taskallo.project.TagListActivity;
 import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -62,6 +68,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     private int EDITING_TYPE = 0;
     private String postStr, newStr;
     private LinearLayout mMemberLayout;
+    private ExRadioGroup cardLayout;
+    private LinearLayout.LayoutParams layoutParams;
+    private int heightDM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,12 +152,91 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         mCardDescEt.setOnFocusChangeListener(onFocusChangeListener);//描述
         mCardTalkEt.setOnFocusChangeListener(onFocusChangeListener);//讨论输入框
 
+        cardLayout = (ExRadioGroup) findViewById(R.id.card_item_tag_layout);
+
+        heightDM = getResources().getDimensionPixelSize(R.dimen.dm057);
+        layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0, 0, 10, 10);
+
     }
+
+    //获取标签数据
+    private void getRelationData() {
+        String url = Constant.WEB_SITE1 + UrlConstant.url_label + UrlConstant.url_label + "/" +
+                mBoardId;
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            return;
+        }
+
+        Response.Listener<JsonResult<List<TagInfo>>> successListener = new Response
+                .Listener<JsonResult<List<TagInfo>>>() {
+            @Override
+            public void onResponse(JsonResult<List<TagInfo>> result) {
+                if (result == null) {
+                    ToastUtil.show(context, getString(R.string.server_exception));
+                    return;
+                }
+
+                List<TagInfo> relationInfo = result.data;
+                if (result.code == 0 && context != null && relationInfo != null && relationInfo
+                        .size() > 0) {
+                    cardLayout.removeAllViews();
+                    cardLayout.setVisibility(View.VISIBLE);
+                    for (TagInfo tagInfo : relationInfo) {
+                        TextView codeBtn = new TextView(context);
+                        codeBtn.setGravity(Gravity.CENTER_VERTICAL);
+                        codeBtn.setPadding(20, 3, 20, 6);
+                        codeBtn.setMinWidth(heightDM);
+                        codeBtn.setText(tagInfo.labelName == null ? "" : tagInfo.labelName);
+                        codeBtn.setSingleLine();
+                        codeBtn.setTextColor(Color.WHITE);
+                        ShapeDrawable drawable = new ShapeDrawable(new RoundRectShape
+                                (outerRadian, null,
+                                null));
+                        drawable.getPaint().setStyle(Paint.Style.FILL);
+                        drawable.getPaint().setColor(Color.parseColor(tagInfo.labelColour));
+                        codeBtn.setBackground(drawable);
+                        codeBtn.setLayoutParams(layoutParams);
+                        cardLayout.addView(codeBtn);
+                    }
+                } else {
+                    cardLayout.setVisibility(View.INVISIBLE);
+                }
+            }
+        };
+
+        Request<JsonResult<List<TagInfo>>> versionRequest = new
+                GsonRequest<JsonResult<List<TagInfo>>>(
+                        Request.Method.GET, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult<List<TagInfo>>>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
+    }
+
+    float[] outerRadian = new float[]{7, 7, 7, 7, 7, 7, 7, 7};
 
     @Override
     protected void onStart() {
         super.onStart();
         //获取成员列表
+        getRelationData();
         getMemberInfo();
     }
 

@@ -2,6 +2,10 @@ package com.android.taskallo.project.Item;
 
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,12 +27,13 @@ import java.util.List;
 
 public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.SimpleViewHolder> {
 
-    private String mItemId, mListItemName,mProjectId;
+    private String mItemId, mListItemName, mProjectId;
     private List<BoardVOListBean> mItemItemList = new ArrayList<>();
     ProjListActivity context;
     private int width, height, margin;
     private View codeBtn;
     private LinearLayout.LayoutParams layoutParams;
+    float[] outerRadian = new float[]{5, 5, 5, 5, 5, 5, 5, 5};
 
     public ItemItemAdapter(ProjListActivity c, String projectId, String itemId, String listItemName,
                            List<BoardVOListBean> boardVOList) {
@@ -85,24 +90,25 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
             }
         });
 
-        if (labelColorIdArr == null || labelColorIdArr.length == 0) {
-        } else {
-            setLabelColorLayout(labelColorIdArr, holder.mItemItemLabelLayout);
-        }
+        setLabelColorLayout("#fff546", holder.mItemItemLabelLayout);
         int childCount = holder.mItemItemMentionPeopleLayout.getChildCount();
 
     }
 
-    int[] labelColorIdArr = new int[]{R.color.red};
 
     //标签布局
-    private void setLabelColorLayout(final int[] tab2StringArr, ExRadioGroup
+    private void setLabelColorLayout(final String tab2StringArr, ExRadioGroup
             mItemItemLabelLayout) {
         mItemItemLabelLayout.removeAllViews();
-        int length = tab2StringArr.length;
+        int length = 3;
         for (int position = 0; position < length; position++) {
             codeBtn = new View(context);
-            codeBtn.setBackgroundResource(tab2StringArr[position]);
+            ShapeDrawable drawable = new ShapeDrawable(new RoundRectShape(outerRadian, null,
+                    null));
+            drawable.getPaint().setStyle(Paint.Style.FILL);
+            drawable.getPaint().setColor(Color.parseColor(tab2StringArr));
+            //构建Controller
+            codeBtn.setBackground(drawable);
             codeBtn.setLayoutParams(layoutParams);
 
             mItemItemLabelLayout.addView(codeBtn);

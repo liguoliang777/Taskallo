@@ -193,7 +193,7 @@
                 android:onClick="onCradDetailTagAddBtClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selector_bg_white_f2"
+                android:background="@color/white"
                 android:clickable="true">
 
                 <ImageView
@@ -217,7 +217,7 @@
                     android:textSize="@dimen/dm028"
                     android:textStyle="italic" />
 
-                <LinearLayout
+                <com.android.taskallo.project.Item.ExRadioGroup
                     android:id="@+id/card_item_tag_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -225,8 +225,9 @@
                     android:layout_toRightOf="@id/card_item_tag_iv"
                     android:background="@color/white"
                     android:orientation="horizontal"
-                    android:padding="@dimen/dm020"
-                    android:scaleType="fitXY"
+                    android:paddingTop="@dimen/dm020"
+                    android:paddingRight="@dimen/dm020"
+                    android:paddingBottom="@dimen/dm020"
                     android:textColorHint="@color/hint_color"
                     android:visibility="invisible" />
 
