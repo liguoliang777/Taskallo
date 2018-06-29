@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.android.taskallo.R;
 import com.android.taskallo.bean.BoardVOListBean;
+import com.android.taskallo.bean.TagInfo;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.project.view.CardDetailActivity;
 import com.android.taskallo.project.view.ProjListActivity;
@@ -90,23 +91,26 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
             }
         });
 
-        setLabelColorLayout("#fff546", holder.mItemItemLabelLayout);
+        //标签
+        List<TagInfo> projectLabelVOList = boardVOListBean.projectLabelVOList;
+        if (projectLabelVOList != null) {
+            setLabelColorLayout(projectLabelVOList, holder.mItemItemLabelLayout);
+        }
         int childCount = holder.mItemItemMentionPeopleLayout.getChildCount();
 
     }
 
 
     //标签布局
-    private void setLabelColorLayout(final String tab2StringArr, ExRadioGroup
+    private void setLabelColorLayout(final List<TagInfo> tab2StringArr, ExRadioGroup
             mItemItemLabelLayout) {
         mItemItemLabelLayout.removeAllViews();
-        int length = 3;
-        for (int position = 0; position < length; position++) {
+        for (TagInfo tagInfo : tab2StringArr) {
             codeBtn = new View(context);
             ShapeDrawable drawable = new ShapeDrawable(new RoundRectShape(outerRadian, null,
                     null));
             drawable.getPaint().setStyle(Paint.Style.FILL);
-            drawable.getPaint().setColor(Color.parseColor(tab2StringArr));
+            drawable.getPaint().setColor(Color.parseColor(tagInfo.labelColour));
             //构建Controller
             codeBtn.setBackground(drawable);
             codeBtn.setLayoutParams(layoutParams);
