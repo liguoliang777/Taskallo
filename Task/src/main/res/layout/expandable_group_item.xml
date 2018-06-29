@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/group_item_subtask_top_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dm020"
+        android:background="@color/f0f0f0"></View>
+
+    <ImageView
+        android:layout_below="@id/group_item_subtask_top_line"
+        android:id="@+id/group_item_subtask_start_iv"
+        android:layout_width="@dimen/dm036"
+        android:layout_height="@dimen/dm036"
+        android:layout_marginLeft="@dimen/card_item_margin_left"
+        android:layout_marginRight="@dimen/card_item_margin_left"
+        android:layout_marginTop="@dimen/dm020"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_incard_subtask" />
+
+
+    <ImageView
+        android:layout_below="@id/group_item_subtask_top_line"
+        android:id="@+id/group_item_subtask_menu_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center_vertical"
+        android:clickable="true"
+        android:paddingBottom="@dimen/dm020"
+        android:paddingLeft="@dimen/dm030"
+        android:paddingRight="@dimen/dm030"
+        android:paddingTop="@dimen/dm020"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_list_menu" />
+
+    <ImageView
+        android:layout_below="@id/group_item_subtask_top_line"
+        android:id="@+id/group_item_subtask_jt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_toLeftOf="@id/group_item_subtask_menu_bt"
+        android:paddingBottom="@dimen/dm020"
+        android:paddingLeft="@dimen/dm030"
+        android:paddingRight="@dimen/dm030"
+        android:paddingTop="@dimen/dm020"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_incard_subtask_down" />
+
+    <TextView
+        android:layout_below="@id/group_item_subtask_top_line"
+        android:id="@+id/group_text"
+        style="@style/px27_333333"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/group_item_subtask_menu_bt"
+        android:layout_toRightOf="@id/group_item_subtask_start_iv"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/dm020"
+        android:paddingTop="@dimen/dm020" />
+</RelativeLayout>

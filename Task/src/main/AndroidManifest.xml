@@ -187,12 +187,6 @@
             android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
-            android:name="com.android.taskallo.video.view.VideoPlayActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar" />
-
-        <activity
             android:name="com.android.taskallo.video.view.VideoPlay3DActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"

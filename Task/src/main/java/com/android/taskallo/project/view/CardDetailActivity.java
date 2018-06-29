@@ -1,5 +1,6 @@
 package com.android.taskallo.project.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -8,13 +9,19 @@ import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +35,7 @@ import com.android.taskallo.bean.MemberInfo;
 import com.android.taskallo.bean.TagInfo;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.ImageUtil;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.NetUtil;
 import com.android.taskallo.core.utils.TextUtil;
@@ -71,6 +79,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     private ExRadioGroup cardLayout;
     private LinearLayout.LayoutParams layoutParams;
     private int heightDM;
+    private ExpandableListView expandableLV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,8 +168,175 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(0, 0, 10, 10);
 
+        //----------------------------------------------------------------------------------------------------
+        expandableLV = (ExpandableListView) findViewById(R.id.expandable_lv);
+        //给ExpandableListAdapter设置适配器---自定义适配器需要继承BaseExpandableListAdapter()实现其中的方法
+        MyExpandableListAdapter myExpandableListAdapter = new MyExpandableListAdapter();
+        //设置适配器
+        expandableLV.setAdapter(myExpandableListAdapter);
+
+        reSetLVHeight(expandableLV);
+        //去掉group默认的箭头
+        expandableLV.setGroupIndicator(null);
+        //设置组可拉伸的监听器,拉伸时会调用其中的onGroupExpand()方法
+        expandableLV.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                reSetLVHeight(expandableLV);
+                /*     *//**
+                 * 实现打开只能打开一个组的功能,打开一个组,已将打开的组会自动收缩
+                 *//*
+                if(lastGroupPosition != groupPosition){
+                    expandableLV.collapseGroup(lastGroupPosition);
+                }
+                lastGroupPosition  = groupPosition;*/
+            }
+        });
+
+        //设置组收缩的监听器,收缩时会调用其中的onGroupCollapse()方法
+        expandableLV.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+                reSetLVHeight(expandableLV);
+            }
+        });
+
+
+    }
+    public void reSetLVHeight(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+        int totalHeight = 0;
+        View view;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, null, listView);
+            //宽度为屏幕宽度
+            int i1 = View.MeasureSpec.makeMeasureSpec(ImageUtil.getScreenWidth(context),
+                    View.MeasureSpec.EXACTLY);
+            //根据屏幕宽度计算高度
+            int i2 = View.MeasureSpec.makeMeasureSpec(i1, View.MeasureSpec.UNSPECIFIED);
+            view.measure(i1, i2);
+            totalHeight += view.getMeasuredHeight();
+        }
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
+    private String groupData[] = {"同事", "老师", "朋友"};
+    private String childData[][] = {{"小小", "小明", "饭饭", "流浪"}, {"李老师", "张老师", "吴老师", "肖老师",
+            "柳老师"}, {"雯雯", "哔哔", "嘻嘻"}};
+
+    public void onCradSubTaskAddBtClick(View view) {
+        //todo 添加子任务
     }
 
+    class MyExpandableListAdapter extends BaseExpandableListAdapter {
+        /**
+         * 得到组的数量
+         */
+        @Override
+        public int getGroupCount() {
+            return groupData.length;
+        }
+
+        /**
+         * 得到每个组的元素的数量
+         */
+        @Override
+        public int getChildrenCount(int groupPosition) {
+            return childData[groupPosition].length;
+        }
+
+        /**
+         * 获得组的对象
+         */
+        @Override
+        public Object getGroup(int groupPosition) {
+            return groupData[groupPosition];
+        }
+
+        /**
+         * 获得子对象
+         */
+        @Override
+        public Object getChild(int groupPosition, int childPosition) {
+            return childData[groupPosition][childPosition];
+        }
+
+        /**
+         * 得到组id
+         */
+        @Override
+        public long getGroupId(int groupPosition) {
+            return groupPosition;
+        }
+
+        /**
+         * 得到子id
+         */
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+
+        /**
+         * 表示数据是否稳定,对监听事件有影响
+         */
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+        /**
+         * 确定一个组的展示视图--groupPosition表示的当前需要展示的组的索引
+         */
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded,
+                                 View convertView, ViewGroup parent) {
+            LayoutInflater systemService = (LayoutInflater) getSystemService(Context
+                    .LAYOUT_INFLATER_SERVICE);
+            View view = systemService.inflate(R.layout.expandable_group_item, null);
+            TextView group_text = (TextView) view.findViewById(R.id.group_text);
+            ImageView groupItemSubtaskJt = (ImageView) view.findViewById(R.id.group_item_subtask_jt);
+            group_text.setText(groupData[groupPosition]);
+
+            //判断isExpanded就可以控制是按下还是关闭，同时更换图片
+            if(isExpanded){
+                groupItemSubtaskJt.setImageResource(R.drawable.ic_incard_subtask_up);
+            }else{
+                groupItemSubtaskJt.setImageResource(R.drawable.ic_incard_subtask_down);
+            }
+            return view;
+        }
+
+        /**
+         * 确定一个组的一个子的展示视图-
+         * -groupPostion表示当前组的索引,childPosition表示的是需要展示的子的索引
+         */
+        @Override
+        public View getChildView(int groupPosition, int childPosition,
+                                 boolean isLastChild, View convertView, ViewGroup parent) {
+            LayoutInflater systemService = (LayoutInflater) getSystemService(Context
+                    .LAYOUT_INFLATER_SERVICE);
+            View view = systemService.inflate(R.layout.expandable_childe_item, null);
+            TextView child_text = (TextView) view.findViewById(R.id.child_text);
+            child_text.setText(childData[groupPosition][childPosition]);
+            return view;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return false;
+        }
+
+    }
+
+    //------------------------------------------------------------------------------------------
     //获取标签数据
     private void getRelationData() {
         String url = Constant.WEB_SITE1 + UrlConstant.url_label + UrlConstant.url_label + "/" +
@@ -194,7 +370,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                         codeBtn.setTextColor(Color.WHITE);
                         ShapeDrawable drawable = new ShapeDrawable(new RoundRectShape
                                 (outerRadian, null,
-                                null));
+                                        null));
                         drawable.getPaint().setStyle(Paint.Style.FILL);
                         drawable.getPaint().setColor(Color.parseColor(tagInfo.labelColour));
                         codeBtn.setBackground(drawable);

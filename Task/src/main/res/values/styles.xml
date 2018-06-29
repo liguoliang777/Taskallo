@@ -260,6 +260,10 @@
         <item name="android:textSize">@dimen/dm024</item>
         <item name="android:textColor">@color/color_333333</item>
     </style>
+    <style name="px27_333333">
+        <item name="android:textSize">@dimen/dm027</item>
+        <item name="android:textColor">@color/color_333333</item>
+    </style>
 
     <style name="px24_1a1a1a">
         <item name="android:textSize">@dimen/dm024</item>

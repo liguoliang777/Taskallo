@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/f5f5f5"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f5f5f5"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-              android:orientation="vertical">
+    android:orientation="vertical">
 
-    <include layout="@layout/layout_title_left_center"/>
+    <include layout="@layout/layout_title_left_center" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
         android:layout_gravity="center_vertical"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,7 +24,7 @@
             android:paddingLeft="@dimen/dp_10"
             android:text="自动删除安装包"
             android:textColor="@color/color_1a"
-            android:textSize="@dimen/dp_14"/>
+            android:textSize="@dimen/dp_14" />
 
         <ToggleButton
             android:id="@+id/but_install"
@@ -40,17 +39,16 @@
             android:checked="false"
             android:text=""
             android:textOff=""
-            android:textOn=""/>
+            android:textOn="" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_gravity="center_vertical"
-        android:background="@color/white"
-        >
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,7 +58,7 @@
             android:paddingLeft="@dimen/dp_10"
             android:text="推送通知设置"
             android:textColor="@color/color_1a"
-            android:textSize="@dimen/dp_14"/>
+            android:textSize="@dimen/dp_14" />
 
         <ToggleButton
             android:id="@+id/but_push"
@@ -75,27 +73,26 @@
             android:checked="true"
             android:text=""
             android:textOff=""
-            android:textOn=""/>
+            android:textOn="" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_height="@dimen/dp_44"
-        android:layout_marginTop="@dimen/dp_05"
         android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
         android:layout_gravity="center_vertical"
-        android:background="@color/white"
-      >
+        android:layout_marginTop="@dimen/dp_05"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="使用数据流量下载"
             android:layout_centerVertical="true"
             android:paddingLeft="@dimen/dp_10"
+            android:text="使用数据流量下载"
             android:textColor="@color/color_1a"
-            android:textSize="@dimen/dp_14"/>
+            android:textSize="@dimen/dp_14" />
 
         <ToggleButton
             android:id="@+id/but_load"
@@ -103,46 +100,45 @@
             android:layout_height="@dimen/dm052"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_10"
             android:layout_gravity="center_horizontal"
+            android:layout_marginRight="@dimen/dp_10"
             android:background="@android:color/transparent"
             android:button="@drawable/selector_toggle_but"
             android:checked="false"
             android:text=""
             android:textOff=""
-            android:textOn=""/>
+            android:textOn="" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/layout_1"
         android:layout_width="match_parent"
-        android:gravity="center_vertical"
-        android:background="@color/white"
         android:layout_height="@dimen/dp_44"
         android:layout_marginTop="@dimen/dp_10"
-  >
+        android:background="@color/white"
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="清理缓存"
             android:paddingLeft="@dimen/dp_10"
+            android:text="清理缓存"
             android:textColor="@color/color_1a"
-            android:textSize="@dimen/dp_14"/>
+            android:textSize="@dimen/dp_14" />
 
         <TextView
             android:id="@+id/tv_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="0KB"
-            android:paddingRight="@dimen/dp_10"
             android:layout_centerVertical="true"
+            android:paddingRight="@dimen/dp_10"
+            android:text="0KB"
             android:textColor="@color/b3"
-            android:textSize="@dimen/dp_14"/>
+            android:textSize="@dimen/dp_14" />
 
     </RelativeLayout>
     <!--

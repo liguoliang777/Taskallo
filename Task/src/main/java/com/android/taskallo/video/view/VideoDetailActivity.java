@@ -13,16 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.taskallo.App;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.activity.ReviewActivity;
@@ -34,12 +24,21 @@ import com.android.taskallo.bean.User;
 import com.android.taskallo.bean.VideoInfo;
 import com.android.taskallo.bean.VideoType;
 import com.android.taskallo.core.net.GsonRequest;
-import com.android.taskallo.user.view.LoginActivity;
 import com.android.taskallo.core.utils.CommonUtil;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.Log;
+import com.android.taskallo.user.view.LoginActivity;
 import com.android.taskallo.view.LoadStateView;
 import com.android.taskallo.view.PicassoImageView;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 显示视频详情的界面
@@ -244,7 +243,7 @@ public class VideoDetailActivity extends BaseFgActivity {
 
                                 Intent intent;
                                 if(videoInfo.isPanorama == 1){
-                                    intent = new Intent(VideoDetailActivity.this, VideoPlayActivity.class);
+                                    intent = new Intent(VideoDetailActivity.this, VideoPlay3DActivity.class);
                                 }else {
                                     intent = new Intent(VideoDetailActivity.this, VideoPlay3DActivity.class);
                                 }
