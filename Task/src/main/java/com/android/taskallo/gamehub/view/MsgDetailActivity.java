@@ -18,27 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.taskallo.App;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.android.taskallo.R;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddCommentBodyBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddPointBodyBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.BrowseHistoryBodyBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.CommentListBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.CommentListBodyBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBodyBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.NormalDataBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.AddCommentClient;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.AddPointClient;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.BrowseHistoryClient;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.CommentListClient;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.MsgDetailClient;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.adapter.MsgDetailGridAdapter;
 import com.android.taskallo.adapter.MsgDetailListAdapter;
@@ -55,6 +35,25 @@ import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.popupwin.MsgDetailPop;
 import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
 import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddCommentBodyBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddPointBodyBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.BrowseHistoryBodyBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.CommentListBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.CommentListBodyBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBodyBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.NormalDataBean;
+import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
+import com.jzt.hol.android.jkda.sdk.services.gamehub.AddCommentClient;
+import com.jzt.hol.android.jkda.sdk.services.gamehub.AddPointClient;
+import com.jzt.hol.android.jkda.sdk.services.gamehub.BrowseHistoryClient;
+import com.jzt.hol.android.jkda.sdk.services.gamehub.CommentListClient;
+import com.jzt.hol.android.jkda.sdk.services.gamehub.MsgDetailClient;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import static com.android.taskallo.R.id.pulllistview;
 
@@ -418,7 +417,6 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
                 break;
             case R.id.ll_share:
                 Intent intent = new Intent();
-                intent.setClass(this, ReportActivity.class);
                 intent.putExtra("isReport", isReport);
                 intent.putExtra("postId", msgId);
                 startActivity(intent);

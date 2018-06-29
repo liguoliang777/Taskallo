@@ -229,11 +229,8 @@
 
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
 
-        <activity android:name="com.android.taskallo.gamehub.view.ReportActivity" />
         <activity android:name="com.android.taskallo.gamehub.view.PostMsgActivity" />
         <activity android:name="com.android.taskallo.gamehub.view.SubmitGameActivity" />
-        <activity android:name="com.android.taskallo.gamehub.view.StrategyActivity" />
-        <activity android:name="com.android.taskallo.gamehub.view.VoteActivity" />
         <activity android:name="com.android.taskallo.gamehub.view.ChooseModuleActivity" />
         <activity android:name="com.android.taskallo.gamehub.view.ChooseGameActivity" />
         <activity android:name="com.android.taskallo.gamehub.view.NoticeActivity" />

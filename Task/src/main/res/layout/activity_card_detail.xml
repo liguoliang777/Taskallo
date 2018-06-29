@@ -279,13 +279,10 @@
 
             <include layout="@layout/layout_line_1px_f0f0f0" />
             <!--子任务的列表 -->
-            <ListView
-                android:id="@+id/subtask_list_view"
+            <ExpandableListView
+                android:id="@+id/expandable_lv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-            </ListView>
+                android:layout_height="match_parent"></ExpandableListView>
             <!--    添加子任务   -->
             <LinearLayout
                 android:layout_width="match_parent"
