@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -18,6 +19,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -205,6 +207,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
 
     }
+
     public void reSetLVHeight(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         ViewGroup.LayoutParams params = listView.getLayoutParams();
@@ -227,6 +230,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
+
     private String groupData[] = {"同事", "老师", "朋友"};
     private String childData[][] = {{"小小", "小明", "饭饭", "流浪"}, {"李老师", "张老师", "吴老师", "肖老师",
             "柳老师"}, {"雯雯", "哔哔", "嘻嘻"}};
@@ -296,21 +300,63 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
          * 确定一个组的展示视图--groupPosition表示的当前需要展示的组的索引
          */
         @Override
-        public View getGroupView(int groupPosition, boolean isExpanded,
+        public View getGroupView(final int groupPosition, boolean isExpanded,
                                  View convertView, ViewGroup parent) {
+
             LayoutInflater systemService = (LayoutInflater) getSystemService(Context
                     .LAYOUT_INFLATER_SERVICE);
             View view = systemService.inflate(R.layout.expandable_group_item, null);
-            TextView group_text = (TextView) view.findViewById(R.id.group_text);
-            ImageView groupItemSubtaskJt = (ImageView) view.findViewById(R.id.group_item_subtask_jt);
-            group_text.setText(groupData[groupPosition]);
+            view.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    ((ViewGroup) v)
+                            .setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+                    return false;
+                }
+            });
+            final EditText mTitleET = (EditText) view.findViewById(R.id.group_text);
+            ImageView groupItemSubtaskJt = (ImageView) view.findViewById(R.id
+                    .group_item_subtask_jt);
+            ImageButton mMenuBt = (ImageButton) view.findViewById(R.id
+                    .group_item_subtask_menu_bt);
+            mTitleET.setText(groupData[groupPosition]);
 
             //判断isExpanded就可以控制是按下还是关闭，同时更换图片
-            if(isExpanded){
+            if (isExpanded) {
                 groupItemSubtaskJt.setImageResource(R.drawable.ic_incard_subtask_up);
-            }else{
+            } else {
                 groupItemSubtaskJt.setImageResource(R.drawable.ic_incard_subtask_down);
             }
+
+            mTitleET.setOnTouchListener(new View.OnTouchListener() {
+
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    ((ViewGroup) v.getParent()).setDescendantFocusability
+                            (ViewGroup.FOCUS_AFTER_DESCENDANTS);
+
+                    return false;
+                }
+            });
+            mTitleET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (!hasFocus) {
+                        //关闭输入法
+                        //closeInputMethod();
+                        //提交标题
+                    }
+                }
+            });
+            mMenuBt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mTitleET.clearFocus();
+                    closeInputMethodClearFocus();
+                    ToastUtil.show(context, "点击菜单" + groupPosition);
+                }
+            });
+
             return view;
         }
 
@@ -323,10 +369,10 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                                  boolean isLastChild, View convertView, ViewGroup parent) {
             LayoutInflater systemService = (LayoutInflater) getSystemService(Context
                     .LAYOUT_INFLATER_SERVICE);
-            View view = systemService.inflate(R.layout.expandable_childe_item, null);
-            TextView child_text = (TextView) view.findViewById(R.id.child_text);
+            convertView = systemService.inflate(R.layout.expandable_childe_item, null);
+            TextView child_text = (TextView) convertView.findViewById(R.id.child_text);
             child_text.setText(childData[groupPosition][childPosition]);
-            return view;
+            return convertView;
         }
 
         @Override
@@ -334,6 +380,15 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             return false;
         }
 
+    }
+
+    private void closeInputMethod() {
+        View currentFocus = context.getCurrentFocus();
+        if (currentFocus != null) {
+            ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                    .hideSoftInputFromWindow(currentFocus.getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     //------------------------------------------------------------------------------------------
@@ -430,11 +485,11 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             switch (id) {
                 case R.id.edit_right_save_bt:
                     isCancel = false;
-                    closeInputMethod();
+                    closeInputMethodClearFocus();
                     break;
                 case R.id.top_left_delete_bt:
                     isCancel = true;
-                    closeInputMethod();
+                    closeInputMethodClearFocus();
                     break;
                 case R.id.top_left_finish_bt:
                     finish();
@@ -662,11 +717,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
     }
 
-    private void closeInputMethod() {
-        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                .hideSoftInputFromWindow(context
-                                .getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);//关闭输入法
+    private void closeInputMethodClearFocus() {
+        closeInputMethod();
         mCardDescEt.clearFocus();
         mCardTitleEt.clearFocus();
         mCardTalkEt.clearFocus();
