@@ -7,35 +7,36 @@
 
     <ImageView
         android:id="@+id/child_imageview"
-        android:layout_width="@dimen/dm036"
-        android:layout_height="@dimen/dm036"
-        android:layout_marginLeft="@dimen/card_item_margin_left"
-        android:layout_marginRight="@dimen/card_item_margin_left"
-        android:layout_marginTop="@dimen/dm020"
+        android:layout_width="@dimen/dm084"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_incard_subtask_unfinish" />
+        android:src="@drawable/selector_subtask_term_iv" />
 
     <TextView
         android:id="@+id/child_text"
         style="@style/px27_333333"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@id/child_imageview"
         android:hint=""
         android:paddingBottom="@dimen/dm020"
         android:paddingTop="@dimen/dm020"
         android:textColor="@color/color_333333" />
+
     <EditText
         android:id="@+id/child_add_et"
         style="@style/px27_333333"
-        android:layout_marginRight="@dimen/card_item_margin_left"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/card_item_margin_left"
         android:layout_toRightOf="@id/child_imageview"
-        android:hint="添加项目..."
         android:background="@null"
-        android:textCursorDrawable="@drawable/shape_cursor_color_main_color"
+        android:hint="添加项目..."
         android:paddingBottom="@dimen/dm020"
         android:paddingTop="@dimen/dm020"
-        android:textColorHint="@color/cccccc" />
+        android:textColorHint="@color/cccccc"
+        android:textCursorDrawable="@drawable/shape_cursor_color_main_color" />
 </RelativeLayout>

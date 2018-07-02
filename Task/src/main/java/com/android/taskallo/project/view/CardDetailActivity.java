@@ -517,11 +517,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             mSubtaskTitleET.setText(text == null ? "" : text);
 
             //判断isExpanded就可以控制是按下还是关闭，同时更换图片
-            if (isExpanded) {
-                groupItemSubtaskJt.setImageResource(R.drawable.ic_incard_subtask_up);
-            } else {
-                groupItemSubtaskJt.setImageResource(R.drawable.ic_incard_subtask_down);
-            }
+            groupItemSubtaskJt.setImageResource(isExpanded ?
+                    R.drawable.ic_incard_subtask_up : R.drawable.ic_incard_subtask_down);
 
             mSubtaskTitleET.setOnTouchListener(new View.OnTouchListener() {
 
@@ -578,8 +575,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             final List<SubtaskItemInfo> childDatum = childListData.get(groupPosition);
 
             convertView = mLayoutInflater.inflate(R.layout.expandable_childe_item, null);
-            TextView childTv = (TextView) convertView.findViewById(R.id.child_text);
-            ImageView childImageView = (ImageView) convertView.findViewById(R.id.child_imageview);
+            final TextView childTv = (TextView) convertView.findViewById(R.id.child_text);
+            final ImageView childImageView = (ImageView) convertView.findViewById(R.id
+                    .child_imageview);
             final EditText childAddEt = (EditText) convertView.findViewById(R.id.child_add_et);
 
             Log.d(TAG, childDatum.get(childPosition).termDesc + ",是否是:" + isLastChild);
@@ -594,7 +592,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                             if (TextUtil.isEmpty(subtskItemTitle)) {
                                 return;
                             }
-                            addSubtaskItemThraed(subtskItemTitle, subtaskId, childDatum,groupPosition);
+                            addSubtaskItemThraed(subtskItemTitle, subtaskId, childDatum,
+                                    groupPosition);
                         }
                     }
                 });
@@ -605,13 +604,32 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     String termDesc = childDatum.get(childPosition).termDesc;
                     childTv.setText(termDesc == null ? "" : termDesc);
                 }
+                childImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        boolean selected = childImageView.isSelected();
+                        if (selected) {//删除ing
+                            childTv.getPaint().setFlags(0 | Paint
+                                    .ANTI_ALIAS_FLAG);
+                            childTv.setTextColor(getResources().getColor(R.color.color_333333));
+
+                        } else {//不是删除
+                            childTv.setTextColor(getResources().getColor(R.color.cccccc));
+                            childTv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint
+                                    .ANTI_ALIAS_FLAG);
+
+                        }
+                        childImageView.setSelected(!selected);
+                    }
+                });
             }
             return convertView;
         }
 
         //添加项
         private void addSubtaskItemThraed(final String subtskItemTitle, final String subtaskId,
-                                          final List<SubtaskItemInfo> childDatum, final int groupPosition) {
+                                          final List<SubtaskItemInfo> childDatum, final int
+                                                  groupPosition) {
             String url = Constant.WEB_SITE1 + UrlConstant.url_term;
             Response.Listener<JsonResult<SubtaskItemInfo>> successListener = new Response
                     .Listener<JsonResult<SubtaskItemInfo>>() {
@@ -627,7 +645,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     if (context != null && data != null) {
                         //把返回的集合添加到子任务集合里面去
                         List<SubtaskItemInfo> itemInfos1 = childDatum;
-                        itemInfos1.set(itemInfos1.size()-1,data);
+                        itemInfos1.set(itemInfos1.size() - 1, data);
                         itemInfos1.add(new SubtaskItemInfo("-1", ""));
                         childListData.set(groupPosition, itemInfos1);
                         notifyDataSetChanged();
