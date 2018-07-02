@@ -87,13 +87,18 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     private boolean isTopClick = false;
     private String SUBTASK_DEF_NAME = "子任务";
     private MyExpandableListAdapter mSubtaskLvAdapter;
+    private ArrayList<SubtaskItemInfo> itemInfos = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initStatusBar();
         setContentView(R.layout.activity_card_detail);
+
+        itemInfos.add(new SubtaskItemInfo("-1", "添加项目"));
+
         context = this;
+
         Bundle bundle = getIntent().getExtras();
         Serializable serializable = null;
         if (bundle != null) {
@@ -211,7 +216,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 if (result.code == 0 && context != null &&
                         subtaskListData != null) {
                     for (int i = 0; i < subtaskListData.size(); i++) {
-                        childItemListData.add(new ArrayList<SubtaskItemInfo>());
+                        childItemListData.add(i, itemInfos);
                         getChildInfo(i);
                     }
                     mSubtaskLvAdapter.setData(subtaskListData, childItemListData);
@@ -265,9 +270,13 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 }
 
                 List<SubtaskItemInfo> relationInfo = result.data;
-                Log.d(TAG, "子条目数据:" + relationInfo.size());
                 if (result.code == 0 && context != null) {
-                    childItemListData.add(i, relationInfo);
+                    if (relationInfo != null && relationInfo.size() != 0) {
+                        childItemListData.set(i, relationInfo);
+                    } else {
+                        childItemListData.set(i, itemInfos);
+                    }
+
                     if (i == subtaskListData.size() - 1) {
                         mSubtaskLvAdapter.setData(subtaskListData, childItemListData);
                         reSetLVHeight(subtaskLV);
@@ -409,18 +418,13 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     };
     private List<List<SubtaskItemInfo>> childItemListData = new ArrayList<List<SubtaskItemInfo>>() {
     };
-    /*    private String childListData[][] = {{"1", "1", "1", "1"}, {"2", "2", "2", "2",
-                "2"}, {"3", "3", "3"}};  */
 
     public void onCradSubTaskAddBtClick(View view) {
         addSubtask(SUBTASK_DEF_NAME);
     }
 
     class MyExpandableListAdapter extends BaseExpandableListAdapter {
-        /**
-         * 得到组的数量
-         */
-        private List<SubtaskInfo> mSubtaskData ;
+        private List<SubtaskInfo> mSubtaskData;
         private List<List<SubtaskItemInfo>> childListData;
         private int focusPosition = -1;
 
@@ -433,32 +437,23 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             return mSubtaskData.size();
         }
 
-        /**
-         * 得到每个组的元素的数量
-         */
         @Override
         public int getChildrenCount(int groupPosition) {
             int lengthInt = 0;
-            if (childListData != null && groupPosition < childListData.size()) {
+            if (childListData != null) {
                 lengthInt = childListData.get(groupPosition).size();
             }
             return lengthInt;
         }
 
-        /**
-         * 获得组的对象
-         */
         @Override
         public Object getGroup(int groupPosition) {
             return mSubtaskData.get(groupPosition);
         }
 
-        /**
-         * 获得子对象
-         */
         @Override
         public Object getChild(int groupPosition, int childPosition) {
-            if (childListData != null && groupPosition < childListData.size()) {
+            if (childListData != null) {
                 return childListData.get(groupPosition).get(childPosition);
 
             } else {
@@ -466,25 +461,16 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             }
         }
 
-        /**
-         * 得到组id
-         */
         @Override
         public long getGroupId(int groupPosition) {
             return groupPosition;
         }
 
-        /**
-         * 得到子id
-         */
         @Override
         public long getChildId(int groupPosition, int childPosition) {
             return childPosition;
         }
 
-        /**
-         * 表示数据是否稳定,对监听事件有影响
-         */
         @Override
         public boolean hasStableIds() {
             return false;
@@ -576,18 +562,24 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         @Override
         public View getChildView(int groupPosition, int childPosition,
                                  boolean isLastChild, View convertView, ViewGroup parent) {
-            LayoutInflater systemService = (LayoutInflater) getSystemService(Context
+            LayoutInflater mLayoutInflater = (LayoutInflater) getSystemService(Context
                     .LAYOUT_INFLATER_SERVICE);
-            convertView = systemService.inflate(R.layout.expandable_childe_item, null);
-            TextView child_text = (TextView) convertView.findViewById(R.id.child_text);
-
-            if (childListData != null && groupPosition < childListData.size()) {
+            Log.d("子条目", "getChildView: ");
+            if (childListData != null) {
 
                 List<SubtaskItemInfo> childDatum = childListData.get(groupPosition);
-                if (childDatum != null) {
+                if (childDatum != null && childDatum.size() != 0) {
+                    Log.d("子条目", "1: ");
+                    convertView = mLayoutInflater.inflate(R.layout.expandable_childe_item, null);
+                    TextView child_text = (TextView) convertView.findViewById(R.id.child_text);
+
                     String termDesc = childDatum.get(childPosition).termDesc;
                     child_text.setText(termDesc == null ? "" : termDesc);
+                } else {
+                    Log.d("子条目", "2 ");
                 }
+            } else {
+                Log.d("子条目", "3: ");
             }
             return convertView;
         }
@@ -599,7 +591,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
         public void setData(List<SubtaskInfo> subtaskData, List<List<SubtaskItemInfo>> childList) {
             mSubtaskData = subtaskData;
-            childListData=childList;
+            childListData = childList;
             notifyDataSetChanged();
         }
     }

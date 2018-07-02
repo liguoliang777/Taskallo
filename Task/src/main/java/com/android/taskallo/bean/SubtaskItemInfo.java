@@ -9,4 +9,9 @@ public class SubtaskItemInfo implements Serializable {
 
     public String termId;
     public String termDesc;
+
+    public SubtaskItemInfo(String termId, String termDesc) {
+        this.termId = termId;
+        this.termDesc = termDesc;
+    }
 }
