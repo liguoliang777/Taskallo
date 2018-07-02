@@ -65,20 +65,16 @@ import java.util.Map;
 public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         .OnMenuItemClickListener {
     private Button mTopFinishedBT, mCancelBT, mTopEditSaveBt;
-    private String mListTitle = "", mProjectId;
     private CardDetailActivity context;
     private EditText mCardTitleEt, mCardTalkEt, mCardDescEt;
     private TextView mListTitleTv;
     private BoardVOListBean mCardBean;
-    private String mBoardId;
-    private String mListItemId;
-    private String mBoardName, postBoardName, postDesc;
-    private String mBoardDesc;
+    private String mBoardId = "", mListItemId = "", mListTitle = "", mProjectId = "",
+            mBoardName = "", postBoardName = "", postDesc = "", mBoardDesc = "",oldTitle = "";
     private int TYPE_TITLE = 1;
     private int TYPE_DESC = 2;
     private int TYPE_TALK = 3;
     private int EDITING_TYPE = 0;
-    private String postStr, newStr;
     private LinearLayout mMemberLayout;
     private ExRadioGroup cardLayout;
     private LinearLayout.LayoutParams layoutParams;
@@ -87,7 +83,6 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     private boolean isTopClick = false;
     private String SUBTASK_DEF_NAME = "子任务";
     private MyExpandableListAdapter mSubtaskLvAdapter;
-    private String oldTitle = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +91,13 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         setContentView(R.layout.activity_card_detail);
         context = this;
         Bundle bundle = getIntent().getExtras();
-        Serializable serializable = bundle.getSerializable(KeyConstant.cardBean);
+        Serializable serializable = null;
+        if (bundle != null) {
+            serializable = bundle.getSerializable(KeyConstant.cardBean);
+            mListTitle = bundle.getString(KeyConstant.listItemName);
+            mProjectId = bundle.getString(KeyConstant.projectId);
+            mListItemId = bundle.getString(KeyConstant.listItemId);
+        }
 
         if (serializable != null && serializable instanceof BoardVOListBean) {
             mCardBean = (BoardVOListBean) serializable;
@@ -106,11 +107,6 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             postBoardName = mBoardName;
             mBoardDesc = mCardBean.boardDesc == null ? "" : mCardBean.boardDesc;
         }
-
-        mListTitle = bundle.getString(KeyConstant.listItemName);
-        mProjectId = bundle.getString(KeyConstant.projectId);
-        mListItemId = bundle.getString(KeyConstant.listItemId);
-
         mTopFinishedBT = (Button) findViewById(R.id.top_left_finish_bt);
         mCancelBT = (Button) findViewById(R.id.top_left_delete_bt);
         mMemberLayout = (LinearLayout) findViewById(R.id.card_item_member_layout);
@@ -483,7 +479,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                             return;
                         }
                         //修改标题
-                        changeSubtaskTitle(mSubtaskTitleET,subtaskInfo.subtaskId,newTitle);
+                        changeSubtaskTitle(mSubtaskTitleET, subtaskInfo.subtaskId, newTitle);
                     } else {
                         oldTitle = mSubtaskTitleET.getText().toString();
                     }
@@ -529,9 +525,11 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             notifyDataSetChanged();
         }
     }
-    private void changeSubtaskTitle(final EditText mSubtaskTitleET, String subtaskId, final String newTitle) {
+
+    private void changeSubtaskTitle(final EditText mSubtaskTitleET, String subtaskId, final
+    String newTitle) {
         if (!NetUtil.isNetworkConnected(context)) {
-            ToastUtil.show(context,getString(R.string.no_network));
+            ToastUtil.show(context, getString(R.string.no_network));
             return;
         }
         String url = Constant.WEB_SITE1 + UrlConstant.url_subtask + "/" + subtaskId;
@@ -577,6 +575,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         App.requestQueue.add(versionRequest);
 
     }
+
     private void closeInputMethod() {
         View currentFocus = context.getCurrentFocus();
         if (currentFocus != null) {
