@@ -34,6 +34,7 @@ import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.BoardVOListBean;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.MemberInfo;
+import com.android.taskallo.bean.SubtaskInfo;
 import com.android.taskallo.bean.TagInfo;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
@@ -185,7 +186,57 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             }
         });
 
+        getSubTaskList();
+    }
 
+    //获取子任务列表
+    private void getSubTaskList() {
+        String url = Constant.WEB_SITE1 + UrlConstant.url_subtask + "/" +
+                mBoardId;
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            return;
+        }
+
+        Response.Listener<JsonResult<List<SubtaskInfo>>> successListener = new Response
+                .Listener<JsonResult<List<SubtaskInfo>>>() {
+            @Override
+            public void onResponse(JsonResult<List<SubtaskInfo>> result) {
+                if (result == null) {
+                    ToastUtil.show(context, getString(R.string.server_exception));
+                    return;
+                }
+
+                subtaskData = result.data;
+                if (result.code == 0 && context != null &&
+                        subtaskData != null) {
+                    mSubtaskLvAdapter.setData(subtaskData);
+                } else {
+                }
+            }
+        };
+
+        Request<JsonResult<List<SubtaskInfo>>> versionRequest = new
+                GsonRequest<JsonResult<List<SubtaskInfo>>>(
+                        Request.Method.GET, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult<List<TagInfo>>>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 
     //添加标签
@@ -200,9 +251,10 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     return;
                 }
                 //添加子任务成功
+                SubtaskInfo data = (SubtaskInfo) result.data;
                 if (context != null) {
                     //把返回的集合添加到子任务集合里面去
-                    subtaskData.add("子任务");
+                    subtaskData.add(data);
                     if (subtaskData != null) {
                         mSubtaskLvAdapter.setData(subtaskData);
                         reSetLVHeight(subtaskLV);
@@ -257,7 +309,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             } else {
                 //不是取消
                 if (!isCancel) {
-                    postChange();
+                    postTitleChange();
                 } else {
                     if (EDITING_TYPE == TYPE_TITLE) {
                         mCardTitleEt.setText(postBoardName);
@@ -293,10 +345,10 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         listView.setLayoutParams(params);
     }
 
-    private List<String> subtaskData = new ArrayList<String>() {
+    private List<SubtaskInfo> subtaskData = new ArrayList<SubtaskInfo>() {
     };
-    private String childData[][] = {{"小小", "小明", "饭饭", "流浪"}, {"李老师", "张老师", "吴老师", "肖老师",
-            "柳老师"}, {"雯雯", "哔哔", "嘻嘻"}};
+    private String childData[][] = {{"1", "1", "1", "1"}, {"2", "2", "2", "2",
+            "2"}, {"3", "3", "3"}};
 
     public void onCradSubTaskAddBtClick(View view) {
         addSubtask(SUBTASK_DEF_NAME);
@@ -306,9 +358,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         /**
          * 得到组的数量
          */
-        private List<String> mSubtaskData = new ArrayList<>();
+        private List<SubtaskInfo> mSubtaskData = new ArrayList<>();
 
-        public MyExpandableListAdapter(List<String> subtaskData) {
+        public MyExpandableListAdapter(List<SubtaskInfo> subtaskData) {
             mSubtaskData = subtaskData;
         }
 
@@ -397,7 +449,11 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     .group_item_subtask_jt);
             ImageButton mMenuBt = (ImageButton) view.findViewById(R.id
                     .group_item_subtask_menu_bt);
-            String text = mSubtaskData.get(groupPosition);
+            final SubtaskInfo subtaskInfo = mSubtaskData.get(groupPosition);
+            if (subtaskInfo == null) {
+                return null;
+            }
+            String text = subtaskInfo.subtaskName;
             mSubtaskTitleET.setText(text == null ? "" : text);
 
             //判断isExpanded就可以控制是按下还是关闭，同时更换图片
@@ -424,8 +480,10 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                         String newTitle = mSubtaskTitleET.getText().toString();
                         if (TextUtil.isEmpty(newTitle)) {
                             mSubtaskTitleET.setText(oldTitle);
+                            return;
                         }
-                        //todo 提交标题
+                        //修改标题
+                        changeSubtaskTitle(mSubtaskTitleET,subtaskInfo.subtaskId,newTitle);
                     } else {
                         oldTitle = mSubtaskTitleET.getText().toString();
                     }
@@ -466,13 +524,59 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             return false;
         }
 
-        public void setData(List<String> subtaskData) {
+        public void setData(List<SubtaskInfo> subtaskData) {
             mSubtaskData = subtaskData;
-            Log.d(TAG, "添加数据::" + mSubtaskData.size());
             notifyDataSetChanged();
         }
     }
+    private void changeSubtaskTitle(final EditText mSubtaskTitleET, String subtaskId, final String newTitle) {
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context,getString(R.string.no_network));
+            return;
+        }
+        String url = Constant.WEB_SITE1 + UrlConstant.url_subtask + "/" + subtaskId;
 
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result.code == 0 && result.data != null && context != null) {
+                    mSubtaskTitleET.setText(newTitle);
+                }
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(
+                        Request.Method.PUT, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        Log.d("", "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.subtaskName, newTitle);
+                        params.put(KeyConstant.boardId, mBoardId);
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
+
+    }
     private void closeInputMethod() {
         View currentFocus = context.getCurrentFocus();
         if (currentFocus != null) {
@@ -590,7 +694,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         }
     };
 
-    private void postChange() {
+    private void postTitleChange() {
         if (EDITING_TYPE == TYPE_TITLE) {
             String title = mCardTitleEt.getText().toString();
             if (!TextUtil.isEmpty(title)) {
