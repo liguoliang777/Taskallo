@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/loading"
-        android:layout_marginRight="@dimen/dm025"
+        android:layout_marginRight="@dimen/dm030"
         android:textColor="@color/white"
         android:textSize="@dimen/dm020" />
 

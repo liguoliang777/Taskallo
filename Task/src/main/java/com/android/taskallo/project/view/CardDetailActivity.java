@@ -210,6 +210,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 if (result.code == 0 && context != null &&
                         subtaskListData != null) {
                     mSubtaskLvAdapter.setData(subtaskListData);
+                    reSetLVHeight(subtaskLV);
                 } else {
                 }
             }
@@ -224,7 +225,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                         volleyError.printStackTrace();
                         Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
                     }
-                }, new TypeToken<JsonResult<List<TagInfo>>>() {
+                }, new TypeToken<JsonResult<List<SubtaskInfo>>>() {
                 }.getType()) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
@@ -238,19 +239,19 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         App.requestQueue.add(versionRequest);
     }
 
-    //添加标签
+    //添加
     private void addSubtask(final String SUBTASK_DEF_NAME) {
         String url = Constant.WEB_SITE1 + UrlConstant.url_subtask;
-        Response.Listener<JsonResult> successListener = new Response
-                .Listener<JsonResult>() {
+        Response.Listener<JsonResult<SubtaskInfo>> successListener = new Response
+                .Listener<JsonResult<SubtaskInfo>>() {
             @Override
-            public void onResponse(JsonResult result) {
+            public void onResponse(JsonResult<SubtaskInfo> result) {
                 if (result == null || result.code != 0) {
                     ToastUtil.show(context, getString(R.string.requery_failed));
                     return;
                 }
                 //添加子任务成功
-                SubtaskInfo data = (SubtaskInfo) result.data;
+                SubtaskInfo data = result.data;
                 if (context != null) {
                     //把返回的集合添加到子任务集合里面去
                     subtaskListData.add(data);
@@ -271,9 +272,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             }
         };
 
-        Request<JsonResult> versionRequest = new
-                GsonRequest<JsonResult>(Request.Method.POST, url,
-                        successListener, errorListener, new TypeToken<JsonResult>() {
+        Request<JsonResult<SubtaskInfo>> versionRequest = new
+                GsonRequest<JsonResult<SubtaskInfo>>(Request.Method.POST, url,
+                        successListener, errorListener, new TypeToken<JsonResult<SubtaskInfo>>() {
                 }.getType()) {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
@@ -358,6 +359,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
          * 得到组的数量
          */
         private List<SubtaskInfo> mSubtaskData = new ArrayList<>();
+        private int focusPosition = -1;
 
         public MyExpandableListAdapter(List<SubtaskInfo> subtaskData) {
             mSubtaskData = subtaskData;
@@ -482,9 +484,13 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                             return;
                         }
                         //修改标题
-                        changeSubtaskTitle(mSubtaskTitleET, subtaskInfo.subtaskId, newTitle);
+                        if (focusPosition == groupPosition && newTitle.equals(oldTitle)) {
+                            changeSubtaskTitle(subtaskInfo.subtaskId, newTitle);
+                        }
                     } else {
+                        focusPosition = groupPosition;
                         oldTitle = mSubtaskTitleET.getText().toString();
+                        mSubtaskTitleET.setSelection(oldTitle.length());
                     }
                 }
             });
@@ -539,11 +545,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         int[] location = new int[2];
         popWindow.setFocusable(true);
         popWindow.setOutsideTouchable(false);
-        // 获得位置 这里的v是目标控件，就是你要放在这个v的上面还是下面
         v.getLocationOnScreen(location);
-        // 设置背景，这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
         popWindow.setBackgroundDrawable(new BitmapDrawable());
-        //软键盘不会挡着popupwindow
         popWindow.setSoftInputMode(WindowManager.LayoutParams
                 .SOFT_INPUT_ADJUST_RESIZE);
 
@@ -584,6 +587,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 if (result.code == 0) {
                     subtaskListData.remove(subtaskInfo);
                     mSubtaskLvAdapter.setData(subtaskListData);
+                    reSetLVHeight(subtaskLV);
                 } else {
                     ToastUtil.show(context, getString(R.string.delete_faild) + result.msg);
                 }
@@ -613,7 +617,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         App.requestQueue.add(versionRequest);
     }
 
-    private void changeSubtaskTitle(final EditText mSubtaskTitleET, String subtaskId, final
+    private void changeSubtaskTitle( String subtaskId, final
     String newTitle) {
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, getString(R.string.no_network));
@@ -626,7 +630,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             @Override
             public void onResponse(JsonResult result) {
                 if (result.code == 0 && result.data != null && context != null) {
-                    mSubtaskTitleET.setText(newTitle);
+                    //mSubtaskTitleET.setText(newTitle);
                 }
             }
         };

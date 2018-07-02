@@ -8,12 +8,12 @@
 
     <Button
         android:id="@+id/card_detail_subtalk_menu_delete_bt"
-        style="@style/px24_0079bf"
         android:layout_width="match_parent"
         android:layout_height="@dimen/popup_height"
         android:background="@drawable/selector_item_bg"
-        android:gravity="left|center_vertical"
-        android:paddingLeft="@dimen/dm024"
+        android:gravity="center"
+        android:textSize="@dimen/dm024"
+        android:textColor="@color/font_logout_red"
         android:text="删除" />
 
 <!--    <Button
