@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
@@ -25,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,7 +73,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     private TextView mListTitleTv;
     private BoardVOListBean mCardBean;
     private String mBoardId = "", mListItemId = "", mListTitle = "", mProjectId = "",
-            mBoardName = "", postBoardName = "", postDesc = "", mBoardDesc = "",oldTitle = "";
+            mBoardName = "", postBoardName = "", postDesc = "", mBoardDesc = "", oldTitle = "";
     private int TYPE_TITLE = 1;
     private int TYPE_DESC = 2;
     private int TYPE_TALK = 3;
@@ -150,7 +153,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         //----------------------------------------------------------------------------------------------------
         subtaskLV = (ExpandableListView) findViewById(R.id.expandable_lv);
         //给ExpandableListAdapter设置适配器---自定义适配器需要继承BaseExpandableListAdapter()实现其中的方法
-        mSubtaskLvAdapter = new MyExpandableListAdapter(subtaskData);
+        mSubtaskLvAdapter = new MyExpandableListAdapter(subtaskListData);
         //设置适配器
         subtaskLV.setAdapter(mSubtaskLvAdapter);
 
@@ -203,10 +206,10 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     return;
                 }
 
-                subtaskData = result.data;
+                subtaskListData = result.data;
                 if (result.code == 0 && context != null &&
-                        subtaskData != null) {
-                    mSubtaskLvAdapter.setData(subtaskData);
+                        subtaskListData != null) {
+                    mSubtaskLvAdapter.setData(subtaskListData);
                 } else {
                 }
             }
@@ -250,9 +253,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 SubtaskInfo data = (SubtaskInfo) result.data;
                 if (context != null) {
                     //把返回的集合添加到子任务集合里面去
-                    subtaskData.add(data);
-                    if (subtaskData != null) {
-                        mSubtaskLvAdapter.setData(subtaskData);
+                    subtaskListData.add(data);
+                    if (subtaskListData != null) {
+                        mSubtaskLvAdapter.setData(subtaskListData);
                         reSetLVHeight(subtaskLV);
                     }
                 }
@@ -341,7 +344,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         listView.setLayoutParams(params);
     }
 
-    private List<SubtaskInfo> subtaskData = new ArrayList<SubtaskInfo>() {
+    private List<SubtaskInfo> subtaskListData = new ArrayList<SubtaskInfo>() {
     };
     private String childData[][] = {{"1", "1", "1", "1"}, {"2", "2", "2", "2",
             "2"}, {"3", "3", "3"}};
@@ -490,7 +493,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 public void onClick(View v) {
                     closeInputMethod();
                     mSubtaskTitleET.clearFocus();
-                    ToastUtil.show(context, "点击菜单" + groupPosition);
+                    showPopWindow(v, subtaskInfo);
                 }
             });
 
@@ -524,6 +527,90 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             mSubtaskData = subtaskData;
             notifyDataSetChanged();
         }
+    }
+
+    private void showPopWindow(View v, final SubtaskInfo subtaskInfo) {
+        View inflate = LayoutInflater.from(context).inflate(R.layout
+                .layout_card_detail_subtask_menu, null);
+
+        final PopupWindow popWindow = new PopupWindow(inflate, LinearLayout.LayoutParams
+                .WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        inflate.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        int[] location = new int[2];
+        popWindow.setFocusable(true);
+        popWindow.setOutsideTouchable(false);
+        // 获得位置 这里的v是目标控件，就是你要放在这个v的上面还是下面
+        v.getLocationOnScreen(location);
+        // 设置背景，这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+        popWindow.setBackgroundDrawable(new BitmapDrawable());
+        //软键盘不会挡着popupwindow
+        popWindow.setSoftInputMode(WindowManager.LayoutParams
+                .SOFT_INPUT_ADJUST_RESIZE);
+
+        popWindow.showAsDropDown(v);
+        View.OnClickListener itemMenuPopupClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popWindow.dismiss();
+                switch (view.getId()) {
+                    case R.id.card_detail_subtalk_menu_delete_bt:
+                        deleteSubtask(subtaskInfo);
+                        break;
+                }
+            }
+        };
+        inflate.findViewById(R.id.card_detail_subtalk_menu_delete_bt).setOnClickListener
+                (itemMenuPopupClickListener);
+
+    }
+
+    //删除子任务
+    private void deleteSubtask(final SubtaskInfo subtaskInfo) {
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, getString(R.string.no_network));
+            return;
+        }
+        String url = Constant.WEB_SITE1 + UrlConstant.url_subtask + "/" + mBoardId + "/" +
+                subtaskInfo.subtaskId;
+
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result == null) {
+                    ToastUtil.show(context, getString(R.string.server_exception));
+                    return;
+                }
+                if (result.code == 0) {
+                    subtaskListData.remove(subtaskInfo);
+                    mSubtaskLvAdapter.setData(subtaskListData);
+                } else {
+                    ToastUtil.show(context, getString(R.string.delete_faild) + result.msg);
+                }
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(Request.Method.DELETE, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        ToastUtil.show(context, context.getString(R.string.server_exception));
+
+                    }
+                }, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 
     private void changeSubtaskTitle(final EditText mSubtaskTitleET, String subtaskId, final

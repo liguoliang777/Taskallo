@@ -263,4 +263,5 @@
     <string name="zhong">中</string>
     <string name="add_card_describe">添加卡片描述</string>
     <string name="this_colum_to_finished_filed">此列归档到\"已完成\"</string>
+    <string name="delete_faild">删除失败</string>
 </resources>

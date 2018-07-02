@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:drawable/dialog_holo_light_frame"
+    android:orientation="vertical">
+
+
+    <Button
+        android:id="@+id/card_detail_subtalk_menu_delete_bt"
+        style="@style/px24_0079bf"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/popup_height"
+        android:background="@drawable/selector_item_bg"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="@dimen/dm024"
+        android:text="删除" />
+
+<!--    <Button
+        style="@style/px24_0079bf"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/popup_height"
+        android:background="@drawable/selector_item_bg"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="@dimen/dm024"
+        android:text="@string/this_colum_to_finished_filed" />-->
+
+</LinearLayout>
