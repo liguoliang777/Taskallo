@@ -3,8 +3,8 @@
        android:useLevel="false">
 
     <!-- 填充 -->
-    <solid android:color="@color/all_claasify_item_2"/>
+    <solid android:color="@android:color/background_dark"/>
     <!--圆角-->
-    <corners android:radius="@dimen/dp_4"/>
+    <corners android:radius="@dimen/dm010"/>
 
 </shape>

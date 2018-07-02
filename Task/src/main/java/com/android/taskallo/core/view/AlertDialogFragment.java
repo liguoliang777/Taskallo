@@ -68,7 +68,7 @@ public class AlertDialogFragment extends DialogFragment {
         if(dialogWidth > 0){
             getDialog().getWindow().setLayout(CommonUtil.dip2px(getActivity(),dialogWidth), WindowManager.LayoutParams.WRAP_CONTENT);
         }else {
-            getDialog().getWindow().setLayout(CommonUtil.dip2px(getActivity(),200), CommonUtil.dip2px(getActivity(),70));
+            getDialog().getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
         }
     }
 

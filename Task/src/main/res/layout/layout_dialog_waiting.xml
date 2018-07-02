@@ -16,7 +16,7 @@
             android:id="@+id/img_1"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/ic_loading_bg"/>
+            android:src="@drawable/ic_loading"/>
 
     </FrameLayout>
 

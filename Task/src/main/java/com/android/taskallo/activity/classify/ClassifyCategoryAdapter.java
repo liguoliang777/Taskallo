@@ -66,7 +66,7 @@ public class ClassifyCategoryAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = View.inflate(parent.getContext(), R.layout.classify_gridview_item, null);
             holder.tv_content = convertView.findViewById(tv_content);
-            holder.tv_content.setBackgroundResource(R.drawable.shape_corner4dp_4ac7fc);
+            holder.tv_content.setBackgroundResource(R.drawable.shape_corner8px_black);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

@@ -7,11 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.android.taskallo.R;
 import com.jzt.hol.android.jkda.sdk.bean.classification.AllClassifyBean;
 
 import java.util.List;
-
-import com.android.taskallo.R;
 
 /**
  * 首页下方攻略列表
@@ -62,7 +61,7 @@ public class AllClassifyStyleAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = View.inflate(parent.getContext(), R.layout.classify_gridview_item, null);
             holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
-            holder.tv_content .setBackgroundResource(R.drawable.shape_corner4dp_4ac7fc);
+            holder.tv_content .setBackgroundResource(R.drawable.shape_corner8px_black);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
