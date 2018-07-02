@@ -38,6 +38,7 @@ import com.android.taskallo.bean.BoardVOListBean;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.MemberInfo;
 import com.android.taskallo.bean.SubtaskInfo;
+import com.android.taskallo.bean.SubtaskItemInfo;
 import com.android.taskallo.bean.TagInfo;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
@@ -209,7 +210,11 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 subtaskListData = result.data;
                 if (result.code == 0 && context != null &&
                         subtaskListData != null) {
-                    mSubtaskLvAdapter.setData(subtaskListData);
+                    for (int i = 0; i < subtaskListData.size(); i++) {
+                        childItemListData.add(new ArrayList<SubtaskItemInfo>());
+                        getChildInfo(i);
+                    }
+                    mSubtaskLvAdapter.setData(subtaskListData, childItemListData);
                     reSetLVHeight(subtaskLV);
                 } else {
                 }
@@ -226,6 +231,61 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                         Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
                     }
                 }, new TypeToken<JsonResult<List<SubtaskInfo>>>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
+    }
+
+    private void getChildInfo(final int i) {
+        final SubtaskInfo subtaskInfo = subtaskListData.get(i);
+        if (subtaskInfo == null) {
+            return;
+        }
+        String url = Constant.WEB_SITE1 + UrlConstant.url_term + "/" + subtaskInfo.subtaskId;
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, "网络异常,请检查网络设置");
+            return;
+        }
+
+        Response.Listener<JsonResult<List<SubtaskItemInfo>>> successListener = new Response
+                .Listener<JsonResult<List<SubtaskItemInfo>>>() {
+            @Override
+            public void onResponse(JsonResult<List<SubtaskItemInfo>> result) {
+                if (result == null) {
+                    ToastUtil.show(context, getString(R.string.server_exception));
+                    return;
+                }
+
+                List<SubtaskItemInfo> relationInfo = result.data;
+                Log.d(TAG, "子条目数据:" + relationInfo.size());
+                if (result.code == 0 && context != null) {
+                    childItemListData.add(i, relationInfo);
+                    if (i == subtaskListData.size() - 1) {
+                        mSubtaskLvAdapter.setData(subtaskListData, childItemListData);
+                        reSetLVHeight(subtaskLV);
+                    }
+                }
+            }
+        };
+
+        Request<JsonResult<List<SubtaskItemInfo>>> versionRequest = new
+                GsonRequest<JsonResult<List<SubtaskItemInfo>>>(
+                        Request.Method.GET, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult<List<SubtaskItemInfo>>>() {
                 }.getType()) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
@@ -256,7 +316,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     //把返回的集合添加到子任务集合里面去
                     subtaskListData.add(data);
                     if (subtaskListData != null) {
-                        mSubtaskLvAdapter.setData(subtaskListData);
+                        mSubtaskLvAdapter.setData(subtaskListData, childItemListData);
                         reSetLVHeight(subtaskLV);
                     }
                 }
@@ -347,8 +407,10 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
     private List<SubtaskInfo> subtaskListData = new ArrayList<SubtaskInfo>() {
     };
-    private String childData[][] = {{"1", "1", "1", "1"}, {"2", "2", "2", "2",
-            "2"}, {"3", "3", "3"}};
+    private List<List<SubtaskItemInfo>> childItemListData = new ArrayList<List<SubtaskItemInfo>>() {
+    };
+    /*    private String childListData[][] = {{"1", "1", "1", "1"}, {"2", "2", "2", "2",
+                "2"}, {"3", "3", "3"}};  */
 
     public void onCradSubTaskAddBtClick(View view) {
         addSubtask(SUBTASK_DEF_NAME);
@@ -358,7 +420,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         /**
          * 得到组的数量
          */
-        private List<SubtaskInfo> mSubtaskData = new ArrayList<>();
+        private List<SubtaskInfo> mSubtaskData ;
+        private List<List<SubtaskItemInfo>> childListData;
         private int focusPosition = -1;
 
         public MyExpandableListAdapter(List<SubtaskInfo> subtaskData) {
@@ -376,8 +439,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         @Override
         public int getChildrenCount(int groupPosition) {
             int lengthInt = 0;
-            if (groupPosition < childData.length) {
-                lengthInt = childData[groupPosition].length;
+            if (childListData != null && groupPosition < childListData.size()) {
+                lengthInt = childListData.get(groupPosition).size();
             }
             return lengthInt;
         }
@@ -395,8 +458,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
          */
         @Override
         public Object getChild(int groupPosition, int childPosition) {
-            if (groupPosition < childData.length) {
-                return childData[groupPosition][childPosition];
+            if (childListData != null && groupPosition < childListData.size()) {
+                return childListData.get(groupPosition).get(childPosition);
 
             } else {
                 return null;
@@ -517,9 +580,14 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     .LAYOUT_INFLATER_SERVICE);
             convertView = systemService.inflate(R.layout.expandable_childe_item, null);
             TextView child_text = (TextView) convertView.findViewById(R.id.child_text);
-            if (groupPosition < childData.length) {
-                String[] childDatum = childData[groupPosition];
-                child_text.setText(childDatum[childPosition]);
+
+            if (childListData != null && groupPosition < childListData.size()) {
+
+                List<SubtaskItemInfo> childDatum = childListData.get(groupPosition);
+                if (childDatum != null) {
+                    String termDesc = childDatum.get(childPosition).termDesc;
+                    child_text.setText(termDesc == null ? "" : termDesc);
+                }
             }
             return convertView;
         }
@@ -529,8 +597,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             return false;
         }
 
-        public void setData(List<SubtaskInfo> subtaskData) {
+        public void setData(List<SubtaskInfo> subtaskData, List<List<SubtaskItemInfo>> childList) {
             mSubtaskData = subtaskData;
+            childListData=childList;
             notifyDataSetChanged();
         }
     }
@@ -586,7 +655,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 }
                 if (result.code == 0) {
                     subtaskListData.remove(subtaskInfo);
-                    mSubtaskLvAdapter.setData(subtaskListData);
+                    mSubtaskLvAdapter.setData(subtaskListData, childItemListData);
                     reSetLVHeight(subtaskLV);
                 } else {
                     ToastUtil.show(context, getString(R.string.delete_faild) + result.msg);
@@ -617,7 +686,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         App.requestQueue.add(versionRequest);
     }
 
-    private void changeSubtaskTitle( String subtaskId, final
+    private void changeSubtaskTitle(String subtaskId, final
     String newTitle) {
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, getString(R.string.no_network));

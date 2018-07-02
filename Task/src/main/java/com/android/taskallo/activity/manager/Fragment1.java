@@ -63,8 +63,6 @@ public class Fragment1 extends BaseSearchFragment {
     public Fragment1(MainHomeActivity activity) {
         content = activity;
     }
-    public Fragment1( ) {
-    }
 
     @Override
     protected int getContentViewLayoutID() {
