@@ -95,7 +95,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         initStatusBar();
         setContentView(R.layout.activity_card_detail);
 
-        itemInfos.add(new SubtaskItemInfo("-1", "添加项目"));
+        itemInfos.add(new SubtaskItemInfo("-1", ""));
 
         context = this;
 
@@ -273,11 +273,15 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 if (result.code == 0 && context != null) {
                     if (relationInfo != null && relationInfo.size() != 0) {
                         childItemListData.set(i, relationInfo);
+
                     } else {
                         childItemListData.set(i, itemInfos);
                     }
 
                     if (i == subtaskListData.size() - 1) {
+                        if (childItemListData.size() > 1) {
+                            childItemListData.add(itemInfos);
+                        }
                         mSubtaskLvAdapter.setData(subtaskListData, childItemListData);
                         reSetLVHeight(subtaskLV);
                     }
@@ -476,6 +480,12 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             return false;
         }
 
+        public void setData(List<SubtaskInfo> subtaskData, List<List<SubtaskItemInfo>> childList) {
+            mSubtaskData = subtaskData;
+            childListData = childList;
+            notifyDataSetChanged();
+        }
+
         /**
          * 确定一个组的展示视图--groupPosition表示的当前需要展示的组的索引
          */
@@ -560,39 +570,109 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
          * -groupPostion表示当前组的索引,childPosition表示的是需要展示的子的索引
          */
         @Override
-        public View getChildView(int groupPosition, int childPosition,
+        public View getChildView(final int groupPosition, int childPosition,
                                  boolean isLastChild, View convertView, ViewGroup parent) {
             LayoutInflater mLayoutInflater = (LayoutInflater) getSystemService(Context
                     .LAYOUT_INFLATER_SERVICE);
-            Log.d("子条目", "getChildView: ");
-            if (childListData != null) {
+            final String subtaskId = mSubtaskData.get(groupPosition).subtaskId;
+            final List<SubtaskItemInfo> childDatum = childListData.get(groupPosition);
 
-                List<SubtaskItemInfo> childDatum = childListData.get(groupPosition);
-                if (childDatum != null && childDatum.size() != 0) {
-                    Log.d("子条目", "1: ");
-                    convertView = mLayoutInflater.inflate(R.layout.expandable_childe_item, null);
-                    TextView child_text = (TextView) convertView.findViewById(R.id.child_text);
+            convertView = mLayoutInflater.inflate(R.layout.expandable_childe_item, null);
+            TextView childTv = (TextView) convertView.findViewById(R.id.child_text);
+            ImageView childImageView = (ImageView) convertView.findViewById(R.id.child_imageview);
+            final EditText childAddEt = (EditText) convertView.findViewById(R.id.child_add_et);
 
-                    String termDesc = childDatum.get(childPosition).termDesc;
-                    child_text.setText(termDesc == null ? "" : termDesc);
-                } else {
-                    Log.d("子条目", "2 ");
-                }
+            Log.d(TAG, childDatum.get(childPosition).termDesc + ",是否是:" + isLastChild);
+            if (isLastChild) {
+                childAddEt.setVisibility(View.VISIBLE);
+                childImageView.setVisibility(View.INVISIBLE);
+                childAddEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus) {
+                            String subtskItemTitle = childAddEt.getText().toString();
+                            if (TextUtil.isEmpty(subtskItemTitle)) {
+                                return;
+                            }
+                            addSubtaskItemThraed(subtskItemTitle, subtaskId, childDatum,groupPosition);
+                        }
+                    }
+                });
             } else {
-                Log.d("子条目", "3: ");
+                childAddEt.setVisibility(View.GONE);
+                childImageView.setVisibility(View.VISIBLE);
+                if (childDatum != null && childDatum.size() != 0) {
+                    String termDesc = childDatum.get(childPosition).termDesc;
+                    childTv.setText(termDesc == null ? "" : termDesc);
+                }
             }
             return convertView;
+        }
+
+        //添加项
+        private void addSubtaskItemThraed(final String subtskItemTitle, final String subtaskId,
+                                          final List<SubtaskItemInfo> childDatum, final int groupPosition) {
+            String url = Constant.WEB_SITE1 + UrlConstant.url_term;
+            Response.Listener<JsonResult<SubtaskItemInfo>> successListener = new Response
+                    .Listener<JsonResult<SubtaskItemInfo>>() {
+                @Override
+                public void onResponse(JsonResult<SubtaskItemInfo> result) {
+                    if (result == null || result.code != 0) {
+                        ToastUtil.show(context, getString(R.string.requery_failed));
+                        return;
+                    }
+                    //添加子任务成功
+                    SubtaskItemInfo data = result.data;
+                    Log.d(TAG, subtaskId + "返回:" + "," + data.termDesc);
+                    if (context != null && data != null) {
+                        //把返回的集合添加到子任务集合里面去
+                        List<SubtaskItemInfo> itemInfos1 = childDatum;
+                        itemInfos1.set(itemInfos1.size()-1,data);
+                        itemInfos1.add(new SubtaskItemInfo("-1", ""));
+                        childListData.set(groupPosition, itemInfos1);
+                        notifyDataSetChanged();
+                        reSetLVHeight(subtaskLV);
+                    }
+
+                }
+            };
+
+            Response.ErrorListener errorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyError.printStackTrace();
+                    ToastUtil.show(context, getString(R.string.requery_failed));
+                }
+            };
+
+            Request<JsonResult<SubtaskItemInfo>> versionRequest = new
+                    GsonRequest<JsonResult<SubtaskItemInfo>>(Request.Method.POST, url,
+                            successListener, errorListener, new
+                            TypeToken<JsonResult<SubtaskItemInfo>>() {
+                            }.getType()) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put(KeyConstant.subtaskId, subtaskId);
+                            params.put(KeyConstant.termDesc, subtskItemTitle);
+                            return params;
+                        }
+
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put(KeyConstant.Content_Type, Constant.application_json);
+                            params.put(KeyConstant.Authorization, App.token);
+                            params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                            return params;
+                        }
+                    };
+            App.requestQueue.add(versionRequest);
         }
 
         @Override
         public boolean isChildSelectable(int groupPosition, int childPosition) {
             return false;
-        }
-
-        public void setData(List<SubtaskInfo> subtaskData, List<List<SubtaskItemInfo>> childList) {
-            mSubtaskData = subtaskData;
-            childListData = childList;
-            notifyDataSetChanged();
         }
     }
 

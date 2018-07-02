@@ -85,4 +85,6 @@ public class KeyConstant {
     public static final String tagInfo="tagInfo";
 
     public static final String subtaskName="subtaskName";
+    public static final String subtaskId="subtaskId";
+    public static final String termDesc="termDesc";
 }
