@@ -218,7 +218,7 @@ public class ProjListActivity extends BaseFgActivity {
         window.setGravity(Gravity.CENTER);
         TextView tv = new TextView(context);
         tv.setText(IS_PUBLIC ? R.string
-                .str_private: R.string.str_public);
+                .str_private : R.string.str_public);
         tv.setTextColor(ContextCompat.getColor(context, R.color.color_808080));
         window.addView(tv);
 
@@ -251,8 +251,8 @@ public class ProjListActivity extends BaseFgActivity {
             @Override
             public void onClick(View v) {
                 if (projNameEt != null) {
-                    closeInputMethod();
                     projNameEt.clearFocus();
+                    closeInputMethod();
                 }
                 switch (v.getId()) {
                     case R.id.proj_menu_dialog_favorite_bt:
@@ -273,20 +273,24 @@ public class ProjListActivity extends BaseFgActivity {
                     case R.id.proj_list_public_private_tv:
                         setPopupWindow();
                         break;
+                    //成员列表
+                    case R.id.layout_memeber_list:
+                        break;
                 }
             }
         };
         inflate.findViewById(R.id.proj_menu_dialog_favorite_bt).setOnClickListener
                 (mDialogClickLstener);
         inflate.findViewById(R.id.proj_list_menu_filed_bt).setOnClickListener(mDialogClickLstener);
+        inflate.findViewById(R.id.layout_memeber_list).setOnClickListener(mDialogClickLstener);
         inflate.findViewById(R.id.proj_list_menu_delete_proj_bt).setOnClickListener
                 (mDialogClickLstener);
         projNameEt.setText(mProjectName == null ? "" : mProjectName);
 
         mPublicPrivateTv = (TextView) inflate.findViewById(R.id.proj_list_public_private_tv);
         mPublicPrivateTv.setOnClickListener(mDialogClickLstener);
-        mPublicPrivateTv.setText(IS_PUBLIC ? R.string.str_public: R.string
-                .str_private );
+        mPublicPrivateTv.setText(IS_PUBLIC ? R.string.str_public : R.string
+                .str_private);
 
         projNameEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -320,7 +324,6 @@ public class ProjListActivity extends BaseFgActivity {
                 .Listener<JsonResult>() {
             @Override
             public void onResponse(JsonResult result) {
-                Log.d(TAG, "修改项目信息:" + result.msg);
                 if (result.code == 0 && result.data != null) {
                     //修改成功
                     if (projNameEt != null && context != null) {
@@ -338,14 +341,14 @@ public class ProjListActivity extends BaseFgActivity {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         volleyError.printStackTrace();
-                        Log.d("", "网络连接错误！" + volleyError.getMessage());
+                        Log.d("", "修改项目信息,网络错误:" + volleyError.getMessage());
                     }
                 }, new TypeToken<JsonResult>() {
                 }.getType()) {
                     @Override
                     public Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
-                        params.put(KeyConstant.privacy, IS_PUBLIC ? "0" : "1");
+                        params.put(KeyConstant.privacy, "0");
                         params.put(KeyConstant.name, newProjNameStr);
                         params.put(KeyConstant.desc, "描述");
                         params.put(KeyConstant.imgId, "0");
@@ -357,7 +360,7 @@ public class ProjListActivity extends BaseFgActivity {
                         Map<String, String> params = new HashMap<>();
                         params.put(KeyConstant.Content_Type, Constant.application_json);
                         params.put(KeyConstant.Authorization, App.token);
-                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        params.put(KeyConstant.appType, "0");
                         return params;
                     }
                 };

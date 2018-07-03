@@ -57,7 +57,7 @@
             style="@style/px20_808080"
             android:id="@+id/proj_list_public_private_tv"
             android:layout_width="wrap_content"
-            android:paddingLeft="@dimen/dm100"
+            android:paddingLeft="@dimen/dm080"
             android:clickable="true"
             android:paddingRight="@dimen/dm024"
             android:paddingBottom="@dimen/dm020"
