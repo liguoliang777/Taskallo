@@ -633,7 +633,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                             SubtaskItemInfo subtaskItemInfo = childDatum.get(childPosition);
                             if (subtaskItemInfo != null) {
                                 changeTermThraed(childTv, subtaskId, subtaskItemInfo.termId,
-                                        newTitle);
+                                        newTitle,groupPosition,childPosition,childDatum);
                             }
                         } else {
                             oldTermTtileStr = childTv.getText().toString();
@@ -645,16 +645,17 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         }
 
         private void changeTermThraed(final EditText childTv, final String subtaskId, String
-                termId, final String newTitle) {
+                termId, final String newTitle, final int groupPosition, final int childPosition,
+                                      final List<SubtaskItemInfo> subtaskItemInfo) {
             if (!NetUtil.isNetworkConnected(context)) {
                 ToastUtil.show(context, getString(R.string.no_network));
                 return;
             }
             String url = Constant.WEB_SITE1 + UrlConstant.url_term + "/" + termId;
-            Response.Listener<JsonResult> successListener = new Response
-                    .Listener<JsonResult>() {
+            Response.Listener<JsonResult<SubtaskItemInfo>> successListener = new Response
+                    .Listener<JsonResult<SubtaskItemInfo>>() {
                 @Override
-                public void onResponse(JsonResult result) {
+                public void onResponse(JsonResult<SubtaskItemInfo> result) {
                     if (result == null || result.code != 0) {
                         ToastUtil.show(context, context.getString(R.string.requery_failed));
                         if (context != null) {
@@ -662,7 +663,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                         }
                         return;
                     }
-
+                    List<SubtaskItemInfo> newSubtaskItemInfo=subtaskItemInfo;
+                    newSubtaskItemInfo.set(childPosition,result.data);
+                    childListData.set(groupPosition, newSubtaskItemInfo);
                 }
             };
 
@@ -677,9 +680,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 }
             };
 
-            Request<JsonResult> versionRequest = new
-                    GsonRequest<JsonResult>(Request.Method.PUT, url,
-                            successListener, errorListener, new TypeToken<JsonResult>() {
+            Request<JsonResult<SubtaskItemInfo>> versionRequest = new
+                    GsonRequest<JsonResult<SubtaskItemInfo>>(Request.Method.PUT, url,
+                            successListener, errorListener, new TypeToken<JsonResult<SubtaskItemInfo>>() {
                     }.getType()) {
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
