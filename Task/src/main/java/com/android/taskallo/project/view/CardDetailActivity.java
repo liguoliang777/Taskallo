@@ -575,7 +575,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             final List<SubtaskItemInfo> childDatum = childListData.get(groupPosition);
 
             convertView = mLayoutInflater.inflate(R.layout.expandable_childe_item, null);
-            final TextView childTv = (TextView) convertView.findViewById(R.id.child_text);
+            final EditText childTv = (EditText) convertView.findViewById(R.id.child_text);
             final ImageView childImageView = (ImageView) convertView.findViewById(R.id
                     .child_imageview);
             final EditText childAddEt = (EditText) convertView.findViewById(R.id.child_add_et);
@@ -610,12 +610,33 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                         if (selected) {//删除ing
                             //childTv.getPaint().setFlags(0 | Paint.ANTI_ALIAS_FLAG);
                             //childTv.setTextColor(getResources().getColor(R.color.color_333333));
-                            ToastUtil.show(context,"该项已被删除");
+                            ToastUtil.show(context, "该项已被删除");
                         } else {//不是删除
                             SubtaskItemInfo subtaskItemInfo = childDatum.get(childPosition);
                             if (subtaskItemInfo != null) {
-                                deleteSubtaskTerm(childImageView,childTv, subtaskId, subtaskItemInfo.termId);
+                                deleteSubtaskTerm(childImageView, childTv, subtaskId,
+                                        subtaskItemInfo.termId);
                             }
+                        }
+                    }
+                });
+
+                childTv.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus) {
+                            String newTitle = childTv.getText().toString();
+                            if (TextUtil.isEmpty(newTitle)) {
+                                childTv.setText(oldTermTtileStr);
+                                return;
+                            }
+                            SubtaskItemInfo subtaskItemInfo = childDatum.get(childPosition);
+                            if (subtaskItemInfo != null) {
+                                changeTermThraed(childTv, subtaskId, subtaskItemInfo.termId,
+                                        newTitle);
+                            }
+                        } else {
+                            oldTermTtileStr = childTv.getText().toString();
                         }
                     }
                 });
@@ -623,7 +644,68 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             return convertView;
         }
 
-        private void deleteSubtaskTerm(final ImageView childImageView, final TextView childTv, String subtaskId, String termId) {
+        private void changeTermThraed(final EditText childTv, final String subtaskId, String
+                termId, final String newTitle) {
+            if (!NetUtil.isNetworkConnected(context)) {
+                ToastUtil.show(context, getString(R.string.no_network));
+                return;
+            }
+            String url = Constant.WEB_SITE1 + UrlConstant.url_term + "/" + termId;
+            Response.Listener<JsonResult> successListener = new Response
+                    .Listener<JsonResult>() {
+                @Override
+                public void onResponse(JsonResult result) {
+                    if (result == null || result.code != 0) {
+                        ToastUtil.show(context, context.getString(R.string.requery_failed));
+                        if (context != null) {
+                            childTv.setText(oldTermTtileStr);
+                        }
+                        return;
+                    }
+
+                }
+            };
+
+            Response.ErrorListener errorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyError.printStackTrace();
+                    if (context != null) {
+                        childTv.setText(oldTermTtileStr);
+                    }
+                    ToastUtil.show(context, context.getString(R.string.requery_failed));
+                }
+            };
+
+            Request<JsonResult> versionRequest = new
+                    GsonRequest<JsonResult>(Request.Method.PUT, url,
+                            successListener, errorListener, new TypeToken<JsonResult>() {
+                    }.getType()) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put(KeyConstant.subtaskId, subtaskId);
+                            params.put(KeyConstant.termDesc, newTitle);
+                            return params;
+                        }
+
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put(KeyConstant.Content_Type, Constant.application_json);
+                            params.put(KeyConstant.Authorization, App.token);
+                            params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                            return params;
+                        }
+                    };
+            App.requestQueue.add(versionRequest);
+
+        }
+
+        String oldTermTtileStr = "";
+
+        private void deleteSubtaskTerm(final ImageView childImageView, final TextView childTv,
+                                       String subtaskId, String termId) {
             if (!NetUtil.isNetworkConnected(context)) {
                 ToastUtil.show(context, getString(R.string.no_network));
                 return;
