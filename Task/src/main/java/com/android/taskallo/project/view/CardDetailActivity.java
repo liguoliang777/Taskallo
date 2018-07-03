@@ -536,11 +536,11 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     if (!hasFocus) {
                         String newTitle = mSubtaskTitleET.getText().toString();
                         if (TextUtil.isEmpty(newTitle)) {
-                            mSubtaskTitleET.setText(oldTitle);
+                            //mSubtaskTitleET.setText(oldTitle);
                             return;
                         }
                         //修改标题
-                        if (focusPosition == groupPosition && newTitle.equals(oldTitle)) {
+                        if (focusPosition == groupPosition ) {
                             changeSubtaskTitle(subtaskInfo.subtaskId, newTitle);
                         }
                     } else {
