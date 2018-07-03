@@ -156,13 +156,14 @@
                 android:clickable="true">
 
                 <ImageView
+                    android:id="@+id/card_detail_expiry_time_iv"
                     android:layout_width="@dimen/dm036"
                     android:layout_height="@dimen/dm036"
                     android:layout_marginLeft="@dimen/card_item_margin_left"
                     android:layout_marginRight="@dimen/card_item_margin_left"
                     android:layout_marginTop="@dimen/dm020"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_card_time" />
+                    android:src="@drawable/selector_ic_incard_expirytime_right_iv_checked" />
 
                 <TextView
                     android:id="@+id/crad_detail_time_tv"

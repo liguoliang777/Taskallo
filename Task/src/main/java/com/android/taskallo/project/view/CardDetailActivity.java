@@ -443,9 +443,11 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     }
 
     public void onCradDetailTimeClick(View view) {
+        ImageView expiryTimeLeftIv = (ImageView)findViewById(R.id.card_detail_expiry_time_iv);
         ImageView timeSeletedIv = (ImageView) view;
         boolean selected = timeSeletedIv.isSelected();
         timeSeletedIv.setSelected(!selected);
+        expiryTimeLeftIv.setSelected(!selected);
     }
 
     String format = "yyyy-MM-dd HH:mm:ss";
@@ -464,11 +466,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 Date date = null;
                 try {
                     date = sdf.parse(time);
-                    long timeLong = date.getTime();
-                    Log.d(TAG, "时间:" + timeLong);
+
                     //发送修改的截止日期时间
-                    postExpiryTime(timeLong);
-                    mExpiryTimeTv.setText(formatterStr.format(date) + " 到期");
+                    postExpiryTime(date);
                 } catch (Exception e) {
                 }
 
@@ -485,8 +485,58 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     }
 
     //修改截止时间
-    private void postExpiryTime(long timeLong) {
+    private void postExpiryTime(final Date date) {
+        //传数值
+        if (!NetUtil.isNetworkConnected(context)) {
+            return;
+        }
+        final String title = mCardTitleEt.getText().toString();
+        final String desc = mCardDescEt.getText().toString();
+        final long timeLong = date.getTime();
+        String url = Constant.WEB_SITE1 + UrlConstant.url_board + "/" + mBoardId;
 
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                if (result.code == 0 && result.data != null && context != null) {
+                    //修改成功
+                    mExpiryTimeTv.setText(formatterStr.format(date) + " 到期");
+                }
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(
+                        Request.Method.PUT, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        Log.d("", "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.listItemId, mListItemId);
+                        params.put(KeyConstant.boardName, title);
+                        params.put(KeyConstant.boardDesc, desc);
+                        params.put(KeyConstant.expiryTime, String.valueOf(timeLong));
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 
     class MyExpandableListAdapter extends BaseExpandableListAdapter {
@@ -1187,7 +1237,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                         params.put(KeyConstant.boardName, postBoardName);
                         params.put(KeyConstant.listItemId, mListItemId);
                         params.put(KeyConstant.boardDesc, postDesc);
-                        params.put(KeyConstant.expiryTime, System.currentTimeMillis() + "");
+                        //params.put(KeyConstant.expiryTime, "");
                         return params;
                     }
 
