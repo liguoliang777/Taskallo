@@ -172,4 +172,7 @@ dependencies {
 
     compile 'com.androidkun:XTabLayout:1.1.3'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
+
+    //时间选择器
+    compile 'com.feezu.liuli:timeselector:1.1.3+'
 }

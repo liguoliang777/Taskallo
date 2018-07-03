@@ -151,6 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dm020"
+                android:onClick="onCradDetailTimeBtClick"
                 android:background="@drawable/selector_bg_white_f2"
                 android:clickable="true">
 
@@ -164,6 +165,7 @@
                     android:src="@drawable/ic_card_time" />
 
                 <TextView
+                    android:id="@+id/crad_detail_time_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -181,11 +183,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:clickable="true"
+                    android:onClick="onCradDetailTimeClick"
                     android:paddingBottom="@dimen/dm013"
                     android:paddingLeft="@dimen/dm030"
                     android:paddingRight="@dimen/dm030"
                     android:paddingTop="@dimen/dm013"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerInside"
                     android:src="@drawable/selector_ic_incard_time_checked" />
             </LinearLayout>
             <!--添加标签-->

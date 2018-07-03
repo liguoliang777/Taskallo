@@ -60,11 +60,17 @@ import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 
+import org.feezu.liuli.timeselector.TimeSelector;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         .OnMenuItemClickListener {
@@ -88,6 +94,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     private String SUBTASK_DEF_NAME = "子任务";
     private MyExpandableListAdapter mSubtaskLvAdapter;
     private ArrayList<SubtaskItemInfo> itemInfos = new ArrayList<>();
+    private TextView mDetailTimeTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +148,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         mTopFinishedBT.setOnClickListener(onBtClickListener);
 
         mTopEditSaveBt = (Button) findViewById(R.id.edit_right_save_bt);
+        mDetailTimeTv = (TextView) findViewById(R.id.crad_detail_time_tv);
 
         mCancelBT.setOnClickListener(onBtClickListener);
         mTopEditSaveBt.setOnClickListener(onBtClickListener);
@@ -427,6 +435,47 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         addSubtask(SUBTASK_DEF_NAME);
     }
 
+    public void onCradDetailTimeClick(View view) {
+        ImageView timeSeletedIv = (ImageView) view;
+        boolean selected = timeSeletedIv.isSelected();
+        timeSeletedIv.setSelected(!selected);
+    }
+
+    String format = "yyyy-MM-dd HH:mm:ss";
+    String formatStr = "yyyy年MM月dd日 HH:mm";
+
+    public void onCradDetailTimeBtClick(View view) {
+        SimpleDateFormat formatter = new SimpleDateFormat(format);
+        final SimpleDateFormat formatterStr = new SimpleDateFormat(formatStr);
+        String currrteDate = formatter.format(new Date());
+        //选择时间
+        TimeSelector timeSelector = new TimeSelector(context, new TimeSelector
+                .ResultHandler() {
+            @Override
+            public void handle(String time) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINESE);
+                sdf.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+                Date date = null;
+                try {
+                    date = sdf.parse(time);
+                    long timeLong = date.getTime();
+                    Log.d(TAG, "时间:" + timeLong);
+                    mDetailTimeTv.setText(formatterStr.format(date));
+                } catch (Exception e) {
+                }
+
+            }
+        }, currrteDate, "2022-12-31 23:59:59");
+
+        timeSelector.setIsLoop(true);//设置不循环,true循环
+        timeSelector.setMode(TimeSelector.MODE.YMDHM);//显示 年月日时分（默认）
+        //timeSelector.setMode(TimeSelector.MODE.YMD);//只显示 年月日
+
+        timeSelector.show();
+
+
+    }
+
     class MyExpandableListAdapter extends BaseExpandableListAdapter {
         private List<SubtaskInfo> mSubtaskData;
         private List<List<SubtaskItemInfo>> childListData;
@@ -540,7 +589,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                             return;
                         }
                         //修改标题
-                        if (focusPosition == groupPosition ) {
+                        if (focusPosition == groupPosition) {
                             changeSubtaskTitle(subtaskInfo.subtaskId, newTitle);
                         }
                     } else {

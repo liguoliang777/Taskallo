@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 引导页面小圆点选中与未选择状态 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:state_checked="true" android:drawable="@drawable/ic_incard_time_click"></item>
-    <item android:state_checked="false" android:drawable="@drawable/ic_incard_time_affirm"></item>
+    <item android:state_selected="true" android:drawable="@drawable/ic_incard_time_click"></item>
+    <item android:state_selected="false" android:drawable="@drawable/ic_incard_time_affirm"></item>
+    <item android:drawable="@drawable/ic_incard_time_affirm"></item>
 </selector>
