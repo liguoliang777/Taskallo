@@ -111,7 +111,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    //收藏项目
+    //修改项目名称
     private void postTitleName(final EditText mItemTitleEt, final String oldTitleStr, final
     String newTitleStr, final String itemId) {
         if (!NetUtil.isNetworkConnected(context)) {
@@ -119,7 +119,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             mItemTitleEt.setText(oldTitleStr);
             return;
         }
-        String url = Constant.WEB_SITE1 + UrlConstant.url_item + "/" + mProjectId;
+        String url = Constant.WEB_SITE1 + UrlConstant.url_item + "/" + itemId;
 
         Response.Listener<JsonResult> successListener = new Response
                 .Listener<JsonResult>() {
