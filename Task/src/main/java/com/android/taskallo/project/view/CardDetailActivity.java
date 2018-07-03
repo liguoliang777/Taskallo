@@ -94,7 +94,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     private String SUBTASK_DEF_NAME = "子任务";
     private MyExpandableListAdapter mSubtaskLvAdapter;
     private ArrayList<SubtaskItemInfo> itemInfos = new ArrayList<>();
-    private TextView mDetailTimeTv;
+    private TextView mExpiryTimeTv;
+    private long mExpiryTime = 0;
+    private SimpleDateFormat formatterStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +107,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         itemInfos.add(new SubtaskItemInfo("-1", ""));
 
         context = this;
+        formatterStr = new SimpleDateFormat(formatStr);
 
         Bundle bundle = getIntent().getExtras();
         Serializable serializable = null;
@@ -121,6 +124,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             mBoardId = mCardBean.boardId;
             mBoardName = mCardBean.boardName;
             postBoardName = mBoardName;
+            mExpiryTime = mCardBean.expiryTime;
             mBoardDesc = mCardBean.boardDesc == null ? "" : mCardBean.boardDesc;
         }
         mTopFinishedBT = (Button) findViewById(R.id.top_left_finish_bt);
@@ -148,7 +152,10 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         mTopFinishedBT.setOnClickListener(onBtClickListener);
 
         mTopEditSaveBt = (Button) findViewById(R.id.edit_right_save_bt);
-        mDetailTimeTv = (TextView) findViewById(R.id.crad_detail_time_tv);
+        mExpiryTimeTv = (TextView) findViewById(R.id.crad_detail_time_tv);
+
+
+        mExpiryTimeTv.setText(mExpiryTime == 0 ? "" : formatterStr.format(mExpiryTime) + " 到期");
 
         mCancelBT.setOnClickListener(onBtClickListener);
         mTopEditSaveBt.setOnClickListener(onBtClickListener);
@@ -446,7 +453,6 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
     public void onCradDetailTimeBtClick(View view) {
         SimpleDateFormat formatter = new SimpleDateFormat(format);
-        final SimpleDateFormat formatterStr = new SimpleDateFormat(formatStr);
         String currrteDate = formatter.format(new Date());
         //选择时间
         TimeSelector timeSelector = new TimeSelector(context, new TimeSelector
@@ -460,7 +466,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     date = sdf.parse(time);
                     long timeLong = date.getTime();
                     Log.d(TAG, "时间:" + timeLong);
-                    mDetailTimeTv.setText(formatterStr.format(date));
+                    //发送修改的截止日期时间
+                    postExpiryTime(timeLong);
+                    mExpiryTimeTv.setText(formatterStr.format(date) + " 到期");
                 } catch (Exception e) {
                 }
 
@@ -473,6 +481,11 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
         timeSelector.show();
 
+
+    }
+
+    //修改截止时间
+    private void postExpiryTime(long timeLong) {
 
     }
 
