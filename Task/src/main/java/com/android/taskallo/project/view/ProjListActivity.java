@@ -1,17 +1,23 @@
 package com.android.taskallo.project.view;
 
 import android.app.Dialog;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.android.taskallo.App;
@@ -25,6 +31,7 @@ import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.ImageUtil;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.NetUtil;
+import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.project.Item.ItemView;
 import com.android.taskallo.project.Item.ItemViewCallback;
@@ -49,6 +56,8 @@ public class ProjListActivity extends BaseFgActivity {
     private String mProjectName = "";
     private String mProjectImg = "";
     private TextView mFeildEmptyTv;
+    private Dialog dialog;
+    private TextView mPublicPrivateTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +80,7 @@ public class ProjListActivity extends BaseFgActivity {
                 finish();
             }
         });
-        mTitleBackBt.setText(mProjectName);
+        mTitleBackBt.setText(mProjectName == null ? "" : mProjectName);
 
         mItemView = (ItemView) findViewById(R.id.boardview);
         mItemView.setCallback(new ItemViewCallback());
@@ -194,16 +203,57 @@ public class ProjListActivity extends BaseFgActivity {
         }
     }
 
+    private void closeInputMethod() {
+        View currentFocus = context.getCurrentFocus();
+        if (currentFocus != null) {
+            ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                    .hideSoftInputFromWindow(currentFocus.getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    private void setPopupWindow() {
+        LinearLayout window = new LinearLayout(context);
+        window.setBackgroundResource(R.drawable.ic_rank_popup_bg);
+        window.setGravity(Gravity.CENTER);
+        TextView tv = new TextView(context);
+        tv.setText(IS_PUBLIC ? R.string
+                .str_private: R.string.str_public);
+        tv.setTextColor(ContextCompat.getColor(context, R.color.color_808080));
+        window.addView(tv);
+
+        final PopupWindow popupWindow = new PopupWindow(window, 220, 120);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        window.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IS_PUBLIC = !IS_PUBLIC;
+                popupWindow.dismiss();
+                mPublicPrivateTv.setText(IS_PUBLIC ? R.string.str_public : R.string
+                        .str_private);
+            }
+        });
+        popupWindow.showAsDropDown(mPublicPrivateTv);
+    }
+
     // 菜单
     public void onProjListTopMenuClick(View view) {
-        final Dialog dialog = new Dialog(context, R.style.Dialog_right_left);
+        dialog = new Dialog(context, R.style.Dialog_right_left);
         dialog.setCanceledOnTouchOutside(true);
         //填充对话框的布局
         View inflate = LayoutInflater.from(this).inflate(R.layout.layout_proj_detail_menu, null);
 
+        final EditText projNameEt = (EditText) inflate.findViewById(R.id.proj_list_projName_et);
         View.OnClickListener mDialogClickLstener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (projNameEt != null) {
+                    closeInputMethod();
+                    projNameEt.clearFocus();
+                }
                 switch (v.getId()) {
                     case R.id.proj_menu_dialog_favorite_bt:
                         favoriteProj(dialog);
@@ -219,6 +269,10 @@ public class ProjListActivity extends BaseFgActivity {
                     case R.id.proj_list_menu_dialog_empty_view:
                         dialog.cancel();
                         break;
+                    //私有,公开
+                    case R.id.proj_list_public_private_tv:
+                        setPopupWindow();
+                        break;
                 }
             }
         };
@@ -227,12 +281,90 @@ public class ProjListActivity extends BaseFgActivity {
         inflate.findViewById(R.id.proj_list_menu_filed_bt).setOnClickListener(mDialogClickLstener);
         inflate.findViewById(R.id.proj_list_menu_delete_proj_bt).setOnClickListener
                 (mDialogClickLstener);
+        projNameEt.setText(mProjectName == null ? "" : mProjectName);
+
+        mPublicPrivateTv = (TextView) inflate.findViewById(R.id.proj_list_public_private_tv);
+        mPublicPrivateTv.setOnClickListener(mDialogClickLstener);
+        mPublicPrivateTv.setText(IS_PUBLIC ? R.string.str_public: R.string
+                .str_private );
+
+        projNameEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String newprojNameStr = projNameEt.getText().toString();
+                    if (TextUtil.isEmpty(newprojNameStr)) {
+                        return;
+                    }
+                    //修改项目的名字
+                    changeProjName(projNameEt, newprojNameStr);
+
+                }
+
+            }
+        });
         inflate.findViewById(R.id.proj_list_menu_dialog_empty_view).setOnClickListener
                 (mDialogClickLstener);
         dialog.setContentView(inflate);//将布局设置给Dialog
 
         setDialogWindow(dialog);
     }
+
+    private void changeProjName(final EditText projNameEt, final String newProjNameStr) {
+        if (!NetUtil.isNetworkConnected(context)) {
+            return;
+        }
+        String url = Constant.WEB_SITE1 + UrlConstant.URL_PROJECT + "/" + mProjectId;
+
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                Log.d(TAG, "修改项目信息:" + result.msg);
+                if (result.code == 0 && result.data != null) {
+                    //修改成功
+                    if (projNameEt != null && context != null) {
+                        projNameEt.setText(newProjNameStr);
+                        mTitleBackBt.setText(newProjNameStr);
+                    }
+                }
+            }
+        };
+
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(
+                        Request.Method.PUT, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        Log.d("", "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.privacy, IS_PUBLIC ? "0" : "1");
+                        params.put(KeyConstant.name, newProjNameStr);
+                        params.put(KeyConstant.desc, "描述");
+                        params.put(KeyConstant.imgId, "0");
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
+    }
+
+    private boolean IS_PUBLIC = true; //0 共有 1私有
 
     //删除项目
     private void deleteProj(final Dialog dialog) {
@@ -253,7 +385,7 @@ public class ProjListActivity extends BaseFgActivity {
                 if (result.code == 0 && context != null) {
                     dialog.cancel();
                     finish();
-                } else if (result.code==-3) {
+                } else if (result.code == -3) {
                     ToastUtil.show(context, result.msg);
                 }
 
@@ -413,5 +545,4 @@ public class ProjListActivity extends BaseFgActivity {
         dialogWindow.setAttributes(params);
         dialog.show();
     }
-
 }

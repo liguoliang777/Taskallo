@@ -5,15 +5,46 @@
     android:background="@color/f5f5f5"
     android:orientation="vertical">
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/diolg_bottom_height"
+        android:layout_marginTop="@dimen/dm020"
+        android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:paddingLeft="@dimen/dm024"
+        android:paddingRight="@dimen/dm024">
+
+        <TextView
+            android:id="@+id/proj_list_projName_tv"
+            style="@style/px24_333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dm010"
+            android:layout_centerVertical="true"
+            android:text="名字" />
+
+        <EditText
+            android:id="@+id/proj_list_projName_et"
+            style="@style/px24_1a1a1a"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/proj_list_projName_tv"
+            android:background="@null"
+            android:textStyle="bold"
+            android:padding="@dimen/dm020"
+            android:textCursorDrawable="@drawable/shape_cursor_color_main_color" />
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/layout_public_private"
         android:layout_width="match_parent"
         android:layout_height="@dimen/diolg_bottom_height"
         android:layout_marginTop="@dimen/dm020"
-        android:background="@drawable/selector_item_bg"
-        android:clickable="true"
-        android:paddingLeft="@dimen/dm024"
-        android:paddingRight="@dimen/dm024">
+        android:background="@color/white"
+        android:paddingLeft="@dimen/dm024">
 
         <TextView
             style="@style/px24_333333"
@@ -24,11 +55,18 @@
 
         <TextView
             style="@style/px20_808080"
+            android:id="@+id/proj_list_public_private_tv"
             android:layout_width="wrap_content"
+            android:paddingLeft="@dimen/dm100"
+            android:clickable="true"
+            android:paddingRight="@dimen/dm024"
+            android:paddingBottom="@dimen/dm020"
+            android:paddingTop="@dimen/dm020"
+            android:gravity="center_vertical"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="公开" />
+            android:text="" />
     </RelativeLayout>
 
     <RelativeLayout
