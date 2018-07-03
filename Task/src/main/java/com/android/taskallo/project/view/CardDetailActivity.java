@@ -567,7 +567,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
          * -groupPostion表示当前组的索引,childPosition表示的是需要展示的子的索引
          */
         @Override
-        public View getChildView(final int groupPosition, int childPosition,
+        public View getChildView(final int groupPosition, final int childPosition,
                                  boolean isLastChild, View convertView, ViewGroup parent) {
             LayoutInflater mLayoutInflater = (LayoutInflater) getSystemService(Context
                     .LAYOUT_INFLATER_SERVICE);
@@ -580,7 +580,6 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     .child_imageview);
             final EditText childAddEt = (EditText) convertView.findViewById(R.id.child_add_et);
 
-            Log.d(TAG, childDatum.get(childPosition).termDesc + ",是否是:" + isLastChild);
             if (isLastChild) {
                 childAddEt.setVisibility(View.VISIBLE);
                 childImageView.setVisibility(View.INVISIBLE);
@@ -609,21 +608,71 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     public void onClick(View v) {
                         boolean selected = childImageView.isSelected();
                         if (selected) {//删除ing
-                            childTv.getPaint().setFlags(0 | Paint
-                                    .ANTI_ALIAS_FLAG);
-                            childTv.setTextColor(getResources().getColor(R.color.color_333333));
-
+                            //childTv.getPaint().setFlags(0 | Paint.ANTI_ALIAS_FLAG);
+                            //childTv.setTextColor(getResources().getColor(R.color.color_333333));
+                            ToastUtil.show(context,"该项已被删除");
                         } else {//不是删除
-                            childTv.setTextColor(getResources().getColor(R.color.cccccc));
-                            childTv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint
-                                    .ANTI_ALIAS_FLAG);
-
+                            SubtaskItemInfo subtaskItemInfo = childDatum.get(childPosition);
+                            if (subtaskItemInfo != null) {
+                                deleteSubtaskTerm(childImageView,childTv, subtaskId, subtaskItemInfo.termId);
+                            }
                         }
-                        childImageView.setSelected(!selected);
                     }
                 });
             }
             return convertView;
+        }
+
+        private void deleteSubtaskTerm(final ImageView childImageView, final TextView childTv, String subtaskId, String termId) {
+            if (!NetUtil.isNetworkConnected(context)) {
+                ToastUtil.show(context, getString(R.string.no_network));
+                return;
+            }
+            String url = Constant.WEB_SITE1 + UrlConstant.url_term + "/" + subtaskId + "/" +
+                    termId;
+
+            Response.Listener<JsonResult> successListener = new Response
+                    .Listener<JsonResult>() {
+                @Override
+                public void onResponse(JsonResult result) {
+                    if (result == null) {
+                        ToastUtil.show(context, getString(R.string.server_exception));
+                        return;
+                    }
+                    if (result.code == 0) {
+                        childImageView.setSelected(true);
+                        childTv.setTextColor(getResources().getColor(R.color.cccccc));
+                        childTv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint
+                                .ANTI_ALIAS_FLAG);
+
+                    } else {
+                        ToastUtil.show(context, getString(R.string.delete_faild) + "," + result
+                                .msg);
+                    }
+                }
+            };
+
+            Request<JsonResult> versionRequest = new
+                    GsonRequest<JsonResult>(Request.Method.DELETE, url,
+                            successListener, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            volleyError.printStackTrace();
+                            ToastUtil.show(context, context.getString(R.string.server_exception));
+
+                        }
+                    }, new TypeToken<JsonResult>() {
+                    }.getType()) {
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put(KeyConstant.Content_Type, Constant.application_json);
+                            params.put(KeyConstant.Authorization, App.token);
+                            params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                            return params;
+                        }
+                    };
+            App.requestQueue.add(versionRequest);
         }
 
         //添加项
@@ -641,7 +690,6 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     }
                     //添加子任务成功
                     SubtaskItemInfo data = result.data;
-                    Log.d(TAG, subtaskId + "返回:" + "," + data.termDesc);
                     if (context != null && data != null) {
                         //把返回的集合添加到子任务集合里面去
                         List<SubtaskItemInfo> itemInfos1 = childDatum;

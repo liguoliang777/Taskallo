@@ -253,7 +253,10 @@ public class ProjListActivity extends BaseFgActivity {
                 if (result.code == 0 && context != null) {
                     dialog.cancel();
                     finish();
+                } else if (result.code==-3) {
+                    ToastUtil.show(context, result.msg);
                 }
+
             }
         };
 

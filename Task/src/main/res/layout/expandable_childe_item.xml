@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/child_imageview"
         android:layout_width="@dimen/dm084"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/dm060"
         android:layout_centerVertical="true"
         android:scaleType="centerInside"
         android:src="@drawable/selector_subtask_term_iv" />
