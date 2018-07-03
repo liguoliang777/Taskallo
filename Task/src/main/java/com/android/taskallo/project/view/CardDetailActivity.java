@@ -615,7 +615,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                             SubtaskItemInfo subtaskItemInfo = childDatum.get(childPosition);
                             if (subtaskItemInfo != null) {
                                 deleteSubtaskTerm(childImageView, childTv, subtaskId,
-                                        subtaskItemInfo.termId);
+                                        subtaskItemInfo.termId, childDatum, groupPosition,
+                                        childPosition);
                             }
                         }
                     }
@@ -633,7 +634,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                             SubtaskItemInfo subtaskItemInfo = childDatum.get(childPosition);
                             if (subtaskItemInfo != null) {
                                 changeTermThraed(childTv, subtaskId, subtaskItemInfo.termId,
-                                        newTitle,groupPosition,childPosition,childDatum);
+                                        newTitle, groupPosition, childPosition, childDatum);
                             }
                         } else {
                             oldTermTtileStr = childTv.getText().toString();
@@ -663,8 +664,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                         }
                         return;
                     }
-                    List<SubtaskItemInfo> newSubtaskItemInfo=subtaskItemInfo;
-                    newSubtaskItemInfo.set(childPosition,result.data);
+                    List<SubtaskItemInfo> newSubtaskItemInfo = subtaskItemInfo;
+                    newSubtaskItemInfo.set(childPosition, result.data);
                     childListData.set(groupPosition, newSubtaskItemInfo);
                 }
             };
@@ -682,8 +683,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
             Request<JsonResult<SubtaskItemInfo>> versionRequest = new
                     GsonRequest<JsonResult<SubtaskItemInfo>>(Request.Method.PUT, url,
-                            successListener, errorListener, new TypeToken<JsonResult<SubtaskItemInfo>>() {
-                    }.getType()) {
+                            successListener, errorListener, new
+                            TypeToken<JsonResult<SubtaskItemInfo>>() {
+                            }.getType()) {
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String, String> params = new HashMap<>();
@@ -708,7 +710,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         String oldTermTtileStr = "";
 
         private void deleteSubtaskTerm(final ImageView childImageView, final TextView childTv,
-                                       String subtaskId, String termId) {
+                                       String subtaskId, String termId, final List<SubtaskItemInfo>
+                                               childDatum, final int groupPosition, final int
+                                               childPosition) {
             if (!NetUtil.isNetworkConnected(context)) {
                 ToastUtil.show(context, getString(R.string.no_network));
                 return;
@@ -724,11 +728,14 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                         ToastUtil.show(context, getString(R.string.server_exception));
                         return;
                     }
-                    if (result.code == 0) {
+                    if (result.code == 0 && context != null) {
                         childImageView.setSelected(true);
                         childTv.setTextColor(getResources().getColor(R.color.cccccc));
                         childTv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint
                                 .ANTI_ALIAS_FLAG);
+                        List<SubtaskItemInfo> newChildDatum = childDatum;
+                        newChildDatum.remove(childPosition);
+                        childListData.set(groupPosition, newChildDatum);
 
                     } else {
                         ToastUtil.show(context, getString(R.string.delete_faild) + "," + result
