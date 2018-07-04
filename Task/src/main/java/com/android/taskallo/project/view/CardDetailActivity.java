@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -50,6 +51,7 @@ import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.project.Item.ExRadioGroup;
 import com.android.taskallo.project.TagListActivity;
 import com.android.taskallo.util.ToastUtil;
+import com.android.taskallo.view.PullScrollView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -141,6 +143,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         mListTitleTv.setText(mListTitle);
 
         //卡片标题
+        if (mBoardName == null) {
+            mBoardName = "";
+        }
         mCardTitleEt.setText(mBoardName);
         mCardTitleEt.setSelection(mBoardName.length());
 
@@ -153,7 +158,16 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
         mTopEditSaveBt = (Button) findViewById(R.id.edit_right_save_bt);
         mExpiryTimeTv = (TextView) findViewById(R.id.crad_detail_time_tv);
-
+        PullScrollView mPullSv = (PullScrollView) findViewById(R.id.card_pull_sv);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mPullSv.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int
+                        oldScrollY) {
+                    mTopFinishedBT.setText(scrollY>150?mBoardName:"");
+                }
+            });
+        }
 
         mExpiryTimeTv.setText(mExpiryTime == 0 ? "" : formatterStr.format(mExpiryTime) + " 到期");
 
