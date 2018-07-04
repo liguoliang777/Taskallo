@@ -234,8 +234,6 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                         childItemListData.add(i, itemInfos);
                         getChildInfo(i);
                     }
-                    mSubtaskLvAdapter.setData(subtaskListData, childItemListData);
-                    reSetLVHeight(subtaskLV);
                 } else {
                 }
             }
@@ -295,6 +293,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
                     if (i == subtaskListData.size() - 1) {
                         if (childItemListData.size() > 1) {
+                            itemInfos.clear();
+                            itemInfos.add(new SubtaskItemInfo("-1", ""));
                             childItemListData.add(itemInfos);
                         }
                         mSubtaskLvAdapter.setData(subtaskListData, childItemListData);
@@ -343,6 +343,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 if (context != null) {
                     //把返回的集合添加到子任务集合里面去
                     subtaskListData.add(data);
+                    itemInfos.clear();
+                    itemInfos.add(new SubtaskItemInfo("-1", ""));
                     childItemListData.add(itemInfos);
                     if (subtaskListData != null) {
                         mSubtaskLvAdapter.setData(subtaskListData, childItemListData);
@@ -712,7 +714,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                             if (TextUtil.isEmpty(subtskItemTitle)) {
                                 return;
                             }
-                            if (System.currentTimeMillis() - lastTime < 3000) {
+                            if (System.currentTimeMillis() - lastTime < 1000) {
                                 return;
                             }
                             lastTime = System.currentTimeMillis();
@@ -914,14 +916,14 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     SubtaskItemInfo data = result.data;
                     if (context != null && data != null) {
                         //把返回的集合添加到子任务集合里面去
-                  /*      List<SubtaskItemInfo> itemInfos1 = childDatum;
+                       List<SubtaskItemInfo> itemInfos1 = childDatum;
                         itemInfos1.set(itemInfos1.size() - 1, data);
                         itemInfos1.add(new SubtaskItemInfo("-1", ""));
                         Log.d(TAG, itemInfos1.size() + "返回数据" + groupPosition);
                         childListData.set(groupPosition, itemInfos1);
                         notifyDataSetChanged();
-                        reSetLVHeight(subtaskLV);*/
-                        getSubTaskList();
+                        reSetLVHeight(subtaskLV);
+                        //getSubTaskList();
                     }
 
                 }
