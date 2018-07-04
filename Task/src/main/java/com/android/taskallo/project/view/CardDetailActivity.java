@@ -343,6 +343,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 if (context != null) {
                     //把返回的集合添加到子任务集合里面去
                     subtaskListData.add(data);
+                    childItemListData.add(itemInfos);
                     if (subtaskListData != null) {
                         mSubtaskLvAdapter.setData(subtaskListData, childItemListData);
                         reSetLVHeight(subtaskLV);
@@ -656,7 +657,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                         }
                         //修改标题
                         if (focusPosition == groupPosition) {
-                            changeSubtaskTitle(groupPosition,subtaskInfo, newTitle);
+                            changeSubtaskTitle(groupPosition, subtaskInfo, newTitle);
                         }
                     } else {
                         focusPosition = groupPosition;
@@ -687,14 +688,14 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             LayoutInflater mLayoutInflater = (LayoutInflater) getSystemService(Context
                     .LAYOUT_INFLATER_SERVICE);
             final String subtaskId = mSubtaskData.get(groupPosition).subtaskId;
-            if (childListData == null || childListData.size() == 0 || groupPosition <
-                    childListData.size()) {
-                childListData.add(itemInfos);
+            convertView = mLayoutInflater.inflate(R.layout.expandable_childe_item, null);
 
-            }
+           /* if (childListData == null || childListData.size() == 0 || groupPosition >=
+                    childListData.size()) {
+
+            }*/
             final List<SubtaskItemInfo> childDatum = childListData.get(groupPosition);
 
-            convertView = mLayoutInflater.inflate(R.layout.expandable_childe_item, null);
             final EditText childTv = (EditText) convertView.findViewById(R.id.child_text);
             final ImageView childImageView = (ImageView) convertView.findViewById(R.id
                     .child_imageview);
@@ -722,9 +723,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 });
             } else {
                 childAddEt.setVisibility(View.GONE);
-                childImageView.setVisibility(View.VISIBLE);
                 if (childDatum != null && childDatum.size() != 0 && childPosition < childDatum
                         .size()) {
+                    childImageView.setVisibility(View.VISIBLE);
                     String termDesc = childDatum.get(childPosition).termDesc;
                     childTv.setText(termDesc == null ? "" : termDesc);
                 }
@@ -965,6 +966,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
         public void setGroupData(List<SubtaskInfo> subtaskListData) {
             mSubtaskData = subtaskListData;
+            //notifyDataSetChanged(); 不能加这个,不然标题无法编辑
         }
     }
 
@@ -1051,7 +1053,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         App.requestQueue.add(versionRequest);
     }
 
-    private void changeSubtaskTitle(final int groupPosition, final SubtaskInfo subtaskInfo, final String newTitle) {
+    private void changeSubtaskTitle(final int groupPosition, final SubtaskInfo subtaskInfo, final
+    String newTitle) {
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, getString(R.string.no_network));
             return;
@@ -1066,8 +1069,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     //mSubtaskTitleET.setText(newTitle);
                     //getSubTaskList();
                     SubtaskInfo subtaskInfoNew = subtaskInfo;
-                    subtaskInfoNew.subtaskName=newTitle;
-                    subtaskListData.set(groupPosition,subtaskInfoNew);
+                    subtaskInfoNew.subtaskName = newTitle;
+                    subtaskListData.set(groupPosition, subtaskInfoNew);
                     mSubtaskLvAdapter.setGroupData(subtaskListData);
                     //reSetLVHeight(subtaskLV);
 
