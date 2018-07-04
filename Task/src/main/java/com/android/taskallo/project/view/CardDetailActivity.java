@@ -442,7 +442,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     };
 
     public void onCradSubTaskAddBtClick(View view) {
-        addSubtask(SUBTASK_DEF_NAME);
+        addSubtask(SUBTASK_DEF_NAME + (subtaskListData.size() + 1));
     }
 
     public void onCradDetailTimeClick(View view) {
@@ -916,7 +916,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     SubtaskItemInfo data = result.data;
                     if (context != null && data != null) {
                         //把返回的集合添加到子任务集合里面去
-                       List<SubtaskItemInfo> itemInfos1 = childDatum;
+                        List<SubtaskItemInfo> itemInfos1 = childDatum;
                         itemInfos1.set(itemInfos1.size() - 1, data);
                         itemInfos1.add(new SubtaskItemInfo("-1", ""));
                         Log.d(TAG, itemInfos1.size() + "返回数据" + groupPosition);
