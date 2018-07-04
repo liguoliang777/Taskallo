@@ -67,6 +67,7 @@ public class ProjectAddActivity extends BaseFgActivity {
         mProjNameTv = (EditText) findViewById(R.id.proj_name_et);
         mProjSubtitleTv = (EditText) findViewById(R.id.proj_subtitle_et);
         saveBt.setVisibility(View.VISIBLE);
+        saveBt.setText("保存");
         saveBt.setOnClickListener(mOnClickListener);
         mPublicPrivateBt.setOnClickListener(mOnClickListener);
         findViewById(R.id.left_bt).setOnClickListener(mOnClickListener);

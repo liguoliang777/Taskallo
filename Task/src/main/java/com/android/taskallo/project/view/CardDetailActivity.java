@@ -443,7 +443,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     }
 
     public void onCradDetailTimeClick(View view) {
-        ImageView expiryTimeLeftIv = (ImageView)findViewById(R.id.card_detail_expiry_time_iv);
+        ImageView expiryTimeLeftIv = (ImageView) findViewById(R.id.card_detail_expiry_time_iv);
         ImageView timeSeletedIv = (ImageView) view;
         boolean selected = timeSeletedIv.isSelected();
         timeSeletedIv.setSelected(!selected);
@@ -543,6 +543,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         private List<SubtaskInfo> mSubtaskData;
         private List<List<SubtaskItemInfo>> childListData;
         private int focusPosition = -1;
+        private long lastTime = 0;
 
         public MyExpandableListAdapter(List<SubtaskInfo> subtaskData) {
             mSubtaskData = subtaskData;
@@ -556,7 +557,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         @Override
         public int getChildrenCount(int groupPosition) {
             int lengthInt = 0;
-            if (childListData != null) {
+            if (childListData != null && childListData.size() != 0) {
                 lengthInt = childListData.get(groupPosition).size();
             }
             return lengthInt;
@@ -569,7 +570,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
         @Override
         public Object getChild(int groupPosition, int childPosition) {
-            if (childListData != null) {
+            if (childListData != null && childListData.size() != 0) {
                 return childListData.get(groupPosition).get(childPosition);
 
             } else {
@@ -703,7 +704,11 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                             if (TextUtil.isEmpty(subtskItemTitle)) {
                                 return;
                             }
-                            addSubtaskItemThraed(subtskItemTitle, subtaskId, childDatum,
+                            if (System.currentTimeMillis() - lastTime < 3000) {
+                                return;
+                            }
+                            lastTime = System.currentTimeMillis();
+                            addSubtaskItemThraed(subtskItemTitle.trim(), subtaskId, childDatum,
                                     groupPosition);
                         }
                     }
@@ -711,7 +716,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             } else {
                 childAddEt.setVisibility(View.GONE);
                 childImageView.setVisibility(View.VISIBLE);
-                if (childDatum != null && childDatum.size() != 0) {
+                if (childDatum != null && childDatum.size() != 0&&childPosition<childDatum.size()) {
                     String termDesc = childDatum.get(childPosition).termDesc;
                     childTv.setText(termDesc == null ? "" : termDesc);
                 }
@@ -724,6 +729,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                             //childTv.setTextColor(getResources().getColor(R.color.color_333333));
                             ToastUtil.show(context, "该项已被删除");
                         } else {//不是删除
+                            if (childDatum == null ||childDatum.size() == 0||childPosition<childDatum.size()) {
+                                return;
+                            }
                             SubtaskItemInfo subtaskItemInfo = childDatum.get(childPosition);
                             if (subtaskItemInfo != null) {
                                 deleteSubtaskTerm(childImageView, childTv, subtaskId,
@@ -899,6 +907,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                         List<SubtaskItemInfo> itemInfos1 = childDatum;
                         itemInfos1.set(itemInfos1.size() - 1, data);
                         itemInfos1.add(new SubtaskItemInfo("-1", ""));
+                        Log.d(TAG, itemInfos1.size()+"返回数据"+groupPosition);
                         childListData.set(groupPosition, itemInfos1);
                         notifyDataSetChanged();
                         reSetLVHeight(subtaskLV);
