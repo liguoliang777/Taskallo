@@ -264,10 +264,19 @@
         <item name="android:textSize">@dimen/dm027</item>
         <item name="android:textColor">@color/color_333333</item>
     </style>
+    <style name="px26_333333">
+        <item name="android:textSize">@dimen/dm026</item>
+        <item name="android:textColor">@color/color_333333</item>
+    </style>
 
     <style name="px24_1a1a1a">
         <item name="android:textSize">@dimen/dm024</item>
         <item name="android:textColor">@color/color_1a</item>
+    </style>
+    <style name="px26_666_bold">
+        <item name="android:textSize">@dimen/dm026</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/color_666666</item>
     </style>
 
     <style name="style_18px_808080">

@@ -3,6 +3,7 @@ package com.android.taskallo.project.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,13 @@ public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.View
             return;
         }
         final String name = projInfo.nickName;
+        final String thing = projInfo.operation;
+        final String thingName = projInfo.content;
         holder.tvName.setText(name == null ? "" : name);
+        holder.tvThing.setText(thing == null ? "" : thing);
+        holder.tvThingName.setText(thingName == null ? "" : thingName);
+        holder.tvTime.setText(String.valueOf(DateUtils.getRelativeTimeSpanString(
+                projInfo.createTime)).replace(" ", ""));
     }
 
     @Override
@@ -77,12 +84,15 @@ public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.View
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private SimpleDraweeView evnetSdv;
-        private TextView tvName;
+        private TextView tvName, tvThing, tvTime,tvThingName;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            evnetSdv = itemView.findViewById(R.id.classify_item_iv);
-            tvName = itemView.findViewById(R.id.singer_item_tv);
+            evnetSdv = itemView.findViewById(R.id.card_item_event_left_iv);
+            tvName = itemView.findViewById(R.id.card_item_event_name_tv);
+            tvThing = itemView.findViewById(R.id.card_item_event_thing_tv);
+            tvTime = itemView.findViewById(R.id.card_item_event_time_tv);
+            tvThingName = itemView.findViewById(R.id.card_item_event_thing_name_tv);
         }
     }
 }

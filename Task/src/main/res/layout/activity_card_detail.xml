@@ -141,10 +141,10 @@
                 android:background="@color/white"
                 android:hint="@string/add_card_describe"
                 android:padding="@dimen/card_item_margin_left"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/color_666666"
                 android:textColorHint="@color/hint_color"
                 android:textCursorDrawable="@drawable/shape_cursor_color_main_color"
-                android:textSize="@dimen/dm024" />
+                android:textSize="@dimen/dm026" />
 
             <include layout="@layout/layout_line_1px_f0f0f0" />
             <!--    截止日期   -->
@@ -175,10 +175,9 @@
                     android:hint="截止日期"
                     android:paddingBottom="@dimen/dm020"
                     android:paddingTop="@dimen/dm020"
-                    android:textColor="@color/color_333333"
+                    android:textColor="@color/color_666666"
                     android:textColorHint="@color/hint_color"
-                    android:textSize="@dimen/dm028"
-                    android:textStyle="italic" />
+                    android:textSize="@dimen/dm027" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -219,8 +218,7 @@
                     android:layout_toRightOf="@id/card_item_tag_iv"
                     android:text="添加标签"
                     android:textColor="@color/hint_color"
-                    android:textSize="@dimen/dm028"
-                    android:textStyle="italic" />
+                    android:textSize="@dimen/dm026" />
 
                 <com.android.taskallo.project.Item.ExRadioGroup
                     android:id="@+id/card_item_tag_layout"
@@ -265,8 +263,7 @@
                     android:layout_toRightOf="@id/card_item_member_iv"
                     android:text="添加成员"
                     android:textColor="@color/hint_color"
-                    android:textSize="@dimen/dm028"
-                    android:textStyle="italic" />
+                    android:textSize="@dimen/dm026" />
 
                 <LinearLayout
                     android:id="@+id/card_item_member_layout"
@@ -326,7 +323,7 @@
                     android:paddingTop="@dimen/dm020"
                     android:textColor="@color/color_333333"
                     android:textColorHint="@color/hint_color"
-                    android:textSize="@dimen/dm028" />
+                    android:textSize="@dimen/dm026" />
             </LinearLayout>
 
 
@@ -348,15 +345,14 @@
                     android:src="@drawable/ic_incard_photo" />
 
                 <TextView
+                    style="@style/px26_666_bold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingBottom="@dimen/dm020"
                     android:paddingTop="@dimen/dm020"
-                    android:text="图像附件"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/dm028" />
+                    android:text="图像附件" />
 
                 <ImageView
                     android:layout_width="@dimen/dm028"
@@ -390,6 +386,7 @@
                     android:src="@drawable/ic_incard_active" />
 
                 <TextView
+                    style="@style/px26_666_bold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -397,9 +394,7 @@
                     android:paddingBottom="@dimen/dm020"
                     android:paddingTop="@dimen/dm020"
                     android:scaleType="fitXY"
-                    android:text="所有活动"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/dm028" />
+                    android:text="所有活动" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -445,7 +440,7 @@
                     android:textColor="@color/color_333333"
                     android:textColorHint="@color/hint_color"
                     android:textCursorDrawable="@drawable/shape_cursor_color_main_color"
-                    android:textSize="@dimen/dm028" />
+                    android:textSize="@dimen/dm026" />
 
             </LinearLayout>
 
@@ -453,7 +448,7 @@
                 android:id="@+id/crad_detail_event_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/dm020" />
+                android:layout_marginTop="@dimen/dm005" />
         </LinearLayout>
     </com.android.taskallo.view.PullScrollView>
 

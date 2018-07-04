@@ -55,7 +55,7 @@
 
     <EditText
         android:id="@+id/group_text"
-        style="@style/px27_333333"
+        style="@style/px26_666_bold"
         android:textCursorDrawable="@drawable/shape_cursor_color_main_color"
         android:background="@null"
         android:layout_width="wrap_content"

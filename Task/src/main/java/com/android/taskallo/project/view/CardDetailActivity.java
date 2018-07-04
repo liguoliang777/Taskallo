@@ -176,7 +176,10 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
             });
         }
 
-        mExpiryTimeTv.setText(mExpiryTime == 0 ? "" : formatterStr.format(mExpiryTime) + " 到期");
+        if (mExpiryTime != 0) {
+            mExpiryTimeTv.setText(formatterStr.format(mExpiryTime) + " 到期");
+            mExpiryTimeTv.getPaint().setFakeBoldText(true);
+        }
 
         mCancelBT.setOnClickListener(onBtClickListener);
         mTopEditSaveBt.setOnClickListener(onBtClickListener);
@@ -186,8 +189,6 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         mCardTalkEt.setOnFocusChangeListener(onFocusChangeListener);//讨论输入框
 
         cardLayout = (ExRadioGroup) findViewById(R.id.card_item_tag_layout);
-        mEventRV = (RecyclerView) findViewById(R.id.crad_detail_event_rv);
-
         heightDM = getResources().getDimensionPixelSize(R.dimen.dm057);
         layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -234,6 +235,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     }
 
     private void initEventRV() {
+        mEventRV = (RecyclerView) findViewById(R.id.crad_detail_event_rv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
                 context, LinearLayoutManager.VERTICAL, false);
         mEventRV.setLayoutManager(linearLayoutManager);

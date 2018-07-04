@@ -1,39 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/fragment_0_item_layout_height"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/dm010">
 
     <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_item_iv"
+        android:id="@+id/card_item_event_left_iv"
         android:layout_width="@dimen/dm036"
         android:layout_height="@dimen/dm036"
-        android:layout_margin="@dimen/dm020"
-        android:scaleType="centerCrop"
+        android:layout_marginTop="@dimen/dm005"
+        android:layout_marginLeft="@dimen/card_item_margin_left"
+        android:layout_marginRight="@dimen/card_item_margin_left"
         fresco:actualImageScaleType="centerCrop"
-        fresco:failureImage="@drawable/ic_def_logo_188_188"
-        fresco:placeholderImage="@drawable/ic_def_logo_188_188"
-        fresco:placeholderImageScaleType="centerCrop"
-        fresco:progressBarImage="@drawable/ic_def_logo_188_188"
-        fresco:roundedCornerRadius="@dimen/dm005" />
+        fresco:failureImage="@drawable/ic_incard_write"
+        fresco:placeholderImage="@drawable/ic_incard_write"
+        fresco:placeholderImageScaleType="fitXY"
+        fresco:progressBarImage="@drawable/ic_incard_write"
+        /><!-- fresco:roundedCornerRadius="@dimen/dm005"-->
 
 
     <TextView
-        android:id="@+id/singer_item_tv"
+        android:id="@+id/card_item_event_name_tv"
+        style="@style/px24_1a1a1a"
+        android:layout_marginRight="@dimen/dm007"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/px28_333333"
+        android:layout_toRightOf="@id/card_item_event_left_iv"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text=""
-      />
+        android:text="" />
 
-    <ImageView
-        android:id="@+id/singer_item_star_tag"
-        android:layout_width="@dimen/dm036"
-        android:layout_height="@dimen/dm036"
+    <TextView
+        android:id="@+id/card_item_event_thing_tv"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/dm024"
+        android:textColor="@color/color999999"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dm007"
+        android:layout_toRightOf="@id/card_item_event_name_tv"
+        android:ellipsize="end"
+        android:maxLines="1" />
+    <TextView
+        style="@style/px24_1a1a1a"
+        android:id="@+id/card_item_event_thing_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dm020"
-        android:scaleType="centerInside"
-        android:visibility="invisible"
-        android:src="@drawable/ic_star_small_normal" />
-</LinearLayout>
+        android:layout_toRightOf="@id/card_item_event_thing_tv"
+        android:ellipsize="end"
+        android:maxLines="1" />
+    <TextView
+        android:id="@+id/card_item_event_time_tv"
+       android:textSize="@dimen/dm020"
+        android:textColor="@color/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_item_event_name_tv"
+        android:layout_toRightOf="@id/card_item_event_left_iv"
+        android:scaleType="centerInside" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dm001"
+        android:layout_below="@id/card_item_event_time_tv"
+        android:layout_marginTop="@dimen/dm010"
+        android:layout_toRightOf="@id/card_item_event_left_iv"
+        android:background="@color/subtitle" />
+</RelativeLayout>

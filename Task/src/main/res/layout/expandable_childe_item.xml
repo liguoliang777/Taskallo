@@ -15,30 +15,30 @@
 
     <EditText
         android:id="@+id/child_text"
-        style="@style/px27_333333"
+        style="@style/px26_333333"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/child_imageview"
-        android:hint=""
         android:background="@null"
+        android:hint=""
         android:paddingBottom="@dimen/dm020"
         android:paddingRight="@dimen/card_item_margin_left"
         android:paddingTop="@dimen/dm020"
-        android:textCursorDrawable="@drawable/shape_cursor_color_main_color"
-        android:textColor="@color/color_333333" />
+        android:textColor="@color/color_333333"
+        android:textCursorDrawable="@drawable/shape_cursor_color_main_color" />
 
     <EditText
         android:id="@+id/child_add_et"
-        style="@style/px27_333333"
+        style="@style/px26_333333"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:paddingRight="@dimen/card_item_margin_left"
         android:layout_toRightOf="@id/child_imageview"
         android:background="@null"
         android:hint="添加项目..."
         android:paddingBottom="@dimen/dm020"
+        android:paddingRight="@dimen/card_item_margin_left"
         android:paddingTop="@dimen/dm020"
         android:textColorHint="@color/cccccc"
         android:textCursorDrawable="@drawable/shape_cursor_color_main_color" />
