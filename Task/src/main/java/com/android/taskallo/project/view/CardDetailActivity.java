@@ -9,6 +9,8 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -50,6 +52,8 @@ import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.project.Item.ExRadioGroup;
 import com.android.taskallo.project.TagListActivity;
+import com.android.taskallo.project.bean.EventInfo;
+import com.android.taskallo.project.bean.LogsBean;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.PullScrollView;
 import com.android.volley.AuthFailureError;
@@ -99,6 +103,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
     private TextView mExpiryTimeTv;
     private long mExpiryTime = 0;
     private SimpleDateFormat formatterStr;
+    private RecyclerView mEventRV;
+    private CardEventAdapter mEventRVAdapter;
+    private List<LogsBean> mEventList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,7 +171,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                 @Override
                 public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int
                         oldScrollY) {
-                    mTopFinishedBT.setText(scrollY>150?mBoardName:"");
+                    mTopFinishedBT.setText(scrollY > 150 ? mBoardName : "");
                 }
             });
         }
@@ -179,6 +186,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         mCardTalkEt.setOnFocusChangeListener(onFocusChangeListener);//讨论输入框
 
         cardLayout = (ExRadioGroup) findViewById(R.id.card_item_tag_layout);
+        mEventRV = (RecyclerView) findViewById(R.id.crad_detail_event_rv);
 
         heightDM = getResources().getDimensionPixelSize(R.dimen.dm057);
         layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -221,6 +229,71 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         });
 
         getSubTaskList();
+
+        initEventRV();
+    }
+
+    private void initEventRV() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
+                context, LinearLayoutManager.VERTICAL, false);
+        mEventRV.setLayoutManager(linearLayoutManager);
+
+        mEventRVAdapter = new CardEventAdapter(context, mEventList);
+        mEventRV.setHasFixedSize(true);
+        mEventRV.setNestedScrollingEnabled(false);
+        mEventRV.setAdapter(mEventRVAdapter);
+
+        getEventThread();
+    }
+
+    //获取活动日志数据
+    private void getEventThread() {
+        if (!NetUtil.isNetworkConnected(context)) {
+            return;
+        }
+        String url = Constant.WEB_SITE1 + UrlConstant.url_logs + "/" +
+                mBoardId;
+
+        Response.Listener<JsonResult<EventInfo>> successListener = new Response
+                .Listener<JsonResult<EventInfo>>() {
+            @Override
+            public void onResponse(JsonResult<EventInfo> result) {
+                if (result == null) {
+                    ToastUtil.show(context, getString(R.string.server_exception));
+                    return;
+                }
+
+                EventInfo data = result.data;
+                if (result.code == 0 && context != null && data != null) {
+                    mEventList = data.logs.subList(0, data.count > 30 ? 30 : data.count);
+                    if (mEventList != null) {
+                        mEventRVAdapter.setList(mEventList);
+                    }
+                }
+            }
+        };
+
+        Request<JsonResult<EventInfo>> versionRequest = new
+                GsonRequest<JsonResult<EventInfo>>(
+                        Request.Method.GET, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult<EventInfo>>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
     }
 
     //获取子任务列表
