@@ -19,10 +19,10 @@
 
         <ImageButton
             android:id="@+id/btn_horizontal_gridview_item"
-            android:layout_width="@dimen/dm056"
-            android:layout_height="@dimen/dm056"
-            android:paddingTop="@dimen/dm020"
-            android:paddingRight="@dimen/dm_010"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dm018"
+            android:paddingRight="@dimen/dm005"
             android:background="@null"
             android:layout_alignParentRight="true"
             android:src="@drawable/opinion_close"
