@@ -673,7 +673,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                         break;
                     //图片
                     case 1:
-                        uploadFile();
+                        choisePicture();
                         break;
                     //超链接
                     case 2:
@@ -693,6 +693,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
+                    Log.d(TAG, "获取图片数据: 准备上传");
                     postImg(ConvUtil.NS(msg.obj));
                     break;
                 case 0:
@@ -751,9 +752,60 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
             }
             setIntent(arg2);
             getBundle();
+            uploadPictureThread();
             setGridView();
         }
         super.onActivityResult(arg0, arg1, arg2);
+    }
+
+    private void uploadPictureThread() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HashMap<String, File> files = new HashMap<String, File>();
+
+                    if (pictures != null) {
+                        for (PictureBean pictureBean : pictures) {
+                            File file = new File(pictureBean.getLocalURL());
+                            files.put(file.getName(), file);
+                        }
+                    }
+                    if (files.size() > 0) {
+                        UpLoadBean result = UploadFileHttp.INSTANCE.uploadFile(Constant.WEB_SITE
+                                + Constant.URL_FEEDBACK_FILE, files);
+                        //todo  图片上传
+                        if (result == null) {
+                            return;
+                        }
+                        if (result.getCode() == 0) {
+
+                            sendHandle(result.getData(), 1);
+                        } else {
+                            DialogHelper.hideWaiting(getSupportFragmentManager());
+                            sendHandle("", 0);
+                        }
+                    } else {
+                        sendHandle("", 1);
+                    }
+                } catch (Exception e) {
+                    DialogHelper.hideWaiting(getSupportFragmentManager());
+                }
+            }
+        }).start();
+    }
+
+    public void getBundle() {
+        super.getBundle();
+        if (getIntent() != null) {
+            bundle = getIntent().getExtras();
+            if (bundle != null) {
+                pictures = (List<PictureBean>) bundle.getSerializable("pictures") != null ?
+                        (List<PictureBean>) bundle.getSerializable("pictures") : new
+                        ArrayList<PictureBean>();
+                Log.d(TAG, "获取图片数据:" + pictures.size());
+            }
+        }
     }
 
     //读取手机存储
@@ -786,7 +838,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         Looper.loop();
     }
 
-    private void uploadFile() {
+    private void choisePicture() {
         int choose = 9 - pictures.size();
         int sdk = android.os.Build.VERSION.SDK_INT;
         if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
@@ -800,40 +852,6 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
             MPermissions.requestPermissions(this, MulPictureActivity.SDCARD_READ, Manifest
                     .permission.READ_EXTERNAL_STORAGE);
         }
-
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    HashMap<String, File> files = new HashMap<String, File>();
-
-                    if (pictures != null) {
-                        for (PictureBean pictureBean : pictures) {
-                            File file = new File(pictureBean.getLocalURL());
-                            files.put(file.getName(), file);
-                        }
-                    }
-                    if (files.size() > 0) {
-                        UpLoadBean result = UploadFileHttp.INSTANCE.uploadFile(Constant.WEB_SITE
-                                + Constant.URL_FEEDBACK_FILE, files);
-                        if (result == null) {
-                            return;
-                        }
-                        if (result.getCode() == 0) {
-                            sendHandle(result.getData(), 1);
-                        } else {
-                            DialogHelper.hideWaiting(getSupportFragmentManager());
-                            sendHandle("", 0);
-                        }
-                    } else {
-                        sendHandle("", 1);
-                    }
-                } catch (Exception e) {
-                    DialogHelper.hideWaiting(getSupportFragmentManager());
-                }
-            }
-        }).start();
     }
 
     class MyExpandableListAdapter extends BaseExpandableListAdapter {
