@@ -5,26 +5,29 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import com.android.taskallo.activity.BaseFgActivity;
+import com.android.taskallo.adapter.QuickConsultationAdapter;
+import com.android.taskallo.core.utils.ImageUtil;
+import com.android.taskallo.gamehub.bean.PictureBean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android.taskallo.activity.BaseFgActivity;
-import com.android.taskallo.adapter.QuickConsultationAdapter;
-import com.android.taskallo.gamehub.bean.PictureBean;
-import com.android.taskallo.widget.BaseGridView;
-
 /**
  * Created by gp on 2017/2/13 0013.
  */
 
-public class CommonBaseActivity extends BaseFgActivity implements QuickConsultationAdapter.OnGridViewItemClickListener {
+public class CommonBaseActivity extends BaseFgActivity implements QuickConsultationAdapter
+        .OnGridViewItemClickListener {
 
-    public BaseGridView gridView;
+    public GridView gridView;
     public ImageView iv_upload;
     public TextView tv_info;
     public QuickConsultationAdapter adapter;
@@ -49,17 +52,44 @@ public class CommonBaseActivity extends BaseFgActivity implements QuickConsultat
 
         int gridviewWidth = (int) (size * (length + 4) * density);
         int itemWidth = (int) (length * density) - 2;
-//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-//               gridviewWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         ViewGroup.LayoutParams params = gridView.getLayoutParams();
         params.width = itemWidth * size + (size == 1 ? 25 : 0);
-        gridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
+        //gridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
         gridView.setColumnWidth(itemWidth); // 设置列表项宽
-        gridView.setHorizontalSpacing(-8); // 设置列表项水平间距
+        gridView.setHorizontalSpacing(0); // 设置列表项水平间距
         gridView.setStretchMode(GridView.NO_STRETCH);
-        gridView.setNumColumns(size); // 设置列数量=列表集合数
+        //gridView.setNumColumns(size); // 设置列数量=列表集合数
         adapter = new QuickConsultationAdapter(this, pictures, this);
         gridView.setAdapter(adapter);
+        reSetLVHeight(gridView);
+
+    }
+
+    public void reSetLVHeight(AbsListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+        int totalHeight = 0;
+        View view;
+        int count = listAdapter.getCount();
+        if (count == 5||count == 10) {
+            count = count-1;
+        }
+        for (int i = 0; i < count / 5 + 1; i++) {
+            view = listAdapter.getView(i, null, listView);
+            //宽度为屏幕宽度
+            int i1 = View.MeasureSpec.makeMeasureSpec(ImageUtil.getScreenWidth(this),
+                    View.MeasureSpec.EXACTLY);
+            //根据屏幕宽度计算高度
+            int i2 = View.MeasureSpec.makeMeasureSpec(i1, View.MeasureSpec.UNSPECIFIED);
+            view.measure(i1, i2);
+            totalHeight += view.getMeasuredHeight();
+        }
+        params.height = totalHeight;
+        listView.setLayoutParams(params);
     }
 
     //设置界面传递的参数
@@ -74,7 +104,9 @@ public class CommonBaseActivity extends BaseFgActivity implements QuickConsultat
         if (getIntent() != null) {
             bundle = getIntent().getExtras();
             if (bundle != null) {
-                pictures = (List<PictureBean>) bundle.getSerializable("pictures") != null ? (List<PictureBean>) bundle.getSerializable("pictures") : new ArrayList<PictureBean>();
+                pictures = (List<PictureBean>) bundle.getSerializable("pictures") != null ?
+                        (List<PictureBean>) bundle.getSerializable("pictures") : new
+                        ArrayList<PictureBean>();
             }
         }
     }
@@ -89,11 +121,15 @@ public class CommonBaseActivity extends BaseFgActivity implements QuickConsultat
                     break;
                 }
             }
-            iv_upload.setVisibility(View.VISIBLE);
-            if (pictures.size() == 0) {
-                tv_info.setVisibility(View.VISIBLE);
-            } else {
-                tv_info.setVisibility(View.GONE);
+            if (iv_upload != null) {
+                iv_upload.setVisibility(View.VISIBLE);
+            }
+            if (tv_info != null) {
+                if (pictures.size() == 0) {
+                    tv_info.setVisibility(View.VISIBLE);
+                } else {
+                    tv_info.setVisibility(View.GONE);
+                }
             }
             setGridView();
         }

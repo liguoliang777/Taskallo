@@ -1,5 +1,6 @@
 package com.android.taskallo.project.view;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,9 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +30,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,26 +43,32 @@ import android.widget.Toast;
 
 import com.android.taskallo.App;
 import com.android.taskallo.R;
-import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.bean.BoardVOListBean;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.MemberInfo;
 import com.android.taskallo.bean.SubtaskInfo;
 import com.android.taskallo.bean.SubtaskItemInfo;
 import com.android.taskallo.bean.TagInfo;
+import com.android.taskallo.bean.UpLoadBean;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.DialogHelper;
 import com.android.taskallo.core.utils.ImageUtil;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.NetUtil;
 import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.core.utils.UrlConstant;
+import com.android.taskallo.gamehub.bean.PictureBean;
+import com.android.taskallo.gamehub.view.CommonBaseActivity;
 import com.android.taskallo.project.Item.ExRadioGroup;
 import com.android.taskallo.project.TagListActivity;
 import com.android.taskallo.project.bean.EventInfo;
 import com.android.taskallo.project.bean.LogsBean;
+import com.android.taskallo.util.ConvUtil;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.PullScrollView;
+import com.android.taskallo.widget.UploadFileHttp;
+import com.android.taskallo.widget.mulpicture.MulPictureActivity;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -67,9 +78,13 @@ import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
+import com.zhy.m.permission.MPermissions;
+import com.zhy.m.permission.PermissionDenied;
+import com.zhy.m.permission.PermissionGrant;
 
 import org.feezu.liuli.timeselector.TimeSelector;
 
+import java.io.File;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -80,7 +95,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
-public class CardDetailActivity extends BaseFgActivity implements PopupMenu
+public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         .OnMenuItemClickListener {
     private Button mTopFinishedBT, mCancelBT, mTopEditSaveBt;
     private CardDetailActivity context;
@@ -235,6 +250,8 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         getSubTaskList();
 
         initEventRV();
+
+        gridView = (GridView) findViewById(R.id.horizontal_gridview);
     }
 
     private void initEventRV() {
@@ -642,18 +659,181 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         textView.setTextSize(18);
         textView.getPaint().setFakeBoldText(true);
         textView.setTextColor(getResources().getColor(R.color.mainColorDrak));
-        textView.setPadding(350, 40, 100, 0);
+        textView.setPadding(350, 50, 100, 0);
         builder.setCustomTitle(textView);
         //    指定下拉列表的显示数据
         final String[] cities = {"选择文件", "选择图片", "附加超链接"};
         //    设置一个下拉的列表选择项
         builder.setItems(cities, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ToastUtil.show(context, "" + cities[which]);
+            public void onClick(DialogInterface dialog, int i) {
+                switch (i) {
+                    //文件
+                    case 0:
+                        break;
+                    //图片
+                    case 1:
+                        uploadFile();
+                        break;
+                    //超链接
+                    case 2:
+                        break;
+                }
             }
         });
         builder.show();
+    }
+
+    /**
+     * 更新ui
+     */
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    postImg(ConvUtil.NS(msg.obj));
+                    break;
+                case 0:
+                    break;
+            }
+            pictures.clear();
+        }
+    };
+
+    private void postImg(final String file) {
+        String url = Constant.WEB_SITE + Constant.URL_FEEDBACK;
+        Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
+            @Override
+            public void onResponse(JsonResult result) {
+                DialogHelper.hideWaiting(getSupportFragmentManager());
+                if (result == null) {
+                    return;
+                }
+                if (result.code == 0) {
+                } else {
+                    com.android.taskallo.core.utils.Log.d(TAG, "服务器返回错误：" + result.msg);
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                DialogHelper.hideWaiting(getSupportFragmentManager());
+                com.android.taskallo.core.utils.Log.d(TAG, "HTTP请求失败：网络连接错误！");
+            }
+        };
+
+        Request<JsonResult> versionRequest = new GsonRequest<JsonResult>(Request.Method.POST, url,
+                successListener, errorListener, new TypeToken<JsonResult>() {
+        }.getType()) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("feedbackImage", file);
+                return params;
+            }
+        };
+        App.requestQueue.add(versionRequest);
+    }
+
+    @Override
+    protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+        if (arg0 == 101) {
+            if (arg1 == 1) {
+
+            } else if (arg1 > 0) {
+
+            } else {
+            }
+            setIntent(arg2);
+            getBundle();
+            setGridView();
+        }
+        super.onActivityResult(arg0, arg1, arg2);
+    }
+
+    //读取手机存储
+    @PermissionGrant(MulPictureActivity.SDCARD_READ)
+    public void requestSdcardReadSuccess() {
+        int choose = 1 - pictures.size();
+        intent = new Intent(this, MulPictureActivity.class);
+        bundle = setBundle();
+        bundle.putInt("imageNum", choose);
+        bundle.putInt("imageAllNum", 1);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, 101);
+    }
+
+    //读取手机存储
+    @PermissionDenied(MulPictureActivity.SDCARD_READ)
+    public void requestSdcardReadFailed() {
+        ToastUtil.show(this, "用户拒绝读写手机存储!");
+    }
+
+    public List<PictureBean> pictures = new ArrayList<PictureBean>();//图片文件
+
+    public void sendHandle(String message, int success) {
+        Looper.prepare();
+        Message msg = new Message();
+        msg.what = success;
+        msg.obj = message;
+        handler.sendMessage(msg);
+        Looper.loop();
+    }
+
+    private void uploadFile() {
+        int choose = 9 - pictures.size();
+        int sdk = android.os.Build.VERSION.SDK_INT;
+        if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            Intent intent = new Intent(this, MulPictureActivity.class);
+            bundle = setBundle();
+            bundle.putInt("imageNum", choose);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtras(bundle);
+            startActivityForResult(intent, 101);
+        } else {
+            MPermissions.requestPermissions(this, MulPictureActivity.SDCARD_READ, Manifest
+                    .permission.READ_EXTERNAL_STORAGE);
+        }
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HashMap<String, File> files = new HashMap<String, File>();
+
+                    if (pictures != null) {
+                        for (PictureBean pictureBean : pictures) {
+                            File file = new File(pictureBean.getLocalURL());
+                            files.put(file.getName(), file);
+                        }
+                    }
+                    if (files.size() > 0) {
+                        UpLoadBean result = UploadFileHttp.INSTANCE.uploadFile(Constant.WEB_SITE
+                                + Constant.URL_FEEDBACK_FILE, files);
+                        if (result == null) {
+                            return;
+                        }
+                        if (result.getCode() == 0) {
+                            sendHandle(result.getData(), 1);
+                        } else {
+                            DialogHelper.hideWaiting(getSupportFragmentManager());
+                            sendHandle("", 0);
+                        }
+                    } else {
+                        sendHandle("", 1);
+                    }
+                } catch (Exception e) {
+                    DialogHelper.hideWaiting(getSupportFragmentManager());
+                }
+            }
+        }).start();
     }
 
     class MyExpandableListAdapter extends BaseExpandableListAdapter {

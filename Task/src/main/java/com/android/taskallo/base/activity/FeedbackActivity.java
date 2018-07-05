@@ -12,26 +12,14 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.google.gson.reflect.TypeToken;
-import com.zhy.m.permission.MPermissions;
-import com.zhy.m.permission.PermissionDenied;
-import com.zhy.m.permission.PermissionGrant;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
-import com.android.taskallo.R;
 import com.android.taskallo.App;
+import com.android.taskallo.R;
 import com.android.taskallo.activity.manager.FeedbackSucceedActivity;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.UpLoadBean;
@@ -45,9 +33,20 @@ import com.android.taskallo.gamehub.view.CommonBaseActivity;
 import com.android.taskallo.util.CPUInformation;
 import com.android.taskallo.util.ConvUtil;
 import com.android.taskallo.util.ToastUtil;
-import com.android.taskallo.widget.BaseGridView;
 import com.android.taskallo.widget.UploadFileHttp;
 import com.android.taskallo.widget.mulpicture.MulPictureActivity;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
+import com.zhy.m.permission.MPermissions;
+import com.zhy.m.permission.PermissionDenied;
+import com.zhy.m.permission.PermissionGrant;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 显示意见反馈的页面
@@ -85,7 +84,7 @@ public class FeedbackActivity extends CommonBaseActivity implements View.OnClick
         tv_content_num = (TextView) findViewById(R.id.tv_content_num);
         bt_submit = (Button) findViewById(R.id.btn_submit);
         iv_upload = (ImageView) findViewById(R.id.iv_upload);
-        gridView = (BaseGridView) findViewById(R.id.horizontal_gridview);
+        gridView = (GridView) findViewById(R.id.horizontal_gridview);
         tv_info = (TextView) findViewById(R.id.tv_info);
         ll_back.setOnClickListener(this);
         tv_rightTxt.setOnClickListener(this);
@@ -162,7 +161,8 @@ public class FeedbackActivity extends CommonBaseActivity implements View.OnClick
 //        dialogFragment.setDialogWidth(250);
 //
 //        TextView tv = new TextView(FeedbackActivity.this);
-//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
+// .MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 //        params.setMargins(0, 20, 0, 0);
 //        params.gravity = Gravity.CENTER;
 //        tv.setLayoutParams(params);
@@ -203,7 +203,8 @@ public class FeedbackActivity extends CommonBaseActivity implements View.OnClick
                 }
                 if (contact != null && contact.length() > 0) {
                     if (!TextUtil.isMobile(contact)) {
-                        Toast.makeText(FeedbackActivity.this, "请填写正确的手机号！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FeedbackActivity.this, "请填写正确的手机号！", Toast.LENGTH_SHORT)
+                                .show();
                         return;
                     }
                 }
@@ -211,20 +212,17 @@ public class FeedbackActivity extends CommonBaseActivity implements View.OnClick
                 break;
             case R.id.iv_upload:
                 int choose = 9 - pictures.size();
-                if (choose > 0) {
-                    int sdk = android.os.Build.VERSION.SDK_INT;
-                    if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        intent = new Intent(this, MulPictureActivity.class);
-                        bundle = setBundle();
-                        bundle.putInt("imageNum", choose);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtras(bundle);
-                        startActivityForResult(intent, 101);
-                    } else {
-                        MPermissions.requestPermissions(this, MulPictureActivity.SDCARD_READ, Manifest.permission.READ_EXTERNAL_STORAGE);
-                    }
+                int sdk = android.os.Build.VERSION.SDK_INT;
+                if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    intent = new Intent(this, MulPictureActivity.class);
+                    bundle = setBundle();
+                    bundle.putInt("imageNum", choose);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, 101);
                 } else {
-                    ToastUtil.show(this, "最多只能选择1张照片");
+                    MPermissions.requestPermissions(this, MulPictureActivity.SDCARD_READ,
+                            Manifest.permission.READ_EXTERNAL_STORAGE);
                 }
                 break;
         }
@@ -246,8 +244,9 @@ public class FeedbackActivity extends CommonBaseActivity implements View.OnClick
                             files.put(file.getName(), file);
                         }
                     }
-                    if(files.size() > 0){
-                        UpLoadBean result = UploadFileHttp.INSTANCE.uploadFile(Constant.WEB_SITE + Constant.URL_FEEDBACK_FILE, files);
+                    if (files.size() > 0) {
+                        UpLoadBean result = UploadFileHttp.INSTANCE.uploadFile(Constant.WEB_SITE
+                                + Constant.URL_FEEDBACK_FILE, files);
                         if (result == null) {
                             return;
                         }

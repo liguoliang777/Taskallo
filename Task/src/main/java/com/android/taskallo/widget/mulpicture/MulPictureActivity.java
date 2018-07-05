@@ -12,7 +12,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -21,6 +20,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.taskallo.R;
+import com.android.taskallo.core.utils.CommonUtil;
+import com.android.taskallo.core.utils.FileUtil;
+import com.android.taskallo.gamehub.bean.PictureBean;
+import com.android.taskallo.gamehub.view.CommonBaseActivity;
+import com.android.taskallo.util.StringUtil;
+import com.android.taskallo.util.ToastUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionDenied;
@@ -33,14 +39,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.android.taskallo.R;
-import com.android.taskallo.core.utils.CommonUtil;
-import com.android.taskallo.core.utils.FileUtil;
-import com.android.taskallo.gamehub.bean.PictureBean;
-import com.android.taskallo.gamehub.view.CommonBaseActivity;
-import com.android.taskallo.util.StringUtil;
-import com.android.taskallo.util.ToastUtil;
 
 
 /*
@@ -55,8 +53,6 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
     private MulPictureAdapter adapter; //适配器
     private RelativeLayout showSelectRelativeLayout; //下面显示区域
     private LinearLayout selectPictureLinearLayout;
-    private Button sendButton;
-
     private Map<Integer, ImageView> hashImage = new HashMap<Integer, ImageView>();
 
     private List<PictureBean> selectList = new ArrayList<PictureBean>();   // 存放当前选中的图片
@@ -130,9 +126,8 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
         showSelectRelativeLayout = (RelativeLayout) findViewById(R.id.rl_select_picture_layout);
         selectPictureLinearLayout = (LinearLayout) findViewById(R.id.ll_selected_picture_layout);
         selectPictureLinearLayout.setVisibility(View.GONE);
-        sendButton = (Button) findViewById(R.id.btn_mul_picture_submit);
-        sendButton.setOnClickListener(this);
-//        gridView.setOnScrollListener(new PauseOnScrollListener(imageLoader, true, true));// 两个分别表示拖动下拉条和滑动过程中暂停加载
+//        gridView.setOnScrollListener(new PauseOnScrollListener(imageLoader, true, true));//
+// 两个分别表示拖动下拉条和滑动过程中暂停加载
 
     }
 
@@ -144,7 +139,6 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
-        setSubmitValue();
         setAdapter();
         if (list == null || list.size() == 0) {
             getAllImageUrls();
@@ -164,13 +158,18 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
                 public void run() {
                     list = new ArrayList<PictureBean>();
                     ContentResolver cr = getContentResolver();
-                    String[] pro = {MediaStore.Images.Media._ID, MediaStore.Images.Media.MIME_TYPE, MediaStore.Images.Media.DATA};
-                    Cursor cursor = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, pro, MediaStore.Images.Media.MIME_TYPE + "=? or "
-                            + MediaStore.Images.Media.MIME_TYPE + "=?", new String[]{"image/jpeg", "image/png"}, MediaStore.Images.Media.DATE_ADDED + " DESC");
+                    String[] pro = {MediaStore.Images.Media._ID, MediaStore.Images.Media
+                            .MIME_TYPE, MediaStore.Images.Media.DATA};
+                    Cursor cursor = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, pro,
+                            MediaStore.Images.Media.MIME_TYPE + "=? or "
+                                    + MediaStore.Images.Media.MIME_TYPE + "=?", new
+                                    String[]{"image/jpeg", "image/png"}, MediaStore.Images.Media
+                                    .DATE_ADDED + " DESC");
                     int size = cursor.getCount();
                     while (cursor.moveToNext()) {
                         PictureBean pictureBean = new PictureBean();
-                        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images
+                                .Media.DATA));
                         pictureBean.setLocalURL(path);
                         list.add(pictureBean);
                     }
@@ -189,9 +188,6 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
 //              clearDatas();
                 this.finish();
                 break;
-            case R.id.btn_mul_picture_submit:
-                sendfiles();
-                break;
         }
     }
 
@@ -206,7 +202,8 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
                 if (!fileDir.exists()) {
                     fileDir.mkdirs();
                 }
-                file = new File(sdcardPathDir + "Temp_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+                file = new File(sdcardPathDir + "Temp_" + String.valueOf(System.currentTimeMillis
+                        ()) + ".jpg");
                 if (file != null) {
                     path = file.getPath();
                     photoUri = Uri.fromFile(file);
@@ -223,15 +220,19 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
     MulPictureAdapter.OnItemClickClass onItemClickClass = new MulPictureAdapter.OnItemClickClass() {
         @Override
         public void OnItemClick(View v, int Position, CheckBox checkBox, View imageOverLay) {
+            if (selectList != null) {
+                selectList.clear();
+            }
             if (Position == 0) {
-                MPermissions.requestPermissions(MulPictureActivity.this, CAMERA_PERMISSION, Manifest.permission.CAMERA);
+                MPermissions.requestPermissions(MulPictureActivity.this, CAMERA_PERMISSION,
+                        Manifest.permission.CAMERA);
                 //camera();
             } else {
-                PictureBean bean = isShowCamera == true ? list.get(Position - 1) : list.get(Position);
-                if (checkBox.isChecked()) { //取消选中
+                PictureBean bean = isShowCamera == true ? list.get(Position - 1) : list.get
+                        (Position);
+              /*  if (checkBox.isChecked()) { //取消选中
                     checkBox.setChecked(false);
-                    imageOverLay.setVisibility(View.GONE);
-//                  selectPictureLinearLayout.removeView(hashImage.get(Position));
+                    //imageOverLay.setVisibility(View.GONE);
                     for (int i = 0; i < selectList.size(); i++) {
                         if (selectList.get(i).getLocalURL().equals(bean.getLocalURL())) {
                             selectList.remove(i);
@@ -240,42 +241,35 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
                     }
                     // selectList.remove(bean); 从快速查询页把已选择的对象带过来时，remove不掉
                     removePicture(bean);
-                    setSubmitValue();
-                } else { //选中
+                } else { //选中*/
                     try {
                         //selectPictureLinearLayout.getChildCount()
-                        if (selectList.size() < imageNum) { // 最多上传 张图片
+                        //if (selectList.size() < imageNum) { // 最多上传 张图片
                             //判断所选的图片是否正常,是否损坏
                             Bitmap bitmap = FileUtil.getImageThumbnail(bean.getLocalURL(), 5, 5);
                             if (bitmap == null) {
-                                ToastUtil.show(MulPictureActivity.this, "图片" + bean.getLocalURL() + "异常无法上传");
-                            } else if (FileUtil.getFileSize(bean.getLocalURL(), FileUtil.SIZETYPE_KB) < 3) {
+                                ToastUtil.show(MulPictureActivity.this, "图片" + bean.getLocalURL()
+                                        + "异常无法上传");
+                            } else if (FileUtil.getFileSize(bean.getLocalURL(), FileUtil
+                                    .SIZETYPE_KB) < 3) {
                                 ToastUtil.show(MulPictureActivity.this, "图片清晰度不够");
                             } else {
                                 bitmap.recycle();
-                                checkBox.setChecked(true);
-                                imageOverLay.setVisibility(View.VISIBLE);
+                                //checkBox.setChecked(true);
+                                //imageOverLay.setVisibility(View.VISIBLE);
                                 selectList.add(bean);
                                 addPicture(bean);
-                                setSubmitValue();
-                                // ImageView imageView = iconImage(bean, Position, checkBox, imageOverLay);
-                                //if (imageView != null) {
-                                // hashImage.put(Position, imageView);
-                                // selectList.add(bean);
-                                // addPicture(bean);
-                                // imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                                // selectPictureLinearLayout.addView(imageView);
-                                // setSubmitValue();
-                                // }
                             }
-                        } else {
-                            ToastUtil.show(MulPictureActivity.this,  "最多只能选择" + imageNum + "张照片");
-                        }
+
+                            sendfiles();
+                       // } else {
+                           // ToastUtil.show(MulPictureActivity.this, "最多只能选择" + imageNum + "张照片");
+                       // }
                     } catch (Exception e) {
                         ToastUtil.show(MulPictureActivity.this, "异常信息");
                     }
 
-                }
+                //}
 
             }
         }
@@ -291,7 +285,6 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
 //            allPictures.add(bean);
 //        }
 //    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -303,7 +296,8 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
                     pictureBean.setLocalURL(path);
                     FileUtil.correctCameraPictureAngle(path);// 纠正部分手机拍照后自动旋转的问题
                     refreshImagePhoto(pictureBean.getLocalURL());// 拍照后刷新，使拍照的图片显示到相册中
-//                    pictureBean.setPictureId(FileTools.getLocalImageId(getContentResolver(), path));
+//                    pictureBean.setPictureId(FileTools.getLocalImageId(getContentResolver(),
+// path));
                     selectList = new ArrayList<PictureBean>();
                     selectList.add(pictureBean);
 //                    allPictures = allPicturesTemp;
@@ -319,7 +313,8 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
 
     // 在相册中快速显示图片
     public void refreshImagePhoto(String fileUrl) {
-        boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED); // 判断sd卡是否存在
+        boolean sdCardExist = Environment.getExternalStorageState().equals(Environment
+                .MEDIA_MOUNTED); // 判断sd卡是否存在
         if (!sdCardExist) {
             return;
         }
@@ -343,15 +338,9 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtras(setBundle());
         if (getIntent().hasExtra("drugId"))
-            intent.putExtra("drugId", imageNum+"");
+            intent.putExtra("drugId", imageNum + "");
         setResult(selectList.size(), intent);
         this.finish();
-    }
-
-
-    //显示发送按钮文字
-    public void setSubmitValue() {
-        sendButton.setText("发送(" + (selectList != null ? selectList.size() : "0") + "/" + imageNum + ")");
     }
 
     @Override
@@ -379,7 +368,8 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
         if (savedInstanceState != null) {
 //            allPictures = (List<PictureBean>) savedInstanceState.getSerializable("allPictures");
             pictures = (List<PictureBean>) savedInstanceState.getSerializable("pictures");
-            allPicturesTemp = (List<PictureBean>) savedInstanceState.getSerializable("allPicturesTemp");
+            allPicturesTemp = (List<PictureBean>) savedInstanceState.getSerializable
+                    ("allPicturesTemp");
             picturesTemp = (List<PictureBean>) savedInstanceState.getSerializable("picturesTemp");
             selectList = (List<PictureBean>) savedInstanceState.getSerializable("selectList");
             list = (List<PictureBean>) savedInstanceState.getSerializable("mStickyLV");
@@ -445,7 +435,8 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
 
     //暂时同意权限
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]
+            grantResults) {
         MPermissions.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -453,13 +444,14 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
     //同意权限
     @PermissionGrant(CAMERA_PERMISSION)
     public void requestCameraSuccess() {
-        MPermissions.requestPermissions(this, SDCARD_WRITER, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        MPermissions.requestPermissions(this, SDCARD_WRITER, Manifest.permission
+                .WRITE_EXTERNAL_STORAGE);
     }
 
     //拒绝权限
     @PermissionDenied(CAMERA_PERMISSION)
     public void requestCameraFailed() {
-        ToastUtil.show(this, "用户拒绝拍照功能!");
+        ToastUtil.show(this, "请开启允许拍照权限");
     }
 
     //同意权限

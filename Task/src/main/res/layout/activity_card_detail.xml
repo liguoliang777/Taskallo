@@ -369,9 +369,16 @@
 
             <include layout="@layout/layout_line_1px_f0f0f0" />
 
+
             <GridView
+                android:id="@+id/horizontal_gridview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:numColumns="5"
+                android:layout_marginLeft="@dimen/dm019"
+                android:scrollbars="none"
+                android:stretchMode="spacingWidthUniform" />
             <!--所有活动-->
             <LinearLayout
                 android:layout_width="match_parent"
