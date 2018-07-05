@@ -30,4 +30,5 @@ public class UrlConstant {
     public static final String url_subtask = "/subtask";
     public static final String url_term = "/term";
     public static final String url_logs = "/logs";
+    public static final String url_upFiles = "/files/upFiles";
 }

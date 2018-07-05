@@ -693,7 +693,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-                    Log.d(TAG, "获取图片数据: 准备上传");
+                    Log.d(TAG, "handler 图片上传 ");
                     postImg(ConvUtil.NS(msg.obj));
                     break;
                 case 0:
@@ -751,7 +751,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
             } else {
             }
             setIntent(arg2);
-            getBundle();
+            getBundleP();
             uploadPictureThread();
             setGridView();
         }
@@ -772,17 +772,20 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                         }
                     }
                     if (files.size() > 0) {
-                        UpLoadBean result = UploadFileHttp.INSTANCE.uploadFile(Constant.WEB_SITE
-                                + Constant.URL_FEEDBACK_FILE, files);
+                        UpLoadBean result = UploadFileHttp.INSTANCE.uploadFile(Constant.WEB_SITE1
+                                + UrlConstant.url_upFiles, files);
                         //todo  图片上传
+                        Log.d(TAG, result.getCode() + "图片上传:" + result.getMsg());
+
                         if (result == null) {
+                            ToastUtil.show(context, "附件上传失败");
                             return;
                         }
                         if (result.getCode() == 0) {
-
+                            ToastUtil.show(context, "附件上传成功");
                             sendHandle(result.getData(), 1);
                         } else {
-                            DialogHelper.hideWaiting(getSupportFragmentManager());
+                            ToastUtil.show(context, "附件上传失败");
                             sendHandle("", 0);
                         }
                     } else {
@@ -795,15 +798,14 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         }).start();
     }
 
-    public void getBundle() {
-        super.getBundle();
+    public void getBundleP() {
         if (getIntent() != null) {
             bundle = getIntent().getExtras();
             if (bundle != null) {
                 pictures = (List<PictureBean>) bundle.getSerializable("pictures") != null ?
                         (List<PictureBean>) bundle.getSerializable("pictures") : new
                         ArrayList<PictureBean>();
-                Log.d(TAG, "获取图片数据:" + pictures.size());
+                Log.d(TAG, "图片上传:数据:" + pictures.size());
             }
         }
     }

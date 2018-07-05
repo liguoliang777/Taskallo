@@ -1,6 +1,8 @@
 package com.android.taskallo.widget;
 
 
+import com.android.taskallo.bean.UpLoadBean;
+import com.android.taskallo.core.utils.FileUtil;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -14,9 +16,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
-
-import com.android.taskallo.bean.UpLoadBean;
-import com.android.taskallo.core.utils.FileUtil;
 
 /**
  * Created by jztdzsw on 15-8-24.
@@ -40,7 +39,8 @@ public class UploadFileHttp {
             String CHARSET = "UTF-8";
             String BOUNDARY = java.util.UUID.randomUUID().toString();
             String MULTIPART_FROM_DATA = "multipart/form-data";
-            hc.setRequestProperty("Content-Type", MULTIPART_FROM_DATA + ";boundary=" + BOUNDARY);
+            hc.setRequestProperty("Content-Type", MULTIPART_FROM_DATA +
+                    ";boundary=" + BOUNDARY);
 //            IdentityBean identityBean = PreferenceHelper.load(JztApplication.getInstance(), IdentityBean.class);// 取缓存
 //            hc.setRequestProperty("Cookie",
 //                    "immune=immune;jzt_principal="
