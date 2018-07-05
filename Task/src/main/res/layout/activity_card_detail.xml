@@ -332,8 +332,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dm020"
-                android:background="@color/white"
-                android:clickable="true">
+                android:background="@color/white">
 
                 <ImageView
                     android:layout_width="@dimen/dm036"
@@ -352,15 +351,19 @@
                     android:gravity="center_vertical"
                     android:paddingBottom="@dimen/dm020"
                     android:paddingTop="@dimen/dm020"
-                    android:text="图像附件" />
+                    android:text="附件" />
 
-                <ImageView
-                    android:layout_width="@dimen/dm028"
-                    android:layout_height="@dimen/dm028"
-                    android:layout_marginLeft="@dimen/card_item_margin_left"
-                    android:layout_marginRight="@dimen/dm030"
-                    android:layout_marginTop="@dimen/dm020"
-                    android:scaleType="fitXY"
+                <ImageButton
+                    android:id="@+id/card_detail_file_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:paddingBottom="@dimen/dm020"
+                    android:paddingLeft="@dimen/card_item_margin_left"
+                    android:paddingRight="@dimen/dm030"
+                    android:paddingTop="@dimen/dm020"
+                    android:scaleType="centerInside"
                     android:src="@drawable/ic_incard_link" />
             </LinearLayout>
 

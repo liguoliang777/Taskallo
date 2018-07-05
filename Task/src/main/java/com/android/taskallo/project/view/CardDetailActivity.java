@@ -1,6 +1,8 @@
 package com.android.taskallo.project.view;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -162,6 +164,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
 
         mTopFinishedBT.setOnClickListener(onBtClickListener);
+        findViewById(R.id.card_detail_file_bt).setOnClickListener(onBtClickListener);
 
         mTopEditSaveBt = (Button) findViewById(R.id.edit_right_save_bt);
         mExpiryTimeTv = (TextView) findViewById(R.id.crad_detail_time_tv);
@@ -629,6 +632,26 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     }
                 };
         App.requestQueue.add(versionRequest);
+    }
+
+    //附件上传
+    public void onCardDetailFileBtClick() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.alert_dialog);
+        TextView textView = new TextView(context);
+        textView.setText("添加附件");
+        textView.setTextColor(getResources().getColor(R.color.color_666666));
+        textView.setPadding(300, 40, 100, 40);
+        builder.setCustomTitle(textView);
+        //    指定下拉列表的显示数据
+        final String[] cities = {"选择文件", "选择图片", "附加超链接"};
+        //    设置一个下拉的列表选择项
+        builder.setItems(cities, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ToastUtil.show(context, "选择的城市为" + cities[which]);
+            }
+        });
+        builder.show();
     }
 
     class MyExpandableListAdapter extends BaseExpandableListAdapter {
@@ -1298,7 +1321,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
     private boolean isCancel = false;
     //取消
-    View.OnClickListener onBtClickListener = new View.OnClickListener() {
+    private View.OnClickListener onBtClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             int id = view.getId();
@@ -1313,6 +1336,9 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
                     break;
                 case R.id.top_left_finish_bt:
                     finish();
+                    break;
+                case R.id.card_detail_file_bt:
+                    onCardDetailFileBtClick();
                     break;
 
             }
