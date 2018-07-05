@@ -5,16 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-
-import java.util.List;
 
 import com.android.taskallo.R;
 import com.android.taskallo.core.utils.FileUtil;
 import com.android.taskallo.gamehub.bean.PictureBean;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.List;
 
 /**
  * Created by jztdzsw on 15-8-19.
@@ -26,7 +25,8 @@ public class QuickConsultationAdapter extends BaseAdapter {
     OnGridViewItemClickListener listener;
     private ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public QuickConsultationAdapter(Context context, List<PictureBean> list, OnGridViewItemClickListener listener) {
+    public QuickConsultationAdapter(Context context, List<PictureBean> list,
+                                    OnGridViewItemClickListener listener) {
         this.list = list;
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
@@ -54,34 +54,42 @@ public class QuickConsultationAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = layoutInflater.inflate(R.layout.inquiry_horizontal_gridview_item, null);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.iv_horizontal_gridview_item);
-            holder.deleteButton = (Button) convertView.findViewById(R.id.btn_horizontal_gridview_item);
+            holder.imageView = (ImageView) convertView.findViewById(R.id
+                    .iv_horizontal_gridview_item);
+            holder.deleteButton = (ImageButton) convertView.findViewById(R.id
+                    .btn_horizontal_gridview_item);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        PictureBean pictureBean = list.get(position);
-        imageLoader.displayImage("file://" + pictureBean.getLocalURL(), holder.imageView, FileUtil.getModelOptions(R.drawable.imgbg, 0));
-        // holder.imageView.setImageBitmap(FileTools.getThumbnailByFileUrl(context.getContentResolver(),pictureBean.getLocalURL()));
+        if (list != null && list.size() != 0) {
+            PictureBean pictureBean = list.get(position);
+            imageLoader.displayImage("file://" + pictureBean.getLocalURL(), holder.imageView,
+                    FileUtil.getModelOptions(R.drawable.imgbg, 0));
+            // holder.imageView.setImageBitmap(FileTools.getThumbnailByFileUrl(context
+            // .getContentResolver(),pictureBean.getLocalURL()));
 
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onGridViewItemClick(position, false);
-            }
-        });
-        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onGridViewItemClick(position, true);
-            }
-        });
+            holder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onGridViewItemClick(position, false);
+                }
+            });
+            holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onGridViewItemClick(position, true);
+                }
+            });
+        } else {
+            return null;
+        }
         return convertView;
     }
 
     class ViewHolder {
         ImageView imageView;
-        Button deleteButton;
+        ImageButton deleteButton;
     }
 
     //item点击后时行处理

@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
     <!--android:descendantFocusability="blocksDescendants"-->
     <RelativeLayout
-        android:layout_width="68dp"
-        android:layout_height="70dp">
-    <ImageView
-        android:id="@+id/iv_horizontal_gridview_item"
-        android:layout_width="58dp"
-        android:layout_height="58dp"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="12dp"
-        android:src="@drawable/imgbg"
-        android:scaleType="fitXY"
-        android:focusable="true"/>
+        android:layout_width="@dimen/dm190"
+        android:layout_height="@dimen/dm190">
 
-    <Button
-        android:id="@+id/btn_horizontal_gridview_item"
-        android:layout_width="19dp"
-        android:layout_height="19dp"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/opinion_close"
-        android:focusable="true"
-        android:clickable="true"
-        android:button="@null"/>
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_horizontal_gridview_item"
+            android:layout_width="@dimen/dm190"
+            android:layout_height="@dimen/dm190"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/dm025"
+            android:focusable="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/imgbg" />
+
+        <ImageButton
+            android:id="@+id/btn_horizontal_gridview_item"
+            android:layout_width="@dimen/dm056"
+            android:layout_height="@dimen/dm056"
+            android:paddingTop="@dimen/dm020"
+            android:paddingRight="@dimen/dm_010"
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/opinion_close"
+            android:button="@null"
+            android:clickable="true"
+            android:focusable="true" />
+    </RelativeLayout>
 </LinearLayout>

@@ -45,7 +45,7 @@ public class CommonBaseActivity extends BaseFgActivity implements QuickConsultat
      */
     public void setGridView() {
         int size = pictures != null ? pictures.size() : 0;
-        int length = 69;
+        int length = 115;
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         float density = dm.density;
@@ -54,7 +54,7 @@ public class CommonBaseActivity extends BaseFgActivity implements QuickConsultat
         int itemWidth = (int) (length * density) - 2;
         ViewGroup.LayoutParams params = gridView.getLayoutParams();
         params.width = itemWidth * size + (size == 1 ? 25 : 0);
-        //gridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
+        gridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
         gridView.setColumnWidth(itemWidth); // 设置列表项宽
         gridView.setHorizontalSpacing(0); // 设置列表项水平间距
         gridView.setStretchMode(GridView.NO_STRETCH);
@@ -75,18 +75,20 @@ public class CommonBaseActivity extends BaseFgActivity implements QuickConsultat
         int totalHeight = 0;
         View view;
         int count = listAdapter.getCount();
-        if (count == 5||count == 10) {
-            count = count-1;
+        if (count == 3 || count == 6 || count == 9) {
+            count = count - 1;
         }
-        for (int i = 0; i < count / 5 + 1; i++) {
+        for (int i = 0; i < count / 3 + 1; i++) {
             view = listAdapter.getView(i, null, listView);
             //宽度为屏幕宽度
             int i1 = View.MeasureSpec.makeMeasureSpec(ImageUtil.getScreenWidth(this),
                     View.MeasureSpec.EXACTLY);
             //根据屏幕宽度计算高度
             int i2 = View.MeasureSpec.makeMeasureSpec(i1, View.MeasureSpec.UNSPECIFIED);
-            view.measure(i1, i2);
-            totalHeight += view.getMeasuredHeight();
+            if (view != null) {
+                view.measure(i1, i2);
+                totalHeight += view.getMeasuredHeight();
+            }
         }
         params.height = totalHeight;
         listView.setLayoutParams(params);
