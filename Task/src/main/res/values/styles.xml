@@ -42,16 +42,10 @@
     </style>
 
 
-    <style name="alert_dialog" parent="@android:style/Theme.Holo.Light.Dialog">
-        <item name="android:windowIsTranslucent">false</item>
-        <item name="android:windowNoTitle">false</item>
-        <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:windowBackground"> @android:color/transparent</item>
-        <item name="android:buttonBarStyle">@style/My_ButtonBar_Style</item>
+    <style name="customTheme" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
     </style>
-    <style name="My_ButtonBar_Style" parent="@android:style/Holo.Light.ButtonBar.AlertDialog">
-        <item name="android:showDividers">none</item>
-    </style>
+
+
     <!-- PopUpMenu -->
     <style name="Animations" />
 

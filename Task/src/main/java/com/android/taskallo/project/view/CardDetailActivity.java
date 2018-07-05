@@ -1,6 +1,5 @@
 package com.android.taskallo.project.view;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +10,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -636,11 +636,13 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
 
     //附件上传
     public void onCardDetailFileBtClick() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.alert_dialog);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.customTheme);
         TextView textView = new TextView(context);
         textView.setText("添加附件");
-        textView.setTextColor(getResources().getColor(R.color.color_666666));
-        textView.setPadding(300, 40, 100, 40);
+        textView.setTextSize(18);
+        textView.getPaint().setFakeBoldText(true);
+        textView.setTextColor(getResources().getColor(R.color.mainColorDrak));
+        textView.setPadding(350, 40, 100, 0);
         builder.setCustomTitle(textView);
         //    指定下拉列表的显示数据
         final String[] cities = {"选择文件", "选择图片", "附加超链接"};
@@ -648,7 +650,7 @@ public class CardDetailActivity extends BaseFgActivity implements PopupMenu
         builder.setItems(cities, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ToastUtil.show(context, "选择的城市为" + cities[which]);
+                ToastUtil.show(context, "" + cities[which]);
             }
         });
         builder.show();
