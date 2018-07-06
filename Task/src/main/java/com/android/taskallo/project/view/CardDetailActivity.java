@@ -49,10 +49,9 @@ import com.android.taskallo.bean.MemberInfo;
 import com.android.taskallo.bean.SubtaskInfo;
 import com.android.taskallo.bean.SubtaskItemInfo;
 import com.android.taskallo.bean.TagInfo;
-import com.android.taskallo.bean.UpLoadBean;
 import com.android.taskallo.core.net.GsonRequest;
+import com.android.taskallo.core.net.RetrofitUtil;
 import com.android.taskallo.core.utils.Constant;
-import com.android.taskallo.core.utils.DialogHelper;
 import com.android.taskallo.core.utils.ImageUtil;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.NetUtil;
@@ -67,7 +66,6 @@ import com.android.taskallo.project.bean.LogsBean;
 import com.android.taskallo.util.ConvUtil;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.PullScrollView;
-import com.android.taskallo.widget.UploadFileHttp;
 import com.android.taskallo.widget.mulpicture.MulPictureActivity;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -85,6 +83,7 @@ import com.zhy.m.permission.PermissionGrant;
 import org.feezu.liuli.timeselector.TimeSelector;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -693,8 +692,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-                    Log.d(TAG, "handler 图片上传 ");
-                    postImg(ConvUtil.NS(msg.obj));
+                    //postImg(ConvUtil.NS(msg.obj));
                     break;
                 case 0:
                     break;
@@ -704,40 +702,54 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
     };
 
     private void postImg(final String file) {
-        String url = Constant.WEB_SITE + Constant.URL_FEEDBACK;
-        Response.Listener<JsonResult> successListener = new Response.Listener<JsonResult>() {
+        String url = Constant.WEB_SITE1 + UrlConstant.url_upFiles;
+
+        // RetrofitUtil.upload(url, file);
+        Response.Listener<JsonResult> successListener = new Response
+                .Listener<JsonResult>() {
             @Override
             public void onResponse(JsonResult result) {
-                DialogHelper.hideWaiting(getSupportFragmentManager());
-                if (result == null) {
+                if (result == null || result.code != 0) {
+                    Log.d(TAG, "上传图片7777" + result);
+                    ToastUtil.show(context, getString(R.string.requery_failed));
                     return;
                 }
-                if (result.code == 0) {
-                } else {
-                    com.android.taskallo.core.utils.Log.d(TAG, "服务器返回错误：" + result.msg);
-                }
+                Log.d(TAG, "上传图片7777" + result.msg);
+                //添加子任务成功
+
             }
         };
 
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-                DialogHelper.hideWaiting(getSupportFragmentManager());
-                com.android.taskallo.core.utils.Log.d(TAG, "HTTP请求失败：网络连接错误！");
+                Log.d(TAG, "上传图片88:" + volleyError.getMessage());
+                ToastUtil.show(context, getString(R.string.requery_failed));
             }
         };
 
-        Request<JsonResult> versionRequest = new GsonRequest<JsonResult>(Request.Method.POST, url,
-                successListener, errorListener, new TypeToken<JsonResult>() {
-        }.getType()) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("feedbackImage", file);
-                return params;
-            }
-        };
+        Request<JsonResult> versionRequest = new
+                GsonRequest<JsonResult>(Request.Method.POST, url,
+                        successListener, errorListener, new
+                        TypeToken<JsonResult>() {
+                        }.getType()) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.file, file);
+                        params.put(KeyConstant.boardId, mBoardId);
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
         App.requestQueue.add(versionRequest);
     }
 
@@ -759,43 +771,44 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
     }
 
     private void uploadPictureThread() {
-        new Thread(new Runnable() {
+        File file = null;
+        for (PictureBean pictureBean : pictures) {
+            file = new File(pictureBean.getLocalURL());
+        }
+
+        final HashMap<String, String> map = new HashMap<String, String>();
+        map.put(KeyConstant.boardId, mBoardId);
+
+        final String url = Constant.WEB_SITE1 + UrlConstant.url_upFiles;
+        String fileStr = ConvUtil.NS(file);
+        final File finalFile = file;
+        new Thread() {
             @Override
             public void run() {
                 try {
-                    HashMap<String, File> files = new HashMap<String, File>();
+                    RetrofitUtil.upLoadByCommonPost(url, finalFile, map, new RetrofitUtil
+                            .FileUploadListener() {
+                        @Override
+                        public void onProgress(long pro, double precent) {
+                            Log.d(TAG, "图片上传" + pro);
 
-                    if (pictures != null) {
-                        for (PictureBean pictureBean : pictures) {
-                            File file = new File(pictureBean.getLocalURL());
-                            files.put(file.getName(), file);
                         }
-                    }
-                    if (files.size() > 0) {
-                        UpLoadBean result = UploadFileHttp.INSTANCE.uploadFile(Constant.WEB_SITE1
-                                + UrlConstant.url_upFiles, files);
-                        //todo  图片上传
-                        Log.d(TAG, result.getCode() + "图片上传:" + result.getMsg());
 
-                        if (result == null) {
-                            ToastUtil.show(context, "附件上传失败");
-                            return;
+                        @Override
+                        public void onFinish(int code, String res, Map<String, List<String>>
+                                headers) {
+                            Log.d(TAG, "图片上传1" + code);
+                            Log.d(TAG, "图片上传1" + res);
+
                         }
-                        if (result.getCode() == 0) {
-                            ToastUtil.show(context, "附件上传成功");
-                            sendHandle(result.getData(), 1);
-                        } else {
-                            ToastUtil.show(context, "附件上传失败");
-                            sendHandle("", 0);
-                        }
-                    } else {
-                        sendHandle("", 1);
-                    }
-                } catch (Exception e) {
-                    DialogHelper.hideWaiting(getSupportFragmentManager());
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+
             }
-        }).start();
+        }.start();
+        //postImg(fileStr);
     }
 
     public void getBundleP() {
@@ -805,7 +818,6 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 pictures = (List<PictureBean>) bundle.getSerializable("pictures") != null ?
                         (List<PictureBean>) bundle.getSerializable("pictures") : new
                         ArrayList<PictureBean>();
-                Log.d(TAG, "图片上传:数据:" + pictures.size());
             }
         }
     }

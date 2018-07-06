@@ -1,6 +1,9 @@
 package com.android.taskallo.widget;
 
 
+import android.util.Log;
+
+import com.android.taskallo.App;
 import com.android.taskallo.bean.UpLoadBean;
 import com.android.taskallo.core.utils.FileUtil;
 import com.google.gson.Gson;
@@ -29,7 +32,8 @@ public class UploadFileHttp {
     }
 
     // HttpURLConnection 上传文件
-    public UpLoadBean uploadFile(String url, Map<String, File> files) throws IOException {
+    public UpLoadBean uploadFile(String url, Map<String, File> files, Map<String, String> files2)
+            throws IOException {
         boolean isZip = true;
         URL urls = new URL(url + "?" + Math.random());
         HttpURLConnection hc = null;
@@ -39,9 +43,12 @@ public class UploadFileHttp {
             String CHARSET = "UTF-8";
             String BOUNDARY = java.util.UUID.randomUUID().toString();
             String MULTIPART_FROM_DATA = "multipart/form-data";
-            hc.setRequestProperty("Content-Type", MULTIPART_FROM_DATA +
-                    ";boundary=" + BOUNDARY);
-//            IdentityBean identityBean = PreferenceHelper.load(JztApplication.getInstance(), IdentityBean.class);// 取缓存
+            hc.setRequestProperty("Content-Type", "application/json");
+            hc.setRequestProperty("Authorization", App.token);
+            hc.setRequestProperty("appType", "0");
+            hc.setRequestProperty("Charset", "UTF-8");
+//            IdentityBean identityBean = PreferenceHelper.load(JztApplication.getInstance(),
+// IdentityBean.class);// 取缓存
 //            hc.setRequestProperty("Cookie",
 //                    "immune=immune;jzt_principal="
 //                            + identityBean.getPrincipal());
@@ -64,13 +71,15 @@ public class UploadFileHttp {
             DataOutputStream outStream = null;
             try {
                 outStream = new DataOutputStream(hc.getOutputStream());
+
                 StringBuilder sb = new StringBuilder();
                 // 所有的参数
 //                for (Map.Entry<String, String> entry : parmas.entrySet()) {
 //                    sb.append(PREFIX);
 //                    sb.append(BOUNDARY);
 //                    sb.append(LINEND);
-//                    sb.append("Content-Disposition: form-data; name=\"" + entry.getKey() + "\"" + LINEND);
+//                    sb.append("Content-Disposition: form-data; name=\"" + entry.getKey() + "\""
+// + LINEND);
 //                    sb.append("Content-Type: text/plain; charset=" + "utf-8" + LINEND);
 //                    sb.append("Content-Transfer-Encoding: 8bit" + LINEND);
 //                    sb.append(LINEND);
@@ -87,9 +96,11 @@ public class UploadFileHttp {
                     sb1.append(PREFIX);
                     sb1.append(BOUNDARY);
                     sb1.append(LINEND);
-                    sb1.append("Content-Disposition: form-data; name=\"file\"; filename=\"" + entry.getValue().getName()
+                    sb1.append("Content-Disposition: form-data; name=\"file\"; filename=\"" +
+                            entry.getValue().getName()
                             + "\"" + LINEND);
-                    sb1.append("Content-Type: application/octet-stream; charset=" + CHARSET + LINEND);
+                    sb1.append("Content-Type: application/json; charset=" + CHARSET +
+                            LINEND);
                     sb1.append(LINEND);
                     outStream.write(sb1.toString().getBytes());
 
@@ -121,8 +132,18 @@ public class UploadFileHttp {
                 }
                 byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINEND).getBytes();
                 outStream.write(end_data);
-                outStream.flush();
 
+                Gson gson = new Gson();
+                //传入的参数
+                String param = gson.toJson(files2);
+                outStream.write(param.getBytes());
+
+                outStream.flush();
+                outStream.close();
+
+            } catch (Exception e) {
+
+                Log.d("http", "图片上传3333:" + e.getMessage());
             } finally {
                 FileUtil.closeIO(outStream);
             }
@@ -135,13 +156,19 @@ public class UploadFileHttp {
                 try {
                     reader = new InputStreamReader(hc.getInputStream());
                     Gson gson = new Gson();
-                    UpLoadBean res = gson.fromJson(convertStreamToString(hc.getInputStream()), UpLoadBean.class);
+                    UpLoadBean res = gson.fromJson(convertStreamToString(hc.getInputStream()),
+                            UpLoadBean.class);
+                    Log.d("http", "图片上传:" + res);
                     return res;
+                } catch (Exception e) {
+                    Log.d("http", "图片上传55555:" + e.getMessage());
                 } finally {
                     FileUtil.closeIO(reader);
                 }
             }
 
+        } catch (Exception e) {
+            Log.d("http", "图片上传6666:" + e.getMessage());
         } finally {
             // 关闭网络连接
             if (hc != null) {
@@ -149,6 +176,7 @@ public class UploadFileHttp {
             }
 
         }
+        Log.d("http", "图片上传:----");
         return null;
     }
 

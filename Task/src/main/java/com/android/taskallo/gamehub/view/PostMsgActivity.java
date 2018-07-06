@@ -13,20 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.NormalDataBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.PostMsgBodyBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.PostMsgClient;
-import com.zhy.m.permission.MPermissions;
-import com.zhy.m.permission.PermissionDenied;
-import com.zhy.m.permission.PermissionGrant;
-
-import java.io.File;
-import java.util.Calendar;
-import java.util.HashMap;
-
-import com.android.taskallo.R;
 import com.android.taskallo.App;
+import com.android.taskallo.R;
 import com.android.taskallo.bean.UpLoadBean;
 import com.android.taskallo.core.utils.APIErrorUtils;
 import com.android.taskallo.core.utils.Constant;
@@ -42,6 +30,17 @@ import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.widget.BaseGridView;
 import com.android.taskallo.widget.UploadFileHttp;
 import com.android.taskallo.widget.mulpicture.MulPictureActivity;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.NormalDataBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.PostMsgBodyBean;
+import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
+import com.jzt.hol.android.jkda.sdk.services.gamehub.PostMsgClient;
+import com.zhy.m.permission.MPermissions;
+import com.zhy.m.permission.PermissionDenied;
+import com.zhy.m.permission.PermissionGrant;
+
+import java.io.File;
+import java.util.Calendar;
+import java.util.HashMap;
 
 /**
  * 发帖
@@ -232,12 +231,13 @@ public class PostMsgActivity extends CommonBaseActivity implements View.OnClickL
                             files.put(file.getName(), file);
                         }
                     }
-                    UpLoadBean result = UploadFileHttp.INSTANCE.uploadFile(Constant.WEB_SITE + Constant.URL_UP_LOAD_FILE, files);
+                    UpLoadBean result = UploadFileHttp.INSTANCE.uploadFile(
+                            Constant.WEB_SITE + Constant.URL_UP_LOAD_FILE, files,null);
                     if (result == null) {
                         return;
                     }
                     if (result.getCode() == 0) {
-                        sendHandle(result.getData(), 1);
+                        sendHandle(result.getData().toString(), 1);
                     } else {
                         DialogHelper.hideWaiting(getSupportFragmentManager());
                         sendHandle("", 0);

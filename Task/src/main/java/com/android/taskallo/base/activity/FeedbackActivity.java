@@ -246,12 +246,12 @@ public class FeedbackActivity extends CommonBaseActivity implements View.OnClick
                     }
                     if (files.size() > 0) {
                         UpLoadBean result = UploadFileHttp.INSTANCE.uploadFile(Constant.WEB_SITE
-                                + Constant.URL_FEEDBACK_FILE, files);
+                                + Constant.URL_FEEDBACK_FILE, files,null);
                         if (result == null) {
                             return;
                         }
                         if (result.getCode() == 0) {
-                            sendHandle(result.getData(), 1);
+                            sendHandle(result.getData().toString(), 1);
                         } else {
                             DialogHelper.hideWaiting(getSupportFragmentManager());
                             sendHandle("", 0);
