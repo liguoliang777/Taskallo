@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.GridView;
@@ -193,26 +194,26 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
 
     // 调用相机拍照
     public void camera() {
-        if (FileUtil.isSDCardEnable()) {
-            try {
-                Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                String sdcardPathDir = CommonUtil.getImageBasePath();
-                File file = null;
-                File fileDir = new File(sdcardPathDir);
-                if (!fileDir.exists()) {
-                    fileDir.mkdirs();
-                }
-                file = new File(sdcardPathDir + "Temp_" + String.valueOf(System.currentTimeMillis
-                        ()) + ".jpg");
-                if (file != null) {
-                    path = file.getPath();
-                    photoUri = Uri.fromFile(file);
-                    openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                    startActivityForResult(openCameraIntent, 1);
-                }
-            } catch (Exception e) {
-                ToastUtil.show(this, "内存不足");
+        try {
+            Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            String sdcardPathDir = CommonUtil.getImageBasePath();
+            File file = null;
+            File fileDir = new File(sdcardPathDir);
+            if (!fileDir.exists()) {
+                fileDir.mkdirs();
             }
+            file = new File(sdcardPathDir + "Temp_" + String.valueOf(System.currentTimeMillis
+                    ()) + ".jpg");
+            if (file != null) {
+                path = file.getPath();
+                photoUri = Uri.fromFile(file);
+                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(openCameraIntent, 1);
+            }
+        } catch (Exception e) {
+            ToastUtil.show(this, "内存不足");
+            Log.d(TAG, "相机:" + e.getMessage());
+
         }
     }
 
@@ -242,32 +243,32 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
                     // selectList.remove(bean); 从快速查询页把已选择的对象带过来时，remove不掉
                     removePicture(bean);
                 } else { //选中*/
-                    try {
-                        //selectPictureLinearLayout.getChildCount()
-                        //if (selectList.size() < imageNum) { // 最多上传 张图片
-                            //判断所选的图片是否正常,是否损坏
-                            Bitmap bitmap = FileUtil.getImageThumbnail(bean.getLocalURL(), 5, 5);
-                            if (bitmap == null) {
-                                ToastUtil.show(MulPictureActivity.this, "图片" + bean.getLocalURL()
-                                        + "异常无法上传");
-                            } else if (FileUtil.getFileSize(bean.getLocalURL(), FileUtil
-                                    .SIZETYPE_KB) < 3) {
-                                ToastUtil.show(MulPictureActivity.this, "图片清晰度不够");
-                            } else {
-                                bitmap.recycle();
-                                //checkBox.setChecked(true);
-                                //imageOverLay.setVisibility(View.VISIBLE);
-                                selectList.add(bean);
-                                addPicture(bean);
-                            }
-
-                            sendfiles();
-                       // } else {
-                           // ToastUtil.show(MulPictureActivity.this, "最多只能选择" + imageNum + "张照片");
-                       // }
-                    } catch (Exception e) {
-                        ToastUtil.show(MulPictureActivity.this, "异常信息");
+                try {
+                    //selectPictureLinearLayout.getChildCount()
+                    //if (selectList.size() < imageNum) { // 最多上传 张图片
+                    //判断所选的图片是否正常,是否损坏
+                    Bitmap bitmap = FileUtil.getImageThumbnail(bean.getLocalURL(), 5, 5);
+                    if (bitmap == null) {
+                        ToastUtil.show(MulPictureActivity.this, "图片" + bean.getLocalURL()
+                                + "异常无法上传");
+                    } else if (FileUtil.getFileSize(bean.getLocalURL(), FileUtil
+                            .SIZETYPE_KB) < 3) {
+                        ToastUtil.show(MulPictureActivity.this, "图片清晰度不够");
+                    } else {
+                        bitmap.recycle();
+                        //checkBox.setChecked(true);
+                        //imageOverLay.setVisibility(View.VISIBLE);
+                        selectList.add(bean);
+                        addPicture(bean);
                     }
+
+                    sendfiles();
+                    // } else {
+                    // ToastUtil.show(MulPictureActivity.this, "最多只能选择" + imageNum + "张照片");
+                    // }
+                } catch (Exception e) {
+                    ToastUtil.show(MulPictureActivity.this, "异常信息");
+                }
 
                 //}
 
@@ -304,6 +305,7 @@ public class MulPictureActivity extends CommonBaseActivity implements View.OnCli
                     pictures = picturesTemp;
                     addPicture(pictureBean);
                     sendfiles();
+
                 }
                 break;
             default:

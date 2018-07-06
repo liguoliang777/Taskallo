@@ -697,7 +697,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 case 0:
                     break;
             }
-            pictures.clear();
+            //pictures.clear();
         }
     };
 

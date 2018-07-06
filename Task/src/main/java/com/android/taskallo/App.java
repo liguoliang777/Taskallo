@@ -4,8 +4,14 @@ import android.app.Application;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.StrictMode;
 import android.support.multidex.MultiDex;
 
+import com.android.taskallo.bean.User;
+import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.Log;
+import com.android.taskallo.core.utils.SPUtils;
+import com.android.taskallo.exception.GlobalExceptionHandler;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -19,12 +25,6 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
-
-import com.android.taskallo.bean.User;
-import com.android.taskallo.core.utils.Constant;
-import com.android.taskallo.core.utils.Log;
-import com.android.taskallo.core.utils.SPUtils;
-import com.android.taskallo.exception.GlobalExceptionHandler;
 
 /**
  * 全局设置
@@ -85,6 +85,11 @@ public class App extends Application {
         Log.setLevel(Log.DEBUG);    //设置Log打印级别
         android.util.Log.d("app修改", phone + ",密码:" + passWord + ",启动：" + token);
         Config.DEBUG = true;
+
+        // android 7.0系统解决拍照的问题
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
 
     }
 
