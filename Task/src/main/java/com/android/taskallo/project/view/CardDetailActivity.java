@@ -653,13 +653,14 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
     //附件上传
     public void onCardDetailFileBtClick() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.customTheme);
-        TextView textView = new TextView(context);
+        builder.setTitle("添加附件");
+       /* TextView textView = new TextView(context);
         textView.setText("添加附件");
-        textView.setTextSize(18);
+        textView.setTextSize(16);
         textView.getPaint().setFakeBoldText(true);
         textView.setTextColor(getResources().getColor(R.color.mainColorDrak));
-        textView.setPadding(350, 50, 100, 0);
-        builder.setCustomTitle(textView);
+        textView.setPadding(350, 40, 100, 0);
+        builder.setCustomTitle(textView);*/
         //    指定下拉列表的显示数据
         final String[] cities = {"选择图片", "选择文件"};
         //    设置一个下拉的列表选择项
