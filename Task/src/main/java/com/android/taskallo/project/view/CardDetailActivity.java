@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -63,7 +64,6 @@ import com.android.taskallo.project.Item.ExRadioGroup;
 import com.android.taskallo.project.TagListActivity;
 import com.android.taskallo.project.bean.EventInfo;
 import com.android.taskallo.project.bean.LogsBean;
-import com.android.taskallo.util.ConvUtil;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.PullScrollView;
 import com.android.taskallo.widget.mulpicture.MulPictureActivity;
@@ -661,7 +661,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         textView.setPadding(350, 50, 100, 0);
         builder.setCustomTitle(textView);
         //    指定下拉列表的显示数据
-        final String[] cities = {"选择文件", "选择图片", "附加超链接"};
+        final String[] cities = {"选择图片", "选择文件"};
         //    设置一个下拉的列表选择项
         builder.setItems(cities, new DialogInterface.OnClickListener() {
             @Override
@@ -669,18 +669,24 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 switch (i) {
                     //文件
                     case 0:
+                        choisePicture();
                         break;
                     //图片
                     case 1:
-                        choisePicture();
-                        break;
-                    //超链接
-                    case 2:
+                        choiseFile();
                         break;
                 }
             }
         });
         builder.show();
+    }
+
+    //选择文件
+    private void choiseFile() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");//设置类型，我这里是任意类型，任意后缀的可以这样写。
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent, 1);
     }
 
     /**
@@ -755,38 +761,36 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
 
     @Override
     protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+        Uri uri = arg2.getData();
+        if (uri != null) {
+            Log.d(TAG, "文件路径：" + uri.getPath());
+            File file1 = new File(uri.getPath());
+            uploadPictureThread(file1);
+        }
+
         if (arg0 == 101) {
-            if (arg1 == 1) {
-
-            } else if (arg1 > 0) {
-
-            } else {
-            }
             setIntent(arg2);
             getBundleP();
-            uploadPictureThread();
+
+            if (pictures != null && pictures.size() > 0) {
+                File file = new File(pictures.get(0).getLocalURL());
+                uploadPictureThread(file);
+            }
             setGridView();
         }
         super.onActivityResult(arg0, arg1, arg2);
     }
 
-    private void uploadPictureThread() {
-        File file = null;
-        for (PictureBean pictureBean : pictures) {
-            file = new File(pictureBean.getLocalURL());
-        }
-
+    private void uploadPictureThread(final File file) {
         final HashMap<String, String> map = new HashMap<String, String>();
         map.put(KeyConstant.boardId, mBoardId);
 
         final String url = Constant.WEB_SITE1 + UrlConstant.url_upFiles;
-        String fileStr = ConvUtil.NS(file);
-        final File finalFile = file;
         new Thread() {
             @Override
             public void run() {
                 try {
-                    RetrofitUtil.upLoadByCommonPost(url, finalFile, map, new RetrofitUtil
+                    RetrofitUtil.upLoadByCommonPost(url, file, map, new RetrofitUtil
                             .FileUploadListener() {
                         @Override
                         public void onProgress(long pro, double precent) {

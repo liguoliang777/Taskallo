@@ -43,7 +43,6 @@ import java.util.UUID;
  * @since 2015年11月7日
  */
 public class RetrofitUtil {
-    private static final String TAG = "uploadFile";
     private static final int TIME_OUT = 10*10000000; //超时时间
     private static final String CHARSET = "utf-8"; //设置编码
     private static final String PREFIX = "--";
