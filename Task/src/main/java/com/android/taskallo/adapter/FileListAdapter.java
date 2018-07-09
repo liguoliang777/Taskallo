@@ -112,6 +112,7 @@ public class FileListAdapter extends BaseAdapter {
 
         if (gameInfo != null) {
             String imgUrl = gameInfo.fileUrl;
+            String fileId = gameInfo.fileId;
             Picasso.with(context)
                     .load(imgUrl)
                     .placeholder(R.drawable.ic_def_logo_720_288)
@@ -120,7 +121,14 @@ public class FileListAdapter extends BaseAdapter {
                     .tag(context)
                     .into(holder.img);
 
+            holder.img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //到附件详情界面,全屏的 dialog
+                }
+            });
         }
+
 
         return convertView;
     }
