@@ -31,4 +31,5 @@ public class UrlConstant {
     public static final String url_term = "/term";
     public static final String url_logs = "/logs";
     public static final String url_upFiles = "/files/upFiles";
+    public static final String url_files = "/files";
 }

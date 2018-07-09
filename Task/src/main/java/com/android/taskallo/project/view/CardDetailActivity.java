@@ -44,7 +44,9 @@ import android.widget.Toast;
 
 import com.android.taskallo.App;
 import com.android.taskallo.R;
+import com.android.taskallo.adapter.FileListAdapter;
 import com.android.taskallo.bean.BoardVOListBean;
+import com.android.taskallo.bean.FileListInfo;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.bean.MemberInfo;
 import com.android.taskallo.bean.SubtaskInfo;
@@ -122,6 +124,9 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
     private RecyclerView mEventRV;
     private CardEventAdapter mEventRVAdapter;
     private List<LogsBean> mEventList = new ArrayList<>();
+    private GridView mGridView;
+    private FileListAdapter fileListAdapter;
+    private List<FileListInfo> mFileListData=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -250,7 +255,12 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
 
         initEventRV();
 
-        gridView = (GridView) findViewById(R.id.horizontal_gridview);
+        mGridView = (GridView) findViewById(R.id.horizontal_gridview);
+
+        //获取附件数据
+        getFileListData();
+        fileListAdapter = new FileListAdapter(context,getSupportFragmentManager(),mFileListData);
+        mGridView.setAdapter(fileListAdapter);
     }
 
     private void initEventRV() {
@@ -266,7 +276,53 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
 
         getEventThread();
     }
+    //获取活动日志数据
+    private void getFileListData() {
+        if (!NetUtil.isNetworkConnected(context)) {
+            return;
+        }
+        String url = Constant.WEB_SITE1 + UrlConstant.url_files + "/" +
+                mBoardId;
 
+        Response.Listener<JsonResult<List<FileListInfo>>> successListener = new Response
+                .Listener<JsonResult<List<FileListInfo>>>() {
+            @Override
+            public void onResponse(JsonResult<List<FileListInfo>> result) {
+                if (result == null) {
+                    ToastUtil.show(context, getString(R.string.server_exception));
+                    return;
+                }
+
+                mFileListData = result.data;
+                if (result.code == 0 && context != null && mFileListData != null) {
+                    fileListAdapter.setDate(mFileListData);
+                    reSetLVHeight(mGridView);
+                }
+            }
+        };
+
+        Request<JsonResult<List<FileListInfo>>> versionRequest = new
+                GsonRequest<JsonResult<List<FileListInfo>>>(
+                        Request.Method.GET, url,
+                        successListener, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
+                    }
+                }, new TypeToken<JsonResult<List<FileListInfo>>>() {
+                }.getType()) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(KeyConstant.Content_Type, Constant.application_json);
+                        params.put(KeyConstant.Authorization, App.token);
+                        params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                        return params;
+                    }
+                };
+        App.requestQueue.add(versionRequest);
+    }
     //获取活动日志数据
     private void getEventThread() {
         if (!NetUtil.isNetworkConnected(context)) {
@@ -777,7 +833,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 File file = new File(pictures.get(0).getLocalURL());
                 uploadPictureThread(file);
             }
-            setGridView();
+            //setGridView();
         }
         super.onActivityResult(arg0, arg1, arg2);
     }

@@ -44,6 +44,9 @@ public class CommonBaseActivity extends BaseFgActivity implements QuickConsultat
      * 设置GirdView参数，绑定数据
      */
     public void setGridView() {
+        if (gridView==null) {
+            return;
+        }
         int size = pictures != null ? pictures.size() : 0;
         int length = 115;
         DisplayMetrics dm = new DisplayMetrics();
@@ -61,8 +64,7 @@ public class CommonBaseActivity extends BaseFgActivity implements QuickConsultat
         //gridView.setNumColumns(size); // 设置列数量=列表集合数
         adapter = new QuickConsultationAdapter(this, pictures, this);
         gridView.setAdapter(adapter);
-        reSetLVHeight(gridView);
-
+        //reSetLVHeight(gridView);
     }
 
     public void reSetLVHeight(AbsListView listView) {
