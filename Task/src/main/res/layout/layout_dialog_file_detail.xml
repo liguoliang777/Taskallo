@@ -7,8 +7,8 @@
 
     <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_detail_file_sdv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dm640"
+        android:layout_height="@dimen/dm999"
         android:layout_centerInParent="true"
         android:scaleType="centerInside"
         fresco:actualImageScaleType="centerInside"
@@ -25,6 +25,19 @@
         android:drawableRight="@drawable/ic_back"
         android:paddingLeft="@dimen/dm036"
         android:paddingTop="@dimen/dm055" />
+
+    <TextView
+        android:id="@+id/dialog_center_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:text=""
+        android:layout_centerHorizontal="true"
+        android:paddingTop="@dimen/dm055"
+        android:maxLines="1"
+        android:maxWidth="@dimen/dm400"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dm028" />
 
     <Button
         android:id="@+id/dialog_btn_sure"

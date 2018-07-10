@@ -59,7 +59,7 @@
         android:theme="@style/AppTheme"
         tools:replace="icon,label,theme,allowBackup">
         <activity
-            android:name="com.android.taskallo.base.activity.BeginActivity"
+            android:name=".project.view.CardDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme_NoActionBar_Fullscreen">
             <intent-filter>
@@ -67,12 +67,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
+    <!--    <activity
             android:name=".project.view.CardDetailActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>-->
         <activity
             android:name=".user.view.LoginActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|navigation"

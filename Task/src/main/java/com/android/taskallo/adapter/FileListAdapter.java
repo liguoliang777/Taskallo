@@ -19,12 +19,17 @@ package com.android.taskallo.adapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.android.taskallo.R;
 import com.android.taskallo.bean.FileListInfo;
@@ -131,22 +136,57 @@ public class FileListAdapter extends BaseAdapter {
                 .card_detail_file_sdv);
         fileDetailSDV.setImageURI(gameInfo.fileUrl);
 
-        Button btn_sure = (Button) v.findViewById(R.id.dialog_btn_sure);
-        Button btn_cancel = (Button) v.findViewById(R.id.dialog_btn_cancel);
+        TextView centerTitleTv = (TextView) v.findViewById(R.id.dialog_center_title_tv);
+        centerTitleTv.setText(gameInfo.fileName==null?"":gameInfo.fileName);
+
+        Button moreMenuBt = (Button) v.findViewById(R.id.dialog_btn_sure);
+        Button finishBt = (Button) v.findViewById(R.id.dialog_btn_cancel);
         //builer.setView(v);//这里如果使用builer.setView(v)，自定义布局只会覆盖title和button之间的那部分
         final Dialog dialog = builder.create();
         dialog.show();
         dialog.getWindow().setContentView(v);//自定义布局应该在这里添加，要在dialog.show()的后面
         //dialog.getWindow().setGravity(Gravity.CENTER);//可以设置显示的位置
-        btn_sure.setOnClickListener(new View.OnClickListener() {
+        moreMenuBt.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                View inflate = LayoutInflater.from(context).inflate(R.layout
+                        .layout_file_detail_top_menu, null);
+
+                final PopupWindow popWindow = new PopupWindow(inflate, LinearLayout.LayoutParams
+                        .WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+                inflate.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+                int[] location = new int[2];
+                popWindow.setFocusable(true);
+                popWindow.setOutsideTouchable(false);
+                // 获得位置 这里的v是目标控件，就是你要放在这个v的上面还是下面
+                v.getLocationOnScreen(location);
+                // 设置背景，这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+                popWindow.setBackgroundDrawable(new BitmapDrawable());
+                //软键盘不会挡着popupwindow
+                popWindow.setSoftInputMode(WindowManager.LayoutParams
+                        .SOFT_INPUT_ADJUST_RESIZE);
+
+                popWindow.showAsDropDown(v);
+                inflate.findViewById(R.id.file_item_menu_rename_bt).setOnClickListener
+                        (new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //重命名
+                            }
+                        });
+                inflate.findViewById(R.id.file_item_menu_delete_bt).setOnClickListener
+                        (new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //删除
+                            }
+                        });
+
             }
         });
 
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
+        finishBt.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
