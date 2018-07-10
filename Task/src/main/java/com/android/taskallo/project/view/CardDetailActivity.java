@@ -126,7 +126,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
     private List<LogsBean> mEventList = new ArrayList<>();
     private GridView mGridView;
     private FileListAdapter fileListAdapter;
-    private List<FileListInfo> mFileListData=new ArrayList<>();
+    private List<FileListInfo> mFileListData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -257,10 +257,16 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
 
         mGridView = (GridView) findViewById(R.id.horizontal_gridview);
 
+
+        /*String fileUrl = "http://oss.fanglenet.cn/upload/1531127053591.jpg";
+        FileListInfo fileListInfo = new FileListInfo("0", "112", fileUrl, 0, 0);
+        mFileListData.add(fileListInfo);*/
+
+        fileListAdapter = new FileListAdapter(context, mFileListData);
+        mGridView.setAdapter(fileListAdapter);
+        //reSetLVHeight(mGridView);
         //获取附件数据
         getFileListData();
-        fileListAdapter = new FileListAdapter(context,getSupportFragmentManager(),mFileListData);
-        mGridView.setAdapter(fileListAdapter);
     }
 
     private void initEventRV() {
@@ -276,6 +282,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
 
         getEventThread();
     }
+
     //获取活动日志数据
     private void getFileListData() {
         if (!NetUtil.isNetworkConnected(context)) {
@@ -307,8 +314,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                         successListener, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        volleyError.printStackTrace();
-                        Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
+                        Log.d(TAG, "服务器异常！");
                     }
                 }, new TypeToken<JsonResult<List<FileListInfo>>>() {
                 }.getType()) {
@@ -323,6 +329,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 };
         App.requestQueue.add(versionRequest);
     }
+
     //获取活动日志数据
     private void getEventThread() {
         if (!NetUtil.isNetworkConnected(context)) {
@@ -1847,7 +1854,10 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
 
     public void onCradDetailTagAddBtClick(View view) {
         Intent intent = new Intent(context, TagListActivity.class);
-        List<TagInfo> tagInfo = mCardBean.projectLabelVOList;
+        List<TagInfo> tagInfo = new ArrayList<>();
+        if (mCardBean != null) {
+            tagInfo = mCardBean.projectLabelVOList;
+        }
         intent.putExtra(KeyConstant.tagInfo, (Serializable) tagInfo);
         Bundle bundle = new Bundle();
         bundle.putString(KeyConstant.projectId, mProjectId);

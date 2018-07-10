@@ -17,17 +17,15 @@
 package com.android.taskallo.adapter;
 
 import android.content.Context;
-import android.os.Handler;
-import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 
 import com.android.taskallo.R;
 import com.android.taskallo.bean.FileListInfo;
-import com.squareup.picasso.Picasso;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
@@ -40,27 +38,17 @@ import java.util.List;
 public class FileListAdapter extends BaseAdapter {
 
     private List<FileListInfo> gameInfoList;
-    private FragmentManager fragmentManager;
-
     private Context context;
-    private static Handler uiHandler = new Handler();
 
-
-    public FileListAdapter(Context context, FragmentManager fm, List<FileListInfo> mFileListData) {
+    public FileListAdapter(Context context, List<FileListInfo> mFileListData) {
         super();
         this.context = context;
-        this.fragmentManager = fm;
         gameInfoList = mFileListData;
     }
 
-    /**
-     * 设置ListView中的数据
-     *
-     * @param gameInfoList 游戏数据
-     */
     public void setDate(List<FileListInfo> gameInfoList) {
         this.gameInfoList = gameInfoList;
-
+        notifyDataSetChanged();
     }
 
     @Override
@@ -93,7 +81,9 @@ public class FileListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
-
+        if (gameInfoList == null || gameInfoList.size() == 0) {
+            return null;
+        }
         final FileListInfo gameInfo = gameInfoList.get(position);
 
         ViewHolder holder;
@@ -103,7 +93,8 @@ public class FileListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout
                             .item_card_detail_file_list, parent,
                     false);
-            holder.img = (ImageView) convertView.findViewById(R.id.card_detail_file_list_item_iv);
+            holder.filePicIv = (SimpleDraweeView) convertView.findViewById(R.id
+                    .card_detail_file_list_item_iv);
 
             convertView.setTag(holder);
         } else {
@@ -112,19 +103,15 @@ public class FileListAdapter extends BaseAdapter {
 
         if (gameInfo != null) {
             String imgUrl = gameInfo.fileUrl;
+            Log.d("", "图片:" + imgUrl);
             String fileId = gameInfo.fileId;
-            Picasso.with(context)
-                    .load(imgUrl)
-                    .placeholder(R.drawable.ic_def_logo_720_288)
-                    .error(R.drawable.ic_def_logo_720_288)
-                    .centerInside()
-                    .tag(context)
-                    .into(holder.img);
+            holder.filePicIv.setImageURI(imgUrl);
 
-            holder.img.setOnClickListener(new View.OnClickListener() {
+            holder.filePicIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //到附件详情界面,全屏的 dialog
+
                 }
             });
         }
@@ -140,7 +127,7 @@ public class FileListAdapter extends BaseAdapter {
      * @since 2015年10月28日
      */
     public static class ViewHolder {
-        private ImageView img;
+        private SimpleDraweeView filePicIv;
     }
 
 }

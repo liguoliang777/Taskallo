@@ -29,6 +29,7 @@
     <dimen name="title_back_bt_paddingLeft">20dp</dimen>
     <dimen name="recommend_item_from_pic">@dimen/dm038</dimen>
     <dimen name="recommend_item_game_pic_hight">@dimen/dm260</dimen>
+    <dimen name="card_detail_file_gv_item">@dimen/dm190</dimen>
 
 
     <dimen name="dp_05">0.5dp</dimen>

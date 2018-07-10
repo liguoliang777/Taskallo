@@ -53,7 +53,6 @@ public class CommonBaseActivity extends BaseFgActivity implements QuickConsultat
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         float density = dm.density;
 
-        int gridviewWidth = (int) (size * (length + 4) * density);
         int itemWidth = (int) (length * density) - 2;
         ViewGroup.LayoutParams params = gridView.getLayoutParams();
         params.width = itemWidth * size + (size == 1 ? 25 : 0);

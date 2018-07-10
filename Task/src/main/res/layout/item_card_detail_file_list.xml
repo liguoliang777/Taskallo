@@ -5,17 +5,22 @@
     android:layout_height="wrap_content">
     <!--android:descendantFocusability="blocksDescendants"-->
     <RelativeLayout
-        android:layout_width="@dimen/dm190"
-        android:layout_height="@dimen/dm190">
+        android:layout_width="@dimen/card_detail_file_gv_item"
+        android:layout_height="@dimen/card_detail_file_gv_item">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
             android:id="@+id/card_detail_file_list_item_iv"
-            android:layout_width="@dimen/dm190"
-            android:layout_height="@dimen/dm190"
+            android:layout_width="@dimen/card_detail_file_gv_item"
+            android:layout_height="@dimen/card_detail_file_gv_item"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/dm025"
             android:focusable="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/imgbg" />
+            android:scaleType="centerInside"
+            fresco:actualImageScaleType="centerInside"
+            fresco:failureImage="@drawable/ic_card_link"
+            fresco:placeholderImage="@drawable/ic_card_link"
+            fresco:placeholderImageScaleType="centerInside"
+            fresco:progressBarImage="@drawable/ic_card_link"
+            fresco:roundedCornerRadius="@dimen/dm002" />
     </RelativeLayout>
 </RelativeLayout>
