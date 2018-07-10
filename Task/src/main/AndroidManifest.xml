@@ -93,10 +93,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
-        <!--   <activity
-               android:name=".project.view.CardDetailActivity"
-               android:screenOrientation="portrait"
-              />-->
 
         <activity
             android:name="com.android.taskallo.search.view.SearchActivity"

@@ -376,14 +376,15 @@
                 android:id="@+id/horizontal_gridview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dm019"
-                android:layout_marginTop="@dimen/dm010"
+                android:layout_marginTop="@dimen/dm005"
                 android:gravity="center"
-                android:horizontalSpacing="@dimen/dm010"
+                android:paddingLeft="@dimen/dm015"
+                android:paddingRight="@dimen/dm015"
+                android:listSelector="@color/transparent"
                 android:numColumns="3"
                 android:scrollbars="none"
-                android:stretchMode="spacingWidthUniform"
-                android:verticalSpacing="@dimen/dm010" />
+                android:stretchMode="columnWidth"
+                />
             <!--所有活动-->
             <LinearLayout
                 android:layout_width="match_parent"
