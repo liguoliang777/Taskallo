@@ -42,7 +42,10 @@
     </style>
 
 
-    <style name="customTheme" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+    <style name="dialog_appcompat_theme" parent="@style/Theme.AppCompat.Light.Dialog.Alert"></style>
+    <style name="dialog_appcompat_theme_fullscreen" parent="android:Theme.Holo.Light.NoActionBar.Fullscreen">
+        <item name="android:windowBackground">@color/transparent</item><!--背景透明-->
+        <item name="android:windowIsTranslucent">true</item><!--半透明-->
     </style>
 
 

@@ -257,7 +257,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
 
         mGridView = (GridView) findViewById(R.id.horizontal_gridview);
 
-  /*      String fileUrl = "http://oss.fanglenet.cn/upload/1531127053591.jpg";
+ /*       String fileUrl = "http://oss.fanglenet.cn/upload/1531127053591.jpg";
         FileListInfo fileListInfo = new FileListInfo("0", "112", fileUrl, 0, 0);
         mFileListData.add(fileListInfo);
         mFileListData.add(fileListInfo);
@@ -717,7 +717,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
 
     //附件上传
     public void onCardDetailFileBtClick() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.customTheme);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.dialog_appcompat_theme);
         builder.setTitle("添加附件");
        /* TextView textView = new TextView(context);
         textView.setText("添加附件");

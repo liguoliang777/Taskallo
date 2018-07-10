@@ -16,12 +16,15 @@
 
 package com.android.taskallo.adapter;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 
 import com.android.taskallo.R;
 import com.android.taskallo.bean.FileListInfo;
@@ -110,14 +113,46 @@ public class FileListAdapter extends BaseAdapter {
             holder.filePicIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //到附件详情界面,全屏的 dialog
-
+                    showFileDetailDialog(gameInfo);
                 }
             });
         }
 
 
         return convertView;
+    }
+
+    private void showFileDetailDialog(final FileListInfo gameInfo) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style
+                .dialog_appcompat_theme_fullscreen);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View v = inflater.inflate(R.layout.layout_dialog_file_detail, null);
+        SimpleDraweeView fileDetailSDV = (SimpleDraweeView) v.findViewById(R.id
+                .card_detail_file_sdv);
+        fileDetailSDV.setImageURI(gameInfo.fileUrl);
+
+        Button btn_sure = (Button) v.findViewById(R.id.dialog_btn_sure);
+        Button btn_cancel = (Button) v.findViewById(R.id.dialog_btn_cancel);
+        //builer.setView(v);//这里如果使用builer.setView(v)，自定义布局只会覆盖title和button之间的那部分
+        final Dialog dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setContentView(v);//自定义布局应该在这里添加，要在dialog.show()的后面
+        //dialog.getWindow().setGravity(Gravity.CENTER);//可以设置显示的位置
+        btn_sure.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+            }
+        });
     }
 
     /**

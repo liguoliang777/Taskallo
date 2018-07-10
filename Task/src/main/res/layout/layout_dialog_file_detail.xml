@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dm640"
+    android:layout_height="match_parent"
+    android:background="@color/transparent_more"
+    android:orientation="vertical">
+
+    <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_detail_file_sdv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:scaleType="centerInside"
+        fresco:actualImageScaleType="centerInside"
+        fresco:failureImage="@drawable/ic_card_link"
+        fresco:placeholderImage="@drawable/ic_card_link"
+        fresco:placeholderImageScaleType="centerInside"
+        fresco:progressBarImage="@drawable/ic_loading" />
+
+    <Button
+        android:id="@+id/dialog_btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:drawableRight="@drawable/ic_back"
+        android:paddingLeft="@dimen/dm036"
+        android:paddingTop="@dimen/dm055" />
+
+    <Button
+        android:id="@+id/dialog_btn_sure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:drawableLeft="@drawable/ic_more"
+        android:paddingRight="@dimen/dm036"
+        android:paddingTop="@dimen/dm055" />
+</RelativeLayout>
