@@ -257,16 +257,16 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
 
         mGridView = (GridView) findViewById(R.id.horizontal_gridview);
 
-        String fileUrl = "http://oss.fanglenet.cn/upload/1531127053591.jpg";
+        /*String fileUrl = "http://oss.fanglenet.cn/upload/1531127053591.jpg";
         FileListInfo fileListInfo = new FileListInfo("0", "112", fileUrl, 0, 0);
         mFileListData.add(fileListInfo);
         mFileListData.add(fileListInfo);
         mFileListData.add(fileListInfo);
-        mFileListData.add(fileListInfo);
+        mFileListData.add(fileListInfo);*/
 
         fileListAdapter = new FileListAdapter(context, mFileListData);
         mGridView.setAdapter(fileListAdapter);
-        reSetLVHeight(mGridView);
+        //reSetLVHeight(mGridView);
         //获取附件数据
         getFileListData();
     }

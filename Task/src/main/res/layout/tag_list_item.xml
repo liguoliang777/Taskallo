@@ -36,7 +36,7 @@
         android:visibility="invisible"
         android:layout_toLeftOf="@id/tag_item_edit"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_seleted" />
+        android:src="@drawable/ic_ok" />
 
     <TextView
         android:id="@+id/tag_item_tv"

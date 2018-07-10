@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
-        android:drawableRight="@drawable/ic_back"
+        android:drawableRight="@drawable/ic_card_cancel"
         android:paddingLeft="@dimen/dm036"
         android:paddingTop="@dimen/dm055" />
 
@@ -30,22 +30,48 @@
         android:id="@+id/dialog_center_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:text=""
         android:layout_centerHorizontal="true"
-        android:paddingTop="@dimen/dm055"
+        android:ellipsize="end"
         android:maxLines="1"
         android:maxWidth="@dimen/dm400"
+        android:paddingTop="@dimen/dm055"
+        android:text=""
         android:textColor="@color/white"
         android:textSize="@dimen/dm028" />
 
+    <EditText
+        android:id="@+id/dialog_center_rename_et"
+        android:layout_width="@dimen/dm400"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dm010"
+        android:layout_centerHorizontal="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginTop="@dimen/dm045"
+        android:background="@android:color/black"
+        android:text=""
+        android:textColor="@color/white"
+        android:textCursorDrawable="@drawable/shape_cursor_color_white"
+        android:textSize="@dimen/dm028"
+        android:visibility="invisible" />
+
     <Button
-        android:id="@+id/dialog_btn_sure"
+        android:id="@+id/dialog_btn_menu_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:background="@null"
         android:drawableLeft="@drawable/ic_more"
+        android:paddingRight="@dimen/dm036"
+        android:paddingTop="@dimen/dm055" />
+    <Button
+        android:id="@+id/dialog_btn_sure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:drawableLeft="@drawable/ic_ok"
         android:paddingRight="@dimen/dm036"
         android:paddingTop="@dimen/dm055" />
 </RelativeLayout>

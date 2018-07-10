@@ -25,14 +25,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.android.taskallo.R;
 import com.android.taskallo.bean.FileListInfo;
+import com.android.taskallo.project.view.CardDetailActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -46,9 +49,9 @@ import java.util.List;
 public class FileListAdapter extends BaseAdapter {
 
     private List<FileListInfo> gameInfoList;
-    private Context context;
+    private CardDetailActivity context;
 
-    public FileListAdapter(Context context, List<FileListInfo> mFileListData) {
+    public FileListAdapter(CardDetailActivity context, List<FileListInfo> mFileListData) {
         super();
         this.context = context;
         gameInfoList = mFileListData;
@@ -127,6 +130,13 @@ public class FileListAdapter extends BaseAdapter {
         return convertView;
     }
 
+    private void closeInputMethod(EditText centerRenameEt) {
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService
+                (Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(centerRenameEt.getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
     private void showFileDetailDialog(final FileListInfo gameInfo) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style
                 .dialog_appcompat_theme_fullscreen);
@@ -136,16 +146,32 @@ public class FileListAdapter extends BaseAdapter {
                 .card_detail_file_sdv);
         fileDetailSDV.setImageURI(gameInfo.fileUrl);
 
-        TextView centerTitleTv = (TextView) v.findViewById(R.id.dialog_center_title_tv);
-        centerTitleTv.setText(gameInfo.fileName==null?"":gameInfo.fileName);
+        final TextView centerTitleTv = (TextView) v.findViewById(R.id.dialog_center_title_tv);
+        final EditText centerRenameEt = (EditText) v.findViewById(R.id.dialog_center_rename_et);
+        final String fileNameStr = gameInfo.fileName == null ? "" : gameInfo.fileName;
+        centerTitleTv.setText(fileNameStr);
+        centerRenameEt.setText(fileNameStr);
+        centerRenameEt.setSelection(fileNameStr.length());
 
-        Button moreMenuBt = (Button) v.findViewById(R.id.dialog_btn_sure);
+        final Button moreMenuBt = (Button) v.findViewById(R.id.dialog_btn_menu_bt);
+        final Button renameSaveBt = (Button) v.findViewById(R.id.dialog_btn_sure);
         Button finishBt = (Button) v.findViewById(R.id.dialog_btn_cancel);
         //builer.setView(v);//这里如果使用builer.setView(v)，自定义布局只会覆盖title和button之间的那部分
         final Dialog dialog = builder.create();
         dialog.show();
-        dialog.getWindow().setContentView(v);//自定义布局应该在这里添加，要在dialog.show()的后面
-        //dialog.getWindow().setGravity(Gravity.CENTER);//可以设置显示的位置
+        dialog.getWindow().setContentView(v);
+
+        renameSaveBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                renameSaveBt.setVisibility(View.INVISIBLE);
+                moreMenuBt.setVisibility(View.VISIBLE);
+                centerTitleTv.setVisibility(View.VISIBLE);
+                centerRenameEt.setVisibility(View.INVISIBLE);
+                //关闭输入法
+                closeInputMethod(centerRenameEt);
+            }
+        });
         moreMenuBt.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -168,11 +194,22 @@ public class FileListAdapter extends BaseAdapter {
                         .SOFT_INPUT_ADJUST_RESIZE);
 
                 popWindow.showAsDropDown(v);
+                //重命名
                 inflate.findViewById(R.id.file_item_menu_rename_bt).setOnClickListener
                         (new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                //重命名
+
+                                //只用下面这一行弹出对话框时需要点击输入框才能弹出软键盘
+                                dialog.getWindow().clearFlags(WindowManager.LayoutParams
+                                        .FLAG_ALT_FOCUSABLE_IM);
+                                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams
+                                        .SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
+                                popWindow.dismiss();
+                                centerRenameEt.setVisibility(View.VISIBLE);
+                                renameSaveBt.setVisibility(View.VISIBLE);
+                                moreMenuBt.setVisibility(View.INVISIBLE);
                             }
                         });
                 inflate.findViewById(R.id.file_item_menu_delete_bt).setOnClickListener
@@ -180,6 +217,9 @@ public class FileListAdapter extends BaseAdapter {
                             @Override
                             public void onClick(View v) {
                                 //删除
+
+                                popWindow.dismiss();
+                                dialog.dismiss();
                             }
                         });
 

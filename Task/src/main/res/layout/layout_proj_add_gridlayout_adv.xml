@@ -22,5 +22,5 @@
         android:scaleType="centerInside"
         android:layout_height="@dimen/dm068"
         android:visibility="invisible"
-        android:src="@drawable/ic_seleted"/>
+        android:src="@drawable/ic_ok"/>
 </RelativeLayout>
