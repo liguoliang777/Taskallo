@@ -17,10 +17,8 @@
             android:focusable="true"
             android:scaleType="centerInside"
             fresco:actualImageScaleType="centerInside"
-            fresco:failureImage="@drawable/ic_card_link"
-            fresco:placeholderImage="@drawable/ic_card_link"
-            fresco:placeholderImageScaleType="centerInside"
-            fresco:progressBarImage="@drawable/ic_card_link"
-            fresco:roundedCornerRadius="@dimen/dm002" />
+            fresco:failureImage="@drawable/imgbg"
+            fresco:placeholderImage="@drawable/imgbg"
+            />
     </RelativeLayout>
 </RelativeLayout>
