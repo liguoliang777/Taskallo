@@ -24,48 +24,43 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.taskallo.R;
+import com.android.taskallo.bean.MemberInfo;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import com.android.taskallo.R;
-import com.android.taskallo.bean.GameType;
-
 /**
  * 首页 GridView控件适配器
+ *
  * @author zeng
  * @since 2016-06-07
  */
-public class GvGameSubjectAdapter extends BaseAdapter {
+public class MemberListAdapter extends BaseAdapter {
 
-    private static final String TAG = GvGameSubjectAdapter.class.getSimpleName();
+    private static final String TAG = MemberListAdapter.class.getSimpleName();
 
-    List<GameType> gameTypeList;
+    List<MemberInfo> memberInfos;
     private Context context;
 
-    public GvGameSubjectAdapter(Context context) {
+    public MemberListAdapter(Context context, List<MemberInfo> memberInfoList) {
         super();
         this.context = context;
-    }
-
-    public void setData(List<GameType> gameTypes) {
-        this.gameTypeList = gameTypes;
+        memberInfos = memberInfoList;
     }
 
     @Override
     public int getCount() {
-
-        if (gameTypeList != null) {
-            return gameTypeList.size();
+        if (memberInfos != null) {
+            return memberInfos.size();
         }
         return 0;
     }
 
     @Override
     public Object getItem(int position) {
-
-        if (gameTypeList != null) {
-            return gameTypeList.get(position);
+        if (memberInfos != null) {
+            return memberInfos.get(position);
         }
         return null;
     }
@@ -75,46 +70,34 @@ public class GvGameSubjectAdapter extends BaseAdapter {
         return position;
     }
 
-    public void clean() {
-        if (gameTypeList != null) {
-            gameTypeList.clear();
-        }
-    }
-
-
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
-        final GameType gameType = gameTypeList == null ? null : gameTypeList.get(position);
+        MemberInfo memberInfo = memberInfos.get(position);
 
         ViewHolder holder;
-        if(convertView == null){
+        if (convertView == null) {
 
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_game_rv, parent, false);
-            holder.img = (ImageView) convertView.findViewById(R.id.img_1);
-            holder.tv_title = (TextView) convertView.findViewById(R.id.text1);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_memeber_list,
+                    parent, false);
+            holder.img = (ImageView) convertView.findViewById(R.id.member_info_iv);
+            holder.tv_title = (TextView) convertView.findViewById(R.id.member_info_name_tv);
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        String gameName = gameType.typeName;
-        if (!"".equals(gameName)) {
-            gameName = gameName.length() > 8 ? gameName.substring(0, 8) : gameName;
-            holder.tv_title.setText(gameName);
-        }
+        String name = memberInfo.nickName;
+        holder.tv_title.setText(name == null ? "" : name);
 
-        String imgUrl = gameType.logoUrl;
-        if(imgUrl != null && imgUrl.trim().equals("")){
-            imgUrl = null;
-        }
+        String imgUrl = memberInfo.headPortrait == null ? "" : memberInfo.headPortrait;
         Picasso.with(context)
                 .load(imgUrl)
                 .placeholder(R.drawable.ic_def_logo_188_188)
                 .error(R.drawable.ic_def_logo_188_188)
-                .resizeDimen(R.dimen.list_detail_image_size, R.dimen.list_detail_image_size)
+                .resizeDimen(R.dimen.dm060, R.dimen.dm060)
                 .centerInside()
                 .tag(context)
                 .into(holder.img);
@@ -122,11 +105,6 @@ public class GvGameSubjectAdapter extends BaseAdapter {
         return convertView;
     }
 
-    /**
-     * 用于保存ListView中重用的item视图的引用
-     * @author flan
-     * @date 2015年10月28日
-     */
     public static class ViewHolder {
 
         public ImageView img;

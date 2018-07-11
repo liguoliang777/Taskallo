@@ -45,6 +45,7 @@ import android.widget.Toast;
 import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.adapter.FileListAdapter;
+import com.android.taskallo.adapter.MemberListAdapter;
 import com.android.taskallo.bean.BoardVOListBean;
 import com.android.taskallo.bean.FileListInfo;
 import com.android.taskallo.bean.JsonResult;
@@ -127,6 +128,8 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
     private GridView mGridView;
     private FileListAdapter fileListAdapter;
     private List<FileListInfo> mFileListData = new ArrayList<>();
+    private List<MemberInfo> memberInfoList = new ArrayList<>();
+    private MemberListAdapter memberListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -935,9 +938,47 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         }
     }
 
+
     //添加成员
     public void onCradDetailMemeberAddBtClick(View view) {
 
+        LinearLayout linearLayoutMain = new LinearLayout(this);//自定义一个布局文件
+        linearLayoutMain.removeAllViews();
+        linearLayoutMain.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        ListView listView = new ListView(this);//this为获取当前的上下文
+        listView.setFadingEdgeLength(0);
+
+        memberListAdapter = new MemberListAdapter(context, memberInfoList);
+
+        listView.setAdapter(adapter);
+
+        if (memberInfoList == null || memberInfoList.size() == 0) {
+            TextView emptyTv = new TextView(context);
+            emptyTv.setText(R.string.no_data);
+            linearLayoutMain.addView(emptyTv);
+        } else {
+            linearLayoutMain.addView(listView);//往这个布局中加入listview
+        }
+
+        final AlertDialog dialog = new AlertDialog.Builder(context, R.style
+                .dialog_appcompat_theme)
+                .setTitle("成员列表").setView(linearLayoutMain)//在这里把写好的这个listview的布局加载dialog中
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).setPositiveButton("添加", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .create();
+        dialog.setCanceledOnTouchOutside(true);//使除了dialog以外的地方不能被点击
+        dialog.show();
     }
 
     class MyExpandableListAdapter extends BaseExpandableListAdapter {
@@ -1713,7 +1754,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                     return;
                 }
 
-                List<MemberInfo> memberInfoList = result.data;
+                memberInfoList = result.data;
                 Log.d("获取成员列表", ":" + memberInfoList.size());
                 if (result.code == 0 && context != null && memberInfoList != null &&
                         memberInfoList.size() > 0) {

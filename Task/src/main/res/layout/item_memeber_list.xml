@@ -2,22 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:gravity="center">
 
     <ImageView
-        android:id="@+id/img_1"
-        android:layout_width="41dp"
-        android:layout_height="41dp"
-        android:src="@drawable/home_bt_vr" />
+        android:id="@+id/member_info_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         />
 
     <TextView
-        android:id="@+id/text1"
+        android:id="@+id/member_info_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:textColor="@color/font_gray"
-        android:text="VR游戏"
+        android:text=""
         android:textSize="12sp"/>
 
 </LinearLayout>
