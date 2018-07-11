@@ -1748,6 +1748,9 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
     }
 
     private void setMemberInfo(List<MemberInfo> memberInfoList) {
+        if (mMemberLayout != null) {
+            mMemberLayout.removeAllViews();
+        }
         int size = memberInfoList.size();
         int widthHeight = getResources().getDimensionPixelOffset(R.dimen.dm050);
         for (int i = 0; i < size; i++) {

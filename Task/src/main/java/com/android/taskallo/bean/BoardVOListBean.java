@@ -15,7 +15,7 @@ public class BoardVOListBean implements Serializable {
     public String boardDesc;
     public String updateTime;
     public long expiryTime;
-    public Object boardFileVOList;
+    public List<Object> boardFileVOList;
     public List<TagInfo> projectLabelVOList;
     public List<SubtaskVOListBean> subtaskVOList;
     public List<UserBasicVOListBean> userBasicVOList;

@@ -20,9 +20,15 @@ import com.android.taskallo.bean.TagInfo;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.project.view.CardDetailActivity;
 import com.android.taskallo.project.view.ProjListActivity;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -90,16 +96,91 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
                 context.startActivity(intent);
             }
         });
+        //成员
+        List<BoardVOListBean.UserBasicVOListBean> userBasicVOList = boardVOListBean.userBasicVOList;
+        if (userBasicVOList != null && userBasicVOList.size() != 0) {
+            setMemberLayout(holder.mMemberLayout,userBasicVOList);
+        }
 
         //标签
         List<TagInfo> projectLabelVOList = boardVOListBean.projectLabelVOList;
         if (projectLabelVOList != null) {
             setLabelColorLayout(projectLabelVOList, holder.mItemItemLabelLayout);
         }
-        int childCount = holder.mItemItemMentionPeopleLayout.getChildCount();
+        //描述
+        String boardDesc = boardVOListBean.boardDesc;
+        //截止时间
+        long expiryTime = boardVOListBean.expiryTime;
+        holder.mSubheadTv.setVisibility(boardDesc == null ? View.GONE : View.VISIBLE);
+        if (expiryTime != 0) {
+            String mmdd = new SimpleDateFormat("MM月dd日").format(new Date());
+            holder.mExpiryTimeTv.setText(mmdd);
+            holder.mExpiryTimeTv.setVisibility(View.VISIBLE);
+
+        } else {
+            holder.mExpiryTimeTv.setVisibility(View.GONE);
+        }
+
+        //附件数量
+        List<Object> boardFileVOList = boardVOListBean.boardFileVOList;
+        holder.mFileNumTv.setText(boardFileVOList == null ? "0" : boardFileVOList.size() + "");
+
+        //子任务
+        List<BoardVOListBean.SubtaskVOListBean> subtaskVOList = boardVOListBean.subtaskVOList;
+        holder.mSubtaskFinishedTv.setText(subtaskVOList == null ? "0" : subtaskVOList.size() + "");
+
 
     }
 
+    private void setMemberLayout(LinearLayout memberLayout,
+                                 List<BoardVOListBean.UserBasicVOListBean> userBasicVOList) {
+        memberLayout.setVisibility(View.VISIBLE);
+        memberLayout.removeAllViews();
+        int size = userBasicVOList.size();
+        int widthHeight = context.getResources().getDimensionPixelOffset(R.dimen.dm050);
+        for (int i = 0; i < size; i++) {
+            BoardVOListBean.UserBasicVOListBean img = userBasicVOList.get(i);
+            SimpleDraweeView picassoImageView = new SimpleDraweeView(context);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup
+                    .LayoutParams.WRAP_CONTENT, ViewGroup
+                    .LayoutParams.WRAP_CONTENT);
+
+            params.width = widthHeight;
+            params.height = widthHeight;
+            params.setMargins(0, 0, widthHeight / 4, 0);
+            picassoImageView.setLayoutParams(params);
+
+            GenericDraweeHierarchy hierarchy = GenericDraweeHierarchyBuilder.newInstance
+                    (context.getResources())
+                    //圆形
+                    .setRoundingParams(RoundingParams.asCircle())
+                    .setFadeDuration(0)
+                    .build();
+            picassoImageView.setHierarchy(hierarchy);
+
+            picassoImageView.setImageURI(img.headPortrait);
+
+            memberLayout.addView(picassoImageView);
+        }
+    }
+
+    static class SimpleViewHolder extends RecyclerView.ViewHolder {
+        private LinearLayout mMemberLayout;
+        private ExRadioGroup mItemItemLabelLayout;
+        private TextView mItemTitleTv, mFileNumTv, mSubtaskFinishedTv, mSubheadTv, mExpiryTimeTv;
+
+        SimpleViewHolder(View itemView) {
+            super(itemView);
+            mItemTitleTv = itemView.findViewById(R.id.item_item_title_tv);
+            mItemItemLabelLayout = itemView.findViewById(R.id.item_item_label_layout);
+            mMemberLayout = itemView.findViewById(R.id
+                    .item_item_mention_people_layout);
+            mSubheadTv = itemView.findViewById(R.id.item_item_exist_subhead_tv);
+            mExpiryTimeTv = itemView.findViewById(R.id.item_item_exist_time_tv);
+            mFileNumTv = itemView.findViewById(R.id.item_item_exist_link);
+            mSubtaskFinishedTv = itemView.findViewById(R.id.item_item_exist_subtask_finished_tv);
+        }
+    }
 
     //标签布局
     private void setLabelColorLayout(final List<TagInfo> tab2StringArr, ExRadioGroup
@@ -166,20 +247,5 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
         mItemItemList = boardVOList;
         notifyDataSetChanged();
     }
-
-    static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        private LinearLayout mItemItemMentionPeopleLayout;
-        private ExRadioGroup mItemItemLabelLayout;
-        TextView mItemTitleTv;
-
-        SimpleViewHolder(View itemView) {
-            super(itemView);
-            mItemTitleTv = itemView.findViewById(R.id.item_item_title_tv);
-            mItemItemLabelLayout = itemView.findViewById(R.id.item_item_label_layout);
-            mItemItemMentionPeopleLayout = itemView.findViewById(R.id
-                    .item_item_mention_people_layout);
-        }
-    }
-
 
 }

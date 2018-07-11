@@ -37,6 +37,7 @@
         <TextView
             android:id="@+id/item_item_exist_subhead_tv"
             style="@style/px20_333333"
+            android:layout_marginRight="@dimen/item_item_margin_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_card_subhead" />
@@ -46,17 +47,17 @@
             style="@style/px20_333333"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/item_item_margin_left"
+            android:layout_marginRight="@dimen/item_item_margin_left"
             android:drawableLeft="@drawable/ic_card_time"
             android:drawablePadding="@dimen/dm006"
-            android:text="3月1日" />
+            android:text="" />
 
         <TextView
             android:id="@+id/item_item_exist_link"
             style="@style/px20_333333"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/item_item_margin_left"
+            android:layout_marginRight="@dimen/item_item_margin_left"
             android:drawableLeft="@drawable/ic_card_link"
             android:drawablePadding="@dimen/dm006"
             android:text="3" />
@@ -66,20 +67,21 @@
             style="@style/px20_333333"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/item_item_margin_left"
+            android:layout_marginRight="@dimen/item_item_margin_left"
             android:drawableLeft="@drawable/ic_card_talk"
             android:drawablePadding="@dimen/dm006"
-            android:text="7" />
+            android:visibility="gone"
+            android:text="0" />
 
         <TextView
             android:id="@+id/item_item_exist_subtask_finished_tv"
             style="@style/px20_333333"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/item_item_margin_left"
+            android:layout_marginRight="@dimen/item_item_margin_left"
             android:drawableLeft="@drawable/ic_card_subtask"
             android:drawablePadding="@dimen/dm006"
-            android:text="1/3" />
+            android:text="0" />
     </LinearLayout>
 
     <LinearLayout
@@ -89,17 +91,7 @@
         android:paddingBottom="@dimen/item_item_margin_left_half"
         android:paddingTop="@dimen/item_item_margin_left_half"
         android:layout_gravity="right"
-        android:visibility="visible"
+        android:visibility="gone"
         android:orientation="horizontal">
-        <ImageView
-            android:layout_width="@dimen/dm040"
-            android:src="@drawable/ic_launcher"
-            android:layout_height="@dimen/dm040" />
-
-        <ImageView
-            android:layout_width="@dimen/dm040"
-            android:layout_height="@dimen/dm040"
-            android:src="@drawable/ic_launcher" />
-
     </LinearLayout>
 </LinearLayout>
