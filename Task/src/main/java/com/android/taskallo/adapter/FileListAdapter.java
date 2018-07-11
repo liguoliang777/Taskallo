@@ -18,7 +18,6 @@ package com.android.taskallo.adapter;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +53,8 @@ import com.google.gson.reflect.TypeToken;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * 手柄游戏的ListView控件适配器
@@ -149,7 +150,7 @@ public class FileListAdapter extends BaseAdapter {
 
     private void closeInputMethod(EditText centerRenameEt) {
         InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService
-                (Context.INPUT_METHOD_SERVICE);
+                (INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(centerRenameEt.getWindowToken(),
                 InputMethodManager.HIDE_NOT_ALWAYS);
     }
@@ -357,9 +358,18 @@ public class FileListAdapter extends BaseAdapter {
             @Override
             public void onClick(View arg0) {
                 dialog.dismiss();
+                closeInputMethod();
             }
         });
     }
+        private void closeInputMethod() {
+         /*   View currentFocus = context.getCurrentFocus();
+            if (currentFocus != null) {
+                ((InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE))
+                        .hideSoftInputFromWindow(currentFocus.getWindowToken(),
+                                InputMethodManager.HIDE_NOT_ALWAYS);
+            }*/
+        }
 
     /**
      * 用于保存ListView中重用的item视图的引用
