@@ -185,14 +185,14 @@
     <string name="pull_to_refresh_footer_hint_ready">松开载入更多</string>
     <string name="pull_to_refresh_refreshing_label_fan">@string/pull_to_refresh_header_hint_loading</string>
     <string name="no_more_data">@string/pushmsg_center_no_more_msg</string>
-    <string name="pull_to_refresh_network_error">网络异常，请稍候重试</string>
+    <string name="pull_to_refresh_network_error">网络繁忙，请稍候重试</string>
     <string name="no_network">网络异常,请检查网络设置</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="see_more">查看全部</string>
     <string name="Account">账号：</string>
     <string name="requery_failed">请求失败,稍后重试</string>
-    <string name="server_exception">服务器开小差了~</string>
-    <string name="server_exception_2_pullrefresh">服务器开小差了,稍后重试~</string>
+    <string name="server_exception">服务器繁忙~</string>
+    <string name="server_exception_2_pullrefresh">服务器繁忙,稍后重试~</string>
     <string name="game_hub">圈子</string>
     <string name="download_count_end">下载</string>
     <string name="unlogin_msg">您还未登录哦~\n登录后发现更多精彩！</string>
