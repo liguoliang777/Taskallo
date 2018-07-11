@@ -182,6 +182,13 @@ public class FileListAdapter extends BaseAdapter {
         dialog.show();
         dialog.getWindow().setContentView(v);
 
+        fileDetailSDV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeInputMethod(centerRenameEt);
+                dialog.dismiss();
+            }
+        });
         //重命名 -> 保存
         renameSaveBt.setOnClickListener(new View.OnClickListener() {
             @Override

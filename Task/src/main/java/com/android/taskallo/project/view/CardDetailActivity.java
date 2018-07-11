@@ -264,11 +264,9 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         mFileListData.add(fileListInfo);
         mFileListData.add(fileListInfo);*/
 
-        fileListAdapter = new FileListAdapter(context, mFileListData,mBoardId);
+        fileListAdapter = new FileListAdapter(context, mFileListData, mBoardId);
         mGridView.setAdapter(fileListAdapter);
         //reSetLVHeight(mGridView);
-        //获取附件数据
-        getFileListData();
     }
 
     private void initEventRV() {
@@ -281,8 +279,6 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         mEventRV.setHasFixedSize(true);
         mEventRV.setNestedScrollingEnabled(false);
         mEventRV.setAdapter(mEventRVAdapter);
-
-        getEventThread();
     }
 
     //获取活动日志数据
@@ -717,7 +713,8 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
 
     //附件上传
     public void onCardDetailFileBtClick() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.dialog_appcompat_theme);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style
+                .dialog_appcompat_theme);
         builder.setTitle("添加附件");
        /* TextView textView = new TextView(context);
         textView.setText("添加附件");
@@ -1593,9 +1590,15 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
     @Override
     protected void onStart() {
         super.onStart();
-        //获取成员列表
+        //获取关联标签
         getRelationData();
+        //获取成员列表
         getMemberInfo();
+        //获取活动数据
+        getEventThread();
+        //获取附件数据
+        getFileListData();
+
     }
 
     private void initCancelOkVisibility(boolean b) {
@@ -1705,6 +1708,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 }
 
                 List<MemberInfo> memberInfoList = result.data;
+                Log.d("", "获取成员列表:" + memberInfoList.size());
                 if (result.code == 0 && context != null && memberInfoList != null &&
                         memberInfoList.size() > 0) {
                     mMemberLayout.setVisibility(View.VISIBLE);
@@ -1721,8 +1725,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                         successListener, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        volleyError.printStackTrace();
-                        Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
+                        Log.d(TAG, "网络连接错误！");
                     }
                 }, new TypeToken<JsonResult<List<MemberInfo>>>() {
                 }.getType()) {

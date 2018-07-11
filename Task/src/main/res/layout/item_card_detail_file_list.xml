@@ -17,6 +17,7 @@
             android:focusable="true"
             android:scaleType="centerInside"
             fresco:actualImageScaleType="centerInside"
+            fresco:placeholderImageScaleType="fitXY"
             fresco:failureImage="@drawable/imgbg"
             fresco:placeholderImage="@drawable/imgbg"
             />
