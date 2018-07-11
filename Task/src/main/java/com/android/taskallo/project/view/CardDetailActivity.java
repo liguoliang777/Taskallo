@@ -935,6 +935,11 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         }
     }
 
+    //添加成员
+    public void onCradDetailMemeberAddBtClick(View view) {
+
+    }
+
     class MyExpandableListAdapter extends BaseExpandableListAdapter {
         private List<SubtaskInfo> mSubtaskData;
         private List<List<SubtaskItemInfo>> childListData;
@@ -1693,7 +1698,8 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
 
     //获取看板成员
     private void getMemberInfo() {
-        String url = Constant.WEB_SITE1 + UrlConstant.URL_MEMEBER + "/" + mBoardId;
+        String url = Constant.WEB_SITE1 + UrlConstant.URL_MEMEBER + "/" + mProjectId + "/" +
+                mBoardId;
         if (!NetUtil.isNetworkConnected(context)) {
             return;
         }
@@ -1708,7 +1714,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 }
 
                 List<MemberInfo> memberInfoList = result.data;
-                Log.d("", "获取成员列表:" + memberInfoList.size());
+                Log.d("获取成员列表", ":" + memberInfoList.size());
                 if (result.code == 0 && context != null && memberInfoList != null &&
                         memberInfoList.size() > 0) {
                     mMemberLayout.setVisibility(View.VISIBLE);
@@ -1725,7 +1731,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                         successListener, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        Log.d(TAG, "网络连接错误！");
+                        Log.d(TAG, "获取成员列表,网络连接错误！");
                     }
                 }, new TypeToken<JsonResult<List<MemberInfo>>>() {
                 }.getType()) {
@@ -1767,7 +1773,6 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
             picassoImageView.setHierarchy(hierarchy);
 
             picassoImageView.setImageURI(img.headPortrait);
-
 
             mMemberLayout.addView(picassoImageView);
         }

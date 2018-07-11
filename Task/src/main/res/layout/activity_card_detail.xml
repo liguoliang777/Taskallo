@@ -245,7 +245,8 @@
                 android:background="@drawable/selector_bg_white_f2"
                 android:clickable="true"
                 android:focusable="true"
-                android:focusableInTouchMode="true">
+                android:focusableInTouchMode="true"
+                android:onClick="onCradDetailMemeberAddBtClick">
 
                 <ImageView
                     android:id="@+id/card_item_member_iv"
@@ -378,13 +379,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dm005"
                 android:gravity="center"
-                android:paddingLeft="@dimen/dm015"
-                android:paddingRight="@dimen/dm015"
                 android:listSelector="@color/transparent"
                 android:numColumns="3"
+                android:paddingLeft="@dimen/dm015"
+                android:paddingRight="@dimen/dm015"
                 android:scrollbars="none"
-                android:stretchMode="columnWidth"
-                />
+                android:stretchMode="columnWidth" />
             <!--所有活动-->
             <LinearLayout
                 android:layout_width="match_parent"
