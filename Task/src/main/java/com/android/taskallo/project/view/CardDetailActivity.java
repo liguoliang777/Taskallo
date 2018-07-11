@@ -264,7 +264,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         mFileListData.add(fileListInfo);
         mFileListData.add(fileListInfo);*/
 
-        fileListAdapter = new FileListAdapter(context, mFileListData);
+        fileListAdapter = new FileListAdapter(context, mFileListData,mBoardId);
         mGridView.setAdapter(fileListAdapter);
         //reSetLVHeight(mGridView);
         //获取附件数据

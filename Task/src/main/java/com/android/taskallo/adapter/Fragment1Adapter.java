@@ -2,6 +2,8 @@
 package com.android.taskallo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -15,6 +17,8 @@ import com.android.taskallo.activity.manager.Fragment1;
 import com.android.taskallo.bean.NecessaryItemData;
 import com.android.taskallo.core.fileload.FileLoadManager;
 import com.android.taskallo.core.fileload.IFileLoad;
+import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.project.view.CardDetailActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -115,6 +119,22 @@ public class Fragment1Adapter extends BaseAdapter implements StickyListHeadersAd
         if (planDetail != null) {
             holder.update(planDetail);
         }
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CardDetailActivity.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(KeyConstant.listItemName, planDetail.getToolName());
+                bundle.putString(KeyConstant.listItemId, "");
+                bundle.putString(KeyConstant.projectId, "");
+                bundle.putSerializable(KeyConstant.cardBean, null);
+
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
 
         return convertView;
     }

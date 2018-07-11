@@ -20,7 +20,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +32,28 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.bean.FileListInfo;
+import com.android.taskallo.bean.JsonResult;
+import com.android.taskallo.core.net.GsonRequest;
+import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.core.utils.NetUtil;
+import com.android.taskallo.core.utils.TextUtil;
+import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.project.view.CardDetailActivity;
+import com.android.taskallo.util.ToastUtil;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.reflect.TypeToken;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 手柄游戏的ListView控件适配器
@@ -50,10 +65,13 @@ public class FileListAdapter extends BaseAdapter {
 
     private List<FileListInfo> gameInfoList;
     private CardDetailActivity context;
+    private String mBoardId;
 
-    public FileListAdapter(CardDetailActivity context, List<FileListInfo> mFileListData) {
-        super();
+    public FileListAdapter(CardDetailActivity context, List<FileListInfo> mFileListData, String
+            mBoardId) {
+
         this.context = context;
+        this.mBoardId = mBoardId;
         gameInfoList = mFileListData;
     }
 
@@ -114,7 +132,6 @@ public class FileListAdapter extends BaseAdapter {
 
         if (gameInfo != null) {
             String imgUrl = gameInfo.fileUrl;
-            Log.d("", "图片:" + imgUrl);
             String fileId = gameInfo.fileId;
             holder.filePicIv.setImageURI(imgUrl);
 
@@ -161,15 +178,74 @@ public class FileListAdapter extends BaseAdapter {
         dialog.show();
         dialog.getWindow().setContentView(v);
 
+        //重命名 -> 保存
         renameSaveBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final String newName = centerRenameEt.getText().toString();
+                if (!TextUtil.isEmpty(newName)) {
+                    //传数值
+                    if (!NetUtil.isNetworkConnected(context)) {
+                        ToastUtil.show(context, context.getString(R
+                                .string.no_network));
+                        return;
+                    }
+                    String url = Constant.WEB_SITE1 + UrlConstant.url_files + "/" + gameInfo.fileId;
+
+                    Response.Listener<JsonResult> successListener = new Response
+                            .Listener<JsonResult>() {
+                        @Override
+                        public void onResponse(JsonResult result) {
+                            if (result.code == 0 && result.data != null && context != null) {
+                                //修改成功
+                                centerTitleTv.setText(newName);
+                            } else {
+                                ToastUtil.show(context, context.getString(R.string
+                                        .delete_faild) + "," + result
+                                        .msg);
+                            }
+                        }
+                    };
+
+                    Request<JsonResult> versionRequest = new
+                            GsonRequest<JsonResult>(
+                                    Request.Method.PUT, url,
+                                    successListener, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError volleyError) {
+                                    volleyError.printStackTrace();
+                                    ToastUtil.show(context, context.getString(R
+                                            .string.server_exception));
+                                }
+                            }, new TypeToken<JsonResult>() {
+                            }.getType()) {
+                                @Override
+                                public Map<String, String> getParams() throws AuthFailureError {
+                                    Map<String, String> params = new HashMap<>();
+                                    params.put(KeyConstant.fileName, newName);
+                                    params.put(KeyConstant.boardId, mBoardId);
+                                    return params;
+                                }
+
+                                @Override
+                                public Map<String, String> getHeaders() throws AuthFailureError {
+                                    Map<String, String> params = new HashMap<>();
+                                    params.put(KeyConstant.Content_Type, Constant.application_json);
+                                    params.put(KeyConstant.Authorization, App.token);
+                                    params.put(KeyConstant.appType, Constant.APP_TYPE_ID_0_ANDROID);
+                                    return params;
+                                }
+                            };
+                    App.requestQueue.add(versionRequest);
+                }
                 renameSaveBt.setVisibility(View.INVISIBLE);
                 moreMenuBt.setVisibility(View.VISIBLE);
                 centerTitleTv.setVisibility(View.VISIBLE);
                 centerRenameEt.setVisibility(View.INVISIBLE);
                 //关闭输入法
                 closeInputMethod(centerRenameEt);
+
+
             }
         });
         moreMenuBt.setOnClickListener(new View.OnClickListener() {
@@ -199,7 +275,6 @@ public class FileListAdapter extends BaseAdapter {
                         (new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
                                 //只用下面这一行弹出对话框时需要点击输入框才能弹出软键盘
                                 dialog.getWindow().clearFlags(WindowManager.LayoutParams
                                         .FLAG_ALT_FOCUSABLE_IM);
@@ -212,14 +287,65 @@ public class FileListAdapter extends BaseAdapter {
                                 moreMenuBt.setVisibility(View.INVISIBLE);
                             }
                         });
+                //删除附件
                 inflate.findViewById(R.id.file_item_menu_delete_bt).setOnClickListener
                         (new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                //删除
+                                if (!NetUtil.isNetworkConnected(context)) {
+                                    ToastUtil.show(context, context.getString(R.string.no_network));
+                                    return;
+                                }
+                                String url = Constant.WEB_SITE1 + UrlConstant.url_files + "/" +
+                                        mBoardId + "/" +
+                                        gameInfo.fileId;
 
-                                popWindow.dismiss();
-                                dialog.dismiss();
+                                Response.Listener<JsonResult> successListener = new Response
+                                        .Listener<JsonResult>() {
+                                    @Override
+                                    public void onResponse(JsonResult result) {
+                                        if (result == null) {
+                                            ToastUtil.show(context, context.getString(R.string
+                                                    .server_exception));
+                                            return;
+                                        }
+                                        //删除附件成功
+                                        if (result.code == 0 && context != null) {
+                                            popWindow.dismiss();
+                                            dialog.dismiss();
+                                        } else {
+                                            ToastUtil.show(context, context.getString(R.string
+                                                    .delete_faild) + "," + result
+                                                    .msg);
+                                        }
+                                    }
+                                };
+
+                                Request<JsonResult> versionRequest = new
+                                        GsonRequest<JsonResult>(Request.Method.DELETE, url,
+                                                successListener, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError volleyError) {
+                                                volleyError.printStackTrace();
+                                                ToastUtil.show(context, context.getString(R
+                                                        .string.server_exception));
+
+                                            }
+                                        }, new TypeToken<JsonResult>() {
+                                        }.getType()) {
+                                            @Override
+                                            public Map<String, String> getHeaders() throws
+                                                    AuthFailureError {
+                                                Map<String, String> params = new HashMap<>();
+                                                params.put(KeyConstant.Content_Type, Constant
+                                                        .application_json);
+                                                params.put(KeyConstant.Authorization, App.token);
+                                                params.put(KeyConstant.appType, Constant
+                                                        .APP_TYPE_ID_0_ANDROID);
+                                                return params;
+                                            }
+                                        };
+                                App.requestQueue.add(versionRequest);
                             }
                         });
 

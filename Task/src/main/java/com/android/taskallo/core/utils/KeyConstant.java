@@ -89,4 +89,5 @@ public class KeyConstant {
     public static final String termDesc="termDesc";
 
     public static final String file="file";
+    public static final String fileName="fileName";
 }
