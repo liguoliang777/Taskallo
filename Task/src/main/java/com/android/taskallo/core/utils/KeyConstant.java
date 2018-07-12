@@ -82,12 +82,13 @@ public class KeyConstant {
     public static final String labelName = "labelName";
     public static final String labelId = "labelId";
     public static final String labelColour = "labelColour";
-    public static final String tagInfo="tagInfo";
+    public static final String tagInfo = "tagInfo";
 
-    public static final String subtaskName="subtaskName";
-    public static final String subtaskId="subtaskId";
-    public static final String termDesc="termDesc";
+    public static final String subtaskName = "subtaskName";
+    public static final String subtaskId = "subtaskId";
+    public static final String termDesc = "termDesc";
 
-    public static final String file="file";
-    public static final String fileName="fileName";
+    public static final String file = "file";
+    public static final String fileName = "fileName";
+    public static final String userName = "userName";
 }

@@ -780,29 +780,31 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         }
     };
 
-    private void postImg(final String file) {
-        String url = Constant.WEB_SITE1 + UrlConstant.url_upFiles;
-
-        // RetrofitUtil.upload(url, file);
+    private void addMember(final AlertDialog dialog1, final String account) {
+        if (!NetUtil.isNetworkConnected(context)) {
+            ToastUtil.show(context, getString(R.string.no_network));
+            return;
+        }
+        String url = Constant.WEB_SITE1 + UrlConstant.URL_MEMEBER;
         Response.Listener<JsonResult> successListener = new Response
                 .Listener<JsonResult>() {
             @Override
             public void onResponse(JsonResult result) {
                 if (result == null || result.code != 0) {
-                    Log.d(TAG, "上传图片7777" + result);
-                    ToastUtil.show(context, getString(R.string.requery_failed));
+                    ToastUtil.show(context,
+                            result == null ? "添加失败" : "添加失败," + result.msg);
                     return;
                 }
-                Log.d(TAG, "上传图片7777" + result.msg);
+                ToastUtil.show(context, "添加成功");
+                getMemberInfo();
                 //添加子任务成功
-
+                dialog1.dismiss();
             }
         };
 
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.d(TAG, "上传图片88:" + volleyError.getMessage());
                 ToastUtil.show(context, getString(R.string.requery_failed));
             }
         };
@@ -815,7 +817,9 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
-                        params.put(KeyConstant.file, file);
+                        params.put(KeyConstant.projectId, mProjectId);
+                        params.put(KeyConstant.listItemId, mListItemId);
+                        params.put(KeyConstant.userName, account);
                         params.put(KeyConstant.boardId, mBoardId);
                         return params;
                     }
@@ -984,9 +988,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                             ToastUtil.show(context, "输入为空");
                             return;
                         }
-
-                        addMember(dialog1);
-
+                        addMember(dialog1, account);
                     }
                 });
                 //显示输入法
@@ -998,24 +1000,6 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
             }
         });
 
-    }
-
-    private void addMember(AlertDialog dialog1) {
-
-
-    }
-
-    private void showInputMethod() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //自动弹出键盘
-                InputMethodManager inputManager = (InputMethodManager) context.getSystemService
-                        (Context
-                                .INPUT_METHOD_SERVICE);
-                inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-            }
-        }, 100);
     }
 
     class MyExpandableListAdapter extends BaseExpandableListAdapter {
@@ -1826,6 +1810,9 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
     }
 
     private void setMemberInfo(List<MemberInfo> memberInfoList) {
+        if (memberListAdapter != null) {
+            memberListAdapter.setData(memberInfoList);
+        }
         if (mMemberLayout != null) {
             mMemberLayout.removeAllViews();
         }
