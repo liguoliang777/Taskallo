@@ -320,7 +320,10 @@ public class FileListAdapter extends BaseAdapter {
                                             return;
                                         }
                                         //删除附件成功
-                                        if (result.code == 0 && context != null) {
+                                        if (result.code == 0 && context != null && gameInfoList
+                                                != null) {
+                                            gameInfoList.remove(gameInfo);
+                                            notifyDataSetChanged();
                                             popWindow.dismiss();
                                             dialog.dismiss();
                                         } else {
@@ -371,13 +374,14 @@ public class FileListAdapter extends BaseAdapter {
             }
         });
     }
+
     /**
      * 用于保存ListView中重用的item视图的引用
      *
      * @author flan
      * @since 2015年10月28日
      */
-    public static class ViewHolder {
+    public class ViewHolder {
         private SimpleDraweeView filePicIv;
     }
 
