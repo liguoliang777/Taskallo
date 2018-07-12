@@ -271,6 +271,26 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         fileListAdapter = new FileListAdapter(context, mFileListData, mBoardId);
         mGridView.setAdapter(fileListAdapter);
         //reSetLVHeight(mGridView);
+
+        //获取附件数据
+        getFileListData();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "重启界面");
+        updateFileData();
+    }
+
+    public void updateFileData() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //自动弹出键盘
+                getFileListData();
+            }
+        }, 500);
     }
 
     private void initEventRV() {
@@ -948,7 +968,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         //添加成员布局
         memberLayout = LayoutInflater.from(context).inflate(R.layout.member_dialog_layout, null);
         ListView listView = memberLayout.findViewById(R.id.member_dialog_layout_lv);
-        memberListAdapter = new MemberListAdapter(context, memberInfoList,mBoardId);
+        memberListAdapter = new MemberListAdapter(context, memberInfoList, mBoardId);
         listView.setAdapter(memberListAdapter);
         if (memberInfoList == null || memberInfoList.size() == 0) {
             TextView emptyTv = new TextView(context);
@@ -1660,9 +1680,6 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         getMemberInfo();
         //获取活动数据
         getEventThread();
-        //获取附件数据
-        getFileListData();
-
     }
 
     private void initCancelOkVisibility(boolean b) {

@@ -322,8 +322,7 @@ public class FileListAdapter extends BaseAdapter {
                                         //删除附件成功
                                         if (result.code == 0 && context != null && gameInfoList
                                                 != null) {
-                                            gameInfoList.remove(gameInfo);
-                                            notifyDataSetChanged();
+                                            context.updateFileData();
                                             popWindow.dismiss();
                                             dialog.dismiss();
                                         } else {
