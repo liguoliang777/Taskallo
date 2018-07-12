@@ -271,12 +271,6 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         fileListAdapter = new FileListAdapter(context, mFileListData, mBoardId);
         mGridView.setAdapter(fileListAdapter);
         //reSetLVHeight(mGridView);
-
-        //添加成员布局
-        memberLayout = LayoutInflater.from(context).inflate(R.layout.member_dialog_layout, null);
-        ListView listView = memberLayout.findViewById(R.id.member_dialog_layout_lv);
-        memberListAdapter = new MemberListAdapter(context, memberInfoList);
-        listView.setAdapter(memberListAdapter);
     }
 
     private void initEventRV() {
@@ -951,12 +945,17 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
 
     //添加成员
     public void onCradDetailMemeberAddBtClick(View view) {
-     /*   if (memberInfoList == null || memberInfoList.size() == 0) {
+        //添加成员布局
+        memberLayout = LayoutInflater.from(context).inflate(R.layout.member_dialog_layout, null);
+        ListView listView = memberLayout.findViewById(R.id.member_dialog_layout_lv);
+        memberListAdapter = new MemberListAdapter(context, memberInfoList,mBoardId);
+        listView.setAdapter(memberListAdapter);
+        if (memberInfoList == null || memberInfoList.size() == 0) {
             TextView emptyTv = new TextView(context);
+            emptyTv.setPadding(0, 50, 0, 40);
             emptyTv.setText("暂无成员");
-            listView.setEmptyView(emptyTv);
-        }*/
-        memberListAdapter.setData(memberInfoList);
+            listView.addFooterView(emptyTv);
+        }
         final AlertDialog dialog = new AlertDialog.Builder(context, R.style
                 .dialog_appcompat_theme)
                 .setTitle("卡片成员").setView(memberLayout)

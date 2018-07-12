@@ -17,6 +17,7 @@
         android:id="@+id/member_dialog_layout_lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:listSelector="@color/white"
         android:divider="@color/f0f0f0"
         android:dividerHeight="@dimen/dm001"
         android:paddingLeft="@dimen/dm050"

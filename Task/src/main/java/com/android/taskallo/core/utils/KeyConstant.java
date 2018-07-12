@@ -10,6 +10,7 @@ public class KeyConstant {
     public static final String id = "id";
     public static final String loginName = "loginName";
     public static final String NICK_NAME = "nickName";
+    public static final String nickName = "nickName";
     public static final String MOBILE_NUMBER = "mobileNumber";
     public static final String phoneNumber = "phoneNumber";
     public static final String passWord = "passWord";//密码
@@ -71,6 +72,7 @@ public class KeyConstant {
     public static final String Content_Type = "Content-Type";
     public static final String projectId = "projectId";
     public static final String boardId = "boardId";
+    public static final String boardMemberId = "boardMemberId";
     public static final String listItemName = "listItemName";
     public static final String listItemId = "listItemId";
     public static final String projectImg = "projectImg";
