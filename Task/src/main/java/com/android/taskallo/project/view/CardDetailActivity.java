@@ -991,8 +991,6 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                         addMember(dialog1, account);
                     }
                 });
-                //显示输入法
-                //只用下面这一行弹出对话框时需要点击输入框才能弹出软键盘
                 dialog1.getWindow().clearFlags(WindowManager.LayoutParams
                         .FLAG_ALT_FOCUSABLE_IM);
                 dialog1.getWindow().setSoftInputMode(WindowManager.LayoutParams
