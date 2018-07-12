@@ -21,12 +21,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.taskallo.R;
 import com.android.taskallo.bean.MemberInfo;
-import com.squareup.picasso.Picasso;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class MemberListAdapter extends BaseAdapter {
 
     private static final String TAG = MemberListAdapter.class.getSimpleName();
 
-    List<MemberInfo> memberInfos;
+    private List<MemberInfo> memberInfos;
     private Context context;
 
     public MemberListAdapter(Context context, List<MemberInfo> memberInfoList) {
@@ -72,46 +71,21 @@ public class MemberListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
-
         MemberInfo memberInfo = memberInfos.get(position);
 
-        ViewHolder holder;
-        if (convertView == null) {
-
-            holder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_memeber_list,
-                    parent, false);
-            holder.img = (ImageView) convertView.findViewById(R.id.member_info_iv);
-            holder.tv_title = (TextView) convertView.findViewById(R.id.member_info_name_tv);
-
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
+        convertView = LayoutInflater.from(context).inflate(R.layout.item_memeber_list, parent,
+                false);
+        SimpleDraweeView infoIv = (SimpleDraweeView) convertView.findViewById(R.id.member_info_iv);
+        TextView titleTv = (TextView) convertView.findViewById(R.id.member_info_name_tv);
+        TextView removeBt = (TextView) convertView.findViewById(R.id.member_info_remove_tv);
 
         String name = memberInfo.nickName;
-        holder.tv_title.setText(name == null ? "" : name);
+        titleTv.setText(name == null ? "" : name);
 
         String imgUrl = memberInfo.headPortrait == null ? "" : memberInfo.headPortrait;
-        Picasso.with(context)
-                .load(imgUrl)
-                .placeholder(R.drawable.ic_def_logo_188_188)
-                .error(R.drawable.ic_def_logo_188_188)
-                .resizeDimen(R.dimen.dm060, R.dimen.dm060)
-                .centerInside()
-                .tag(context)
-                .into(holder.img);
-
+        infoIv.setImageURI(imgUrl);
         return convertView;
     }
-
-    public static class ViewHolder {
-
-        public ImageView img;
-        public TextView tv_title;
-
-    }
-
 }
 
 

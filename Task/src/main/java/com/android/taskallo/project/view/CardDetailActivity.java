@@ -939,38 +939,26 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     //添加成员
     public void onCradDetailMemeberAddBtClick(View view) {
-
-        LinearLayout linearLayoutMain = new LinearLayout(this);//自定义一个布局文件
-        linearLayoutMain.removeAllViews();
-        linearLayoutMain.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        ListView listView = new ListView(this);//this为获取当前的上下文
-        listView.setFadingEdgeLength(0);
-
+        View inflate = LayoutInflater.from(context).inflate(R.layout.member_dialog_layout, null);
+        ListView listView = inflate.findViewById(R.id.member_dialog_layout_lv);
         memberListAdapter = new MemberListAdapter(context, memberInfoList);
-
-        listView.setAdapter(adapter);
-
-        if (memberInfoList == null || memberInfoList.size() == 0) {
+        listView.setAdapter(memberListAdapter);
+       if (memberInfoList == null || memberInfoList.size() == 0) {
             TextView emptyTv = new TextView(context);
-            emptyTv.setText(R.string.no_data);
-            linearLayoutMain.addView(emptyTv);
-        } else {
-            linearLayoutMain.addView(listView);//往这个布局中加入listview
+            emptyTv.setText("暂无成员");
+            listView.setEmptyView(emptyTv);
         }
-
         final AlertDialog dialog = new AlertDialog.Builder(context, R.style
                 .dialog_appcompat_theme)
-                .setTitle("成员列表").setView(linearLayoutMain)//在这里把写好的这个listview的布局加载dialog中
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                }).setPositiveButton("添加", new DialogInterface.OnClickListener() {
+                .setTitle("卡片成员").setView(inflate)
+                .setPositiveButton("添加成员", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

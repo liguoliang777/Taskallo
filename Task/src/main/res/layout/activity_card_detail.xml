@@ -244,8 +244,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/selector_bg_white_f2"
                 android:clickable="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
                 android:onClick="onCradDetailMemeberAddBtClick">
 
                 <ImageView

@@ -1,23 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center">
+    android:orientation="horizontal">
 
-    <ImageView
+
+    <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
         android:id="@+id/member_info_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-         />
+        android:layout_width="@dimen/dm100"
+        android:layout_height="@dimen/dm080"
+        android:layout_marginBottom="@dimen/dm020"
+        android:layout_marginRight="@dimen/dm020"
+        android:layout_marginTop="@dimen/dm020"
+        android:scaleType="centerInside"
+        fresco:actualImageScaleType="centerInside"
+        fresco:failureImage="@drawable/ic_def_logo_188_188"
+        fresco:placeholderImage="@drawable/ic_def_logo_188_188"
+        fresco:placeholderImageScaleType="centerCrop"
+        fresco:progressBarImage="@drawable/ic_def_logo_188_188"
+        fresco:roundAsCircle="true" />
 
     <TextView
         android:id="@+id/member_info_name_tv"
+        style="@style/px26_333333"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/member_info_remove_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:textColor="@color/font_gray"
-        android:text=""
-        android:textSize="12sp"/>
-
+        android:layout_gravity="center_vertical"
+        android:background="@null"
+        android:clickable="true"
+        android:text="移除"
+        android:textColor="@color/red_ff3333"
+        android:textSize="@dimen/dm026" />
 </LinearLayout>
