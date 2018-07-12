@@ -130,6 +130,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
     private List<FileListInfo> mFileListData = new ArrayList<>();
     private List<MemberInfo> memberInfoList = new ArrayList<>();
     private MemberListAdapter memberListAdapter;
+    private View memberLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -270,6 +271,12 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         fileListAdapter = new FileListAdapter(context, mFileListData, mBoardId);
         mGridView.setAdapter(fileListAdapter);
         //reSetLVHeight(mGridView);
+
+        //添加成员布局
+        memberLayout = LayoutInflater.from(context).inflate(R.layout.member_dialog_layout, null);
+        ListView listView = memberLayout.findViewById(R.id.member_dialog_layout_lv);
+        memberListAdapter = new MemberListAdapter(context, memberInfoList);
+        listView.setAdapter(memberListAdapter);
     }
 
     private void initEventRV() {
@@ -938,35 +945,77 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         }
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     //添加成员
     public void onCradDetailMemeberAddBtClick(View view) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.member_dialog_layout, null);
-        ListView listView = inflate.findViewById(R.id.member_dialog_layout_lv);
-        memberListAdapter = new MemberListAdapter(context, memberInfoList);
-        listView.setAdapter(memberListAdapter);
-       if (memberInfoList == null || memberInfoList.size() == 0) {
+     /*   if (memberInfoList == null || memberInfoList.size() == 0) {
             TextView emptyTv = new TextView(context);
             emptyTv.setText("暂无成员");
             listView.setEmptyView(emptyTv);
-        }
+        }*/
+        memberListAdapter.setData(memberInfoList);
         final AlertDialog dialog = new AlertDialog.Builder(context, R.style
                 .dialog_appcompat_theme)
-                .setTitle("卡片成员").setView(inflate)
-                .setPositiveButton("添加成员", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .create();
+                .setTitle("卡片成员").setView(memberLayout)
+                .setPositiveButton("添加成员", null).create();
         dialog.setCanceledOnTouchOutside(true);//使除了dialog以外的地方不能被点击
         dialog.show();
+
+        //添加成员
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener
+                () {
+            @Override
+            public void onClick(View v) {
+                final EditText editText = new EditText(context);
+                editText.setHint("手机号/邮箱");
+                editText.setBackground(null);
+                editText.setPadding(80, 50, 80, 40);
+                //添加成员  13207121632
+                final AlertDialog dialog1 = new AlertDialog.Builder(context, R.style
+                        .dialog_appcompat_theme)
+                        .setTitle("添加成员").setView(editText)
+                        .setPositiveButton("完成", null).create();
+                dialog1.show();
+                dialog1.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View
+                        .OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String account = editText.getText().toString();
+                        if (TextUtil.isEmpty(account)) {
+                            ToastUtil.show(context, "输入为空");
+                            return;
+                        }
+
+                        addMember(dialog1);
+
+                    }
+                });
+                //显示输入法
+                //只用下面这一行弹出对话框时需要点击输入框才能弹出软键盘
+                dialog1.getWindow().clearFlags(WindowManager.LayoutParams
+                        .FLAG_ALT_FOCUSABLE_IM);
+                dialog1.getWindow().setSoftInputMode(WindowManager.LayoutParams
+                        .SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            }
+        });
+
+    }
+
+    private void addMember(AlertDialog dialog1) {
+
+
+    }
+
+    private void showInputMethod() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //自动弹出键盘
+                InputMethodManager inputManager = (InputMethodManager) context.getSystemService
+                        (Context
+                                .INPUT_METHOD_SERVICE);
+                inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }, 100);
     }
 
     class MyExpandableListAdapter extends BaseExpandableListAdapter {

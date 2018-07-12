@@ -18,7 +18,6 @@ package com.android.taskallo.adapter;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -372,15 +371,6 @@ public class FileListAdapter extends BaseAdapter {
             }
         });
     }
-
-    private void closeInputMethod() {
-        InputMethodManager imm = (InputMethodManager) context
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm.isActive()) {
-            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-        }
-    }
-
     /**
      * 用于保存ListView中重用的item视图的引用
      *

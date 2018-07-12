@@ -86,6 +86,11 @@ public class MemberListAdapter extends BaseAdapter {
         infoIv.setImageURI(imgUrl);
         return convertView;
     }
+
+    public void setData(List<MemberInfo> memberInfoList) {
+        memberInfos = memberInfoList;
+        notifyDataSetChanged();
+    }
 }
 
 
