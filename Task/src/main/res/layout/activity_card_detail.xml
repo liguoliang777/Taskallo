@@ -462,7 +462,9 @@
                 android:id="@+id/crad_detail_event_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dm010" />
+                android:layout_marginTop="@dimen/dm010"
+                android:layout_marginBottom="@dimen/dm020"
+                />
         </LinearLayout>
     </com.android.taskallo.view.PullScrollView>
 

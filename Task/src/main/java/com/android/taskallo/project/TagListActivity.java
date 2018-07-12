@@ -78,7 +78,7 @@ public class TagListActivity extends BaseFgActivity {
 
         //defTaglist = (List<TagInfo>) getIntent().getSerializableExtra(KeyConstant.tagInfo);
         init();
-        getData();
+        getProjAllTagListData();
         //获取已经关联的数据
         getRelationData();
     }
@@ -251,12 +251,12 @@ public class TagListActivity extends BaseFgActivity {
     }
 
     //删除标签
-    private void deleteTagThread(String labelId) {
+    private void deleteTagThread(final String labelId) {
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, "网络异常,请检查网络设置");
             return;
         }
-        String url = Constant.WEB_SITE1 + UrlConstant.url_label + "/" + mBoardId + "/" + labelId;
+        String url = Constant.WEB_SITE1 + UrlConstant.url_label + "/" + mProjId + "/" + labelId;
 
         Response.Listener<JsonResult> successListener = new Response
                 .Listener<JsonResult>() {
@@ -267,7 +267,7 @@ public class TagListActivity extends BaseFgActivity {
                     return;
                 }
                 if (result.code == 0) {
-                    getData();
+                    getProjAllTagListData();
                     defAvatarDialog.cancel();
                 }
             }
@@ -287,7 +287,8 @@ public class TagListActivity extends BaseFgActivity {
                     @Override
                     public Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
-                        params.put(KeyConstant.id, mBoardId);
+                        params.put(KeyConstant.projectId, mProjId);
+                        params.put(KeyConstant.labelId, labelId);
                         return params;
                     }
 
@@ -318,7 +319,7 @@ public class TagListActivity extends BaseFgActivity {
                     return;
                 }
 
-                getData();
+                getProjAllTagListData();
                 defAvatarDialog.cancel();
             }
         };
@@ -339,7 +340,6 @@ public class TagListActivity extends BaseFgActivity {
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
                         params.put(KeyConstant.projectId, mProjId);
-                        params.put(KeyConstant.boardId, mBoardId);
                         params.put(KeyConstant.labelName, tagTitle);
                         params.put(KeyConstant.labelColour, labelColour);
                         return params;
@@ -368,8 +368,8 @@ public class TagListActivity extends BaseFgActivity {
                     ToastUtil.show(context, getString(R.string.requery_failed));
                     return;
                 }
-
-                getData();
+                getRelationData();
+                getProjAllTagListData();
                 defAvatarDialog.cancel();
             }
         };
@@ -390,7 +390,6 @@ public class TagListActivity extends BaseFgActivity {
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
                         params.put(KeyConstant.projectId, mProjId);
-                        params.put(KeyConstant.boardId, mBoardId);
                         params.put(KeyConstant.labelName, tagTitle);
                         params.put(KeyConstant.labelColour, labelColour);
                         return params;
@@ -409,9 +408,9 @@ public class TagListActivity extends BaseFgActivity {
     }
 
 
-    public void getData() {
+    public void getProjAllTagListData() {
         //getRelationData();
-        String url = Constant.WEB_SITE1 + UrlConstant.url_label + "/" + mProjId + "/" + mBoardId;
+        String url = Constant.WEB_SITE1 + UrlConstant.url_label + "/" + mProjId ;
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, "网络异常,请检查网络设置");
             return;
@@ -459,8 +458,7 @@ public class TagListActivity extends BaseFgActivity {
 
     private void setData(List<TagInfo> result) {
         if (result != null && result.size() > 0) {
-            defTaglist = result;
-            tagAdapter.setList(defTaglist);
+            tagAdapter.setList(result);
         } else {
             ToastUtil.show(context, "该项目下标签数据为空");
         }

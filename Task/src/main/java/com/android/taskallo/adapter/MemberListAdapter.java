@@ -33,7 +33,6 @@ import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.NetUtil;
-import com.android.taskallo.core.utils.UrlConstant;
 import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -120,7 +119,7 @@ public class MemberListAdapter extends BaseAdapter {
                                     ToastUtil.show(context, "网络异常,请检查网络设置");
                                     return;
                                 }
-                                String url = Constant.WEB_SITE1 + UrlConstant.url_label + "/" +
+                                String url = Constant.WEB_SITE1  +"/"+
                                         mBoardId + "/" + memberInfo.id + "/" + memberInfo.nickName;
 
                                 Response.Listener<JsonResult> successListener = new Response

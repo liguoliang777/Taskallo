@@ -8,15 +8,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jzt.hol.android.jkda.sdk.bean.admin.SystemMsgBean;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.adapter.SystemInfoAdapter;
 import com.android.taskallo.core.db.DatabaseManager;
+import com.jzt.hol.android.jkda.sdk.bean.admin.SystemMsgBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 系统消息
@@ -161,11 +160,11 @@ public class SystemInfoActivity extends BaseFgActivity implements View.OnClickLi
 //                }
                 break;
             case R.id.tv_select:
-//                if (selectList.size() != msgbean.getData().size()) {
+//                if (selectList.size() != msgbean.getProjAllTagListData().size()) {
 //                    //全选
 //                    selectList = new ArrayList<>();
-//                    for (int i = 0; i < msgbean.getData().size(); i++) {
-//                        selectList.add(msgbean.getData().get(i));
+//                    for (int i = 0; i < msgbean.getProjAllTagListData().size(); i++) {
+//                        selectList.add(msgbean.getProjAllTagListData().get(i));
 //                    }
 //                    tv_select.setText("取消全选");
 //                    tv_select.setTextColor(getResources().getColor(R.color.orange_2));

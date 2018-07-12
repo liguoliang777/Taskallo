@@ -103,7 +103,7 @@ public class TagListAdapter extends BaseAdapter {
                 drawable.getPaint().setColor(Color.parseColor(labelColour));
                 //构建Controller
                 holder.itemColorBt.setBackground(drawable);
-
+                holder.itemSelectedTag.setVisibility(View.INVISIBLE);
                 for (TagInfo tagInfo : relationInfo) {
                     if (tagInfo != null) {
                         String relationLabelColour = tagInfo.labelColour;
