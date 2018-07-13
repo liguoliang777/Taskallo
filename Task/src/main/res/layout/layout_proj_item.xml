@@ -41,7 +41,7 @@
 
         <EditText
             android:id="@+id/proj_list_item_title"
-            style="@style/px24_333333"
+            style="@style/px26_333333"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dm080"
             android:layout_alignParentLeft="true"
@@ -54,7 +54,7 @@
             android:gravity="center_vertical"
             android:paddingRight="@dimen/dm010"
             android:singleLine="true"
-            android:text="标题"
+            android:text=""
             android:textAllCaps="false"
             android:textCursorDrawable="@drawable/shape_cursor_color_main_color"
             android:textStyle="bold" />
@@ -82,8 +82,8 @@
         android:gravity="center"
         android:text="添加卡片"
         android:textAllCaps="false"
-        android:textColor="@color/color_808080"
-        android:textSize="@dimen/dm024" />
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/dm022" />
 
     <View
         android:layout_width="match_parent"

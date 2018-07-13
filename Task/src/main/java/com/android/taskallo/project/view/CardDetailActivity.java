@@ -425,6 +425,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                         subtaskListData != null) {
                     for (int i = 0; i < subtaskListData.size(); i++) {
                         childItemListData.add(i, itemInfos);
+                        Log.d(TAG, "子任务获取数据:" + subtaskListData.size());
                         getChildInfo(i);
                     }
                 } else {
@@ -457,9 +458,11 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
 
     private void getChildInfo(final int i) {
         final SubtaskInfo subtaskInfo = subtaskListData.get(i);
+        Log.d("子任务获取数据2", "" + subtaskInfo);
         if (subtaskInfo == null) {
             return;
         }
+        Log.d("子任务获取数据3", "" + subtaskInfo.subtaskName);
         String url = Constant.WEB_SITE1 + UrlConstant.url_term + "/" + subtaskInfo.subtaskId;
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, "网络异常,请检查网络设置");
@@ -476,6 +479,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 }
 
                 List<SubtaskItemInfo> relationInfo = result.data;
+                Log.d("子任务获取数据====项", "" + relationInfo);
                 if (result.code == 0 && context != null) {
                     if (relationInfo != null && relationInfo.size() != 0) {
                         childItemListData.set(i, relationInfo);

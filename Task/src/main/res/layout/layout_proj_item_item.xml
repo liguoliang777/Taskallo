@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/item_item_title_tv"
-        style="@style/px28_333333"
+        style="@style/px26_333333"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"

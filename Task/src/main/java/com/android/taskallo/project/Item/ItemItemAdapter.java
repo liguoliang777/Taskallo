@@ -18,6 +18,7 @@ import com.android.taskallo.R;
 import com.android.taskallo.bean.BoardVOListBean;
 import com.android.taskallo.bean.TagInfo;
 import com.android.taskallo.core.utils.KeyConstant;
+import com.android.taskallo.core.utils.TextUtil;
 import com.android.taskallo.project.view.CardDetailActivity;
 import com.android.taskallo.project.view.ProjListActivity;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
@@ -109,11 +110,11 @@ public class ItemItemAdapter extends RecyclerView.Adapter<ItemItemAdapter.Simple
         }
         //描述
         String boardDesc = boardVOListBean.boardDesc;
+        holder.mSubheadTv.setVisibility(TextUtil.isEmpty(boardDesc) ? View.GONE : View.VISIBLE);
         //截止时间
         long expiryTime = boardVOListBean.expiryTime;
-        holder.mSubheadTv.setVisibility(boardDesc == null ? View.GONE : View.VISIBLE);
         if (expiryTime != 0) {
-            String mmdd = new SimpleDateFormat("MM月dd日").format(new Date());
+            String mmdd = new SimpleDateFormat("MM月dd日").format(new Date(expiryTime));
             holder.mExpiryTimeTv.setText(mmdd);
             holder.mExpiryTimeTv.setVisibility(View.VISIBLE);
 
