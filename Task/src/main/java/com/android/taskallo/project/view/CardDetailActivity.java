@@ -479,7 +479,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 }
 
                 List<SubtaskItemInfo> relationInfo = result.data;
-                Log.d("子任务获取数据====项", "" + relationInfo);
+                Log.d("子任务获取数据====项",  "" + relationInfo);
                 if (result.code == 0 && context != null) {
                     if (relationInfo != null && relationInfo.size() != 0) {
                         childItemListData.set(i, relationInfo);
@@ -1304,6 +1304,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                             Map<String, String> params = new HashMap<>();
                             params.put(KeyConstant.subtaskId, subtaskId);
                             params.put(KeyConstant.termDesc, newTitle);
+                            params.put(KeyConstant.boardId, mBoardId);
                             return params;
                         }
 
@@ -1428,6 +1429,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                             Map<String, String> params = new HashMap<>();
                             params.put(KeyConstant.subtaskId, subtaskId);
                             params.put(KeyConstant.termDesc, subtskItemTitle);
+                            params.put(KeyConstant.boardId, mBoardId);
                             return params;
                         }
 
