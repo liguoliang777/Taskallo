@@ -5,7 +5,9 @@ def releaseTime() {
 }
 
 android {
-
+    lintOptions {
+        abortOnError false
+    }
     signingConfigs {
     }
     compileSdkVersion 26
