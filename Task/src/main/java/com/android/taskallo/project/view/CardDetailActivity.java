@@ -440,7 +440,6 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                         successListener, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        volleyError.printStackTrace();
                         Log.d(TAG, "网络连接错误！" + volleyError.getMessage());
                     }
                 }, new TypeToken<JsonResult<List<SubtaskInfo>>>() {
@@ -464,7 +463,8 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         }
         String url = Constant.WEB_SITE1 + UrlConstant.url_term + "/" + mBoardId + "/" +
                 subtaskInfo.subtaskId;
-        Log.d("获取*********项", subtaskInfo.subtaskName+",mBoardId,:"+mBoardId+"," + subtaskInfo.subtaskId);
+        Log.d("项", "名字:" + subtaskInfo.subtaskName + ",--子任务Id:--" +
+                subtaskInfo.subtaskId);
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, "网络异常,请检查网络设置");
             return;
@@ -480,7 +480,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 }
 
                 List<SubtaskItemInfo> relationInfo = result.data;
-                Log.d(TAG, i+"获取: "+relationInfo.size());
+                Log.d(TAG, i + "获取: " + relationInfo.size());
                 if (result.code == 0 && context != null) {
                     if (relationInfo != null && relationInfo.size() != 0
                             ) {
@@ -853,8 +853,8 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
 
     @Override
     protected void onActivityResult(int arg0, int arg1, Intent arg2) {
-        Uri uri = arg2.getData();
-        if (uri != null) {
+        if (arg2 != null && arg2.getData() != null) {
+            Uri uri = arg2.getData();
             Log.d(TAG, "文件路径：" + uri.getPath());
             File file1 = new File(uri.getPath());
             uploadPictureThread(file1);
@@ -1171,6 +1171,8 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
 
             }*/
             final List<SubtaskItemInfo> childDatum = listList2.get(groupPosition);
+            Log.d("---------项--------", list1.get(groupPosition).subtaskName + "子任务Id:" +
+                    subtaskId + ":子集合大小:" + childDatum.size());
 
             final EditText childTv = (EditText) convertView.findViewById(R.id.child_text);
             final ImageView childImageView = (ImageView) convertView.findViewById(R.id
@@ -1377,8 +1379,9 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         //添加项
         private void addSubtaskItem(final String subtskItemTitle, final String subtaskId,
                                     final List<SubtaskItemInfo> childDatum, final int
-                                                  groupPosition) {
-            Log.d(TAG, "子任务的项:"+subtaskId);
+                                            groupPosition) {
+            Log.d(TAG, groupPosition + ",项:" + subtaskId + ","
+            );
             String url = Constant.WEB_SITE1 + UrlConstant.url_term;
             Response.Listener<JsonResult<SubtaskItemInfo>> successListener = new Response
                     .Listener<JsonResult<SubtaskItemInfo>>() {
@@ -1392,15 +1395,15 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                     SubtaskItemInfo data = result.data;
                     if (context != null && data != null) {
                         //把返回的集合添加到子任务集合里面去
-                        List<SubtaskItemInfo> itemInfos1 = childDatum;
+                   /*     List<SubtaskItemInfo> itemInfos1 = childDatum;
 
                         itemInfos1.set(itemInfos1.size() - 1, data);
                         itemInfos1.add(new SubtaskItemInfo("-1", ""));
 
-                        listList2.set(0,itemInfos1);
+                        listList2.set(0, itemInfos1);
                         notifyDataSetChanged();
-                        reSetLVHeight(subtaskLV);
-                        //getSubTaskList();
+                        reSetLVHeight(subtaskLV);*/
+                        getSubTaskList();
                     }
 
                 }
