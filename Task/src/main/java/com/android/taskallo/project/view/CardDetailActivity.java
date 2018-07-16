@@ -691,7 +691,11 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                     //修改成功
                     mExpiryTimeTv.setText(formatterStr.format(date) + " 到期");
                 } else {
-                    ToastUtil.show(context,getString(R.string.server_exception));
+                    if (result == null) {
+                        ToastUtil.show(context, getString(R.string.server_exception));
+                    } else {
+                        ToastUtil.show(context, result.msg);
+                    }
                 }
             }
         };
@@ -703,7 +707,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         volleyError.printStackTrace();
-                        ToastUtil.show(context,getString(R.string.server_exception));
+                        ToastUtil.show(context, getString(R.string.server_exception));
                         Log.d("", "时间提交出错:" + volleyError.getMessage());
                     }
                 }, new TypeToken<JsonResult>() {
@@ -1729,6 +1733,12 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
             public void onResponse(JsonResult result) {
                 if (result.code == 0 && result.data != null && context != null) {
                     //修改成功
+                } else {
+                    if (result == null) {
+                        ToastUtil.show(context, getString(R.string.server_exception));
+                    } else {
+                        ToastUtil.show(context, result.msg);
+                    }
                 }
             }
         };
