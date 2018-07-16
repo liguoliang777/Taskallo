@@ -708,7 +708,8 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         volleyError.printStackTrace();
-                        Log.d("", "网络连接错误！" + volleyError.getMessage());
+                        ToastUtil.show(context,getString(R.string.server_exception));
+                        Log.d("", "时间提交出错:" + volleyError.getMessage());
                     }
                 }, new TypeToken<JsonResult>() {
                 }.getType()) {
