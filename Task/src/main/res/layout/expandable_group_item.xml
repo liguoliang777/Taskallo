@@ -59,6 +59,7 @@
         android:textCursorDrawable="@drawable/shape_cursor_color_main_color"
         android:background="@null"
         android:layout_width="wrap_content"
+        android:maxLines="1"
         android:layout_height="wrap_content"
         android:layout_below="@id/group_item_subtask_top_line"
         android:layout_toLeftOf="@id/group_item_subtask_jt"

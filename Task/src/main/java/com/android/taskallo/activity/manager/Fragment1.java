@@ -64,6 +64,9 @@ public class Fragment1 extends BaseSearchFragment {
         content = activity;
     }
 
+    public Fragment1() {
+    }
+
     @Override
     protected int getContentViewLayoutID() {
         return R.layout.fragment_1;
@@ -254,7 +257,7 @@ public class Fragment1 extends BaseSearchFragment {
             @Override
             public void onClick(View view) {
                 view.setSelected(true);
-                pupopAdapter.setList(products,mSelectedPosition);
+                pupopAdapter.setList(products, mSelectedPosition);
                 if (listPopupWindow.isShowing()) {
                     listPopupWindow.dismiss();
                 } else {

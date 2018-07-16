@@ -86,8 +86,7 @@ public class ProjListActivity extends BaseFgActivity {
         mItemView.setCallback(new ItemViewCallback());
         mItemView.setContext(context, mProjectId);
 
-        setBackground();
-
+        //setBackground();
     }
 
     @Override

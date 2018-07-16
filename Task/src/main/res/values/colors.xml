@@ -6,6 +6,7 @@
 
     <color name="mainColorDrak">#5782d9</color>
     <color name="mainColorLight">#91b2f2</color>
+    <color name="mainColorLightLight">#5591b2f2</color>
     <color name="mainColorMiddle">#6191f2</color>
 
     <color name="colorPrimaryDark">#000000</color>

@@ -3,7 +3,7 @@
     xmlns:ngame="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mainColorLight"
+    android:background="@color/mainColorLightLight"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
@@ -87,7 +87,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/proj_top_menu"
-        android:background="@color/mainColorLight"
         android:text="看板已归档"
         android:gravity="center"
         android:textColor="@color/white"

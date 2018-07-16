@@ -223,7 +223,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         //----------------------------------------------------------------------------------------------------
         subtaskLV = (ExpandableListView) findViewById(R.id.expandable_lv);
         //给ExpandableListAdapter设置适配器---自定义适配器需要继承BaseExpandableListAdapter()实现其中的方法
-        mSubtaskLvAdapter = new MyExpandableListAdapter(subtaskListData);
+        mSubtaskLvAdapter = new MyExpandableListAdapter(list1);
         //设置适配器
         subtaskLV.setAdapter(mSubtaskLvAdapter);
 
@@ -420,12 +420,13 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                     return;
                 }
 
-                subtaskListData = result.data;
+                list1 = result.data;
                 if (result.code == 0 && context != null &&
-                        subtaskListData != null) {
-                    for (int i = 0; i < subtaskListData.size(); i++) {
-                        childItemListData.add(i, itemInfos);
-                        Log.d(TAG, "子任务获取数据:" + subtaskListData.size());
+                        list1 != null && list1.size() != 0) {
+                    mSubtaskLvAdapter.notifyDataSetChanged();
+                    reSetLVHeight(subtaskLV);
+                    for (int i = 0; i < list1.size(); i++) {
+                        listList2.add(itemInfos);
                         getChildInfo(i);
                     }
                 } else {
@@ -457,13 +458,13 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
     }
 
     private void getChildInfo(final int i) {
-        final SubtaskInfo subtaskInfo = subtaskListData.get(i);
-        Log.d("子任务获取数据2", "" + subtaskInfo);
+        final SubtaskInfo subtaskInfo = list1.get(i);
         if (subtaskInfo == null) {
             return;
         }
-        Log.d("子任务获取数据3", "" + subtaskInfo.subtaskName);
-        String url = Constant.WEB_SITE1 + UrlConstant.url_term + "/" + subtaskInfo.subtaskId;
+        String url = Constant.WEB_SITE1 + UrlConstant.url_term + "/" + mBoardId + "/" +
+                subtaskInfo.subtaskId;
+        Log.d("获取*********项", subtaskInfo.subtaskName+",mBoardId,:"+mBoardId+"," + subtaskInfo.subtaskId);
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, "网络异常,请检查网络设置");
             return;
@@ -479,24 +480,20 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 }
 
                 List<SubtaskItemInfo> relationInfo = result.data;
-                Log.d("子任务获取数据====项",  "" + relationInfo);
+                Log.d(TAG, i+"获取: "+relationInfo.size());
                 if (result.code == 0 && context != null) {
-                    if (relationInfo != null && relationInfo.size() != 0) {
-                        childItemListData.set(i, relationInfo);
-
-                    } else {
-                        childItemListData.set(i, itemInfos);
+                    if (relationInfo != null && relationInfo.size() != 0
+                            ) {
+                        listList2.set(i, relationInfo);
+                        listList2.add(itemInfos);
                     }
 
-                    if (i == subtaskListData.size() - 1) {
-                        if (childItemListData.size() > 1) {
-                            itemInfos.clear();
-                            itemInfos.add(new SubtaskItemInfo("-1", ""));
-                            childItemListData.add(itemInfos);
-                        }
-                        mSubtaskLvAdapter.setData(subtaskListData, childItemListData);
+                    if (i == list1.size() - 1) {
+                        mSubtaskLvAdapter.notifyDataSetChanged();
                         reSetLVHeight(subtaskLV);
                     }
+                } else {
+
                 }
             }
         };
@@ -539,12 +536,12 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 SubtaskInfo data = result.data;
                 if (context != null) {
                     //把返回的集合添加到子任务集合里面去
-                    subtaskListData.add(data);
+                    list1.add(data);
                     itemInfos.clear();
                     itemInfos.add(new SubtaskItemInfo("-1", ""));
-                    childItemListData.add(itemInfos);
-                    if (subtaskListData != null) {
-                        mSubtaskLvAdapter.setData(subtaskListData, childItemListData);
+                    listList2.add(itemInfos);
+                    if (list1 != null) {
+                        mSubtaskLvAdapter.setData(list1, listList2);
                         reSetLVHeight(subtaskLV);
                     }
                 }
@@ -633,13 +630,13 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         listView.setLayoutParams(params);
     }
 
-    private List<SubtaskInfo> subtaskListData = new ArrayList<SubtaskInfo>() {
+    private List<SubtaskInfo> list1 = new ArrayList<SubtaskInfo>() {
     };
-    private List<List<SubtaskItemInfo>> childItemListData = new ArrayList<List<SubtaskItemInfo>>() {
+    private List<List<SubtaskItemInfo>> listList2 = new ArrayList<List<SubtaskItemInfo>>() {
     };
 
     public void onCradSubTaskAddBtClick(View view) {
-        addSubtask(SUBTASK_DEF_NAME + (subtaskListData.size() + 1));
+        addSubtask(SUBTASK_DEF_NAME + (list1.size() + 1));
     }
 
     public void onCradDetailTimeClick(View view) {
@@ -1024,40 +1021,38 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
     }
 
     class MyExpandableListAdapter extends BaseExpandableListAdapter {
-        private List<SubtaskInfo> mSubtaskData;
-        private List<List<SubtaskItemInfo>> childListData;
         private int focusPosition = -1;
         private long lastTime = 0;
 
         public MyExpandableListAdapter(List<SubtaskInfo> subtaskData) {
-            mSubtaskData = subtaskData;
+            //list1 = subtaskData;
         }
 
         @Override
         public int getGroupCount() {
-            return mSubtaskData.size();
+            return list1.size();
         }
 
         @Override
         public int getChildrenCount(int groupPosition) {
             int lengthInt = 1;
-            if (childListData != null && childListData.size() != 0 && groupPosition <
-                    childListData.size()) {
-                lengthInt = childListData.get(groupPosition).size();
+            if (listList2 != null && listList2.size() != 0 && groupPosition <
+                    listList2.size()) {
+                lengthInt = listList2.get(groupPosition).size();
             }
             return lengthInt;
         }
 
         @Override
         public Object getGroup(int groupPosition) {
-            return mSubtaskData.get(groupPosition);
+            return list1.get(groupPosition);
         }
 
         @Override
         public Object getChild(int groupPosition, int childPosition) {
-            if (childListData != null && childListData.size() != 0 && groupPosition <
-                    childListData.size()) {
-                return childListData.get(groupPosition).get(childPosition);
+            if (listList2 != null && listList2.size() != 0 && groupPosition <
+                    listList2.size()) {
+                return listList2.get(groupPosition).get(childPosition);
 
             } else {
                 return new SubtaskItemInfo("-1", "");
@@ -1080,8 +1075,6 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         }
 
         public void setData(List<SubtaskInfo> subtaskData, List<List<SubtaskItemInfo>> childList) {
-            mSubtaskData = subtaskData;
-            childListData = childList;
             notifyDataSetChanged();
         }
 
@@ -1108,7 +1101,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                     .group_item_subtask_jt);
             ImageButton mMenuBt = (ImageButton) view.findViewById(R.id
                     .group_item_subtask_menu_bt);
-            final SubtaskInfo subtaskInfo = mSubtaskData.get(groupPosition);
+            final SubtaskInfo subtaskInfo = list1.get(groupPosition);
             if (subtaskInfo == null) {
                 return null;
             }
@@ -1170,14 +1163,14 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                                  boolean isLastChild, View convertView, ViewGroup parent) {
             LayoutInflater mLayoutInflater = (LayoutInflater) getSystemService(Context
                     .LAYOUT_INFLATER_SERVICE);
-            final String subtaskId = mSubtaskData.get(groupPosition).subtaskId;
+            final String subtaskId = list1.get(groupPosition).subtaskId;
             convertView = mLayoutInflater.inflate(R.layout.expandable_childe_item, null);
 
            /* if (childListData == null || childListData.size() == 0 || groupPosition >=
                     childListData.size()) {
 
             }*/
-            final List<SubtaskItemInfo> childDatum = childListData.get(groupPosition);
+            final List<SubtaskItemInfo> childDatum = listList2.get(groupPosition);
 
             final EditText childTv = (EditText) convertView.findViewById(R.id.child_text);
             final ImageView childImageView = (ImageView) convertView.findViewById(R.id
@@ -1199,7 +1192,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                                 return;
                             }
                             lastTime = System.currentTimeMillis();
-                            addSubtaskItemThraed(subtskItemTitle.trim(), subtaskId, childDatum,
+                            addSubtaskItem(subtskItemTitle.trim(), subtaskId, childDatum,
                                     groupPosition);
                         }
                     }
@@ -1279,7 +1272,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                     }
                     List<SubtaskItemInfo> newSubtaskItemInfo = subtaskItemInfo;
                     newSubtaskItemInfo.set(childPosition, result.data);
-                    childListData.set(groupPosition, newSubtaskItemInfo);
+                    listList2.set(groupPosition, newSubtaskItemInfo);
                 }
             };
 
@@ -1349,7 +1342,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                                 .ANTI_ALIAS_FLAG);
                         List<SubtaskItemInfo> newChildDatum = childDatum;
                         newChildDatum.remove(childPosition);
-                        childListData.set(groupPosition, newChildDatum);
+                        listList2.set(groupPosition, newChildDatum);
 
                     } else {
                         ToastUtil.show(context, getString(R.string.delete_faild) + "," + result
@@ -1382,9 +1375,10 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         }
 
         //添加项
-        private void addSubtaskItemThraed(final String subtskItemTitle, final String subtaskId,
-                                          final List<SubtaskItemInfo> childDatum, final int
+        private void addSubtaskItem(final String subtskItemTitle, final String subtaskId,
+                                    final List<SubtaskItemInfo> childDatum, final int
                                                   groupPosition) {
+            Log.d(TAG, "子任务的项:"+subtaskId);
             String url = Constant.WEB_SITE1 + UrlConstant.url_term;
             Response.Listener<JsonResult<SubtaskItemInfo>> successListener = new Response
                     .Listener<JsonResult<SubtaskItemInfo>>() {
@@ -1399,10 +1393,11 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                     if (context != null && data != null) {
                         //把返回的集合添加到子任务集合里面去
                         List<SubtaskItemInfo> itemInfos1 = childDatum;
+
                         itemInfos1.set(itemInfos1.size() - 1, data);
                         itemInfos1.add(new SubtaskItemInfo("-1", ""));
-                        Log.d(TAG, itemInfos1.size() + "返回数据" + groupPosition);
-                        childListData.set(groupPosition, itemInfos1);
+
+                        listList2.set(0,itemInfos1);
                         notifyDataSetChanged();
                         reSetLVHeight(subtaskLV);
                         //getSubTaskList();
@@ -1451,7 +1446,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         }
 
         public void setGroupData(List<SubtaskInfo> subtaskListData) {
-            mSubtaskData = subtaskListData;
+            //mSubtaskData = subtaskListData;
             //notifyDataSetChanged(); 不能加这个,不然标题无法编辑
         }
     }
@@ -1495,7 +1490,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
             return;
         }
         String url = Constant.WEB_SITE1 + UrlConstant.url_subtask + "/" + mBoardId + "/" +
-                subtaskListData.get(groupPosition).subtaskId;
+                list1.get(groupPosition).subtaskId;
 
         Response.Listener<JsonResult> successListener = new Response
                 .Listener<JsonResult>() {
@@ -1506,9 +1501,9 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                     return;
                 }
                 if (result.code == 0) {
-                    subtaskListData.remove(groupPosition);
-                    childItemListData.remove(groupPosition);
-                    mSubtaskLvAdapter.setData(subtaskListData, childItemListData);
+                    list1.remove(groupPosition);
+                    listList2.remove(groupPosition);
+                    mSubtaskLvAdapter.setData(list1, listList2);
                     reSetLVHeight(subtaskLV);
                 } else {
                     ToastUtil.show(context, getString(R.string.delete_faild) + result.msg);
@@ -1556,8 +1551,8 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                     //getSubTaskList();
                     SubtaskInfo subtaskInfoNew = subtaskInfo;
                     subtaskInfoNew.subtaskName = newTitle;
-                    subtaskListData.set(groupPosition, subtaskInfoNew);
-                    mSubtaskLvAdapter.setGroupData(subtaskListData);
+                    list1.set(groupPosition, subtaskInfoNew);
+                    mSubtaskLvAdapter.setGroupData(list1);
                     //reSetLVHeight(subtaskLV);
 
                 }
@@ -1796,7 +1791,6 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 }
 
                 memberInfoList = result.data;
-                Log.d("获取成员列表", ":" + memberInfoList.size());
                 if (result.code == 0 && context != null && memberInfoList != null &&
                         memberInfoList.size() > 0) {
                     mMemberLayout.setVisibility(View.VISIBLE);
