@@ -1323,7 +1323,8 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 ToastUtil.show(context, getString(R.string.no_network));
                 return;
             }
-            String url = Constant.WEB_SITE1 + UrlConstant.url_term + "/" + subtaskId + "/" +
+            String url = Constant.WEB_SITE1 + UrlConstant.url_term + "/" + mBoardId + "/" +
+                    subtaskId + "/" +
                     termId;
 
             Response.Listener<JsonResult> successListener = new Response
@@ -1342,7 +1343,6 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                         List<SubtaskItemInfo> newChildDatum = childDatum;
                         newChildDatum.remove(childPosition);
                         listList2.set(groupPosition, newChildDatum);
-
                     } else {
                         ToastUtil.show(context, getString(R.string.delete_faild) + "," + result
                                 .msg);
