@@ -220,4 +220,13 @@ public class ImageUtil {
 
         return drawable;
     }
+
+    public static  boolean isImageSuffix(String url) {
+        return url.contains(".png?")
+                || url.contains(".PNG?")
+                || url.contains(".jpg?")
+                || url.contains(".JPG?")
+                || url.contains(".jpeg?")
+                || url.contains(".JPEG?");
+    }
 }

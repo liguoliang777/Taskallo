@@ -10,10 +10,10 @@
         android:layout_width="@dimen/dm640"
         android:layout_height="@dimen/dm999"
         android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/dm020"
         android:scaleType="centerInside"
         fresco:actualImageScaleType="centerInside"
-        fresco:failureImage="@drawable/ic_card_link"
-        fresco:placeholderImage="@drawable/ic_card_link"
+        fresco:placeholderImage="@drawable/ic_incard_link"
         fresco:placeholderImageScaleType="centerInside"
         fresco:progressBarImage="@drawable/ic_loading" />
 
@@ -22,8 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
-        android:paddingLeft="@dimen/dm034"
         android:drawableLeft="@drawable/ic_card_cancel"
+        android:paddingLeft="@dimen/dm034"
         android:paddingTop="@dimen/dm060" />
 
     <TextView
@@ -43,12 +43,12 @@
         android:id="@+id/dialog_center_rename_et"
         android:layout_width="@dimen/dm400"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dm010"
         android:layout_centerHorizontal="true"
-        android:ellipsize="end"
-        android:maxLines="1"
         android:layout_marginTop="@dimen/dm050"
         android:background="@android:color/black"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="@dimen/dm010"
         android:text=""
         android:textColor="@color/white"
         android:textCursorDrawable="@drawable/shape_cursor_color_white"
@@ -61,17 +61,35 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:background="@null"
-        android:paddingRight="@dimen/dm034"
         android:drawableRight="@drawable/ic_more"
+        android:paddingRight="@dimen/dm034"
         android:paddingTop="@dimen/dm060" />
+
     <Button
         android:id="@+id/dialog_btn_sure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_alignParentRight="true"
         android:background="@null"
-        android:paddingRight="@dimen/dm034"
         android:drawableRight="@drawable/ic_ok"
-        android:paddingTop="@dimen/dm060" />
+        android:paddingRight="@dimen/dm034"
+        android:paddingTop="@dimen/dm060"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/card_detail_file_bt"
+        android:layout_width="@dimen/dm640"
+        android:layout_height="@dimen/dm500"
+        android:layout_below="@id/dialog_center_title_tv"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/dm033"
+        android:paddingTop="@dimen/dm080"
+        android:background="@color/white"
+        android:drawableTop="@drawable/ic_unknown_file"
+        android:scaleType="centerInside"
+        android:text="@string/open_file"
+        android:textColor="@color/mainColorDrak"
+        android:textSize="@dimen/dm026"
+        android:textStyle="bold"
+        android:visibility="gone" />
 </RelativeLayout>

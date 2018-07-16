@@ -276,14 +276,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         getFileListData();
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d(TAG, "重启界面");
-        updateFileData();
-    }
-
-    public void updateFileData() {
+  /*  public void updateFileData() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -291,7 +284,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 getFileListData();
             }
         }, 500);
-    }
+    }*/
 
     private void initEventRV() {
         mEventRV = (RecyclerView) findViewById(R.id.crad_detail_event_rv);
@@ -306,7 +299,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
     }
 
     //获取活动日志数据
-    private void getFileListData() {
+    public void getFileListData() {
         if (!NetUtil.isNetworkConnected(context)) {
             return;
         }
@@ -697,6 +690,8 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 if (result.code == 0 && result.data != null && context != null) {
                     //修改成功
                     mExpiryTimeTv.setText(formatterStr.format(date) + " 到期");
+                } else {
+                    ToastUtil.show(context,getString(R.string.server_exception));
                 }
             }
         };
@@ -886,15 +881,13 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                         @Override
                         public void onProgress(long pro, double precent) {
                             Log.d(TAG, "图片上传" + pro);
-
                         }
 
                         @Override
                         public void onFinish(int code, String res, Map<String, List<String>>
                                 headers) {
                             Log.d(TAG, "图片上传1" + code);
-                            Log.d(TAG, "图片上传1" + res);
-
+                            getFileListData();
                         }
                     });
                 } catch (IOException e) {

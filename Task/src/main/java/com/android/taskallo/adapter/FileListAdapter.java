@@ -18,7 +18,9 @@ package com.android.taskallo.adapter;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ import com.android.taskallo.bean.FileListInfo;
 import com.android.taskallo.bean.JsonResult;
 import com.android.taskallo.core.net.GsonRequest;
 import com.android.taskallo.core.utils.Constant;
+import com.android.taskallo.core.utils.ImageUtil;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.NetUtil;
 import com.android.taskallo.core.utils.TextUtil;
@@ -134,7 +137,11 @@ public class FileListAdapter extends BaseAdapter {
         if (gameInfo != null) {
             String imgUrl = gameInfo.fileUrl;
             String fileId = gameInfo.fileId;
-            holder.filePicIv.setImageURI(imgUrl);
+            if (ImageUtil.isImageSuffix(imgUrl)) {
+                holder.filePicIv.setImageURI(imgUrl);
+            } else {
+                holder.filePicIv.setImageResource(R.drawable.ic_card_link);
+            }
 
             holder.filePicIv.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -164,7 +171,28 @@ public class FileListAdapter extends BaseAdapter {
         View v = inflater.inflate(R.layout.layout_dialog_file_detail, null);
         SimpleDraweeView fileDetailSDV = (SimpleDraweeView) v.findViewById(R.id
                 .card_detail_file_sdv);
-        fileDetailSDV.setImageURI(gameInfo.fileUrl);
+        Button fileBt = (Button) v.findViewById(R.id.card_detail_file_bt);
+        String fileUrl = gameInfo.fileUrl;
+        if (ImageUtil.isImageSuffix(fileUrl)) {
+            fileDetailSDV.setImageURI(fileUrl);
+            fileBt.setVisibility(View.GONE);
+        } else {
+            final Intent intent = new Intent();
+            intent.setAction("android.intent.action.VIEW");
+            Uri content_url = Uri.parse(fileUrl);
+            intent.setData(content_url);
+            fileBt.setVisibility(View.VISIBLE);
+            fileBt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    context.startActivity(intent);
+                }
+            });
+            //调用浏览器打开
+
+            context.startActivity(intent);
+
+        }
 
         final TextView centerTitleTv = (TextView) v.findViewById(R.id.dialog_center_title_tv);
         final EditText centerRenameEt = (EditText) v.findViewById(R.id.dialog_center_rename_et);
@@ -322,7 +350,7 @@ public class FileListAdapter extends BaseAdapter {
                                         //删除附件成功
                                         if (result.code == 0 && context != null && gameInfoList
                                                 != null) {
-                                            context.updateFileData();
+                                            context.getFileListData();
                                             popWindow.dismiss();
                                             dialog.dismiss();
                                         } else {
