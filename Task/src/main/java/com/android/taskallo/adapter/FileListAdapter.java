@@ -140,7 +140,7 @@ public class FileListAdapter extends BaseAdapter {
             if (ImageUtil.isImageSuffix(imgUrl)) {
                 holder.filePicIv.setImageURI(imgUrl);
             } else {
-                holder.filePicIv.setImageResource(R.drawable.ic_card_link);
+                holder.filePicIv.setImageResource(R.drawable.ic_incard_link);
             }
 
             holder.filePicIv.setOnClickListener(new View.OnClickListener() {

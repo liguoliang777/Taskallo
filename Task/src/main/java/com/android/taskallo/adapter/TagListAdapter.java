@@ -106,8 +106,8 @@ public class TagListAdapter extends BaseAdapter {
                 holder.itemSelectedTag.setVisibility(View.INVISIBLE);
                 for (TagInfo tagInfo : relationInfo) {
                     if (tagInfo != null) {
-                        String relationLabelColour = tagInfo.labelColour;
-                        if (labelColour.equals(relationLabelColour)) {
+                        String relationLabelId = tagInfo.labelId;
+                        if (item.labelId.equals(relationLabelId)) {
                             holder.itemSelectedTag.setVisibility(View.VISIBLE);
                             break;
                         }

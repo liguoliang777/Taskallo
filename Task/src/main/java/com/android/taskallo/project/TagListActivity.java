@@ -410,7 +410,7 @@ public class TagListActivity extends BaseFgActivity {
 
     public void getProjAllTagListData() {
         //getRelationData();
-        String url = Constant.WEB_SITE1 + UrlConstant.url_label + "/" + mProjId ;
+        String url = Constant.WEB_SITE1 + UrlConstant.url_label + "/" + mProjId;
         if (!NetUtil.isNetworkConnected(context)) {
             ToastUtil.show(context, "网络异常,请检查网络设置");
             return;
