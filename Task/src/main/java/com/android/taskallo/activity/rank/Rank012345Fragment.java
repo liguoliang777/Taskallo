@@ -20,27 +20,23 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBean;
-import com.jzt.hol.android.jkda.sdk.bean.rank.RankListBody;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.game.GameCommentListClient;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.android.taskallo.R;
 import com.android.taskallo.adapter.Ranking012345Adapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
 import com.android.taskallo.bean.PageAction;
 import com.android.taskallo.core.utils.CommonUtil;
 import com.android.taskallo.core.utils.KeyConstant;
-import com.android.taskallo.core.utils.NetUtil;
 import com.android.taskallo.project.view.ProjListActivity;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.LoadStateView;
 import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
 import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
+import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBean;
+import com.jzt.hol.android.jkda.sdk.bean.rank.RankListBody;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 下载榜
@@ -340,38 +336,6 @@ public class Rank012345Fragment extends BaseSearchFragment {
         bodyBean.setRecords(PAGE_SIZE);
         bodyBean.setParentCategoryId(tab_position);
         bodyBean.setCategoryId(tab2_position);
-        new GameCommentListClient(content, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<LikeListBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-//                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                        pullListView.onPullUpRefreshComplete();
-                        pullListView.onPullDownRefreshComplete();
-                        if (!NetUtil.isNetworkConnected(content)) {
-                            loadStateView.setState(LoadStateView.STATE_END, getString(R.string.no_network));
-                        } else {
-                            loadStateView.setState(LoadStateView.STATE_END, getString(R.string.requery_failed));
-                        }
-                    }
-
-                    @Override
-                    public void onNext(LikeListBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            listData(result);
-                        } else {
-                            if (list != null && list.size() > 0) {
-                                ToastUtil.show(content, getString(R.string
-                                        .server_exception_2_pullrefresh));
-                            } else {
-                                loadStateView.setState(LoadStateView.STATE_END, getString(R.string
-                                        .server_exception_2_pullrefresh));
-                            }
-                            pullListView.onPullUpRefreshComplete();
-                            pullListView.onPullDownRefreshComplete();
-                        }
-                    }
-                });
     }
 
     //设置数据

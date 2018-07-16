@@ -23,22 +23,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.taskallo.App;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddPointBodyBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBodyBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.NormalDataBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.PostDetailBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.AddPointClient;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.PostDetailClient;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
-
 import com.android.taskallo.R;
 import com.android.taskallo.core.utils.CommonUtil;
 import com.android.taskallo.core.utils.Constant;
@@ -47,6 +31,18 @@ import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.NetUtil;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.zan.HeartLayout;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddPointBodyBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBodyBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.PostDetailBean;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
@@ -235,23 +231,6 @@ public class HubItemActivity extends AppCompatActivity {
         bodyBean.setUserCode(userCode);
         bodyBean.setPostId(postId);
         bodyBean.setAppTypeId(Constant.APP_TYPE_ID_0_ANDROID);
-        new PostDetailClient(this, bodyBean).observable()
-                .subscribe(new ObserverWrapper<PostDetailBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        //("服务器开小差咯~");
-                    }
-
-                    @Override
-                    public void onNext(PostDetailBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            setMsgDetail(result);
-                        } else {
-                            //ToastUtil.show(mContext, "获取失败");
-                        }
-                    }
-                });
-
     }
 
     /**
@@ -385,42 +364,7 @@ public class HubItemActivity extends AppCompatActivity {
         bodyBean.setUserCode(userCode);
         bodyBean.setAppTypeId(Constant.APP_TYPE_ID_0_ANDROID);
         bodyBean.setPostId(id);  //帖子id
-        new AddPointClient(this, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<NormalDataBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        mSupportBt.setEnabled(true);
-                        ToastUtil.show(mContext, "点赞失败,请稍后重试~");
-                    }
 
-                    @Override
-                    public void onNext(NormalDataBean result) {
-                        if (mContext == null || mContext.isFinishing()) {
-                            return;
-                        }
-                        mSupportBt.setEnabled(true);
-                        if (result != null && result.getCode() == 0) {
-                            if (type == 1) { //区分帖子点赞和评论点赞
-                                ToastUtil.show(mContext, "点赞成功~");
-                                mSupportNumTv.setText(pointNum + 1 + "赞");
-                                mSupportNumTv.setTextColor(ContextCompat.getColor(mContext, R
-                                        .color.mainColor));
-                                mSupportBt.setBackgroundResource(R.drawable.zan);
-                                mSupportBt.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        ToastUtil.show(mContext, "已经点过赞了哦~");
-                                        //heartLayout.addFavor();
-                                    }
-                                });
-                            } else {
-                            }
-                        } else {
-                            ToastUtil.show(mContext, "点赞失败,请稍后重试~");
-                        }
-                    }
-                });
     }
 
     /**
@@ -432,23 +376,7 @@ public class HubItemActivity extends AppCompatActivity {
         bodyBean.setUserCode(userCode);
         bodyBean.setPostId(postId);
         bodyBean.setAppTypeId(Constant.APP_TYPE_ID_0_ANDROID);
-        new PostDetailClient(this, bodyBean).observable()
-                .subscribe(new ObserverWrapper<PostDetailBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        //("服务器开小差咯~");
-                    }
 
-                    @Override
-                    public void onNext(PostDetailBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            setMsgDetail(result);
-                        } else {
-                            //ToastUtil.show(mContext, "获取失败");
-                            // mDescTv.setText("获取失败~");
-                        }
-                    }
-                });
     }
 
     public void onHubItemBackClick(View view) {

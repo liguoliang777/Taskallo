@@ -31,11 +31,7 @@ import com.android.taskallo.project.view.ProjListActivity;
 import com.android.taskallo.view.LoadStateView;
 import com.jzt.hol.android.jkda.sdk.bean.search.RequestSearchBean;
 import com.jzt.hol.android.jkda.sdk.bean.search.SearchBean;
-import com.jzt.hol.android.jkda.sdk.bean.search.SearchBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.search.SearchGameVideoBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.search.SearchClient;
-import com.jzt.hol.android.jkda.sdk.services.search.SearchGVClient;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -223,6 +219,10 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
         getResultList(); //请求热搜游戏，视频
     }
 
+    private void doSearch(boolean b) {
+
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -250,22 +250,7 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
         RequestSearchBean bean = new RequestSearchBean();
         bean.setGameTypeId(GAMETYPE_ID);
         bean.setVideoTypeId(VIDEOTYPE_ID);
-        new SearchGVClient(SearchActivity.this, bean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<SearchGameVideoBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        e.toString();
-                    }
 
-                    @Override
-                    public void onNext(SearchGameVideoBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            searchGameList.addAll(result.getData().getHotSearchGameList());
-                            gameAdapter.setList(searchGameList);
-                        }
-                    }
-                });
     }
 
 //    @Override
@@ -281,70 +266,6 @@ public class SearchActivity extends BaseFgActivity implements View.OnClickListen
     }
 
     //搜索
-    private void doSearch(final boolean isBt) {
-        resultListView.setVisibility(View.VISIBLE);
-        searchList.clear();
-        if (searchAdapter != null) {
-            searchAdapter.notifyDataSetChanged();
-        }
-        ll_show.setVisibility(View.GONE);
-        loadStateView.setVisibility(View.VISIBLE);
-        loadStateView.setState(LoadStateView.STATE_ING);
-        if (null != searchName) {
-            dbManager.addSearchHistory(searchName);
-        }
-        SearchBodyBean bean = new SearchBodyBean();
-        bean.setKeywords(et_search.getText().toString().trim());
-        bean.setAppTypeId(0);
-        bean.setIosCompany(1);
-        new SearchClient(this, bean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<SearchBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        ll_show.setVisibility(View.GONE);
-                        resultListView.setVisibility(View.GONE);
-                        loadStateView.setVisibility(View.VISIBLE);
-                        loadStateView.setState(LoadStateView.STATE_END);
-                    }
-
-                    @Override
-                    public void onNext(SearchBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            searchList.clear();
-                            List<SearchBean.DataBean> data = result.getData();
-                            if (data != null) {
-                                for (int i = 0; i < data.size(); i++) {
-                                    SearchBean.DataBean dataBean = data.get(i);
-                                    int type = dataBean.getType();
-                                    if (type == 1) {//1是游戏  其他不是
-                                        searchList.add(dataBean);
-                                    }
-                                }
-                            }
-                            if (searchAdapter == null) {
-                                searchAdapter = new SearchAdapter(SearchActivity.this, searchList);
-                                resultListView.setAdapter(searchAdapter);
-                                loadStateView.setVisibility(View.GONE);
-                            } else {
-                                loadStateView.setVisibility(View.GONE);
-                                searchAdapter.setSearchResultList(searchList);
-                            }
-                            if (data.size() == 0) {
-                                ll_show.setVisibility(View.GONE);
-                                resultListView.setVisibility(View.GONE);
-                                loadStateView.setVisibility(View.VISIBLE);
-                                loadStateView.setState(LoadStateView.STATE_END);
-                            }
-                        } else {
-                            ll_show.setVisibility(View.GONE);
-                            resultListView.setVisibility(View.GONE);
-                            loadStateView.setVisibility(View.VISIBLE);
-                            loadStateView.setState(LoadStateView.STATE_END);
-                        }
-                    }
-                });
-    }
 
     @Override
     public void onClick(View v) {

@@ -24,14 +24,11 @@ import com.android.taskallo.adapter.MsgDetailGridAdapter;
 import com.android.taskallo.adapter.MsgDetailListAdapter;
 import com.android.taskallo.bean.PageAction;
 import com.android.taskallo.bean.User;
-import com.android.taskallo.core.utils.APIErrorUtils;
 import com.android.taskallo.core.utils.FileUtil;
 import com.android.taskallo.user.view.LoginActivity;
 import com.android.taskallo.user.view.RegisterActivity;
-import com.android.taskallo.util.ConvUtil;
 import com.android.taskallo.util.DateUtil;
 import com.android.taskallo.util.StringUtil;
-import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.popupwin.MsgDetailPop;
 import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
 import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
@@ -42,13 +39,6 @@ import com.jzt.hol.android.jkda.sdk.bean.gamehub.CommentListBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.CommentListBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.MsgDetailBodyBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.NormalDataBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.AddCommentClient;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.AddPointClient;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.BrowseHistoryClient;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.CommentListClient;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.MsgDetailClient;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -195,23 +185,7 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
             bodyBean.setDeviceOnlyNum(App.deviceId);
         }
         bodyBean.setPostId(msgId);
-        new BrowseHistoryClient(this, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<NormalDataBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtil.show(MsgDetailActivity.this, APIErrorUtils.getMessage(e));
-                    }
 
-                    @Override
-                    public void onNext(NormalDataBean result) {
-                        if (result != null && result.getCode() == 0) {
-
-                        } else {
-                            ToastUtil.show(MsgDetailActivity.this, result.getMsg());
-                        }
-                    }
-                });
     }
 
     // 查询帖子详情
@@ -225,23 +199,7 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
         }
         bodyBean.setId(msgId);
         bodyBean.setType(1);
-        new MsgDetailClient(this, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<MsgDetailBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtil.show(MsgDetailActivity.this, APIErrorUtils.getMessage(e));
-                    }
 
-                    @Override
-                    public void onNext(MsgDetailBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            setMsgDetail(result);
-                        } else {
-                            ToastUtil.show(MsgDetailActivity.this, result.getMsg());
-                        }
-                    }
-                });
     }
 
     // 帖子详情头部
@@ -347,23 +305,7 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
         }
         bodyBean.setPageIndex(pageAction.getCurrentPage());
         bodyBean.setPageSize(PAGE_SIZE);
-        new CommentListClient(this, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<CommentListBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtil.show(MsgDetailActivity.this, APIErrorUtils.getMessage(e));
-                    }
 
-                    @Override
-                    public void onNext(CommentListBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            listData(result);
-                        } else {
-                            ToastUtil.show(MsgDetailActivity.this, result.getMsg());
-                        }
-                    }
-                });
     }
 
     public void listData(CommentListBean result) {
@@ -470,33 +412,7 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
         }
         bodyBean.setType(type);  //type：1表示帖子点赞，2表示评论点赞，3表示投票
         bodyBean.setPostId(id);  //帖子id
-        new AddPointClient(this, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<NormalDataBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtil.show(MsgDetailActivity.this, APIErrorUtils.getMessage(e));
-                    }
 
-                    @Override
-                    public void onNext(NormalDataBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            if (type == 1) { //区分帖子点赞和评论点赞
-                                tv_msg_agreeNum.setText(ConvUtil.NI(tv_msg_agreeNum.getText().toString()) + 1 + "");
-                                tv_msg_agreeNum.setTextColor(getResources().getColor(R.color.mainColor));
-                                iv_msg_agree.setBackgroundResource(R.drawable.msg_detail_disagree);
-                                rl_clickAgree.setEnabled(false);
-                            } else {
-                                if (listAdapter != null) {
-                                    agreeList.add(new Integer(position));
-                                    listAdapter.setList(list, agreeList);
-                                }
-                            }
-                        } else {
-                            ToastUtil.show(MsgDetailActivity.this, result.getMsg());
-                        }
-                    }
-                });
     }
 
     // 发送评论
@@ -514,26 +430,7 @@ public class MsgDetailActivity extends BaseFgActivity implements View.OnClickLis
         } else {
             bodyBean.setValue(MSG_TYPE_GL);
         }
-        new AddCommentClient(this, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<NormalDataBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtil.show(MsgDetailActivity.this, APIErrorUtils.getMessage(e));
-                    }
 
-                    @Override
-                    public void onNext(NormalDataBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            et_content.setText("");
-                            pullListView.setPullLoadEnabled(true);
-                            pageAction.setCurrentPage(0);
-                            runService();
-                        } else {
-                            ToastUtil.show(MsgDetailActivity.this, result.getMsg());
-                        }
-                    }
-                });
     }
 
     @Override

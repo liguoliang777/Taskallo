@@ -20,8 +20,6 @@ import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
 import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
 import com.jzt.hol.android.jkda.sdk.bean.classification.AllClassifyBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBodyBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.Classification.ClassifiHomeClient;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -176,21 +174,6 @@ public class AllClassifyActivity extends BaseFgActivity {
         loadStateView.setVisibility(View.VISIBLE);
         loadStateView.setState(LoadStateView.STATE_ING, getString(R.string.loading));
         YunduanBodyBean bodyBean = new YunduanBodyBean();
-        new ClassifiHomeClient(content, bodyBean).observable()
-                .subscribe(new ObserverWrapper<AllClassifyBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        loadStateView.setVisibility(View.GONE);
-                    }
-                    @Override
-                    public void onNext(AllClassifyBean result) {
-                        loadStateView.setVisibility(View.GONE);
-                        if (result != null && result.getCode() == 0) {
-                            listData(result);//更新数据
-                        } else {
-                        }
-                    }
-                });
     }
 
     AllClassifyCountyAdapter mCountyAdapter;

@@ -11,20 +11,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.jzt.hol.android.jkda.sdk.bean.search.RequestSearchBean;
-import com.jzt.hol.android.jkda.sdk.bean.search.SearchGameVideoBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.search.SearchGVClient;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.android.taskallo.R;
 import com.android.taskallo.adapter.SearchOtherAdapter;
 import com.android.taskallo.adapter.SearchVideoAdapter;
 import com.android.taskallo.project.view.ProjListActivity;
-import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.video.view.VideoDetailActivity;
+import com.jzt.hol.android.jkda.sdk.bean.search.RequestSearchBean;
+import com.jzt.hol.android.jkda.sdk.bean.search.SearchGameVideoBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 显示搜索结果的页面
@@ -92,33 +88,5 @@ public class SearchResultFragment extends Fragment {
         RequestSearchBean bean = new RequestSearchBean();
         bean.setGameTypeId(75);
         bean.setVideoTypeId(76);
-        new SearchGVClient(getActivity(), bean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<SearchGameVideoBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtil.show(getActivity(), "失败了");
-                    }
-
-                    @Override
-                    public void onNext(SearchGameVideoBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            searchGameList.addAll(result.getData().getHotSearchGameList());
-                            searchVideotList.addAll(result.getData().getHotSearchVideoList());
-                            if (adapter == null) {
-                                adapter = new SearchOtherAdapter(context, searchGameList);
-                                gridView_game.setAdapter(adapter);
-                            } else {
-                                adapter.setList(searchGameList);
-                            }
-                            if (videoAdapter == null) {
-                                videoAdapter = new SearchVideoAdapter(context, searchVideotList);
-                                gridView_video.setAdapter(videoAdapter);
-                            } else {
-                                videoAdapter.setList(searchVideotList);
-                            }
-                        }
-                    }
-                });
     }
 }

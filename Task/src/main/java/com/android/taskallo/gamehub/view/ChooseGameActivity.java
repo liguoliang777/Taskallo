@@ -9,26 +9,17 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameListBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.NormalDataBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.PostMsgBodyBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.GameIsAddClient;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.GameListClient;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.adapter.ChooseGameAloneAdapter;
 import com.android.taskallo.adapter.ChooseGameNetworkAdapter;
 import com.android.taskallo.adapter.ChooseGameOtherAdapter;
-import com.android.taskallo.core.utils.APIErrorUtils;
-import com.android.taskallo.core.utils.DialogHelper;
-import com.android.taskallo.core.utils.SPUtils;
 import com.android.taskallo.util.StringUtil;
-import com.android.taskallo.util.ToastUtil;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameListBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.PostMsgBodyBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 选择游戏
@@ -98,53 +89,12 @@ public class ChooseGameActivity extends BaseFgActivity {
 
     private void runService() {
         PostMsgBodyBean bodyBean = new PostMsgBodyBean();
-        new GameListClient(this, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<GameListBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtil.show(ChooseGameActivity.this, APIErrorUtils.getMessage(e));
-                    }
-
-                    @Override
-                    public void onNext(GameListBean result) {
-                        DialogHelper.hideWaiting(getSupportFragmentManager());
-                        if (result != null && result.getCode() == 0) {
-                            setData(result.getData());
-                        } else {
-                            ToastUtil.show(ChooseGameActivity.this, result.getMsg());
-                        }
-                    }
-                });
     }
 
     //游戏是否添加
     private void isAddGame(final String gameName) {
         PostMsgBodyBean bodyBean = new PostMsgBodyBean();
         bodyBean.setVoteGame(gameName);
-        new GameIsAddClient(this, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<NormalDataBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtil.show(ChooseGameActivity.this, APIErrorUtils.getMessage(e));
-                    }
-
-                    @Override
-                    public void onNext(NormalDataBean result) {
-                        DialogHelper.hideWaiting(getSupportFragmentManager());
-                        if (result != null) {
-                            if (result.getCode() == 0) {
-                                SPUtils.put(ChooseGameActivity.this, "choose_game", gameName);
-                                ChooseGameActivity.this.finish();
-                            } else {
-                                ToastUtil.show(ChooseGameActivity.this, result.getMsg());
-                            }
-                        } else {
-                            ToastUtil.show(ChooseGameActivity.this, result.getMsg());
-                        }
-                    }
-                });
     }
 
     private void setData(GameListBean.DataBean result) {

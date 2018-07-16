@@ -15,22 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.taskallo.App;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.google.gson.reflect.TypeToken;
-import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBean;
-import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBody;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.main.LikeListClient;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TimerTask;
-
 import com.android.taskallo.R;
 import com.android.taskallo.adapter.LikeFragmentAdapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
@@ -44,6 +28,19 @@ import com.android.taskallo.core.utils.NetUtil;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.ActionItem;
 import com.android.taskallo.view.QuickAction;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
+import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBean;
+import com.jzt.hol.android.jkda.sdk.bean.manager.LikeListBody;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TimerTask;
 
 /**
  * Created by gp on 2017/3/3 0003.
@@ -114,49 +111,7 @@ public class LikeFragment extends BaseSearchFragment {
         bodyBean.setUserCode(App.userCode);
         bodyBean.setStartRecord(pageAction.getCurrentPage());
         bodyBean.setRecords(PAGE_SIZE);
-        new LikeListClient(content, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<LikeListBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-//                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                        Log.d(TAG, "onError: " + e.getMessage());
-                        emptyTv.setText("获取喜欢列表失败~点击重试");
-                    }
 
-                    @Override
-                    public void onNext(LikeListBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            LikeListBean.DataBean data = result.getData();
-                            if (data != null) {
-                                if (gameList != null) {
-                                    gameList.clear();
-                                }
-                                if (null != likeAdapter) {
-                                    likeAdapter.setDate(gameList);
-                                }
-                                gameList = data.getGameList();
-                                if (gameList == null || gameList.size() == 0) {
-                                    emptyTv.setText("您的喜欢列表为空哦~");
-                                    emptyTv.setVisibility(View.VISIBLE);
-                                } else {
-                                    if (null != likeAdapter) {
-                                        likeAdapter.setDate(gameList);
-                                    } else {
-                                    }
-                                    emptyTv.setVisibility(View.GONE);
-                                }
-                            } else {
-                                emptyTv.setText("您的喜欢列表为空哦~");
-                                emptyTv.setVisibility(View.VISIBLE);
-                            }
-                        } else {
-                            //ToastUtil.show(getActivity(), result.getMsg());
-                            emptyTv.setText(getString(R.string.server_exception) + "点击重试");
-                            emptyTv.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
     }
 
     private void initPop() {

@@ -16,24 +16,19 @@ import android.widget.TextView;
 import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.bean.UpLoadBean;
-import com.android.taskallo.core.utils.APIErrorUtils;
 import com.android.taskallo.core.utils.Constant;
 import com.android.taskallo.core.utils.DialogHelper;
 import com.android.taskallo.core.utils.SPUtils;
 import com.android.taskallo.core.utils.SystemUtil;
 import com.android.taskallo.core.utils.unitChangeUtil;
 import com.android.taskallo.gamehub.bean.PictureBean;
-import com.android.taskallo.user.view.LoginActivity;
 import com.android.taskallo.util.ConvUtil;
 import com.android.taskallo.util.StringUtil;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.widget.BaseGridView;
 import com.android.taskallo.widget.UploadFileHttp;
 import com.android.taskallo.widget.mulpicture.MulPictureActivity;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.NormalDataBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.PostMsgBodyBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.PostMsgClient;
 import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionDenied;
 import com.zhy.m.permission.PermissionGrant;
@@ -288,30 +283,6 @@ public class PostMsgActivity extends CommonBaseActivity implements View.OnClickL
         bodyBean.setPostContent(content);
         bodyBean.setPostImage(imgs);
         bodyBean.setToken(App.token);
-        new PostMsgClient(this, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<NormalDataBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtil.show(PostMsgActivity.this, APIErrorUtils.getMessage(e));
-                        DialogHelper.hideWaiting(getSupportFragmentManager());
-                    }
-
-                    @Override
-                    public void onNext(NormalDataBean result) {
-                        DialogHelper.hideWaiting(getSupportFragmentManager());
-                        if (result != null && result.getCode() == 0) {
-                            ToastUtil.show(PostMsgActivity.this, "发送成功！");
-                            PostMsgActivity.this.finish();
-                        } else {
-                            if (result.getMsg().equals("token信息已过期")) {
-                                startActivity(new Intent(PostMsgActivity.this, LoginActivity.class));
-                            } else {
-                                ToastUtil.show(PostMsgActivity.this, result.getMsg());
-                            }
-                        }
-                    }
-                });
     }
 
     @Override

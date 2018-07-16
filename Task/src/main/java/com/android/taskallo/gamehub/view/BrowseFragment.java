@@ -8,23 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.taskallo.App;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.google.gson.reflect.TypeToken;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.CommentBodyBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.VoteListBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.BrowseClient;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.MsgPostClient;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.android.taskallo.R;
 import com.android.taskallo.adapter.NoticeBrowseAdapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
@@ -33,13 +16,24 @@ import com.android.taskallo.bean.PageAction;
 import com.android.taskallo.bean.Token;
 import com.android.taskallo.bean.User;
 import com.android.taskallo.core.net.GsonRequest;
-import com.android.taskallo.core.utils.APIErrorUtils;
 import com.android.taskallo.core.utils.Constant;
-import com.android.taskallo.user.view.LoginActivity;
 import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.view.popupwin.DeleteBrowsePop;
 import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
 import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.CommentBodyBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.VoteListBean;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.android.taskallo.App.user;
 
@@ -145,43 +139,6 @@ public class BrowseFragment extends BaseSearchFragment implements View.OnClickLi
         User user = App.user;
         if (user != null) {
             bodyBean.setUserCode(user.userCode);
-        }
-        if (typeValue == 1) {
-            new BrowseClient(getActivity(), bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                    .subscribe(new ObserverWrapper<VoteListBean>() {
-                        @Override
-                        public void onError(Throwable e) {
-                            ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                        }
-
-                        @Override
-                        public void onNext(VoteListBean result) {
-                            if (result != null && result.getCode() == 0) {
-                                listData(result);
-                            } else if(result.getCode() == -2){
-                                startActivity(new Intent(getActivity(), LoginActivity.class));
-                            }
-                        }
-                    });
-        } else {
-            new MsgPostClient(getActivity(), bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                    .subscribe(new ObserverWrapper<VoteListBean>() {
-                        @Override
-                        public void onError(Throwable e) {
-                            ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                        }
-
-                        @Override
-                        public void onNext(VoteListBean result) {
-                            if (result != null && result.getCode() == 0) {
-                                listData(result);
-                            } else if(result.getCode() == -2){
-                                startActivity(new Intent(getActivity(), LoginActivity.class));
-                            }
-                        }
-                    });
         }
     }
 

@@ -7,16 +7,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddGameBodyBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.NormalDataBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.AddGameClient;
-
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
-import com.android.taskallo.core.utils.APIErrorUtils;
 import com.android.taskallo.util.StringUtil;
 import com.android.taskallo.util.ToastUtil;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.AddGameBodyBean;
 
 /**
  * 提交游戏
@@ -75,23 +70,6 @@ public class SubmitGameActivity extends BaseFgActivity implements View.OnClickLi
         AddGameBodyBean bodyBean = new AddGameBodyBean();
         bodyBean.setGameName(title);
         bodyBean.setRecommendReason(content);
-        new AddGameClient(this, bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<NormalDataBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtil.show(SubmitGameActivity.this, APIErrorUtils.getMessage(e));
-                    }
 
-                    @Override
-                    public void onNext(NormalDataBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            ToastUtil.show(SubmitGameActivity.this, "提交成功");
-                            SubmitGameActivity.this.finish();
-                        } else {
-                            ToastUtil.show(SubmitGameActivity.this, result.getMsg());
-                        }
-                    }
-                });
     }
 }

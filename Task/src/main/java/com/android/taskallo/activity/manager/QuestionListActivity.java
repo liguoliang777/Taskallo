@@ -8,17 +8,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jzt.hol.android.jkda.sdk.bean.admin.AdminGameUpdateBody;
-import com.jzt.hol.android.jkda.sdk.bean.admin.QuestionListBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.admin.ProblemClient;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.adapter.QuestionListAdapter;
+import com.jzt.hol.android.jkda.sdk.bean.admin.AdminGameUpdateBody;
+import com.jzt.hol.android.jkda.sdk.bean.admin.QuestionListBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 问题列表
@@ -71,35 +68,7 @@ public class QuestionListActivity extends BaseFgActivity {
     private void runService() {
         AdminGameUpdateBody body = new AdminGameUpdateBody();
         body.setType(type);
-        new ProblemClient(this, body).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<QuestionListBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-//                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                    }
 
-                    @Override
-                    public void onNext(QuestionListBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            if (result.getData() == null) {
-                                return;
-                            }
-                            if (result.getData().size() > 0) {
-                                list.clear();
-                                list.addAll(result.getData());
-                                if (adapter == null) {
-                                    adapter = new QuestionListAdapter(QuestionListActivity.this, list);
-                                    listView.setAdapter(adapter);
-                                } else {
-                                    adapter.setList(list);
-                                }
-                            }
-                        } else {
-//                            ToastUtil.show(getActivity(), result.getMsg());
-                        }
-                    }
-                });
     }
 
     @Override

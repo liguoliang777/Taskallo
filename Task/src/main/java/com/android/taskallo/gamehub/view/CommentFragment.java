@@ -7,24 +7,19 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.taskallo.App;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.CommentBean;
-import com.jzt.hol.android.jkda.sdk.bean.gamehub.CommentBodyBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.CommentClient;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.android.taskallo.R;
 import com.android.taskallo.adapter.NoticeCommentAdapter;
 import com.android.taskallo.base.fragment.BaseSearchFragment;
 import com.android.taskallo.bean.PageAction;
 import com.android.taskallo.bean.User;
-import com.android.taskallo.core.utils.APIErrorUtils;
-import com.android.taskallo.util.ToastUtil;
 import com.android.taskallo.widget.pulllistview.PullToRefreshBase;
 import com.android.taskallo.widget.pulllistview.PullToRefreshListView;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.CommentBean;
+import com.jzt.hol.android.jkda.sdk.bean.gamehub.CommentBodyBean;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 攻略fragment (懒加载-当滑动到当前fragment时，才去加载。而不是进入到activity时，加载所有fragment)
@@ -114,23 +109,6 @@ public class CommentFragment extends BaseSearchFragment {
         if (user != null) {
             bodyBean.setUserCode(user.userCode);
         }
-        new CommentClient(getActivity(), bodyBean).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<CommentBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                    }
-
-                    @Override
-                    public void onNext(CommentBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            listData(result);
-                        } else {
-//                            ToastUtil.show(getActivity(), result.getMsg());
-                        }
-                    }
-                });
     }
 
     public void listData(CommentBean result) {

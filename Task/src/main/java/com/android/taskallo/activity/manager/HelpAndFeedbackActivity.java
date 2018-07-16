@@ -9,19 +9,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jzt.hol.android.jkda.sdk.bean.admin.AdminGameUpdateBody;
-import com.jzt.hol.android.jkda.sdk.bean.admin.QuestionListBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.admin.QuestionListClient;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.adapter.QuestionListAdapter;
 import com.android.taskallo.base.activity.FeedbackActivity;
-import com.android.taskallo.util.StringUtil;
+import com.jzt.hol.android.jkda.sdk.bean.admin.AdminGameUpdateBody;
+import com.jzt.hol.android.jkda.sdk.bean.admin.QuestionListBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 帮助与反馈
@@ -77,36 +73,6 @@ public class HelpAndFeedbackActivity extends BaseFgActivity implements View.OnCl
 
     private void runService() {
         AdminGameUpdateBody body = new AdminGameUpdateBody();
-        new QuestionListClient(this, body).observable()
-//                .compose(this.<DiscountListBean>bindToLifecycle())
-                .subscribe(new ObserverWrapper<QuestionListBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-//                        ToastUtil.show(getActivity(), APIErrorUtils.getMessage(e));
-                    }
-
-                    @Override
-                    public void onNext(QuestionListBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            if (result.getData() == null) {
-                                return;
-                            }
-                            if (result.getData().size() > 0) {
-                                list.clear();
-                                list.addAll(result.getData());
-                                if (adapter == null) {
-                                    adapter = new QuestionListAdapter(HelpAndFeedbackActivity.this, list);
-                                    listView.setAdapter(adapter);
-                                    StringUtil.setListViewHeightBasedOnChildren(listView, 0);
-                                } else {
-                                    adapter.setList(list);
-                                }
-                            }
-                        } else {
-//                            ToastUtil.show(getActivity(), result.getMsg());
-                        }
-                    }
-                });
     }
 
     @Override

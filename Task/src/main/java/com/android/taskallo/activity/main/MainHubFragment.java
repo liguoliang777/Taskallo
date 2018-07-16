@@ -28,8 +28,6 @@ import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBean;
 import com.jzt.hol.android.jkda.sdk.bean.gamehub.GameHubMainBodyBean;
 import com.jzt.hol.android.jkda.sdk.bean.main.YunduanBean;
 import com.jzt.hol.android.jkda.sdk.bean.recommend.RecommendListBean;
-import com.jzt.hol.android.jkda.sdk.rx.ObserverWrapper;
-import com.jzt.hol.android.jkda.sdk.services.gamehub.GameHubMainClient;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -92,36 +90,6 @@ public class MainHubFragment extends BaseSearchFragment {
         GameHubMainBodyBean bodyBean = new GameHubMainBodyBean();
         bodyBean.setPageIndex(0);
         bodyBean.setPageIndex(pageAction.getCurrentPage());
-        new GameHubMainClient(getActivity(), bodyBean).observable()
-                .subscribe(new ObserverWrapper<GameHubMainBean>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        if (list != null && list.size() > 0) {
-                            loadStateView.setVisibility(View.GONE);
-                            ToastUtil.show(context, getString(R.string.server_exception_2_pullrefresh));
-                        } else {
-                            loadStateView.setState(LoadStateView.STATE_END, getString(R.string.server_exception_2_pullrefresh));
-                            loadStateView.setVisibility(View.VISIBLE);
-                        }
-                        pullListView.onPullUpRefreshComplete();
-                        pullListView.onPullDownRefreshComplete();
-                    }
-
-                    @Override
-                    public void onNext(GameHubMainBean result) {
-                        if (result != null && result.getCode() == 0) {
-                            listData(result);
-                        } else {
-                            if (list != null && list.size() > 0) {
-                                loadStateView.setVisibility(View.GONE);
-                                ToastUtil.show(context, getString(R.string.server_exception_2_pullrefresh));
-                            } else {
-                                loadStateView.setState(LoadStateView.STATE_END, getString(R.string.server_exception_2_pullrefresh));
-                                loadStateView.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    }
-                });
     }
 
 
