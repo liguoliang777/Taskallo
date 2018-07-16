@@ -423,8 +423,8 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 list1 = result.data;
                 if (result.code == 0 && context != null &&
                         list1 != null && list1.size() != 0) {
-                    mSubtaskLvAdapter.notifyDataSetChanged();
-                    reSetLVHeight(subtaskLV);
+                    //mSubtaskLvAdapter.notifyDataSetChanged();
+                    //reSetLVHeight(subtaskLV);
                     for (int i = 0; i < list1.size(); i++) {
                         listList2.add(itemInfos);
                         getChildInfo(i);
@@ -484,14 +484,12 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
                 if (result.code == 0 && context != null) {
                     if (relationInfo != null && relationInfo.size() != 0
                             ) {
+                        relationInfo.add(new SubtaskItemInfo("-1", ""));
                         listList2.set(i, relationInfo);
-                        listList2.add(itemInfos);
                     }
 
-                    if (i == list1.size() - 1) {
-                        mSubtaskLvAdapter.notifyDataSetChanged();
-                        reSetLVHeight(subtaskLV);
-                    }
+                    mSubtaskLvAdapter.notifyDataSetChanged();
+                    reSetLVHeight(subtaskLV);
                 } else {
 
                 }
@@ -1036,8 +1034,7 @@ public class CardDetailActivity extends CommonBaseActivity implements PopupMenu
         @Override
         public int getChildrenCount(int groupPosition) {
             int lengthInt = 1;
-            if (listList2 != null && listList2.size() != 0 && groupPosition <
-                    listList2.size()) {
+            if (listList2 != null && listList2.size() != 0) {
                 lengthInt = listList2.get(groupPosition).size();
             }
             return lengthInt;
