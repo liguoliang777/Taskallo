@@ -154,6 +154,8 @@ public class UserCenterActivity extends BaseFgActivity {
      /*   LoginHelper loginHelper = new LoginHelper(this);
         loginHelper.reLogin();*/
         titleRightBt = (Button) findViewById(R.id.title_right_bt);
+        titleRightBt.setText("保存");
+        titleRightBt.setVisibility(View.VISIBLE);
         titleRightBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,6 +196,7 @@ public class UserCenterActivity extends BaseFgActivity {
                 imgStrPost = mUrlList.get(position);
                 img_photo.setImageURI(imgStrPost);
                 IMG_TYPE = "0";
+                defAvatarDialog.dismiss();
             }
         });
     }
@@ -208,7 +211,7 @@ public class UserCenterActivity extends BaseFgActivity {
             String path = uri.getPath();
             //File file = new File(path);
             imgStrPost = ImageUtil.getImageStr(path);
-            android.util.Log.d(TAG, path+"修改参数:图片地址:"+imgStrPost);
+            android.util.Log.d(TAG, path + "修改参数:图片地址:" + imgStrPost);
             IMG_TYPE = "1";
         } else if (resultCode == Crop.RESULT_ERROR) {
             //Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
@@ -254,6 +257,7 @@ public class UserCenterActivity extends BaseFgActivity {
         startActivity(intent);
 
     }
+
     public void onProfileEmailBtClick(View view) {
         Intent intent = new Intent(content, SendBindCodeActivity.class);
         intent.putExtra(KeyConstant.EDIT_TYPE, Constant.EMAIL);
@@ -294,7 +298,8 @@ public class UserCenterActivity extends BaseFgActivity {
             } else {
                 holder = (AvatarAdapter.ViewHolder) convertView.getTag();
             }
-            holder.mIconIv.setImageURI(mUrlList.get(position));
+            final String uriString = mUrlList.get(position);
+            holder.mIconIv.setImageURI(uriString);
             return convertView;
         }
 
@@ -349,7 +354,7 @@ public class UserCenterActivity extends BaseFgActivity {
 
     private void uploadImage() {
         editor.putBoolean(KeyConstant.AVATAR_HAS_CHANGED, true).apply();
-        android.util.Log.d(TAG, App.token+"修改 点击: "+App.userHeadUrl);
+        android.util.Log.d(TAG, App.token + "修改 点击: " + App.userHeadUrl);
 
         DialogHelper.showWaiting(fm, "加载中...");
         String url = Constant.WEB_SITE + Constant.URL_MODIFY_USER_DATA;
@@ -404,11 +409,11 @@ public class UserCenterActivity extends BaseFgActivity {
             @Override
             protected Map<String, String> getParams() {
                 //设置POST请求参数
-                Log.d(TAG, imgStrPost+"修改参数," + App.token);
+                Log.d(TAG, imgStrPost + "修改参数," + App.token);
                 Map<String, String> params = new HashMap<>();
                 params.put(KeyConstant.TOKEN, App.token);
                 params.put(KeyConstant.NICK_NAME, nickName);
-                params.put(KeyConstant.head_Portrait, imgStrPost+"");
+                params.put(KeyConstant.head_Portrait, imgStrPost + "");
                 params.put(KeyConstant.APP_TYPE_ID, Constant.APP_TYPE_ID_0_ANDROID);  //
                 return params;
             }
