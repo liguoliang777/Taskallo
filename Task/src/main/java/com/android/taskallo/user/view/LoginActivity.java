@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.taskallo.App;
 import com.android.taskallo.R;
 import com.android.taskallo.activity.BaseFgActivity;
 import com.android.taskallo.activity.main.MainHomeActivity;
@@ -26,8 +27,6 @@ import com.android.taskallo.core.utils.DialogHelper;
 import com.android.taskallo.core.utils.KeyConstant;
 import com.android.taskallo.core.utils.Log;
 import com.android.taskallo.core.utils.NetUtil;
-import com.android.taskallo.core.utils.TextUtil;
-import com.android.taskallo.App;
 import com.android.taskallo.util.ToastUtil;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -174,10 +173,6 @@ public class LoginActivity extends BaseFgActivity implements View.OnClickListene
                 password = et_pwd.getText().toString();
                 if (userName == null || "".equals(userName)) {
                     Toast.makeText(this, "用户名不能为空", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!TextUtil.isMobile(userName)) {
-                    Toast.makeText(LoginActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (password == null || "".equals(password)) {
