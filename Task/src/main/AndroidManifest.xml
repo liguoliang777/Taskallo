@@ -274,13 +274,13 @@
         <!--=============================友盟==================================================================-->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="59474c33c62dca28fd000fe6"></meta-data>
+            android:value="5b4da8bc8f4a9d5b76000166"></meta-data>
         <!--   <meta-data
                android:name="UMENG_CHANNEL"
                android:value="${UMENG_CHANNEL_VALUE}"/>&lt;!&ndash;如果要多渠道打包&ndash;&gt;-->
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="ngame_test" />
+            android:value="taskllo" />
 
         <!--  qq完整版：-->
         <activity
