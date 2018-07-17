@@ -398,7 +398,7 @@ public class UserCenterActivity extends BaseFgActivity {
                 volleyError.printStackTrace();
                 titleRightBt.setClickable(true);
                 DialogHelper.hideWaiting(fm);
-                ToastUtil.show(content, "修改失败，网络连接异常");
+                ToastUtil.show(content, getString(R.string.server_exception));
                 Log.d(TAG, "修改" + volleyError.getCause());
             }
         };
